@@ -24,7 +24,7 @@
 
 .um-account-main {
 	float: left;
-	width: 50%;
+	width: 60%;
 	padding: 0 30px;
 	box-sizing: border-box;
 }
@@ -149,7 +149,13 @@
 	list-style-type: none !important;
 }
 
-.um-account-side li {margin-bottom: 1px !important;background: #eee;}
+.um-account-side li {
+	padding-bottom: 1px !important;
+	/*border-width: 1px 0 1px 0;*/
+	/*border-style: solid;*/
+	/*border-color: rgba(193, 192, 198, 0.63);*/
+	/*border: 1px solid rgba(193, 192, 198, 0.63);*/
+}
 
 .um-account-side li a{
 	display: block;
@@ -198,11 +204,74 @@
 	color: #555;
 }
 
-.um-account-side li a:hover {color: #444; background: #ddd}
+.um-account-side li a:hover {
+	color: #444;
+	background: rgba(40, 88, 250, 0.2)
+}
 
 .um-account-side li a.current,
 .um-account-side li a.current:hover {
 	color: #444;
 	font-weight: bold;
 	text-decoration: none !important;
+}
+
+
+
+.um-form form{
+	/*display: inline-block;*/
+	/*justify-content: center;*/
+	width: 85%;
+	margin: auto;
+}
+
+.um-account-side li a.current{
+	background-color: rgba(40, 88, 250, 0.2);
+}
+
+.um-button:hover{
+	background-color: #0a396e !important;
+}
+
+.um-account-side li{
+	display: block;
+}
+
+
+.um-account-main{
+	background-color: white;
+	padding: 10px;
+}
+
+.um-account-side{
+	background-color: white;
+	padding: 0px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-right: 3%;
+}
+
+.um-account-edit-block{
+	/*border:2px solid rgba(14, 86, 164, 0.39);*/
+	border-radius: 8px;
+	box-shadow: 0px 0px 36px 0px rgba(0,0,0,0.3);
+	/*background-color: rgba(14, 86, 164, 0.39);*/
+}
+
+*{
+	font-family: "Roboto Condensed", sans-serif!important;
+}
+
+@media only screen and (max-width:800px){
+
+	.um-account-main {
+		width: 85%!important;
+	}
+}
+
+@media only screen and (max-width:500px){
+
+	.um-account-main {
+		width: 100%!important;
+	}
 }

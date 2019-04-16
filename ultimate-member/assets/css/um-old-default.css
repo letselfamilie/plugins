@@ -51,7 +51,7 @@ div.uimob800 .um-account-side li a.current:hover
 .picker__list-item--selected,
 .picker__list-item--selected:hover,
 .picker--focused .picker__list-item--selected {
-    background: #44b0ec;
+    background: #0e56a4;
 }
 
 .um {
@@ -59,7 +59,7 @@ div.uimob800 .um-account-side li a.current:hover
     margin-right: auto!important;
 }
 .um input[type=submit]:disabled:hover {
-    background: #3ba1da;
+    background: #0e56a4;
 }
 
 .um input[type=submit].um-button,
@@ -72,17 +72,17 @@ div.uimob800 .um-account-side li a.current:hover
 }
 
 .um a.um-link {
-    color: #3ba1da;
+    color: #0e56a4;
 }
 
 .um input[type=submit].um-button:hover,
 .um a.um-button:hover {
-    background-color: #44b0ec;
+    background-color: #0e56a4;
 }
 
 .um a.um-link:hover,
 .um a.um-link-hvr:hover {
-    color: #44b0ec;
+    color: #0e56a4;
 }
 
 .um .um-button {
@@ -254,5 +254,5 @@ div.uimob800 .um-account-side li a.current:hover
 
 .um-profile.um .um-profile-headericon a:hover,
 .um-profile.um .um-profile-edit-a.active {
-    color: #3ba1da;
+    color: #0e56a4;
 }

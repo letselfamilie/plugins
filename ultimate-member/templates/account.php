@@ -41,7 +41,7 @@
 
 			</div>
 			
-			<div class="um-account-side uimob340-hide uimob500-hide">
+			<div class="um-account-side um-account-edit-block uimob340-hide uimob500-hide">
 
 				<div class="um-account-meta radius-<?php echo UM()->options()->get('profile_photocorner'); ?>">
 
@@ -89,7 +89,7 @@
 				</ul>
 			</div>
 			
-			<div class="um-account-main" data-current_tab="<?php echo UM()->account()->current_tab; ?>">
+			<div class="um-account-main um-account-edit-block" data-current_tab="<?php echo UM()->account()->current_tab; ?>">
 			
 				<?php
 				/**
