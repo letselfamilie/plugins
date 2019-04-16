@@ -1,8 +1,11 @@
+#wpadminbar{
+  display: none;
+}
+
 body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+  //display: flex;
+  //align-items: center;
+  //justify-content: center;
   font-family: "Roboto", sans-serif;
   font-size: 1em;
   letter-spacing: 0.1px;
@@ -14,20 +17,27 @@ body {
 }
 
 #chat-frame {
-  width: 95%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+
+  width: 100%;
   min-width: 360px;
   max-width: 1000px;
-  height: 92vh;
-  min-height: 300px;
-  max-height: 720px;
+
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
+
+  //min-height: 300px;
+  //max-height: 720px;
   background: #E6EAEA;
 }
 
 @media screen and (max-width: 360px) {
-  #chat-frame {
-    width: 100%;
-    height: 100vh;
-  }
+
 }
 
 #chat-frame #sidepanel {
@@ -77,6 +87,10 @@ body {
   #chat-frame #sidepanel #profile .wrap {
     height: 50px;
     padding: 10px 9px;
+  }
+
+  #chat-frame {
+    width: 100%
   }
 }
 
@@ -513,7 +527,7 @@ body {
   height: 37px;
   width: calc(100% - 40px);
   padding: 10px 15px;
-  font-size: 0.9em;
+  //font-size: 0.9em;
   color: #000000;
 }
 

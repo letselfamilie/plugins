@@ -51,6 +51,7 @@ define("PATH", plugins_url('..' , __FILE__));
 
 </head>
 <body>
+
 <div id="chat-frame">
     <div id="sidepanel">
         <div id="profile">
@@ -255,7 +256,7 @@ define("PATH", plugins_url('..' , __FILE__));
         </div>
         <div class="message-input">
             <div class="wrap">
-                <input type="text" placeholder="Write your message..."/>
+                <input id="message-input" type="text" placeholder="Write your message..."/>
                 <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
             </div>
         </div>
