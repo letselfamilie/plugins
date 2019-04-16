@@ -52,6 +52,8 @@ define("PATH", plugins_url('..' , __FILE__));
 </head>
 <body>
 
+<?php //get_template_part( 'header' ); ?>
+
 <div id="chat-frame">
     <div id="sidepanel">
         <div id="profile">
@@ -174,7 +176,7 @@ define("PATH", plugins_url('..' , __FILE__));
             </button>
         </div>
     </div>
-    <div class="content">
+    <div class="content-chat">
         <div class="contact-profile">
             <img src="<?php echo PATH?>/images/question.png" alt="question"/>
             <p>Vaccination</p>
@@ -262,6 +264,9 @@ define("PATH", plugins_url('..' , __FILE__));
         </div>
     </div>
 </div>
+
+<?php //get_template_part( 'footer' ); ?>
+
 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

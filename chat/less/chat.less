@@ -359,7 +359,7 @@ body {
   }
 }
 
-#chat-frame .content {
+#chat-frame .content-chat {
   float: right;
   width: 60%;
   height: 100%;
@@ -368,33 +368,33 @@ body {
 }
 
 @media screen and (max-width: 735px) {
-  #chat-frame .content {
+  #chat-frame .content-chat {
     width: calc(100% - 58px);
     min-width: 300px !important;
   }
 }
 
 @media screen and (min-width: 900px) {
-  #chat-frame .content {
+  #chat-frame .content-chat {
     width: calc(100% - 340px);
   }
 }
 
-#chat-frame .content .contact-profile {
+#chat-frame .content-chat .contact-profile {
   width: 100%;
   height: 60px;
   line-height: 60px;
   background: #f5f5f5;
 }
 
-#chat-frame .content .contact-profile img {
+#chat-frame .content-chat .contact-profile img {
   width: 40px;
   border-radius: 50%;
   float: left;
   margin: 9px 12px 0 15px;
 }
 
-#chat-frame .content .contact-profile button {
+#chat-frame .content-chat .contact-profile button {
   float: right;
   border: none;
   border-radius: 50%;
@@ -407,15 +407,15 @@ body {
   background: transparent;
 }
 
-#chat-frame .content .contact-profile button:focus {
+#chat-frame .content-chat .contact-profile button:focus {
   outline: none;
 }
 
-#chat-frame .content .contact-profile p {
+#chat-frame .content-chat .contact-profile p {
   float: left;
 }
 
-#chat-frame .content .messages {
+#chat-frame .content-chat .messages {
   height: auto;
   min-height: calc(100% - 97px);
   max-height: calc(100% - 97px);
@@ -424,12 +424,12 @@ body {
 }
 
 @media screen and (max-width: 735px) {
-  #chat-frame .content .messages {
+  #chat-frame .content-chat .messages {
     max-height: calc(100% - 105px);
   }
 }
 
-#chat-frame .content .messages ul li {
+#chat-frame .content-chat .messages ul li {
   display: inline-block;
   clear: both;
   float: left;
@@ -438,45 +438,45 @@ body {
   font-size: 0.9em;
 }
 
-#chat-frame .content .messages ul li:nth-last-child(1) {
+#chat-frame .content-chat .messages ul li:nth-last-child(1) {
   margin-bottom: 20px;
 }
 
-#chat-frame .content .messages ul li.replies img {
+#chat-frame .content-chat .messages ul li.replies img {
   margin: 6px 8px 0 0;
 }
 
-#chat-frame .content .messages ul li.replies h6 {
+#chat-frame .content-chat .messages ul li.replies h6 {
   background: #0f61b9;
   color: #f5f5f5;
 }
 
-#chat-frame .content .messages ul li.replies h6 small {
+#chat-frame .content-chat .messages ul li.replies h6 small {
   color: #d0d0d0;
 }
 
-#chat-frame .content .messages ul li.sent img {
+#chat-frame .content-chat .messages ul li.sent img {
   float: right;
   margin: 6px 0 0 8px;
 }
 
-#chat-frame .content .messages ul li.sent h6 {
+#chat-frame .content-chat .messages ul li.sent h6 {
   background: #f5f5f5;
   color: #000000;
   float: right;
 }
 
-#chat-frame .content .messages ul li.sent h6 small {
+#chat-frame .content-chat .messages ul li.sent h6 small {
   color: #727272;
 }
 
-#chat-frame .content .messages ul li img {
+#chat-frame .content-chat .messages ul li img {
   width: 25px;
   border-radius: 50%;
   float: left;
 }
 
-#chat-frame .content .messages ul li h6 {
+#chat-frame .content-chat .messages ul li h6 {
   display: inline-block;
   padding: 10px 15px;
   border-radius: 10px;
@@ -484,23 +484,23 @@ body {
   line-height: 130%;
 }
 
-#chat-frame .content .messages ul li h6 small {
+#chat-frame .content-chat .messages ul li h6 small {
   font-size: 10px;
 }
 
 @media screen and (min-width: 735px) {
-  #chat-frame .content .messages ul li h6 {
+  #chat-frame .content-chat .messages ul li h6 {
     max-width: 300px;
   }
 }
 
 @media screen and (min-width: 735px) {
-  #chat-frame .content .messages ul li h6 small {
+  #chat-frame .content-chat .messages ul li h6 small {
     font-size: 10px;
   }
 }
 
-#chat-frame .content .messages ul li.mes-break {
+#chat-frame .content-chat .messages ul li.mes-break {
   border-radius: 10px;
   height: 26px;
   background-color: #dbe0e0;
@@ -508,11 +508,11 @@ body {
   padding-top: 7px;
 }
 
-#chat-frame .content .messages ul li.mes-break p {
+#chat-frame .content-chat .messages ul li.mes-break p {
   font-size: 12px;
 }
 
-#chat-frame .content .message-input {
+#chat-frame .content-chat .message-input {
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -520,11 +520,11 @@ body {
   z-index: 99;
 }
 
-#chat-frame .content .message-input .wrap {
+#chat-frame .content-chat .message-input .wrap {
   position: relative;
 }
 
-#chat-frame .content .message-input .wrap input {
+#chat-frame .content-chat .message-input .wrap input {
   font-family: "Roboto", sans-serif;
   float: left;
   border: none;
@@ -535,11 +535,11 @@ body {
   color: #000000;
 }
 
-#chat-frame .content .message-input .wrap input:focus {
+#chat-frame .content-chat .message-input .wrap input:focus {
   outline: none;
 }
 
-#chat-frame .content .message-input .wrap button {
+#chat-frame .content-chat .message-input .wrap button {
   float: right;
   border: none;
   width: 40px;
@@ -550,11 +550,11 @@ body {
   color: #f5f5f5;
 }
 
-#chat-frame .content .message-input .wrap button:hover {
+#chat-frame .content-chat .message-input .wrap button:hover {
   background: #0a437f;
 }
 
-#chat-frame .content .message-input .wrap button:focus {
+#chat-frame .content-chat .message-input .wrap button:focus {
   outline: none;
 }
 
