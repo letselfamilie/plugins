@@ -51,9 +51,9 @@ $(function () {
 
         var html_message = '<li class="sent">' +
             '<img src="' + url_object.plugin_directory +'/images/logo.png" alt="" />' +
-            '<h6>' + message + '<br/>' +
+            '<p>' + message + '<br/>' +
             '<small class="float-right mt-2">' + time + '</small>' +
-            '</h6></li>';
+            '</p></li>';
 
         $(html_message).appendTo($('.messages ul'));
 

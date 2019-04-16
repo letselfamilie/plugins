@@ -10,9 +10,9 @@ body {
   //display: flex;
   //align-items: center;
   //justify-content: center;
-  font-family: "Roboto", sans-serif;
-  font-size: 1em;
-  letter-spacing: 0.1px;
+  font-family: "Roboto", sans-serif !important;
+  font-size: 1em !important;
+  letter-spacing: 0.1px !important;
   background: #d0d0d0;
   color: #000000;
   text-rendering: optimizeLegibility;
@@ -446,12 +446,12 @@ body {
   margin: 6px 8px 0 0;
 }
 
-#chat-frame .content-chat .messages ul li.replies h6 {
+#chat-frame .content-chat .messages ul li.replies p {
   background: #0f61b9;
   color: #f5f5f5;
 }
 
-#chat-frame .content-chat .messages ul li.replies h6 small {
+#chat-frame .content-chat .messages ul li.replies p small {
   color: #d0d0d0;
 }
 
@@ -460,13 +460,13 @@ body {
   margin: 6px 0 0 8px;
 }
 
-#chat-frame .content-chat .messages ul li.sent h6 {
+#chat-frame .content-chat .messages ul li.sent p {
   background: #f5f5f5;
   color: #000000;
   float: right;
 }
 
-#chat-frame .content-chat .messages ul li.sent h6 small {
+#chat-frame .content-chat .messages ul li.sent p small {
   color: #727272;
 }
 
@@ -476,7 +476,7 @@ body {
   float: left;
 }
 
-#chat-frame .content-chat .messages ul li h6 {
+#chat-frame .content-chat .messages ul li p {
   display: inline-block;
   padding: 10px 15px;
   border-radius: 10px;
@@ -484,18 +484,18 @@ body {
   line-height: 130%;
 }
 
-#chat-frame .content-chat .messages ul li h6 small {
+#chat-frame .content-chat .messages ul li p small {
   font-size: 10px;
 }
 
 @media screen and (min-width: 735px) {
-  #chat-frame .content-chat .messages ul li h6 {
+  #chat-frame .content-chat .messages ul li p {
     max-width: 300px;
   }
 }
 
 @media screen and (min-width: 735px) {
-  #chat-frame .content-chat .messages ul li h6 small {
+  #chat-frame .content-chat .messages ul li p small {
     font-size: 10px;
   }
 }
@@ -575,4 +575,11 @@ body {
 ::-webkit-scrollbar-thumb
 {
   background: #0f61b9 !important;
+}
+
+
+ul {
+  padding-inline-start: 40px;
+    margin: 0;
+    padding: 0;
 }

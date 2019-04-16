@@ -27,6 +27,50 @@ define("PATH", plugins_url('..' , __FILE__));
     <?php wp_head(); ?>
 
     <style>
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+        /* HTML5 display-role reset for older browsers */
+        article, aside, details, figcaption, figure,
+        footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+        body {
+            line-height: 1;
+        }
+        ol, ul {
+            list-style: none;
+        }
+        blockquote, q {
+            quotes: none;
+        }
+        blockquote:before, blockquote:after,
+        q:before, q:after {
+            content: '';
+            content: none;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
         .messages::-webkit-scrollbar, #conversations::-webkit-scrollbar
         {
             width: 12px !important;  /* for vertical scrollbars */
@@ -53,6 +97,7 @@ define("PATH", plugins_url('..' , __FILE__));
 <body>
 
 <?php //get_template_part( 'header' ); ?>
+
 
 <div id="chat-frame">
     <div id="sidepanel">
@@ -187,72 +232,72 @@ define("PATH", plugins_url('..' , __FILE__));
             <ul>
                 <li class="sent">
                     <img src="<?php echo PATH?>/images/logo.png" alt=""/>
-                    <h6>
+                    <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua. In nisl nisi scelerisque eu ultrices.
                         <br/>
                         <small class="float-right mt-2">14:02:59</small>
-                    </h6>
+                    </p>
                 </li>
                 <li class="replies">
                     <img src="<?php echo PATH?>/images/support.png" alt=""/>
-                    <h6>
+                    <p>
                         Cursus vitae congue mauris rhoncus aenean vel elit scelerisque.
                         <br/>
                         <small class="float-right mt-2">14:08:30</small>
-                    </h6>
+                    </p>
                 </li>
                 <li class="replies">
                     <img src="<?php echo PATH?>/images/support.png" alt=""/>
-                    <h6>
+                    <p>
                         Pellentesque diam volutpat commodo sed egestas egestas fringilla.
                         <br/>
                         <small class="float-right mt-2">14:11:32</small>
-                    </h6>
+                    </p>
                 </li>
                 <li class="sent">
                     <img src="<?php echo PATH?>/images/logo.png" alt=""/>
-                    <h6>
+                    <p>
                         Porta nibh venenatis cras sed felis eget velit aliquet sagittis. Sodales ut etiam sit amet nisl
                         purus in mollis.
                         <br/>
                         <small class="float-right mt-2">14:13:08</small>
-                    </h6>
+                    </p>
                 </li>
                 <li class="replies">
                     <img src="<?php echo PATH?>/images/support.png" alt=""/>
-                    <h6>
+                    <p>
                         Eleifend quam adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus.
                         <br/>
                         <small class="float-right mt-2">14:14:54</small>
-                    </h6>
+                    </p>
                 </li>
                 <li class="replies">
                     <img src="<?php echo PATH?>/images/support.png" alt=""/>
-                    <h6>
+                    <p>
                         Eget sit amet tellus cras adipiscing enim eu.
                         <br/>
                         <small class="float-right mt-2">14:16:21</small>
-                    </h6>
+                    </p>
                 </li>
                 <li class="sent">
                     <img src="<?php echo PATH?>/images/logo.png" alt=""/>
-                    <h6>
+                    <p>
                         Id aliquet lectus proin nibh.
                         <br/>
                         <small class="float-right mt-2">14:18:23</small>
-                    </h6>
+                    </p>
                 </li>
                 <li class="mes-break">
                     <p>New messages<i class="fa fa-chevron-down ml-1"></i></p>
                 </li>
                 <li class="replies">
                     <img src="<?php echo PATH?>/images/support.png" alt=""/>
-                    <h6>
+                    <p>
                         Sed nisi lacus sed viverra tellus in. Non odio euismod lacinia at quis risus sed vulputate odio.
                         <br/>
                         <small class="float-right mt-2">14:21:39</small>
-                    </h6>
+                    </p>
                 </li>
             </ul>
         </div>
