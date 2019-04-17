@@ -1,0 +1,245 @@
+* {
+  font-family: "Roboto Condensed", sans-serif;
+}
+body {
+  min-width: 300px;
+}
+
+#topics, table, tbody {
+
+  padding: 0;
+  margin: 0;
+  //table-layout: fixed;
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #0e56a4;
+
+
+  #topics-header {
+    font-size: 20px;
+    background-color: #0e56a4;
+    color: white;
+  }
+
+  th, td {
+    //display: inline-block;
+    height: 50px;
+    padding: 8px;
+    font-weight: 200;
+    text-align: center;
+    border-bottom: 1px solid #0e56a4;
+  }
+
+  td:nth-child(2),
+  td:nth-child(3) {
+    width: 10%;
+  }
+  td:nth-child(1) {
+    width: 45%;
+  }
+
+  td:nth-child(4) {
+    width: 35%;
+  }
+
+  tr:hover {
+    background-color: rgba(38, 157, 255, 0.04);
+  }
+
+  .topic-name {
+    text-align: left;
+    padding-left: 32px;
+    //width: 30%
+    cursor: pointer;
+  }
+
+  .topic-row {
+    font-size: 16px;
+    height: 50px;
+
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+    a:hover {
+      text-underline: black;
+    }
+
+  }
+}
+
+.container {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.info {
+  position: relative;
+}
+
+.back {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  width: 25px;
+  height: 25px;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.back:hover {
+  opacity: 1;
+}
+
+#cat_name {
+  margin: 12px 0 12px 30px;
+  font-weight: 400;
+}
+
+
+@media only screen and (min-width:480px){
+
+  .menu_text { display: block; }
+  .menu_icon { display: none; }
+
+}
+
+
+@media only screen and (max-width:480px){
+
+  .menu_text { display: none; }
+  .menu_icon { display: block; }
+
+}
+
+.menu_icon {
+  height: 30px;
+  width: 30px;
+}
+
+
+#add-topic {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  right: 10px;
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+}
+
+#add-panel {
+
+  position: fixed;
+  //background-color: rgba(156, 156, 156, 0.33);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .add-panel-container {
+    min-width: 300px;
+    max-width: 500px;
+    height: 176px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    .add-content {
+      background-color: white;
+      position: absolute;
+      top: 20px;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      border: 1px solid #269dff;
+      //box-shadow: 0 0 20px rgba(0,0,0,0.5);
+
+      h2 {
+        margin: 10px;
+        font-weight: 400;
+      }
+
+      img {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        height: 40px;
+        width: 40px;
+        cursor: pointer;
+      }
+
+      #add-form {
+        margin: 10px 11px 10px 10px;
+        font-size: 20px;
+
+        input[type='text'] {
+          background-color: white;
+          border: 1px solid #269dff;
+          height: 40px;
+          width: 100%;
+          font-size: 20px;
+          padding: 10px;
+          -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+          -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+          box-sizing: border-box;         /* Opera/IE 8+ */
+        }
+
+
+        .enter-butt {
+          position: absolute;
+          bottom: 9px;
+          right: 12px;
+          width: 100px;
+          height: 30px;
+          border: none;
+          background-color: #0e88f1;
+          color: white;
+          font-weight: bold;
+          font-size: 16px;
+          outline: none;
+          cursor: pointer;
+        }
+
+        .enter-butt:hover {
+          background-color: #269dff;
+        }
+
+        #chech-anonym {
+          position: absolute;
+          bottom: 13px;
+          right: 116px;
+        }
+
+        .label-anonym {
+          position: absolute;
+          bottom: 15px;
+          right: 138px;
+          font-size: 12px;
+          font-style: italic;
+          color: darkgray;
+        }
+
+
+      }
+    }
+  }
+
+
+}
+
+@media only screen and (max-width: 400px) {
+  .topic-name {
+    padding-left: 12px !important;
+  }
+}

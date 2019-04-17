@@ -1,0 +1,7 @@
+INSERT INTO letsel.users (login, first_name, surname, password, email, photo) VALUES ('JulieTKaufman', 'Julie', 'Kaufman', 'yail4mi2Qu', 'bertram1981@gmail.com', '/Backend/user_photos/53.jpg');
+INSERT INTO letsel.users (login, first_name, surname, password, email, photo) VALUES ('IkeJNunez', 'Ike', 'Nunez', 'he1Zaij2', 'esta1997@yahoo.com', '/Backend/user_photos/80.jpg');
+INSERT INTO letsel.users (login, first_name, surname, password, email, photo) VALUES ('IronNuge', 'Donald', 'Johnson', 'meeriz7Sah', 'gerardo.jenki@gmail.com', '/Backend/user_photos/39.jpg');
+INSERT INTO letsel.users (login, first_name, surname, password, email, photo) VALUES ('MrsHudson22121', 'Judy', 'Markham', 'Sie0aez3sek', 'laurel_pour@hotmail.com', '/Backend/user_photos/50.jpg');
+INSERT INTO letsel.users (login, first_name, surname, password, email, photo) VALUES ('melany', 'Randy', 'Stallworth', 'dooWaph8ich', 'weldon1971@yahoo.com', '/Backend/user_photos/38.jpg');
+INSERT INTO letsel.users (login, first_name, surname, password, email, photo) VALUES ('darrell', 'Randi', 'Sellers', 'dooWaph8ich', 'delaney_bedn@gmail.com', '/Backend/user_photos/62.jpg');
+INSERT INTO letsel.users (login, first_name, surname, password, email, photo) VALUES ('toney', 'Jose', 'Schumacher', 'agi3Xaequoo', 'tad.yundt2002@gmail.com', '/Backend/user_photos/11.jpg');

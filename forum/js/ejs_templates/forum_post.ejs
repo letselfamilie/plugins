@@ -1,0 +1,80 @@
+<tr class="post-row">
+
+
+
+
+        <% if (post.is_anonym == 0) {%>
+            <td class="user-info">
+
+                <img src="<%= post.photo %>">
+
+                <a href="/"><%= post.first_name + " " + post.surname %></a>
+            </td>
+        <% } else { %>
+
+                <td class="user-info">
+
+                    <img src="<%= url %>/images/user.png">
+
+                    <a href="/">Anonym</a>
+                </td>
+        <% } %>
+    <td class="post-text">
+        <span class="post-id"><%= post.post_id %></span>
+
+        <p class="text-post">
+            <% if (post.respond_message != null) { %>
+                <div class="respond-message">
+                <span class="respond-to-user"> <%= post.user_respond_to %>: </span>
+                <div class="text-post-message"><%= post.respond_message.substring(0, 75) + ((post.respond_message.length <= 75)? '': "...") %></div></div>
+            <% } %>
+
+
+        <div class="message"><%- post.post_message.replace(/\n/g, '<br>') %></div>
+        </p>
+
+        <span class="date"><%= post.create_timestamp %></span>
+
+        <span class="like-number"><%= post.n_likes %></span>
+        <span class="reaction-number"><%= post.n_responds %></span>
+
+        <img src="<%= url %>/images/like-empty.svg" class="empty-like <% if (post.liked) { %>
+            <%= " none"%>
+        <% }%>">
+        <img src="<%= url %>/images/like-full.svg" class="full-like <% if (!post.liked) { %>
+            <%= " none"%>
+        <% }%>">
+
+        <img src="<%= url %>/images/comment-full.svg" class="comment-full none">
+        <img src="<%= url %>/images/comment-empty.svg" class="comment-empty">
+
+        <% if (post.user_id == user_id) { %>
+        <div class="dropdown">
+            <img src="<%= url %>/images/more.svg">
+            <div class="dropdown-content">
+                <p class="edit">Edit</p>
+                <p class="delete">Delete</p>
+            </div>
+        </div>
+
+
+
+        <div class="content-edit none">
+            <div class="text-enter-container">
+                <textarea class="edit-textarea"></textarea>
+                <button class="save-butt">Save
+                </button>
+            </div>
+
+        </div>
+
+
+        <% }%>
+
+
+
+
+
+
+    </td>
+</tr>
