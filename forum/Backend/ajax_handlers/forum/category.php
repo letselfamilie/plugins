@@ -38,7 +38,9 @@ function get_forum_categories()
     global $wpdb;
     $cats = array();
 
-    $sqlQuery1 = "SELECT {$wpdb->prefix}f_categories.cat_name, COUNT(DISTINCT {$wpdb->prefix}f_topics.topic_id) AS topics_num, COUNT(post_id) AS posts_num
+    $sqlQuery1 = "SELECT {$wpdb->prefix}f_categories.cat_name, 
+                  COUNT(DISTINCT {$wpdb->prefix}f_topics.topic_id) AS topics_num,
+                  COUNT(post_id) AS posts_num
                   FROM ({$wpdb->prefix}f_categories LEFT OUTER JOIN {$wpdb->prefix}f_topics 
                   ON {$wpdb->prefix}f_categories.cat_name = {$wpdb->prefix}f_topics.cat_name) 
                   LEFT OUTER JOIN {$wpdb->prefix}f_posts 
@@ -58,12 +60,16 @@ function get_forum_categories()
                 $sqlQuery3 = "SELECT {$wpdb->prefix}f_topics.topic_name, 
                                       {$wpdb->prefix}f_posts.topic_id, 
                                       {$wpdb->prefix}f_posts.post_id, 
-                                      {$wpdb->prefix}f_posts.create_timestamp AS post_time, posts.user_id
-                              FROM {$wpdb->prefix}f_posts INNER JOIN {$wpdb->prefix}f_topics ON {$wpdb->prefix}f_topics.topic_id = {$wpdb->prefix}f_posts.topic_id
+                                      {$wpdb->prefix}f_posts.create_timestamp AS post_time, 
+                                      {$wpdb->prefix}f_posts.user_id
+                              FROM {$wpdb->prefix}f_posts INNER JOIN {$wpdb->prefix}f_topics 
+                                ON {$wpdb->prefix}f_topics.topic_id = {$wpdb->prefix}f_posts.topic_id
                               WHERE {$wpdb->prefix}f_posts.topic_id = '".$topic['topic_id']."'
                                 AND {$wpdb->prefix}f_posts.create_timestamp IN (SELECT MAX({$wpdb->prefix}f_posts.create_timestamp)
                                                          FROM {$wpdb->prefix}f_posts
                                                          WHERE topic_id =  ".$topic['topic_id'].")";
+
+
 
                 foreach ($wpdb->get_results($sqlQuery3, ARRAY_A) as $post){
                     $cat['last_topic_id'] = $post['topic_id'];

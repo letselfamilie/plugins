@@ -24,11 +24,11 @@ define("PATH", plugins_url('..' , __FILE__));
 
 <?php get_template_part( 'header' ); ?>
 
-<div class="container">
+<div class="container" style="margin-top: 12px">
 
     <table id="categories">
         <tr id="categories-header">
-            <th class="cat-name">Forum</th>
+            <th class="cat-name" style="cursor: auto">Forum</th>
             <th class="onderwerpen">
                 <span class="menu_text">Topics</span>
                 <img class="menu_icon" src="<?php echo PATH?>/images/chat.svg">

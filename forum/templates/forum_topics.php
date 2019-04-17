@@ -56,7 +56,7 @@ define("PATH", plugins_url('..' , __FILE__));
 
     <table id="topics">
         <tr id="topics-header">
-            <th class="topic-name">Topic</th>
+            <th id="head-name-table" class="topic-name">Topic</th>
             <th class="authors">
                 <span class="menu_text">Authors</span>
                 <img class="menu_icon" src="<?php echo PATH?>/images/author.svg">
