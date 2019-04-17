@@ -112,10 +112,10 @@ $(function () {
     function loader(turnOn) {
         if (turnOn) {
             $('#loader').removeClass('none');
-            $('.container').addClass('blur');
+            $('.container-blured').addClass('blur');
         } else {
             $('#loader').addClass('none');
-            $('.container').removeClass('blur');
+            $('.container-blured').removeClass('blur');
         }
     }
 
@@ -267,7 +267,7 @@ $(function () {
         });
 
         $node.on('click', '.delete', function () {
-            $('.container').addClass('blur');
+            $('.container-blured').addClass('blur');
             $('#delete-post-panel').attr('style', '');
             post_to_delete = data.post_id;
         });
@@ -330,12 +330,12 @@ $(function () {
 
     // Post delete
     $('#delete-post-panel').find('.cancel-butt').on('click', function () {
-        $('.container').removeClass('blur');
+        $('.container-blured').removeClass('blur');
         $('#delete-post-panel').attr('style', 'display:none');
     });
 
     $('#delete-post-panel').find('.close-delete-panel').on('click', function () {
-        $('.container').removeClass('blur');
+        $('.container-blured').removeClass('blur');
         $('#delete-post-panel').attr('style', 'display:none');
     });
 
@@ -351,7 +351,7 @@ $(function () {
 
             success: function (res) {
                 console.log('deleted');
-                $('.container').removeClass('blur');
+                $('.container-blured').removeClass('blur');
                 $('#delete-post-panel').attr('style', 'display:none');
                 loadPost();
             },
@@ -365,22 +365,22 @@ $(function () {
     // Editing topic dropdown
 
     $('#topic-dropdown').find('.delete').on('click', function () {
-        $('.container').addClass('blur');
+        $('.container-blured').addClass('blur');
         $('#delete-topic-panel').attr('style', '');
     });
 
     $('#delete-topic-panel').find('.cancel-butt').on('click', function () {
-        $('.container').removeClass('blur');
+        $('.container-blured').removeClass('blur');
         $('#delete-topic-panel').attr('style', 'display:none');
     });
 
     $('#delete-topic-panel').find('.close-delete-panel').on('click', function () {
-        $('.container').removeClass('blur');
+        $('.container-blured').removeClass('blur');
         $('#delete-topic-panel').attr('style', 'display:none');
     });
 
     $('#delete-topic-panel').find('.delete-butt').on('click', function () {
-        $('.container').removeClass('blur');
+        $('.container-blured').removeClass('blur');
         $('#delete-topic-panel').attr('style', 'display:none');
 
         $.ajax({

@@ -16,16 +16,38 @@ define("PATH", plugins_url('..' , __FILE__));
 
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
-    <?php wp_head(); ?>
+
 </head>
 
 <body>
 
 <?php get_template_part( 'header' ); ?>
+<?php wp_head(); ?>
 
-<div class="container blur">
+<div class="container-blured blur">
 
+    <style>
+        .dropdown {
+            position: absolute;
+        }
 
+        input[type='checkbox'] {
+            top: inherit;
+            margin: 0;
+            bottom: 18px !important;
+        }
+        input[type=checkbox]:before, input[type=radio]:before {
+            background-color: #0c76cf;
+        }
+
+        ::selection {
+            background: #0c76cf !important;
+        }
+
+        .content-enter {
+            position: relative;
+        }
+    </style>
 
     <div class="info">
         <a class="back"><img class="back" src="<?php echo PATH?>/images/left.svg"></a>

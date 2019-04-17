@@ -25,7 +25,28 @@ define("PATH", plugins_url('..' , __FILE__));
 
 <?php get_template_part( 'header' ); ?>
 
-<div class="container">
+<style>
+    input[type='checkbox'] {
+        top: inherit;
+        margin: 0;
+        bottom: 16px !important;
+    }
+
+    input[type=checkbox]:before {
+        background-color: #0c76cf !important;
+    }
+
+    ::selection {
+        background: #0c76cf !important;
+    }
+
+    #add-panel {
+        z-index: 100;
+    }
+
+</style>
+
+<div class="container-blured">
 
     <div class="info">
         <a class="back"><img class="back" src="<?php echo PATH?>/images/left.svg"></a>

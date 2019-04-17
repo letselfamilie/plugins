@@ -65,12 +65,12 @@ $(function () {
 
     $('#add-topic').on('click', function () {
         $('#add-panel').attr('style', '');
-        $('.container').addClass('blur');
+        $('.container-blured').addClass('blur');
     });
 
     $('#close-add-panel').on('click', function () {
         $('#add-panel').attr('style', 'display:none')
-        $('.container').removeClass('blur');
+        $('.container-blured').removeClass('blur');
     });
 
     $('#add-form').submit(function (event) {
@@ -86,7 +86,7 @@ $(function () {
             },
             success: function (res) {
                 $('#add-panel').attr('style', 'display:none')
-                $('.container').removeClass('blur');
+                $('.container-blured').removeClass('blur');
                 $('#new-topic-name').val('');
                 console.log(res);
                 getTopics();

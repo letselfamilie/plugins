@@ -80,6 +80,7 @@ function forum_scripts()
         wp_enqueue_script('posts-script', plugins_url('js/compiled/posts.js', __FILE__), array('jquery'), date("h:i:s") , true);
         wp_localize_script('posts-script', 'url_object',
             array('ajax_url' => admin_url('admin-ajax.php'), 'template_directory' => plugins_url('', __FILE__), 'site_url' => get_site_url()));
+        wp_dequeue_style( 'bootstrap' );
     }
 }
 
