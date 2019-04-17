@@ -27,6 +27,10 @@ define("PATH", plugins_url('..' , __FILE__));
 <div class="container-blured blur">
 
     <style>
+        h1, h2, h3, h4, h5, h6 {
+            text-transform: none !important;
+        }
+
         .dropdown {
             position: absolute;
         }

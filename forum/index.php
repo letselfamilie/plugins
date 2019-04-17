@@ -2,7 +2,7 @@
 /*
 Plugin Name: Forum
 Plugin URI: https://github.com/mrsn5
-Description: The forum plugin
+Description: The chat plugin
 Version: 1.0.0
 Author: San Nguyen
 Author URI: https://github.com/mrsn5

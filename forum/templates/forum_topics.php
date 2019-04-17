@@ -44,6 +44,10 @@ define("PATH", plugins_url('..' , __FILE__));
         z-index: 100;
     }
 
+    h1, h2, h3, h4, h5, h6 {
+        text-transform: none !important;
+    }
+
 </style>
 
 <div class="container-blured">
