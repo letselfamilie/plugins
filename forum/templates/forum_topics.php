@@ -50,7 +50,7 @@ define("PATH", plugins_url('..' , __FILE__));
 
 </style>
 
-<div class="container-blured">
+<div class="container container-blured">
 
     <div class="info">
         <a class="back"><img class="back" src="<?php echo PATH?>/images/left.svg"></a>

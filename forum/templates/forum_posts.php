@@ -24,7 +24,7 @@ define("PATH", plugins_url('..' , __FILE__));
 <?php get_template_part( 'header' ); ?>
 <?php wp_head(); ?>
 
-<div class="container-blured blur">
+<div class="container container-blured blur">
 
     <style>
         h1, h2, h3, h4, h5, h6 {
