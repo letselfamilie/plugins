@@ -38,7 +38,7 @@ class Categories_List extends WP_List_Table {
 
         global $wpdb;
 
-        $sql = "SELECT * FROM categories";
+        $sql = "SELECT * FROM {$wpdb->prefix}f_categories";
 
         if ( ! empty( $_REQUEST['orderby'] ) ) {
             $sql .= ' ORDER BY ' . esc_sql( $_REQUEST['orderby'] );
