@@ -14,6 +14,17 @@ window.addEventListener('resize', () => {
 
 
 $(function () {
+    let conn = new WebSocket('ws://178.128.202.94:8000');
+    conn.onopen = function(e) {
+        console.log("Connection established!");
+        conn.send('Hiiii');
+    };
+
+    conn.onmessage = function(e) {
+        console.log(e.data);
+    };
+
+
     console.log('HELLO!');
 
     $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
