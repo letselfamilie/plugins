@@ -6,6 +6,7 @@ Description: The chat plugin
 Version: 1.0.0
 Author: San Nguyen
 Author URI: https://github.com/mrsn5
+Heheh
 */
 
 require_once ( __DIR__ . '/Backend/ajax_handlers/forum/category.php');
@@ -144,6 +145,19 @@ function forum_db_tables() {
 }
 
 
+
+function add_category_admin_bar()
+{
+    global $wp_admin_bar;
+    $wp_admin_bar->add_menu(array(
+        'parent' => 'new-content', // use 'false' for a root menu, or pass the ID of the parent menu
+        'id' => 'add_forum_category', // link ID, defaults to a sanitized title value
+        'title' => __('Forum category'), // link title
+        'href' => get_site_url() . "/wp-admin/admin.php?page=sn_categories_add"
+    ));
+}
+
+add_action( 'wp_before_admin_bar_render', 'add_category_admin_bar' );
 
 
 
