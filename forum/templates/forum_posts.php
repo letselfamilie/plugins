@@ -83,6 +83,8 @@ define("PATH", plugins_url('..' , __FILE__));
         $current_user = wp_get_current_user();
         if(is_user_logged_in()) { ?>
 
+
+        <tfoot>
         <tr class="post-enter">
             <td class="user-info">
 
@@ -97,6 +99,7 @@ define("PATH", plugins_url('..' , __FILE__));
                     }
                     ?></a>
             </td>
+
             <td class="post-text-enter">
                 <div class="content-enter">
                     <div class="respond-info" style="display:none">
@@ -117,7 +120,9 @@ define("PATH", plugins_url('..' , __FILE__));
                 </div>
             </td>
         </tr>
+        </tfoot>
         <?php } ?>
+
     </table>
 
 
