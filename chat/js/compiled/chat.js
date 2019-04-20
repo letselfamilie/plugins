@@ -15,10 +15,17 @@ window.addEventListener('resize', () => {
 
 
 $(function () {
-    let conn = new WebSocket('ws://178.128.202.94:8000');
+    //simple test
+    let conn = new WebSocket('ws://178.128.202.94:8000/?userId='+user_object.id);
     conn.onopen = function(e) {
         console.log("Connection established!");
-        conn.send('Hiiii');
+        console.log(e);
+        conn.send(JSON.stringify({
+            user_id_from:user_object.id,
+            command:'message',
+            dialog_id:1,
+            message: 'hello how are you'
+        }));
     };
 
     conn.onmessage = function(e) {
