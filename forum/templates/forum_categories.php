@@ -52,7 +52,7 @@ define("PATH", plugins_url('..' , __FILE__));
         <?php
         global $wbdb;
 
-        for($i = 2; $i <= ceil($wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}f_categories;") / 5.0); $i++) { ?>
+        for($i = 2; $i <= ceil($wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}f_categories;") / 5.0) ; $i++) { ?>
             <a href="#"><?php $i ?></a>
         <?php } ?>
         <a href="#">&raquo;</a>
