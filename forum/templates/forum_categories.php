@@ -47,14 +47,15 @@ define("PATH", plugins_url('..' , __FILE__));
     </table>
 
     <div class="pagination">
-        <a href="#">&laquo;</a>
-        <a href="#">1</a>
-        <a href="#" class="active">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">6</a>
-        <a href="#">&raquo;</a>
+        <a href="#" class='back-arrow'>&laquo;</a>
+        <a href="#" class="num active">1</a>
+        <?php
+        global $wbdb;
+
+        for($i = 2; $i <= ceil($wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}f_categories;") / 5.0) ; $i++) {
+            echo "<a class='num' href='#'>$i</a>";
+         } ?>
+        <a href="#" class='forward-arrow'>&raquo;</a>
     </div>
 </div>
 
