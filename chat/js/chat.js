@@ -19,12 +19,12 @@ $(function () {
     conn.onopen = function(e) {
         console.log("Connection established!");
         console.log(e);
-        conn.send(JSON.stringify({
-            user_id_from:user_object.id,
-            command:'message',
-            dialog_id:1,
-            message: 'hello how are you'
-        }));
+        // conn.send(JSON.stringify({
+        //     user_id_from:user_object.id,
+        //     command:'message',
+        //     dialog_id:1,
+        //     message: 'hello how are you'
+        // }));
     };
 
     conn.onmessage = function(e) {
