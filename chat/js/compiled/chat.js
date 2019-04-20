@@ -21,16 +21,107 @@ $(function () {
         console.log("Connection established!");
         console.log(e);
 
-        $('#send-message-butt').on('click', function () {
+
+        $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+
+        setTimeout(function() {
+            var new_messages_banner = $(".mes-break")[0];
+            new_messages_banner.parentNode.removeChild(new_messages_banner);
+            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+        }, 5000);
+
+        $('.submit').click(function() {
+            newMessage();
+        });
+
+        $(window).on('keydown', function (e) {
+            if (e.which == 13) {
+                newMessage();
+                return false;
+            }
+        });
+
+        $('#convOptions').click()
+
+        function newMessage() {
+            var messageInput = $(".message-input input");
+
+            message = messageInput.val();
+
+            if($.trim(message) == '') {
+                return false;
+            }
+
+            var today = new Date();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+            var html_message = '<li class="sent">' +
+                '<img src="' + url_object.plugin_directory +'/images/logo.png" alt="" />' +
+                '<p>' + message + '<br/>' +
+                '<small class="float-right mt-2">' + time + '</small>' +
+                '</p></li>';
+
+            $(html_message).appendTo($('.messages ul'));
+
+            messageInput.val(null);
+
+            $('.conversation.active .preview').html('<span>You: </span>' + message);
+
+            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+        }$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+
+        setTimeout(function() {
+            var new_messages_banner = $(".mes-break")[0];
+            new_messages_banner.parentNode.removeChild(new_messages_banner);
+            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+        }, 5000);
+
+        $('.submit').click(function() {
+            newMessage();
+        });
+
+        $(window).on('keydown', function (e) {
+            if (e.which == 13) {
+                newMessage();
+                return false;
+            }
+        });
+
+        $('#convOptions').click()
+
+        function newMessage() {
+            var messageInput = $(".message-input input");
+
+            message = messageInput.val();
+
+            if($.trim(message) == '') {
+                return false;
+            }
+
             conn.send(JSON.stringify({
                 user_id_from:user_object.id,
                 command:'message',
                 dialog_id: 1,
-                message: $('#message-input').val()
+                message: message
             }));
 
-            $('#message-input').val('');
-        });
+            var today = new Date();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+            var html_message = '<li class="sent">' +
+                '<img src="' + url_object.plugin_directory +'/images/logo.png" alt="" />' +
+                '<p>' + message + '<br/>' +
+                '<small class="float-right mt-2">' + time + '</small>' +
+                '</p></li>';
+
+            $(html_message).appendTo($('.messages ul'));
+
+            messageInput.val(null);
+
+            $('.conversation.active .preview').html('<span>You: </span>' + message);
+
+            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+        }
 
     };
 
@@ -39,54 +130,6 @@ $(function () {
     };
 
 
-    console.log('HELLO!');
 
-    $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-
-    setTimeout(function() {
-        var new_messages_banner = $(".mes-break")[0];
-        new_messages_banner.parentNode.removeChild(new_messages_banner);
-        $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-    }, 5000);
-
-    $('.submit').click(function() {
-        newMessage();
-    });
-
-    $(window).on('keydown', function (e) {
-        if (e.which == 13) {
-            newMessage();
-            return false;
-        }
-    });
-
-    $('#convOptions').click()
-
-    function newMessage() {
-        var messageInput = $(".message-input input");
-
-        message = messageInput.val();
-
-        if($.trim(message) == '') {
-            return false;
-        }
-
-        var today = new Date();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-
-        var html_message = '<li class="sent">' +
-            '<img src="' + url_object.plugin_directory +'/images/logo.png" alt="" />' +
-            '<p>' + message + '<br/>' +
-            '<small class="float-right mt-2">' + time + '</small>' +
-            '</p></li>';
-
-        $(html_message).appendTo($('.messages ul'));
-
-        messageInput.val(null);
-
-        $('.conversation.active .preview').html('<span>You: </span>' + message);
-
-        $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-    }
 });
 },{}]},{},[1]);
