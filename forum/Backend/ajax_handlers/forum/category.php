@@ -14,7 +14,8 @@ add_action('wp_ajax_nopriv_' . 'add_category', 'add_category');
 add_action('wp_ajax_' . 'get_forum_categories', 'get_forum_categories');
 add_action('wp_ajax_nopriv_' . 'get_forum_categories', 'get_forum_categories');
 
-
+add_action('wp_ajax_' . 'n_pages', 'n_pages');
+add_action('wp_ajax_nopriv_' . 'n_pages', 'n_pages');
 
 function add_category()
 {
@@ -90,5 +91,11 @@ function get_forum_categories()
         echo 'Exception:', $e->getMessage(), "\n";
         echo $sqlQuery1. "\n" . $sqlQuery2 . "\n". $sqlQuery3;
     }
+    die;
+}
+
+function n_pages() {
+    global $wpdb;
+    echo json_encode(ceil($wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}f_categories;") / $_POST['per_page']));
     die;
 }
