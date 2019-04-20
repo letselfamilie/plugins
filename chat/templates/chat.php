@@ -304,7 +304,7 @@ define("PATH", plugins_url('..' , __FILE__));
         <div class="message-input">
             <div class="wrap">
                 <input id="message-input" type="text" placeholder="Write your message..."/>
-                <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                <button id="send-message-butt" class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
             </div>
         </div>
     </div>
