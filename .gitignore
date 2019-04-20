@@ -8,3 +8,5 @@ js/compiled/
 
 /chat/vendor/
 /chat/composer.phar
+
+chat/config.php

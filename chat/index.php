@@ -64,4 +64,40 @@ function chat_scripts()
     }
 }
 
+register_activation_hook( __FILE__, 'chat_db_tables' );
+function chat_db_tables() {
+    global $wpdb;
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+    $charset_collate = $wpdb->get_charset_collate();
+
+    $sql1 = "CREATE TABLE ".$wpdb->prefix."c_dialogs (
+                dialog_id          mediumint unsigned NOT NULL AUTO_INCREMENT,
+                user1_id           bigint(20) unsigned NOT NULL,
+                user2_id           bigint(20) unsigned NULL,
+                employee_id        bigint(20) unsigned NULL,
+                is_employee_chat   bit(1) NOT NULL DEFAULT false,
+                dialog_topic       char(100) NULL,
+                PRIMARY KEY  (dialog_id),
+                FOREIGN KEY  (user1_id) REFERENCES ".$wpdb->prefix."users (ID) ON DELETE NO ACTION ON UPDATE NO ACTION,
+                FOREIGN KEY  (user2_id) REFERENCES ".$wpdb->prefix."users (ID) ON DELETE NO ACTION ON UPDATE NO ACTION,
+                FOREIGN KEY  (employee_id) REFERENCES ".$wpdb->prefix."users (ID) ON DELETE NO ACTION ON UPDATE NO ACTION
+            ) $charset_collate";
+    dbDelta( $sql1 );
+
+    global $wpdb;
+    $sql2 = "CREATE TABLE ".$wpdb->prefix."c_messages (
+                 message_id         mediumint unsigned NOT NULL AUTO_INCREMENT,
+                 user_from_id       bigint(20) unsigned NOT NULL,
+                 dialog_id          mediumint unsigned NOT NULL,
+                 is_read            bit(1) NOT NULL DEFAULT false,
+                 message_body       text NOT NULL,
+                 create_timestamp   timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                 PRIMARY KEY  (message_id),
+                 FOREIGN KEY  (dialog_id) REFERENCES ".$wpdb->prefix."c_dialogs (dialog_id) ON DELETE CASCADE ON UPDATE CASCADE,
+                 FOREIGN KEY  (user_from_id) REFERENCES ".$wpdb->prefix."users (ID) ON DELETE NO ACTION ON UPDATE NO ACTION
+            ) $charset_collate";
+    dbDelta( $sql2 );
+}
+
 add_action('wp_enqueue_scripts', 'chat_scripts');
