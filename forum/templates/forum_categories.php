@@ -44,7 +44,7 @@ define("PATH", plugins_url('..' , __FILE__));
         <tbody id="categories_list">
 
         </tbody>
-    </table>
+    </table>t
 
     <div class="pagination">
         <a href="#" class='back-arrow'>&laquo;</a>
