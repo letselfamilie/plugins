@@ -46,6 +46,13 @@ $(function () {
         });
     }
 
+
+
+    $('.pagination').find('a').on('click', function () {
+        $('.pagination').find('.active').removeClass('active');
+        $(this).addClass('active');
+    });
+
     document.addEventListener("touchstart", function(){}, true);
 });
 },{"ejs":3}],2:[function(require,module,exports){
