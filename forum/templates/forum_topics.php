@@ -14,6 +14,7 @@ define("PATH", plugins_url('..' , __FILE__));
 
     <link rel="stylesheet/less" type="text/css" href="<?php echo PATH?>/less/topics.less" />
     <link rel="stylesheet/less" type="text/css" href="<?php echo PATH?>/less/loading.less" />
+    <link rel="stylesheet/less" type="text/css" href="<?php echo PATH?>/less/pagination.less" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
 
 
@@ -77,6 +78,16 @@ define("PATH", plugins_url('..' , __FILE__));
         </tbody>
     </table>
 
+    <div class="pagination">
+        <a href="#">&laquo;</a>
+        <a href="#">1</a>
+        <a href="#" class="active">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#">6</a>
+        <a href="#">&raquo;</a>
+    </div>
 </div>
 
 <div id="add-panel" style="display: none">

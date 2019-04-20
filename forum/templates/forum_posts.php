@@ -12,6 +12,7 @@ define("PATH", plugins_url('..' , __FILE__));
 
     <link rel="stylesheet/less" type="text/css" href="<?php echo PATH?>/less/posts.less" />
     <link rel="stylesheet/less" type="text/css" href="<?php echo PATH?>/less/loading.less" />
+    <link rel="stylesheet/less" type="text/css" href="<?php echo PATH?>/less/pagination.less" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
