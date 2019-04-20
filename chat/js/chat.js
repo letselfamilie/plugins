@@ -63,11 +63,11 @@ $(function () {
             $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
         }$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
 
-        setTimeout(function() {
-            var new_messages_banner = $(".mes-break")[0];
-            new_messages_banner.parentNode.removeChild(new_messages_banner);
-            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-        }, 5000);
+        // setTimeout(function() {
+        //     var new_messages_banner = $(".mes-break")[0];
+        //     new_messages_banner.parentNode.removeChild(new_messages_banner);
+        //     $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+        // }, 5000);
 
         $('.submit').click(function() {
             newMessage();
