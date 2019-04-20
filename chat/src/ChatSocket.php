@@ -195,7 +195,7 @@ class ChatSocket implements MessageComponentInterface
         );
 
         $clients = $this->findRoomClients($roomId);
-        $this->sendDataToClients($clients, $dataPacket);
+        $this->sendDataToClients($clientFromId, $clients, $dataPacket);
 
         $this->saveMessageInDB($clientFromId, $roomId, $message);
     }
@@ -252,28 +252,30 @@ class ChatSocket implements MessageComponentInterface
 
         $dbconn = DBHelper::connect();
 
-        $sqlQuery = "SELECT COALESCE(user2_id, employee_id) AS user_id
+        $sqlQuery = "SELECT user1_id, COALESCE(user2_id, employee_id) AS user2_id
                      FROM wp_c_dialogs
                      WHERE dialog_id = ".$roomId.";";
 
         $users = array();
         try {
             foreach ($dbconn->query($sqlQuery, \PDO::FETCH_ASSOC) as $user){
-                echo "USER ".$user['user_id'];
-                $users[] = $user['user_id'];
+                echo "USER ".$user['user_id'].'\n';
+                $users[] = $user['user1_id'];
+                $users[] = $user['user2_id'];
             }
         } catch (\Exception $e) {
             echo "Error occured: ".$e." \n";
             DBHelper::disconnect();
         }
         DBHelper::disconnect();
+
         return $users;
     }
 
-    function sendDataToClients(array $clients, array $packet)
+    function sendDataToClients($clientFromId, array $clients, array $packet)
     {
         foreach ($clients AS $client) {
-            if(array_key_exists($client, $this->users_id)) {
+            if(array_key_exists($client, $this->users_id) && $client != $clientFromId) {
                 echo $client;
                 $conn = $this->users[$this->users_id[$client]];
                 $this->sendData($conn, $packet);
