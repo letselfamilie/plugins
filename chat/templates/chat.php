@@ -23,9 +23,7 @@ define("PATH", plugins_url('..' , __FILE__));
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
     <link rel='stylesheet prefetch'
           href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
-
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
-
     <?php wp_head(); ?>
 
     <style>
@@ -75,8 +73,8 @@ define("PATH", plugins_url('..' , __FILE__));
 
         .messages::-webkit-scrollbar, #conversations::-webkit-scrollbar
         {
-            width: 8px !important;  /* for vertical scrollbars */
-            height: 8px !important; /* for horizontal scrollbars */
+            width: 12px !important;  /* for vertical scrollbars */
+            height: 12px !important; /* for horizontal scrollbars */
         }
 
         .messages::-webkit-scrollbar-track, #conversations::-webkit-scrollbar-track
@@ -86,12 +84,12 @@ define("PATH", plugins_url('..' , __FILE__));
 
         .messages::-webkit-scrollbar-thumb
         {
-            background: rgba(15, 97, 185, 0.41) !important;
+            background: #0f61b9 !important;
         }
 
         #conversations::-webkit-scrollbar-thumb
         {
-            background: rgba(15, 97, 185, 0.41) !important;
+            background: #0c76cf !important;
         }
     </style>
 
@@ -306,7 +304,7 @@ define("PATH", plugins_url('..' , __FILE__));
         <div class="message-input">
             <div class="wrap">
                 <input id="message-input" type="text" placeholder="Write your message..."/>
-                <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                <button id="send-message-butt" class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
             </div>
         </div>
     </div>

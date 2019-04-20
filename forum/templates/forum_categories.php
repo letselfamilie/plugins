@@ -48,7 +48,7 @@ define("PATH", plugins_url('..' , __FILE__));
 
     <div class="pagination">
         <a href="#" class='back-arrow'>&laquo;</a>
-        <a href="#" class="num active">1</a>
+        <a href="#" class="active">1</a>
         <?php
         global $wbdb;
 
