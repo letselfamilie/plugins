@@ -132,6 +132,18 @@ define("PATH", plugins_url('..' , __FILE__));
     <?php if(!is_user_logged_in()) {
         echo '<span class="please-login">To add new post please log in.</span>';
     } ?>
+
+    <div class="pagination">
+        <a href="#">&laquo;</a>
+        <a href="#">1</a>
+        <a href="#" class="active">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#">6</a>
+        <a href="#">&raquo;</a>
+    </div>
+
 </div>
 
 <div id='loader' class="center lds-css ng-scope">
