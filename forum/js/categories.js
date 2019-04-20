@@ -47,9 +47,25 @@ $(function () {
 
 
 
-    $('.pagination').find('a').on('click', function () {
+    var current_page = 1;
+
+    $('.pagination').find('.num').on('click', function () {
         $('.pagination').find('.active').removeClass('active');
         $(this).addClass('active');
+    });
+
+    $('.pagination').find('.back-arrow').on('click', function () {
+        $('.pagination').find('.active').removeClass('active');
+        current_page -= 1;
+        let nth = current_page + 1;
+        $("pagination:nth-child(" + nth + ")").addClass('active');
+    });
+
+    $('.pagination').find('.forward-arrow').on('click', function () {
+        $('.pagination').find('.active').removeClass('active');
+        current_page += 1;
+        let nth = current_page + 1;
+        $("pagination:nth-child(" + nth + ")").addClass('active');
     });
 
     document.addEventListener("touchstart", function(){}, true);
