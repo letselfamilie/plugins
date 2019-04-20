@@ -1,5 +1,5 @@
 /**
- * Created by Polina Mahur on 26.03.2019.
+ * Created by Polina Mahur on 26.03.2019. .
  */
 
 module.exports = function(grunt) {
