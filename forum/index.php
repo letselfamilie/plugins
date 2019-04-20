@@ -134,6 +134,7 @@ function forum_db_tables() {
                  user_id  bigint(20) unsigned NOT NULL ,
                  topic_id mediumint unsigned NOT NULL ,
                 PRIMARY KEY  (user_id, topic_id),
+                FOREIGN KEY  (topic_id) REFERENCES ".$wpdb->prefix."f_topics (topic_id) ON DELETE CASCADE ON UPDATE CASCADE ,
                 FOREIGN KEY  (user_id) REFERENCES ".$wpdb->prefix."users (ID) ON DELETE CASCADE ON UPDATE CASCADE
             ) $charset_collate";
     dbDelta( $sql4 );
@@ -143,6 +144,7 @@ function forum_db_tables() {
                  post_id int unsigned NOT NULL ,
                  user_id bigint(20) unsigned NOT NULL ,
                 PRIMARY KEY  (post_id, user_id),
+                FOREIGN KEY  (post_id) REFERENCES ".$wpdb->prefix."f_posts (post_id) ON DELETE CASCADE ON UPDATE CASCADE ,
                 FOREIGN KEY  (user_id) REFERENCES ".$wpdb->prefix."users (ID) ON DELETE CASCADE ON UPDATE CASCADE
             ) $charset_collate";
     dbDelta( $sql5 );
