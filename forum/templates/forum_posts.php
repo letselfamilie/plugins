@@ -51,6 +51,11 @@ define("PATH", plugins_url('..' , __FILE__));
         .content-enter {
             position: relative;
         }
+
+        tfoot tr {
+            position: absolute;
+        }
+
     </style>
 
     <div class="info">
