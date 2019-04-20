@@ -25,7 +25,7 @@ define("PATH", plugins_url('..' , __FILE__));
 <?php wp_head(); ?>
 
 <div class="container container-blured blur">
-
+shjasgdhjagsdjhsg
     <style>
         h1, h2, h3, h4, h5, h6 {
             text-transform: none !important;
