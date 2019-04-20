@@ -123,7 +123,9 @@ function forum_db_tables() {
                  post_message     text NOT NULL ,
                  is_anonym        bit(1) NOT NULL ,
                  create_timestamp timestamp NOT NULL ,
-                PRIMARY KEY  (post_id)
+                PRIMARY KEY  (post_id),
+                FOREIGN KEY  (topic_id) REFERENCES ".$wpdb->prefix."f_topics (topic_id) ON DELETE CASCADE ON UPDATE CASCADE ,
+                FOREIGN KEY  (user_id) REFERENCES ".$wpdb->prefix."users (ID) ON DELETE NO ACTION ON UPDATE NO ACTION
             ) $charset_collate";
     dbDelta( $sql3 );
 
@@ -131,7 +133,8 @@ function forum_db_tables() {
     $sql4 = "CREATE TABLE ".$wpdb->prefix."f_favorites (
                  user_id  bigint(20) unsigned NOT NULL ,
                  topic_id mediumint unsigned NOT NULL ,
-                PRIMARY KEY  (user_id, topic_id)
+                PRIMARY KEY  (user_id, topic_id),
+                FOREIGN KEY  (user_id) REFERENCES ".$wpdb->prefix."users (ID) ON DELETE CASCADE ON UPDATE CASCADE
             ) $charset_collate";
     dbDelta( $sql4 );
 
@@ -139,7 +142,8 @@ function forum_db_tables() {
     $sql5 = "CREATE TABLE ".$wpdb->prefix."f_likes (
                  post_id int unsigned NOT NULL ,
                  user_id bigint(20) unsigned NOT NULL ,
-                PRIMARY KEY  (post_id, user_id)
+                PRIMARY KEY  (post_id, user_id),
+                FOREIGN KEY  (user_id) REFERENCES ".$wpdb->prefix."users (ID) ON DELETE CASCADE ON UPDATE CASCADE
             ) $charset_collate";
     dbDelta( $sql5 );
 }
