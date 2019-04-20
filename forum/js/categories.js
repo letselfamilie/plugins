@@ -18,6 +18,8 @@ $(function () {
             type: 'POST',
             data: {
                 action: 'get_forum_categories',
+                page_number: 1,
+                per_page: 5
             },
 
             success: function (res) {
