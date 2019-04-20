@@ -58,6 +58,7 @@ define("PATH", plugins_url('..' , __FILE__));
     </style>
 
     <div class="info">
+        asad
         <a class="back"><img class="back" src="<?php echo PATH?>/images/left.svg"></a>
         <h2 id="topic_name"></h2>
         <span id="topic_date"></span>
