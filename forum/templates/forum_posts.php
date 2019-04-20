@@ -51,9 +51,7 @@ define("PATH", plugins_url('..' , __FILE__));
             position: relative;
         }
 
-        tfoot tr {
-            position: absolute;
-        }
+
 
     </style>
 
