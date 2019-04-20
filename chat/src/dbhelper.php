@@ -9,7 +9,7 @@
 namespace MyApp;
 
 //path to configuration file
-//on localhost will be different, change it to your local configuration file path
+//on localhost will be different, change it to your local configuration path
 require_once ('/var/webconfig/config.php');
 
 class DBHelper {
