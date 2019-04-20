@@ -170,7 +170,7 @@ class ChatSocket implements MessageComponentInterface
 
         $clients = $this->findRoomClients($roomId);
 //        unset($clients[$client->getResourceId()]);
-        $this->sendDataToClients($clients, $dataResponse);
+        $this->sendDataToClients($userFromId, $clients, $dataResponse);
     }
 
     function sendUserStoppedTypingMessage($userFromId, $roomId)
@@ -183,7 +183,7 @@ class ChatSocket implements MessageComponentInterface
 
         $clients = $this->findRoomClients($roomId);
 //        unset($clients[$client->getResourceId()]);
-        $this->sendDataToClients($clients, $dataPacket);
+        $this->sendDataToClients($userFromId, $clients, $dataPacket);
     }
 
     function sendMessage($clientFromId, $roomId, $message)
@@ -252,7 +252,7 @@ class ChatSocket implements MessageComponentInterface
 
         $dbconn = DBHelper::connect();
 
-        $sqlQuery = "SELECT user1_id, COALESCE(user2_id, employee_id) AS user2_id
+        $sqlQuery = "SELECT user1_id, COALESCE(user2_id, employee_id) AS user_id
                      FROM wp_c_dialogs
                      WHERE dialog_id = ".$roomId.";";
 
@@ -261,7 +261,7 @@ class ChatSocket implements MessageComponentInterface
             foreach ($dbconn->query($sqlQuery, \PDO::FETCH_ASSOC) as $user){
                 echo "USER ".$user['user_id'].'\n';
                 $users[] = $user['user1_id'];
-                $users[] = $user['user2_id'];
+                $users[] = $user['user_id'];
             }
         } catch (\Exception $e) {
             echo "Error occured: ".$e." \n";
