@@ -49,7 +49,7 @@ function chat_scripts()
 {
     if (is_page('chat')) {
 
-        wp_register_script('chat-js', plugins_url('js/chat.js', __FILE__), array('jquery'), date("h:i:s"), true);
+        wp_register_script('chat-js', plugins_url('js/compiled/chat.js', __FILE__), array('jquery'), date("h:i:s"), true);
         wp_register_style('chat-css', plugins_url('less/chat.less', __FILE__), '', date("h:i:s"), 'screen');
 
         wp_enqueue_script('chat-js');

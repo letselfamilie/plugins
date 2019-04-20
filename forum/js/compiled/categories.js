@@ -4,7 +4,7 @@ let $ = jQuery;
 
 let ejs = require('ejs');
 
-let category_templ = ejs.compile("<tr class=\"categories-row\">\r\n    <td class=\"cat-name\"><a href=\"<%= url%>/topics/?cat_name=<%= encodeURI(category.cat_name)%>\"><%= category.cat_name%></a></td>\r\n    <td class=\"onderwerpen\"><%= category.topics_num%></td>\r\n    <td class=\"berichten\"><%= category.posts_num%></td>\r\n    <td class=\"last-post\">\r\n        <% if (category.last_topic_id != null) { %>\r\n        <a href=\"<%= url%>/posts/?topic_id=<%= encodeURI(category.last_topic_id)%>\">in <%= category.last_topic_name%> at <%= category.last_post_time%></a>\r\n        <% } else { %>\r\n        -\r\n        <% } %>\r\n    </td>\r\n</tr>");
+let category_templ = ejs.compile("<tr class=\"categories-row\">\n    <td class=\"cat-name\"><a href=\"<%= url%>/topics/?cat_name=<%= encodeURI(category.cat_name)%>\"><%= category.cat_name%></a></td>\n    <td class=\"onderwerpen\"><%= category.topics_num%></td>\n    <td class=\"berichten\"><%= category.posts_num%></td>\n    <td class=\"last-post\">\n        <% if (category.last_topic_id != null) { %>\n        <a href=\"<%= url%>/posts/?topic_id=<%= encodeURI(category.last_topic_id)%>\">in <%= category.last_topic_name%> at <%= category.last_post_time%></a>\n        <% } else { %>\n        -\n        <% } %>\n    </td>\n</tr>");
 
 $(function () {
     let $category_table = $("#categories_list");
@@ -1160,7 +1160,7 @@ module.exports={
   "_args": [
     [
       "ejs@2.6.1",
-      "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins"
+      "/Users/sannguyen/Developer/WebStorm/LetselFamilie"
     ]
   ],
   "_from": "ejs@2.6.1",
@@ -1184,7 +1184,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/ejs/-/ejs-2.6.1.tgz",
   "_spec": "2.6.1",
-  "_where": "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins",
+  "_where": "/Users/sannguyen/Developer/WebStorm/LetselFamilie",
   "author": {
     "name": "Matthew Eernisse",
     "email": "mde@fleegix.org",
