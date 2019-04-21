@@ -12,7 +12,8 @@
  * when open connection, url path should be ws://localhost:8000/?userId=1 (example)
  * (instead of localhost past path to your server and vise versa)
  *
- * to send message, query format should be
+ * to send message
+ * query format should be
  *
  * {
     user_id_from:user_object.id,
@@ -26,11 +27,29 @@
  *
  * {
     user_id_from:user_object.id,
+    command:'new_chat',
     dialog_type:'employee_chat' or 'user_chat',
     second_user:1,
     topic: 'natural disasters' (or null)
     }
  *
+ *
+ * to send user start typing event
+ *
+ * {
+ * user_id_from:user_object.id,
+ * command:'start_typing',
+ * dialog_id:1
+ * }
+ *
+ *
+ * to send user stop typing event
+ *
+ * {
+ *  user_id_from:user_object.id,
+ *  command:'stop_typing',
+ *  dialog_id:1
+ * }
  *
  *
 */
