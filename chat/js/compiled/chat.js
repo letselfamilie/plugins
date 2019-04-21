@@ -15,19 +15,6 @@ window.addEventListener('resize', () => {
 
 
 $(function () {
-    $.ajax({
-        url: url_object.ajax_url,
-        type: 'POST',
-        data: {
-            action: 'get_dialogs'
-        },
-        success: function (res) {
-            res = JSON.parse(res);
-            console.log(res);
-        },
-        error: function (error) {
-        }
-    });
     //simple test
     let conn = new WebSocket('ws://178.128.202.94:8000/?userId='+user_object.id);
     conn.onopen = function(e) {
