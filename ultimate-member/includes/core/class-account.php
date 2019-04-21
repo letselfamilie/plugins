@@ -600,7 +600,7 @@ if ( ! class_exists( 'um\core\Account' ) ) {
 
 				case 'general':
 
-					$args = 'user_login,first_name,last_name,user_email';
+					$args = 'user_login,first_name,last_name,user_email,country';
 
 					if ( ! UM()->options()->get( 'account_name' ) ) {
 						$args = 'user_login,user_email';
