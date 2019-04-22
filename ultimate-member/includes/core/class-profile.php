@@ -106,14 +106,14 @@ if ( ! class_exists( 'um\core\Profile' ) ) {
 			 * ?>
 			 */
 			$tabs = apply_filters( 'um_profile_tabs', array(
-				'main' => array(
-					'name' => __( 'About', 'ultimate-member' ),
-					'icon' => 'um-faicon-user'
-				),
-				'posts' => array(
-					'name' => __( 'Posts', 'ultimate-member' ),
-					'icon' => 'um-faicon-pencil'
-				)
+// 				'main' => array(
+// 					'name' => __( 'About', 'ultimate-member' ),
+// 					'icon' => 'um-faicon-user'
+//  				)
+// 				'posts' => array(
+// 					'name' => __( 'Posts', 'ultimate-member' ),
+// 					'icon' => 'um-faicon-pencil'
+// 				)
 // 				'comments' => array(
 // 					'name' => __( 'Comments', 'ultimate-member' ),
 // 					'icon' => 'um-faicon-comment'

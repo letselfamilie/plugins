@@ -784,6 +784,7 @@ function um_profile_header( $args ) {
              * }
              * ?>
              */
+	$curr_user = wp_get_current_user();
             do_action( 'um_before_profile_main_meta', $args ); ?>
 
 			<div class="um-main-meta">
@@ -817,6 +818,26 @@ function um_profile_header( $args ) {
 						do_action( 'um_after_profile_name_inline', $args ); ?>
 
 					</div>
+				<div class="user-name">
+					<?php 
+							$first_name =  get_user_meta(get_current_user_id(), 'first_name', true);
+							$last_name =  get_user_meta(get_current_user_id(), 'last_name', true);
+							$nickname =  get_user_meta(get_current_user_id(), 'nickname', true);
+							
+							if($first_name != '' && $last_name != ''){
+								echo $nickname;
+							}else{
+								echo $first_name.' '.$last_name;
+							}
+					?>
+				</div>
+				<div class="user-email">
+					<?php echo wp_get_current_user()->user_email ?>
+				</div>
+				<div class="user-country">
+					<?php echo get_user_meta(get_current_user_id(), 'country', true) ?>
+				</div>
+
 				<?php } ?>
 
 				<div class="um-clear"></div>
@@ -1075,8 +1096,8 @@ function um_add_edit_icon( $args ) {
 
 	} else {
 		$items = array(
-			'editprofile' => '<a href="' . um_edit_profile_url() . '" class="real_url">' . __( 'Edit Profile', 'ultimate-member' ) . '</a>',
-			'myaccount'   => '<a href="' . um_get_core_page( 'account' ) . '" class="real_url">' . __( 'My Account', 'ultimate-member' ) . '</a>',
+			'editprofile' => '<a href="' . um_get_core_page( 'account' ) . '" class="real_url">' . __( 'Edit Profile', 'ultimate-member' ) . '</a>',
+	//		'myaccount'   => '<a href="' . um_get_core_page( 'account' ) . '" class="real_url">' . __( 'My Account', 'ultimate-member' ) . '</a>',
 			'logout'      => '<a href="' . um_get_core_page( 'logout' ) . '" class="real_url">' . __( 'Logout', 'ultimate-member' ) . '</a>',
 			'cancel'      => '<a href="#" class="um-dropdown-hide">' . __( 'Cancel', 'ultimate-member' ) . '</a>',
 		);
@@ -1229,7 +1250,14 @@ add_action( 'um_after_profile_fields', 'um_add_submit_button_to_profile', 1000 )
  */
 add_filter('um_profile_tabs', 'add_custom_profile_tab', 1000 );
 function add_custom_profile_tab( $tabs ) {
-
+	
+	$tabs['mycustomtab2'] = array(
+		'name' => 'My topics',
+		'icon' => 'um-faicon-comment',
+		'custom' => true
+	);
+	
+	
 	$tabs['mycustomtab'] = array(
 		'name' => 'Favourite topics',
 		'icon' => 'um-icon-android-bookmark',
@@ -1237,14 +1265,57 @@ function add_custom_profile_tab( $tabs ) {
 	);
 		
 	return $tabs;
-		
 }
+
+
+add_action('um_profile_content_mycustomtab2_default', 'um_profile_content_mycustomtab2_default');
+function um_profile_content_mycustomtab2_default( $args ) {
+	$user_id = get_current_user_id();
+	global $wpdb;
+    $result = $wpdb->get_results("SELECT topic_id FROM {$wpdb->prefix}f_topics WHERE user_id='.$user_id.';");
+	
+	$column_name = 'topic_id';
+	$col_name_topic_name = 'topic_name';
+	$col_name_last_post_time = 'last_post_time';
+	$topics = array();
+	?>
+	<div class="topics-list-profile">
+	<?php
+	global $wpdb;
+	foreach ($result as $key => $topic_id){ ?>
+		<div class="topic-row-profile">
+			<?php
+			$topic_inf = $wpdb->get_results("SELECT *, (SELECT MAX({$wpdb->prefix}f_posts.create_timestamp)
+		                                                FROM {$wpdb->prefix}f_posts
+		                                WHERE {$wpdb->prefix}f_posts.topic_id = {$wpdb->prefix}f_topics.topic_id) AS last_post_time
+				                            FROM {$wpdb->prefix}f_topics 
+										    WHERE topic_id = '". $topic_id->$column_name."';")[0];
+			?>
+          <a href="<?php echo get_site_url().'/posts/?topic_id='.$topic_id->$column_name ?>" class="topic-url-profile">
+			  <?php echo $topic_inf->$col_name_topic_name;?>
+			  <span class="last-post-time-profile">
+				  <?php if($topic_inf->$col_name_last_post_time != null) { ?>
+				      last post at <?php echo $topic_inf->$col_name_last_post_time ?>
+				  <?php }else {	?>
+				  	  no posts in topic
+				  <?php } ?>
+			  </span>
+		  </a>
+		</div>
+	<?php 
+	}
+	?>
+	</div>
+	<?php
+}
+
+
 
 add_action('um_profile_content_mycustomtab_default', 'um_profile_content_mycustomtab_default');
 function um_profile_content_mycustomtab_default( $args ) {
 	$user_id = get_current_user_id();
 	global $wpdb;
-    $result = $wpdb->get_results('SELECT topic_id FROM favorites WHERE user_id='.$user_id.';');
+    $result = $wpdb->get_results("SELECT topic_id FROM {$wpdb->prefix}f_favorites WHERE user_id='.$user_id.';");
 	
 	$column_name = 'topic_id';
 	$col_name_topic_name = 'topic_name';
@@ -1256,15 +1327,21 @@ function um_profile_content_mycustomtab_default( $args ) {
 	foreach ($result as $key => $topic_id){ ?>
 		<div class="topic-row-profile">
 			<?php
-				$topic_inf = $wpdb->get_results('SELECT *, (SELECT DATE_FORMAT (MAX(create_timestamp), "%Y-%m-%d")
-		                                                    FROM posts
-		                                                    WHERE topic_id = topics.topic_id) AS last_post_time
-				                                 FROM topics 
-												 WHERE topic_id = '.$topic_id->$column_name.';')[0];
+				$topic_inf = $wpdb->get_results("SELECT *, (SELECT DATE_FORMAT (MAX(create_timestamp), '%Y-%m-%d')
+		                                                    FROM {$wpdb->prefix}f_posts
+		                                                    WHERE topic_id = {$wpdb->prefix}f_topics.topic_id) AS last_post_time
+				                                 FROM {$wpdb->prefix}f_topics 
+												 WHERE topic_id = '". $topic_id->$column_name."';")[0];
 			?>
           <a href="<?php echo get_site_url().'/posts/?topic_id='.$topic_id->$column_name ?>" class="topic-url-profile">
 			  <?php echo $topic_inf->$col_name_topic_name;?>
-			  <span class="last-post-time-profile">last post at <?php echo $topic_inf->$col_name_last_post_time ?></span>
+			  <span class="last-post-time-profile">
+				   <?php if($topic_inf->$col_name_last_post_time != null) { ?>
+				      last post at <?php echo $topic_inf->$col_name_last_post_time ?>
+				  <?php }else {	?>
+				  	  no posts in topic
+				  <?php } ?>
+			  </span>
 		  </a>
 		</div>
 	<?php 

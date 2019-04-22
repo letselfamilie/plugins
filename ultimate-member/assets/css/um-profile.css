@@ -613,6 +613,15 @@ font-weight: normal;
 	white-space: nowrap;
 }
 
+
+.current-user-info ul li{
+		list-style:none;
+}
+
+.um-name{
+	float:none!important;
+}
+
 @media only screen and (max-width:600px){
 
   .topic-row-profile { 
