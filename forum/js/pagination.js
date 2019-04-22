@@ -1,5 +1,7 @@
 module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, pagination_obj) {
 
+    max_page = (max_page > 0) ? max_page : 1;
+
     pagination_obj = {
         current_page: curr_page,
         pagina_from: 1,
