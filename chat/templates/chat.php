@@ -22,10 +22,11 @@ $consultant = false;
     <link rel="stylesheet/less" type="text/css" href="<?php echo PATH?>/less/chat.less" />
 
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,600,700,300' rel='stylesheet' type='text/css'>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
 
 
     <?php wp_head(); ?>
@@ -63,6 +64,14 @@ $consultant = false;
         }
         ol, ul {
             list-style: none;
+        }
+        blockquote, q {
+            quotes: none;
+        }
+        blockquote:before, blockquote:after,
+        q:before, q:after {
+            content: '';
+            content: none;
         }
         table {
             border-collapse: collapse;
@@ -356,6 +365,9 @@ $consultant = false;
 
 <?php //get_template_part( 'footer' ); ?>
 
+<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <?php wp_footer(); ?>
 
 </body>
