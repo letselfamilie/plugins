@@ -1,4 +1,4 @@
-#wpadminbar{
+#wpadminbar {
   display: none;
 }
 
@@ -29,7 +29,7 @@ select:focus {
 }
 
 input:focus {
-   outline: none;
+  outline: none;
 }
 
 textarea:focus {
@@ -210,6 +210,7 @@ textarea:focus {
     overflow-y: scroll;
     overflow-x: hidden;
   }
+
   #chat-frame #sidepanel #conversations::-webkit-scrollbar {
     display: none;
   }
@@ -403,53 +404,57 @@ textarea:focus {
   }
 }
 
-#chat-frame .content .new-convo .new-convo-header {
-  width: 100%;
-  background:  #0c4c92;
-  color: #fff;
-  font-size: 1em;
-  padding: 12px 20px;
-  height: 40px;
-}
+.new-convo {
+  display: none;
 
-#chat-frame .content .new-convo form {
-  padding: 12px 20px;
-}
+  .new-convo-header {
+    width: 100%;
+    background: #0c4c92;
+    color: #fff;
+    font-size: 1em;
+    padding: 12px 20px;
+    height: 40px;
+  }
 
-#chat-frame .content .new-convo form div label {
-  font-size: 0.9rem;
-  padding-left: 5px;
-  margin-bottom: 5px;
-}
+  form {
+    padding: 12px 20px;
+  }
 
-#chat-frame .content .new-convo form div input {
-  font-size: 0.9rem;
-  height: 30px;
-  font-family: "Roboto", sans-serif;
-}
+  form div label {
+    font-size: 0.9rem;
+    padding-left: 5px;
+    margin-bottom: 5px;
+  }
 
-#chat-frame .content .new-convo form div textarea {
-  font-size: 0.9rem;
-  line-height: 25px;
-  font-family: "Roboto", sans-serif;
-  resize: none;
-}
+  form div input {
+    font-size: 0.9rem;
+    height: 30px;
+    font-family: "Roboto", sans-serif;
+  }
 
-#chat-frame .content .new-convo form button {
-  height: 30px;
-  width: 100%;
-  padding-top: 4px;
-  border-radius: 4px;
-  border: none;
-  background: #0f61b9;
-  color: #f5f5f5;
-  cursor: pointer;
-  font-size: 0.9em;
-  font-family: "Roboto", sans-serif;
-}
+  form div textarea {
+    font-size: 0.9rem;
+    line-height: 25px;
+    font-family: "Roboto", sans-serif;
+    resize: none;
+  }
 
-#chat-frame .content .new-convo form button:hover {
-  background: #0E56A4;
+  form button {
+    height: 30px;
+    width: 100%;
+    padding-top: 4px;
+    border-radius: 4px;
+    border: none;
+    background: #0f61b9;
+    color: #f5f5f5;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-family: "Roboto", sans-serif;
+  }
+
+  form button:hover {
+    background: #0E56A4;
+  }
 }
 
 #chat-frame .content-chat .contact-profile {
@@ -687,25 +692,23 @@ img {
 
 // Scrollbar
 
-::-webkit-scrollbar
-{
-  width: 12px !important;  /* for vertical scrollbars */
+::-webkit-scrollbar {
+  width: 12px !important; /* for vertical scrollbars */
   height: 12px !important; /* for horizontal scrollbars */
 }
 
-::-webkit-scrollbar-track
-{
+::-webkit-scrollbar-track {
   background: rgba(15, 97, 185, 0.1) !important;
 }
 
-::-webkit-scrollbar-thumb
-{
+::-webkit-scrollbar-thumb {
   background: #0f61b9 !important;
 }
 
 
 ul {
   padding-inline-start: 40px;
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
+
