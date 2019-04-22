@@ -24,12 +24,6 @@ $(function () {
 
         $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
 
-        setTimeout(function() {
-            var new_messages_banner = $(".mes-break")[0];
-            new_messages_banner.parentNode.removeChild(new_messages_banner);
-            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-        }, 5000);
-
         $('.submit').click(function() {
             newMessage();
         });
@@ -41,9 +35,7 @@ $(function () {
             }
         });
 
-        $('#convOptions').click()
-
-        function newMessage() {
+        /*function newMessage() {
             var messageInput = $(".message-input input");
 
             message = messageInput.val();
@@ -68,26 +60,31 @@ $(function () {
             $('.conversation.active .preview').html('<span>You: </span>' + message);
 
             $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-        }$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+        }*/
 
-        setTimeout(function() {
-            var new_messages_banner = $(".mes-break")[0];
-            new_messages_banner.parentNode.removeChild(new_messages_banner);
-            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-        }, 5000);
+        // setTimeout(function() {
+        //     var new_messages_banner = $(".mes-break")[0];
+        //     new_messages_banner.parentNode.removeChild(new_messages_banner);
+        //     $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+        // }, 5000);
 
-        $('.submit').click(function() {
-            newMessage();
+        $("#resolve-btn").click(function () {
+            var badge = '<span class="badge badge-resolved ml-2">Resolved</span>';
+            $(badge).appendTo($("#chat-title"));
+
+            badge = '<span class="badge badge-resolved ml-2">R</span>';
+            $(badge).appendTo($(".conversation.active .wrap .meta .name"));
+
+            newBanner("This problem has been resolved");
         });
 
-        $(window).on('keydown', function (e) {
-            if (e.which == 13) {
-                newMessage();
-                return false;
-            }
-        });
+        $("#btn-newmessage").click(function () {
+            $(".contact-profile").css('display', 'none');
+            $(".messages").css('display', 'none');
+            $(".message-input").css('display', 'none');
 
-        $('#convOptions').click()
+            $(".new-convo").css('display', 'block');
+        });
 
         function newMessage() {
             var messageInput = $(".message-input input");
@@ -123,6 +120,13 @@ $(function () {
             $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
         }
 
+        function newBanner(message) {
+            var html_banner = '<li class="mes-break">' +
+                '<p>' + message + '</p></li>';
+
+            $(html_banner).appendTo($('.messages ul'));
+        }
+
     };
 
     conn.onmessage = function(e) {
@@ -130,6 +134,11 @@ $(function () {
     };
 
 
+    setTimeout(function() {
+        var new_messages_banner = $(".mes-break")[0];
+        new_messages_banner.parentNode.removeChild(new_messages_banner);
+        $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+    }, 5000);
 
 });
 },{}]},{},[1]);

@@ -1216,7 +1216,7 @@ module.exports={
   "_args": [
     [
       "ejs@2.6.1",
-      "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins"
+      "/Users/sannguyen/Developer/WebStorm/LetselFamilie"
     ]
   ],
   "_from": "ejs@2.6.1",
@@ -1240,7 +1240,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/ejs/-/ejs-2.6.1.tgz",
   "_spec": "2.6.1",
-  "_where": "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins",
+  "_where": "/Users/sannguyen/Developer/WebStorm/LetselFamilie",
   "author": {
     "name": "Matthew Eernisse",
     "email": "mde@fleegix.org",
