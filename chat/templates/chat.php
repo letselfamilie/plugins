@@ -98,6 +98,10 @@ $consultant = false;
         {
             background: #0c76cf !important;
         }
+
+        .fa {
+            font-family: FontAwesome !important;
+        }
     </style>
 
 </head>
