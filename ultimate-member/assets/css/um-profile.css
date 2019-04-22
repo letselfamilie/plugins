@@ -622,6 +622,13 @@ font-weight: normal;
 	float:none!important;
 }
 
+.um-profile-photo-img:hover .um-profile-photo-overlay{
+	display:block;
+}
+
+
+
+
 @media only screen and (max-width:600px){
 
   .topic-row-profile { 

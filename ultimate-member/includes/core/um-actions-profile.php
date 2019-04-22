@@ -644,12 +644,14 @@ function um_profile_header( $args ) {
 
 	$default_size = str_replace( 'px', '', $args['photosize'] );
 
+
 	$overlay = '<span class="um-profile-photo-overlay">
 			<span class="um-profile-photo-overlay-s">
 				<ins>
 					<i class="um-faicon-camera"></i>
 				</ins>
 			</span>
+			
 		</span>';
 
 	?>
@@ -680,8 +682,7 @@ function um_profile_header( $args ) {
 
 		<div class="um-profile-photo" data-user_id="<?php echo um_profile_id(); ?>">
 
-			<a href="<?php echo um_user_profile_url(); ?>" class="um-profile-photo-img"
-			   title="<?php echo um_user( 'display_name' ); ?>"><?php echo $overlay . get_avatar( um_user( 'ID' ), $default_size ); ?></a>
+			<a href="#" class="um-profile-photo-img um-manual-trigger" data-parent=".um-profile-photo" data-child=".um-btn-auto-width"><?php echo $overlay . get_avatar( um_user( 'ID' ), $default_size ); ?></a>
 
 			<?php
 
@@ -689,12 +690,6 @@ function um_profile_header( $args ) {
 
 				UM()->fields()->add_hidden_field( 'profile_photo' );
 
-				if (!um_profile( 'profile_photo' )) { // has profile photo
-
-					$items = array(
-						'<a href="#" class="um-manual-trigger" data-parent=".um-profile-photo" data-child=".um-btn-auto-width">' . __( 'Upload photo', 'ultimate-member' ) . '</a>',
-						'<a href="#" class="um-dropdown-hide">' . __( 'Cancel', 'ultimate-member' ) . '</a>',
-					);
 
 					/**
 					 * UM hook
@@ -717,17 +712,7 @@ function um_profile_header( $args ) {
 					 * }
 					 * ?>
 					 */
-					$items = apply_filters( 'um_user_photo_menu_view', $items );
-
-					echo UM()->profile()->new_ui( 'bc', 'div.um-profile-photo', 'click', $items );
-
 				} else if (UM()->fields()->editing == true) {
-
-					$items = array(
-						'<a href="#" class="um-manual-trigger" data-parent=".um-profile-photo" data-child=".um-btn-auto-width">' . __( 'Change photo', 'ultimate-member' ) . '</a>',
-						'<a href="#" class="um-reset-profile-photo" data-user_id="' . um_profile_id() . '" data-default_src="' . um_get_default_avatar_uri() . '">' . __( 'Remove photo', 'ultimate-member' ) . '</a>',
-						'<a href="#" class="um-dropdown-hide">' . __( 'Cancel', 'ultimate-member' ) . '</a>',
-					);
 
 					/**
 					 * UM hook
@@ -750,11 +735,7 @@ function um_profile_header( $args ) {
 					 * }
 					 * ?>
 					 */
-					$items = apply_filters( 'um_user_photo_menu_edit', $items );
 
-					echo UM()->profile()->new_ui( 'bc', 'div.um-profile-photo', 'click', $items );
-
-				}
 
 			}
 
@@ -1066,7 +1047,7 @@ function um_add_edit_icon( $args ) {
 	} else {
 		$items = array(
 			'editprofile' => '<a href="' . um_get_core_page( 'account' ) . '" class="real_url">' . __( 'Edit Profile', 'ultimate-member' ) . '</a>',
-			'editphoto'   => '<a href="' . um_edit_profile_url() . '" class="real_url">' . __( 'Change Profile Photo', 'ultimate-member' ) . '</a>',
+//			'editphoto'   => '<a href="' . um_edit_profile_url() . '" class="real_url">' . __( 'Change Profile Photo', 'ultimate-member' ) . '</a>',
 			'logout'      => '<a href="' . um_get_core_page( 'logout' ) . '" class="real_url">' . __( 'Logout', 'ultimate-member' ) . '</a>',
 			'cancel'      => '<a href="#" class="um-dropdown-hide">' . __( 'Cancel', 'ultimate-member' ) . '</a>',
 		);
