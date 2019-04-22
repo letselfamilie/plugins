@@ -47,9 +47,13 @@ define("PATH", plugins_url('..' , __FILE__));
     </table>
 
     <div class="pagination">
-        <a href="#" class='back-arrow'>&laquo;</a>
-        <a href="#" class="num active">1</a>
-        <a href="#" class='forward-arrow'>&raquo;</a>
+        <a href="#" class='back-end-arrow'><i class="fa fa-angle-double-left"></i></a>
+        <a href="#" class='back-arrow'><i class="fa fa-angle-left"></i></a>
+        <a href="#" class='before-dots'>…</a>
+        <!-- pages -->
+        <a href="#" class='after-dots'>…</a>
+        <a href="#" class='forward-arrow'><i class="fa fa-angle-right"></i></i></a>
+        <a href="#" class='forward-end-arrow'><i class="fa fa-angle-double-right"></i></a>
     </div>
 </div>
 

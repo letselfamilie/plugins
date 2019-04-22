@@ -5,6 +5,8 @@ let ejs = require('ejs');
 
 let post_templ = ejs.compile(fs.readFileSync("./forum/js/ejs_templates/forum_post.ejs", "utf8"));
 
+let paginationInit = require('./pagination');
+
 function decodeUrl(){
     let search = location.search.substring(1);
     let url_params = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
@@ -21,14 +23,12 @@ $(function () {
             || navigator.msMaxTouchPoints > 0;
     }
 
-
-
     let url_params = decodeUrl();
     console.log(url_params);
 
     $('textarea').autoResize();
 
-    let topic_id = url_params != null ? url_params['topic_id'] : 1;
+    let topic_id = url_params != null ? url_params['topic_id'] : -1;
     let user_id = 1;
     let curr_user = null;
     var respond_to_id = null;
@@ -36,11 +36,38 @@ $(function () {
     var post_to_delete = null;
     var curr_category_url = null;
 
+    var pagination_obj = {current_page: 1};
+    var per_page = 20;
+
+    if (topic_id == -1) {
+        window.location.replace(url_object.site_url + "/categories");
+    }
+
     getInfAboutTopic();
     // loadMyInfo();
     setUpListeners();
-    loadPost();
 
+    loadPost(pagination_obj.current_page);
+
+    initPagination();
+    function initPagination() {
+        $.ajax({
+            url: url_object.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'n_posts_pages',
+                per_page: per_page,
+                topic_id: topic_id
+            },
+            success: function (res) {
+                max_page = res;
+                paginationInit(pagination_obj.current_page, max_page, 5, loadPost, pagination_obj);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
 
     $(".enter-butt").on("click", function (e) {
         var parent = e.target.parentElement;
@@ -64,7 +91,7 @@ $(function () {
                     textarea.val("");
                     $('.respond-info').css('display', 'none');
                     respond_to_id = null;
-                    loadPost();
+                    loadPost(pagination_obj.current_page);
                     setUpListeners();
                 },
                 error: function (error) {
@@ -119,7 +146,7 @@ $(function () {
         }
     }
 
-    function loadPost() {
+    function loadPost(page) {
         loader(true);
 
         posts_table.find(".post-row").remove();
@@ -130,7 +157,10 @@ $(function () {
             data: {
                 action: 'get_posts',
                 topic_id: topic_id,
-                user_id: user_id
+                user_id: user_id,
+                page_number: page,
+                per_page: per_page
+
             },
 
             success: function (res) {
@@ -353,7 +383,7 @@ $(function () {
                 console.log('deleted');
                 $('.container-blured').removeClass('blur');
                 $('#delete-post-panel').attr('style', 'display:none');
-                loadPost();
+                loadPost(pagination_obj.current_page);
             },
             error: function (error) {
                 console.log(error);

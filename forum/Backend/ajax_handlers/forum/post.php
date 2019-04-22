@@ -28,6 +28,9 @@ add_action('wp_ajax_nopriv_'.'delete_post', 'delete_post');
 add_action('wp_ajax_'.'update_post', 'update_post');
 add_action('wp_ajax_nopriv_'.'update_post', 'update_post');
 
+add_action('wp_ajax_'.'n_posts_pages', 'n_posts_pages');
+add_action('wp_ajax_nopriv_'.'n_posts_pages', 'n_posts_pages');
+
 //add new post
 function add_post(){
     global $wpdb;
@@ -86,8 +89,10 @@ function get_forum_posts(){
                           LIMIT 1) AS responded
                  FROM ({$wpdb->prefix}f_posts p INNER JOIN {$wpdb->prefix}users u ON p.user_id = u.ID) 
                                LEFT OUTER JOIN {$wpdb->prefix}f_posts p2 ON p.response_to = p2.post_id
-                 WHERE p.topic_id = " . $topic_id .
-                " ORDER BY p.create_timestamp;";
+                 WHERE p.topic_id = $topic_id
+                 ORDER BY p.create_timestamp
+                 LIMIT $_POST[per_page]
+                 OFFSET ". ( $_POST['page_number'] - 1 ) * $_POST['per_page'] . ";";
 
     $posts = array();
 
@@ -237,4 +242,13 @@ function update_post() {
         
         die;
     }
+}
+
+
+function n_posts_pages() {
+    global $wpdb;
+    echo json_encode(ceil($wpdb->get_var("SELECT COUNT(*) 
+                                                FROM {$wpdb->prefix}f_posts
+                                                WHERE topic_id = $_POST[topic_id];") / $_POST['per_page']));
+    die;
 }
