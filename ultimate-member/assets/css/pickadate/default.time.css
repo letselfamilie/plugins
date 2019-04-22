@@ -23,7 +23,7 @@
   box-sizing: border-box;
   padding: 6px 0px !important;
   margin: 5px 0 !important;
-} 
+}
 
 @media (min-height: 46.75em) {
   .um .picker__list-item {

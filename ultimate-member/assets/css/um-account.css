@@ -258,9 +258,9 @@
 	/*background-color: rgba(14, 86, 164, 0.39);*/
 }
 
-*{
-	font-family: "Roboto Condensed", sans-serif!important;
-}
+/**{*/
+	/*font-family: "Roboto Condensed", sans-serif!important;*/
+/*}*/
 
 @media only screen and (max-width:800px){
 
