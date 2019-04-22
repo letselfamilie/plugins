@@ -132,7 +132,7 @@ module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, paginati
             $n.prev().addClass('active');
             pagination_obj.current_page -= 1;
             updateFunc(pagination_obj.current_page);
-        } else if (current_page > 1) {
+        } else if (pagination_obj.current_page > 1) {
             pagination_obj.pagina_to--;
             pagination_obj.pagina_from--;
             pagination_obj.current_page--;
@@ -152,7 +152,7 @@ module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, paginati
             $n.next().addClass('active');
             pagination_obj.current_page += 1;
             updateFunc(pagination_obj.current_page);
-        } else if (current_page < max_page) {
+        } else if (pagination_obj.current_page < max_page) {
             pagination_obj.pagina_to++;
             pagination_obj.pagina_from++;
             pagination_obj.current_page++;

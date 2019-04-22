@@ -134,13 +134,13 @@ define("PATH", plugins_url('..' , __FILE__));
     } ?>
 
     <div class="pagination">
-        <a href="#" class='back-end-arrow'><i class="fa fa-angle-double-left"></i></a>
-        <a href="#" class='back-arrow'><i class="fa fa-angle-left"></i></a>
-        <a href="#" class='before-dots'>…</a>
+        <a class='back-end-arrow'><i class="fa fa-angle-double-left"></i></a>
+        <a class='back-arrow'><i class="fa fa-angle-left"></i></a>
+        <a class='before-dots'>…</a>
         <!-- pages -->
-        <a href="#" class='after-dots'>…</a>
-        <a href="#" class='forward-arrow'><i class="fa fa-angle-right"></i></i></a>
-        <a href="#" class='forward-end-arrow'><i class="fa fa-angle-double-right"></i></a>
+        <a class='after-dots'>…</a>
+        <a class='forward-arrow'><i class="fa fa-angle-right"></i></i></a>
+        <a class='forward-end-arrow'><i class="fa fa-angle-double-right"></i></a>
     </div>
 
 </div>
