@@ -9,7 +9,7 @@
 /* Template Name: Chat Page */
 define("PATH", plugins_url('..' , __FILE__));
 
-$consultant = true;
+$consultant = false;
 ?>
 
 <!DOCTYPE html>
