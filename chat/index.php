@@ -56,6 +56,8 @@ function chat_scripts()
         wp_enqueue_script('chat-js');
         //wp_enqueue_style('chat-css');
 
+        wp_dequeue_style( 'aurum-main-css' );
+
         wp_localize_script('chat-js', 'url_object',
             array('ajax_url' => admin_url('admin-ajax.php'), 'plugin_directory' => plugins_url('', __FILE__), 'site_url' => get_site_url()));
         wp_localize_script('chat-js', 'user_object',
