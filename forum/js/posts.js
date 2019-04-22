@@ -29,8 +29,9 @@ $(function () {
     $('textarea').autoResize();
 
     let topic_id = url_params != null ? url_params['topic_id'] : -1;
-    let user_id = 1;
-    let curr_user = null;
+    let user_id = user_object.id;
+    console.log(user_id);
+
     var respond_to_id = null;
     var posts_table = $("#posts");
     var post_to_delete = null;
@@ -211,128 +212,135 @@ $(function () {
         var n_responds = parseInt(data.n_responds);
 
 
+        if (user_id > 0) {
+            $node.on('click', '.comment-full', function () {
+                var post_text = data.post_message.substring(0, 75) + ((data.post_message.length <= 75) ? '' : "...");
+                $("#quote-text").text(data.first_name + " " + data.surname + ': ' + post_text);
 
-        $node.on('click', '.comment-full', function () {
-            var post_text = data.post_message.substring(0, 75) + ((data.post_message.length <= 75)? '': "...");
-            $("#quote-text").text(data.first_name + " " + data.surname + ': ' + post_text);
+                $('.respond-info').css('display', 'inline-block');
 
-            $('.respond-info').css('display', 'inline-block');
+                respond_to_id = data.post_id;
+                console.log(respond_to_id);
 
-            respond_to_id = data.post_id;
-            console.log(respond_to_id);
-
-            $("#enter-textarea").focus();
-        });
-
-
-        $node.on('click', '.comment-empty', function () {
-            var post_text = data.post_message.substring(0, 75) + ((data.post_message.length <= 75)? '': "...");
-            $("#quote-text").text(data.first_name + " " + data.surname + ': ' + post_text);
-
-            $('.respond-info').css('display', 'inline-block');
-
-            respond_to_id = data.post_id;
-            console.log(respond_to_id);
-
-            $("#enter-textarea").focus();
-            $('.comment-full').addClass('none');
-            $('.comment-empty').removeClass('none');
-            $node.find('.comment-full').removeClass('none');
-            $node.find('.comment-empty').addClass('none');
-        });
-
-
-        $node.on('click', '.full-like', function () {
-
-            $node.find(".empty-like").removeClass('none');
-            $node.find(".full-like").addClass('none');
-            $.ajax({
-                url: url_object.ajax_url,
-                type: 'POST',
-                data: {
-                    action: 'dislike',
-                    post_id: data.post_id,
-                    user_id: user_id
-                },
-
-                success: function (res) {
-                    console.log('disliked');
-
-                    n_likes -= 1;
-                    $node.find('.like-number').text(n_likes);
-                },
-                error: function (error) {
-                    console.log(error);
-                }
+                $("#enter-textarea").focus();
             });
 
-        });
+            $node.on('click', '.comment-empty', function () {
+                var post_text = data.post_message.substring(0, 75) + ((data.post_message.length <= 75) ? '' : "...");
+                $("#quote-text").text(data.first_name + " " + data.surname + ': ' + post_text);
 
-        $node.on('click', '.empty-like', function () {
+                $('.respond-info').css('display', 'inline-block');
 
-            $node.find(".empty-like").addClass('none');
-            $node.find(".full-like").removeClass('none');
-            $.ajax({
-                url: url_object.ajax_url,
-                type: 'POST',
-                data: {
-                    action: 'like',
-                    post_id: data.post_id,
-                    user_id: user_id
-                },
+                respond_to_id = data.post_id;
+                console.log(respond_to_id);
 
-                success: function (res) {
-                    console.log('liked');
-                    n_likes += 1;
-                    $node.find('.like-number').text(n_likes);
-                },
-                error: function (error) {
-                    console.log(error);
-                }
+                $("#enter-textarea").focus();
+                $('.comment-full').addClass('none');
+                $('.comment-empty').removeClass('none');
+                $node.find('.comment-full').removeClass('none');
+                $node.find('.comment-empty').addClass('none');
             });
-        });
 
-        $node.find('.dropdown').on('click', function() {
-            dropdown($(this))
-        });
+            $node.on('click', '.full-like', function () {
 
-        $node.on('click', '.delete', function () {
-            $('.container-blured').addClass('blur');
-            $('#delete-post-panel').attr('style', '');
-            post_to_delete = data.post_id;
-        });
-
-        $node.on('click', '.edit', function () {
-            $node.find('.content-edit').removeClass('none');
-            $node.find('.edit-textarea').text($node.find('.message').html().replace(/<br>/g, '\n'));
-            $node.find('.edit-textarea').focus();
-            $node.find('.message').addClass('none');
-        });
-
-        $node.on('click', '.save-butt', function () {
-            var textarea = $node.find('.edit-textarea').val();
-            if (textarea.trim() !== '') {
+                $node.find(".empty-like").removeClass('none');
+                $node.find(".full-like").addClass('none');
                 $.ajax({
                     url: url_object.ajax_url,
                     type: 'POST',
                     data: {
-                        action: 'update_post',
+                        action: 'dislike',
                         post_id: data.post_id,
-                        user_id: user_id,
-                        post_message: textarea
+                        user_id: user_id
                     },
 
                     success: function (res) {
-                        $node.find('.message').removeClass('none');
-                        $node.find('.content-edit').addClass('none');
-                        $node.find('.message').html(textarea.replace(/\n/g, '<br>'));
+                        console.log('disliked');
+
+                        n_likes -= 1;
+                        $node.find('.like-number').text(n_likes);
                     },
                     error: function (error) {
                         console.log(error);
                     }
                 });
-            }
-        });
+
+            });
+
+            $node.on('click', '.empty-like', function () {
+
+                $node.find(".empty-like").addClass('none');
+                $node.find(".full-like").removeClass('none');
+                $.ajax({
+                    url: url_object.ajax_url,
+                    type: 'POST',
+                    data: {
+                        action: 'like',
+                        post_id: data.post_id,
+                        user_id: user_id
+                    },
+
+                    success: function (res) {
+                        console.log('liked');
+                        n_likes += 1;
+                        $node.find('.like-number').text(n_likes);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+
+            $node.find('.dropdown').on('click', function () {
+                dropdown($(this))
+            });
+
+            $node.on('click', '.delete', function () {
+                $('.container-blured').addClass('blur');
+                $('#delete-post-panel').attr('style', '');
+                post_to_delete = data.post_id;
+            });
+
+            $node.on('click', '.edit', function () {
+                $node.find('.content-edit').removeClass('none');
+                $node.find('.edit-textarea').text($node.find('.message').html().replace(/<br>/g, '\n'));
+                $node.find('.edit-textarea').focus();
+                $node.find('.message').addClass('none');
+            });
+
+            $node.on('click', '.save-butt', function () {
+                var textarea = $node.find('.edit-textarea').val();
+                if (textarea.trim() !== '') {
+                    $.ajax({
+                        url: url_object.ajax_url,
+                        type: 'POST',
+                        data: {
+                            action: 'update_post',
+                            post_id: data.post_id,
+                            user_id: user_id,
+                            post_message: textarea
+                        },
+
+                        success: function (res) {
+                            $node.find('.message').removeClass('none');
+                            $node.find('.content-edit').addClass('none');
+                            $node.find('.message').html(textarea.replace(/\n/g, '<br>'));
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            });
+        } else {
+            $node.on('click', '.comment-empty', function () {
+                window.location.href =  url_object.site_url + "/register";
+            });
+
+            $node.on('click', '.empty-like', function () {
+                window.location.href =  url_object.site_url + "/register";
+            });
+        }
 
         posts_table.append($node);
         $node.insertBefore(".post-enter");
