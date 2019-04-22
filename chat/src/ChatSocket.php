@@ -124,8 +124,9 @@ class ChatSocket implements MessageComponentInterface
                     break;
 
                 case "message":
+                    $time = date("Y-m-d H:i:s");
                     $message = $data->message;
-                    $this->sendMessage($user_id_from, $room_id, $message);
+                    $this->sendMessage($user_id_from, $room_id, $message, $time);
                     $this->sendUserStoppedTypingMessage($user_id_from, $room_id);
                     break;
 
@@ -205,28 +206,30 @@ class ChatSocket implements MessageComponentInterface
         $this->sendDataToClients($userFromId, $clients, $dataPacket);
     }
 
-    function sendMessage($clientFromId, $roomId, $message)
+    function sendMessage($clientFromId, $roomId, $message, $time)
     {
         $dataPacket = array(
             'type'=> 'message',
             'from'=> $clientFromId,
-            'message'=> $message
+            'message'=> $message,
+            'time' => $time
         );
 
         $clients = $this->findRoomClients($roomId);
         $this->sendDataToClients($clientFromId, $clients, $dataPacket);
 
-        $this->saveMessageInDB($clientFromId, $roomId, $message);
+        $this->saveMessageInDB($clientFromId, $roomId, $message, $time);
     }
 
-    function saveMessageInDB($clientFromId, $dialogId, $message){
+    function saveMessageInDB($clientFromId, $dialogId, $message, $time){
         $dbconn = DBHelper::connect();
 
-        $sqlQuery = "INSERT INTO wp_c_messages (user_from_id, dialog_id, message_body) 
+        $sqlQuery = "INSERT INTO wp_c_messages (user_from_id, dialog_id, message_body, create_timestamp) 
                      VALUES (
                         '" . $clientFromId . "',
                         '" . $dialogId."',
-                        '" . $message."');";
+                        '" . $message."',
+                        '" . $time. "');";
         try {
             $dbconn->query($sqlQuery, \PDO::FETCH_ASSOC);
         } catch (\Exception $e) {
