@@ -136,11 +136,18 @@ class ChatSocket implements MessageComponentInterface
                         $second_user = $data->second_user;
                         $topic = $data->topic;
 
+                        $chat_id = null;
                         if (isset($dialog_type) && isset($second_user)) {
-                            $this->addDialogToDB($user_id_from, $dialog_type, $second_user, $topic);
+                            $chat_id = $this->addDialogToDB($user_id_from, $dialog_type, $second_user, $topic);
                         }
 
-                        $message = array('message' => "New chat with ".$second_user." was added");
+                        $message = array(
+                            'message' => "New chat with ".$second_user." was added",
+                            'second_user' => $second_user,
+                            'dialog_id' => $chat_id,
+                            'dialog_type' => $dialog_type,
+                            'topic' => $topic
+                        );
                         $from->send(json_encode($message));
                     }
                     break;
@@ -260,12 +267,15 @@ class ChatSocket implements MessageComponentInterface
 
         try {
             $dbconn->query($sqlQuery);
+            $last_id = $dbconn->lastInsertId();
+            DBHelper::disconnect();
+            return $last_id;
 
         } catch (\Exception $e) {
             echo "Error occured: ".$e." \n";
             DBHelper::disconnect();
+            return null;
         }
-        DBHelper::disconnect();
     }
 
     function findRoomClients($roomId){
