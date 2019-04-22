@@ -41,6 +41,15 @@ function get_dialogs(){
     $dialogs['curr_user'] = $user_id;
         try {
             foreach ($wpdb->get_results($sqlQuery, ARRAY_A) as $dialog){
+                $second_id = $dialog['user1_id'] == $user_id ? $dialog['user2_id'] : $dialog['user1_id'];
+                $dialog['second_user_nickname'] = get_user_meta($second_id, 'nickname', true);
+
+                if(um_profile('profile_photo')){
+                    $dialog['second_user_photo'] = um_get_avatar_uri( um_profile('profile_photo'), null);
+                } else{
+                    $dialog['second_user_photo'] = um_get_default_avatar_uri();
+                }
+
                 $sqlQuery2 = "SELECT *
                               FROM {$wpdb->prefix}c_messages
                               WHERE dialog_id = '".$dialog['dialog_id']."'
