@@ -892,38 +892,7 @@ function um_profile_header( $args ) {
 				</div>
 			<?php } ?>
 
-			<?php if (UM()->fields()->viewing == true && um_user( 'description' ) && $args['show_bio']) { ?>
 
-				<div class="um-meta-text">
-					<?php
-
-					$description = get_user_meta( um_user( 'ID' ), 'description', true );
-					if ( UM()->options()->get( 'profile_show_html_bio' ) ) : ?>
-						<?php echo make_clickable( wpautop( wp_kses_post( $description ) ) ); ?>
-					<?php else : ?>
-						<?php echo esc_html( $description ); ?>
-					<?php endif; ?>
-				</div>
-
-			<?php } else if (UM()->fields()->editing == true && $args['show_bio']) { ?>
-
-				<div class="um-meta-text">
-					<textarea id="um-meta-bio"
-					          data-character-limit="<?php echo UM()->options()->get( 'profile_bio_maxchars' ); ?>"
-					          placeholder="<?php _e( 'Tell us a bit about yourself...', 'ultimate-member' ); ?>"
-					          name="<?php echo 'description-' . $args['form_id']; ?>"
-					          id="<?php echo 'description-' . $args['form_id']; ?>"><?php echo UM()->fields()->field_value( 'description' ) ?></textarea>
-					<span class="um-meta-bio-character um-right"><span
-							class="um-bio-limit"><?php echo UM()->options()->get( 'profile_bio_maxchars' ); ?></span></span>
-					<?php
-					if (UM()->fields()->is_error( 'description' )) {
-						echo UM()->fields()->field_error( UM()->fields()->show_error( 'description' ), true );
-					}
-					?>
-
-				</div>
-
-			<?php } ?>
 
 			<div class="um-profile-status <?php echo um_user( 'account_status' ); ?>">
 				<span><?php printf( __( 'This user account status is %s', 'ultimate-member' ), um_user( 'account_status_name' ) ); ?></span>
@@ -1097,7 +1066,7 @@ function um_add_edit_icon( $args ) {
 	} else {
 		$items = array(
 			'editprofile' => '<a href="' . um_get_core_page( 'account' ) . '" class="real_url">' . __( 'Edit Profile', 'ultimate-member' ) . '</a>',
-	//		'myaccount'   => '<a href="' . um_get_core_page( 'account' ) . '" class="real_url">' . __( 'My Account', 'ultimate-member' ) . '</a>',
+			'editphoto'   => '<a href="' . um_edit_profile_url() . '" class="real_url">' . __( 'Change Profile Photo', 'ultimate-member' ) . '</a>',
 			'logout'      => '<a href="' . um_get_core_page( 'logout' ) . '" class="real_url">' . __( 'Logout', 'ultimate-member' ) . '</a>',
 			'cancel'      => '<a href="#" class="um-dropdown-hide">' . __( 'Cancel', 'ultimate-member' ) . '</a>',
 		);
