@@ -195,7 +195,7 @@ class ChatSocket implements MessageComponentInterface
             'timestamp'=> time(),
         );
 
-        $clients = $this->findRoomClients($roomId);
+        $clients = ($this->findRoomInf($roomId))['users'];
 //        unset($clients[$client->getResourceId()]);
         $this->sendDataToClients($userFromId, $clients, $dataResponse);
     }
@@ -208,21 +208,25 @@ class ChatSocket implements MessageComponentInterface
             'timestamp'=> time(),
         );
 
-        $clients = $this->findRoomClients($roomId);
+        $clients = ($this->findRoomInf($roomId))['users'];
 //        unset($clients[$client->getResourceId()]);
         $this->sendDataToClients($userFromId, $clients, $dataPacket);
     }
 
     function sendMessage($clientFromId, $roomId, $message, $time)
     {
+        $dialog_inf = $this->findRoomInf($roomId);
+
         $dataPacket = array(
             'type'=> 'message',
+            'dialog_id' => $roomId,
             'from'=> $clientFromId,
             'message'=> $message,
-            'time' => $time
+            'time' => $time,
+            'is_employee_chat' => $dialog_inf['is_employee_chat']
         );
 
-        $clients = $this->findRoomClients($roomId);
+        $clients = $dialog_inf['users'];
         $this->sendDataToClients($clientFromId, $clients, $dataPacket);
 
         $this->saveMessageInDB($clientFromId, $roomId, $message, $time);
@@ -278,30 +282,34 @@ class ChatSocket implements MessageComponentInterface
         }
     }
 
-    function findRoomClients($roomId){
+    function findRoomInf($roomId){
 //        global $wpdb;
         echo "ROOMID ".$roomId;
 
         $dbconn = DBHelper::connect();
 
-        $sqlQuery = "SELECT user1_id, COALESCE(user2_id, employee_id) AS user_id
+        $sqlQuery = "SELECT user1_id, COALESCE(user2_id, employee_id) AS user_id, is_employee_chat
                      FROM wp_c_dialogs
                      WHERE dialog_id = ".$roomId.";";
 
+        $dialog_inf = array();
         $users = array();
         try {
-            foreach ($dbconn->query($sqlQuery, \PDO::FETCH_ASSOC) as $user){
-                echo "USER ".$user['user_id'].'\n';
-                $users[] = $user['user1_id'];
-                $users[] = $user['user_id'];
+            foreach ($dbconn->query($sqlQuery, \PDO::FETCH_ASSOC) as $dialog){
+                echo "USER ".$dialog['user_id'].'\n';
+                $users[] = $dialog['user1_id'];
+                $users[] = $dialog['user_id'];
+
+                $dialog_inf['is_employee_chat'] = $dialog['is_employee_chat'];
             }
+            $dialog_inf['users'] = $users;
         } catch (\Exception $e) {
             echo "Error occured: ".$e." \n";
             DBHelper::disconnect();
         }
         DBHelper::disconnect();
 
-        return $users;
+        return $dialog_inf;
     }
 
     function sendDataToClients($clientFromId, array $clients, array $packet)
