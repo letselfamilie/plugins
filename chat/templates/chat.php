@@ -8,6 +8,8 @@
 
 /* Template Name: Chat Page */
 define("PATH", plugins_url('..' , __FILE__));
+
+$consultant = true;
 ?>
 
 <!DOCTYPE html>
@@ -23,8 +25,7 @@ define("PATH", plugins_url('..' , __FILE__));
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
-    <link rel='stylesheet prefetch'
-          href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
 
 
 
@@ -109,7 +110,7 @@ define("PATH", plugins_url('..' , __FILE__));
     <div id="sidepanel">
         <div id="profile">
             <div class="wrap">
-                <img id="profile-img" src="<?php echo PATH?>/images/logo.png" alt="profile img"/>
+                <img id="profile-img" src="<?php echo PATH?>/images/user.png" alt="profile img"/>
                 <p>Mary Cooper</p>
             </div>
         </div>
@@ -150,7 +151,7 @@ define("PATH", plugins_url('..' , __FILE__));
                 </li>
                 <li class="conversation">
                     <div class="wrap">
-                        <img src="<?php echo PATH?>/images/logo.png" alt=""/>
+                        <img src="<?php echo PATH?>/images/user.png" alt=""/>
                         <div class="meta">
                             <p class="name">Karen Brown</p>
                             <p class="preview">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
@@ -179,7 +180,7 @@ define("PATH", plugins_url('..' , __FILE__));
                 </li>
                 <li class="conversation">
                     <div class="wrap">
-                        <img src="<?php echo PATH?>/images/logo.png" alt=""/>
+                        <img src="<?php echo PATH?>/images/user.png" alt=""/>
                         <div class="meta">
                             <p class="name preview">User</p>
                             <p class="preview">Hello.</p>
@@ -188,7 +189,7 @@ define("PATH", plugins_url('..' , __FILE__));
                 </li>
                 <li class="conversation">
                     <div class="wrap">
-                        <img src="<?php echo PATH?>/images/logo.png" alt=""/>
+                        <img src="<?php echo PATH?>/images/user.png" alt=""/>
                         <div class="meta">
                             <p class="name">Kate</p>
                             <p class="preview">Turpis egestas sed tempus urna et pharetra pharetra massa massa. </p>
@@ -216,28 +217,74 @@ define("PATH", plugins_url('..' , __FILE__));
                 </li>
             </ul>
         </div>
+        <?php if (!$consultant) { ?>
         <div id="bottom-bar">
             <button id="btn-newmessage">
                 <i class="fa fa-comments fa-fw" aria-hidden="true"></i>
                 <span>New message</span>
             </button>
-            <button id="btn-settings">
-                <i class="fa fa-cog fa-fw" aria-hidden="true"></i>
-                <span>Settings</span>
-            </button>
         </div>
+        <?php } ?>
     </div>
     <div class="content-chat">
+        <?php if (!$consultant) { ?>
+        <div class="new-convo">
+            <div class="new-convo-header">
+                <p>New question</p>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label>Question summary</label>
+                    <input type="text" class="form-control" name="topic" placeholder="My question is regarding...">
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea class="form-control" name="text" placeholder="Tell us about your problem here" rows="3"></textarea>
+                </div>
+                <button type="submit">Ask</button>
+            </form>
+        </div>
+        <?php } ?>
+
         <div class="contact-profile">
             <img src="<?php echo PATH?>/images/question.png" alt="question"/>
-            <p>Vaccination</p>
+            <p id="chat-title">Vaccination</p>
 
-            <button id="convOptions" type="button"><i class="fa fa-bars" aria-hidden="true"></i></button>
+            <div class="btn-group dropleft float-right">
+                <button id="convOptions" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#" id="resolve-btn">Mark as resolved</a>
+                    <?php if ($consultant) { ?>
+                    <a class="dropdown-item" href="#redirectCollapse" data-toggle="collapse"
+                       role="button" aria-controls="redirectCollapse" aria-expanded="false">
+                        Redirect to another consultant
+                    </a>
+                    <?php } ?>
+                </div>
+            </div>
         </div>
+        <?php if ($consultant) { ?>
+        <div class="redirect collapse multi-collapse" id="redirectCollapse">
+            <form class="input-group">
+                <select class="form-control custom-select" id="consultantSelect">
+                    <option value="1">Consultant 1</option>
+                    <option value="2">Consultant 2</option>
+                    <option value="3">Consultant 3</option>
+                    <option value="4">Consultant 4</option>
+                    <option value="5">Consultant 5</option>
+                </select>
+                <div class="input-group-append">
+                    <button type="submit">Redirect</button>
+                </div>
+            </form>
+        </div>
+        <?php } ?>
         <div class="messages">
             <ul>
                 <li class="sent">
-                    <img src="<?php echo PATH?>/images/logo.png" alt=""/>
+                    <img src="<?php echo PATH?>/images/user.png" alt=""/>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua. In nisl nisi scelerisque eu ultrices.
@@ -246,7 +293,7 @@ define("PATH", plugins_url('..' , __FILE__));
                     </p>
                 </li>
                 <li class="replies">
-                    <img src="<?php echo PATH?>/images/support.png" alt=""/>
+                    <img src="<?php echo PATH?>/images/logo.png" alt=""/>
                     <p>
                         Cursus vitae congue mauris rhoncus aenean vel elit scelerisque.
                         <br/>
@@ -254,7 +301,7 @@ define("PATH", plugins_url('..' , __FILE__));
                     </p>
                 </li>
                 <li class="replies">
-                    <img src="<?php echo PATH?>/images/support.png" alt=""/>
+                    <img src="<?php echo PATH?>/images/logo.png" alt=""/>
                     <p>
                         Pellentesque diam volutpat commodo sed egestas egestas fringilla.
                         <br/>
@@ -262,7 +309,7 @@ define("PATH", plugins_url('..' , __FILE__));
                     </p>
                 </li>
                 <li class="sent">
-                    <img src="<?php echo PATH?>/images/logo.png" alt=""/>
+                    <img src="<?php echo PATH?>/images/user.png" alt=""/>
                     <p>
                         Porta nibh venenatis cras sed felis eget velit aliquet sagittis. Sodales ut etiam sit amet nisl
                         purus in mollis.
@@ -271,7 +318,7 @@ define("PATH", plugins_url('..' , __FILE__));
                     </p>
                 </li>
                 <li class="replies">
-                    <img src="<?php echo PATH?>/images/support.png" alt=""/>
+                    <img src="<?php echo PATH?>/images/logo.png" alt=""/>
                     <p>
                         Eleifend quam adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus.
                         <br/>
@@ -279,7 +326,7 @@ define("PATH", plugins_url('..' , __FILE__));
                     </p>
                 </li>
                 <li class="replies">
-                    <img src="<?php echo PATH?>/images/support.png" alt=""/>
+                    <img src="<?php echo PATH?>/images/logo.png" alt=""/>
                     <p>
                         Eget sit amet tellus cras adipiscing enim eu.
                         <br/>
@@ -287,7 +334,7 @@ define("PATH", plugins_url('..' , __FILE__));
                     </p>
                 </li>
                 <li class="sent">
-                    <img src="<?php echo PATH?>/images/logo.png" alt=""/>
+                    <img src="<?php echo PATH?>/images/user.png" alt=""/>
                     <p>
                         Id aliquet lectus proin nibh.
                         <br/>
@@ -298,7 +345,7 @@ define("PATH", plugins_url('..' , __FILE__));
                     <p>New messages<i class="fa fa-chevron-down ml-1"></i></p>
                 </li>
                 <li class="replies">
-                    <img src="<?php echo PATH?>/images/support.png" alt=""/>
+                    <img src="<?php echo PATH?>/images/logo.png" alt=""/>
                     <p>
                         Sed nisi lacus sed viverra tellus in. Non odio euismod lacinia at quis risus sed vulputate odio.
                         <br/>
