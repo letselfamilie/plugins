@@ -23,7 +23,7 @@
         <p class="text-post">
             <% if (post.is_reaction == 1) { %>
                 <div class="respond-message">
-                <% if (post.user_respond_to != null) { %>
+                <% if (post.user_respond_to != null && post.respond_message != null) { %>
                 <span class="respond-to-user"> <%= post.user_respond_to %>: </span>
                 <div class="text-post-message"><%= post.respond_message.substring(0, 75) + ((post.respond_message.length <= 75)? '': "...") %></div>
                 <% } else { %>
