@@ -8,8 +8,11 @@
 
 /* Template Name: Chat Page */
 define("PATH", plugins_url('..' , __FILE__));
+$role =  ((array)( wp_get_current_user()->roles )[0])[0];
 
 $consultant = false;
+if ($role == 'adviser') $consultant = true;
+
 ?>
 
 <!DOCTYPE html>
