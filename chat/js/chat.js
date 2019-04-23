@@ -160,7 +160,7 @@ function loadChat(mes) {
         });
 
         $("#btn-newmessage").click(function () {
-            
+
             $(".conversation.active").removeClass("active");
 
             $(".contact-profile").css('display', 'none');
@@ -206,7 +206,7 @@ function loadChat(mes) {
 
                 addDialog(newDialog, mes);
 
-                $(".contact-profile").css('display', '');
+                $(".contact-profile").css('display', 'none');
                 $(".messages").css('display', 'none');
                 $(".message-input").css('display', 'none');
 
