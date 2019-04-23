@@ -9,8 +9,8 @@ let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 let myprofilelogo = url_object.plugin_directory +'/images/user.png';
-let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\r\n    <div class=\"wrap\">\r\n        <img src=\" <%= photo %> \" alt=\"\"/>\r\n        <div class=\"meta\">\r\n            <p class=\"name\"> <%= name %> </p>\r\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\r\n        </div>\r\n    </div>\r\n</li>\r\n");
-let mes_templ = ejs.compile("<li class=\"<%= status %>\">\r\n    <img src=\"<%= image %>\" alt=\"\"/>\r\n    <p>\r\n        <%= mes %>\r\n        <br/>\r\n        <small class=\"float-right mt-2\"><%= time %></small>\r\n    </p>\r\n</li>\r\n");
+let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\n    <div class=\"wrap\">\n        <img src=\" <%= photo %> \" alt=\"\"/>\n        <div class=\"meta\">\n            <p class=\"name\"> <%= name %> </p>\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\n        </div>\n    </div>\n</li>\n");
+let mes_templ = ejs.compile("<li class=\"<%= status %>\">\n    <img src=\"<%= image %>\" alt=\"\"/>\n    <p>\n        <%= mes %>\n        <br/>\n        <small class=\"float-right mt-2\"><%= time %></small>\n    </p>\n</li>\n");
 
 // We listen to the resize event
 window.addEventListener('resize', () => {
@@ -60,6 +60,20 @@ function loadChat(mes) {
         });
 
         $('#search').keyup(function() {
+
+            /*let $node = $("#"+ 1);
+            if($node.find("span.counter").length===0)
+            {
+                $node.find(".wrap").append("<span class='counter hidden'>1</span>");
+            }
+            else
+            {
+                let value = $node.find("span.counter").text();
+                $node.find("span.counter").text(parseInt(value)+1);
+            }*/
+
+
+
             $('#inputSearch').focus();
             var input = $('#inputSearch').val().trim();
 
@@ -315,7 +329,7 @@ function addDialog(item, curr,mes) {
 
     $node.click(function() {
 
-        let newMessages =false;
+        var newMessages =false;
         $(".contact-profile").css('display', '')
         $(".messages").css('display', '')
         $(".message-input").css('display', '')
@@ -356,14 +370,6 @@ function addDialog(item, curr,mes) {
                     {
                         newMessages =true;
                         newBanner("New messages");
-                        //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-                        /*var offset = $(".mes-break").offset().top - $(window).scrollTop();
-
-                        if(offset < window.innerHeight){
-                            // Not in view so scroll to it
-                            $('.messages').animate({scrollTop: offset - offset/2}, "fast");
-                        }
-                        else $('.messages').animate({ scrollTop: $(document).height() }, 'fast');*/
 
                         setTimeout(function() {
                             var new_messages_banner = $(".mes-break")[0];
@@ -374,9 +380,9 @@ function addDialog(item, curr,mes) {
                 }
                 addMes(mes[idDialog].messages[i] , user2logo, is_employee_chat);
             }
-
-            $('.messages ul').children('li').last().focus();
-            gotoBottom('messages-container');
+            if(newMessages) {$(".mes-break").scrollIntoView({block: "center", behavior: "smooth"});}
+            else {gotoBottom('messages-container');}
+            newMessages = false;
         }
         // TODO: badges
 
