@@ -143,7 +143,7 @@ function loadChat(mes) {
             $('.messages ul').children('li').last().focus();
 
             gotoBottom('messages-container');
-            console.log($(document).height());
+
         }
 
 
@@ -198,10 +198,8 @@ function loadChat(mes) {
                     second_user_nickname:null, second_user_photo: url_object.plugin_directory +"/images/question.png",
                     messages: [m] };
 
-
                 mes[Object.keys(mes).length] = newDialog;
 
-                console.log(mes);
 
                 addDialog(newDialog, mes);
 
@@ -210,6 +208,7 @@ function loadChat(mes) {
                 $(".message-input").css('display', 'none');
 
                 $(".new-convo").css('display', 'none');
+                $(".conversation.active").removeClass("active");
             }
             else(alert("Write your issue, please"))
 
@@ -237,18 +236,14 @@ function loadChat(mes) {
             let dial_id = data.dialog_id;
             let is_chat_with_employee = data.is_employee_chat;
 
-            console.log("DialId " + dial_id);
-
             let key = searchObjKey (mes, dial_id);
 
-            console.log("key" + key);
 
             var new_message = {message_id: "" + mes[Object.keys(mes).length -1 ].message_id + 1 , user_from_id: from,
                 dialog_id: dial_id , is_read:"0", message_body:mess, create_timestamp:time};
 
             mes[key].messages.push(new_message);
 
-            console.log("mes " + mes);
 
             $("#"+ dial_id+" p.preview").text(mess);
             let $node = $("#"+ dial_id);
@@ -409,7 +404,7 @@ function addDialog(item, mes) {
 
 function addMes(item, user2logo, is_employee_chat) {
     var st = ((item.user_from_id===user_object.id) ? "sent" : "replies");
-    console.log(item.user_from_id +" "+ user_object.id);
+
     var png = ((item.user_from_id===user_object.id) ? myprofilelogo : user2logo);
 
     if(is_employee_chat==="1" && item.user_from_id!==user_object.id) png = url_object.plugin_directory +"/images/logo.png";
