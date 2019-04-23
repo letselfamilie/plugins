@@ -137,9 +137,9 @@ function loadChat(mes) {
 
             $('.conversation.active .preview').html('<span>You: </span>' + message);
 
-           $('.messages').animate({ scrollTop: $('.messages ul').children('li').last().position().top }, 'fast');
+           //$('.messages').animate({ scrollTop: $('.messages ul').children('li').last().position().top }, 'fast');
 
-            //$('.messages ul').children('li').last().focus();
+            $('.messages ul').children('li').last().focus();
 
             console.log($(document).height());
         }
@@ -387,8 +387,9 @@ function addDialog(item, curr,mes) {
         }
         // TODO: badges
 
-        $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+        //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
 
+        $('.messages ul').children('li').last().focus();
     });
     $("#conversations ul").append($node);
 }
