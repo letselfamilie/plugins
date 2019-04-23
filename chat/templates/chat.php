@@ -107,7 +107,7 @@ $consultant = false;
 </head>
 <body>
 
-<?php get_template_part( 'header' ); ?>
+<?php //get_template_part( 'header' ); ?>
 
 
 <div id='loader' class="center lds-css ng-scope">
@@ -374,7 +374,7 @@ $consultant = false;
     </div>
 </div>
 
-<?php get_template_part( 'footer' ); ?>
+<?php //get_template_part( 'footer' ); ?>
 
 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

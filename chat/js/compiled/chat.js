@@ -403,6 +403,7 @@ function gotoBottom(id){
     var element = document.getElementById(id);
     element.scrollTop = element.scrollHeight - element.clientHeight;
 }
+
 },{"ejs":3}],2:[function(require,module,exports){
 
 },{}],3:[function(require,module,exports){
