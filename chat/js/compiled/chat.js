@@ -322,6 +322,7 @@ function addDialog(item, curr,mes) {
 
     $node.click(function() {
 
+        let newMessages =false;
         $(".contact-profile").css('display', '')
         $(".messages").css('display', '')
         $(".message-input").css('display', '')
@@ -360,6 +361,7 @@ function addDialog(item, curr,mes) {
                 {
                     if($(".mes-break")[0] === undefined)
                     {
+                        newMessages =true;
                         newBanner("New messages");
                         //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
                         var offset = $(".mes-break").offset().top - $(window).scrollTop();
@@ -381,7 +383,7 @@ function addDialog(item, curr,mes) {
         }
         // TODO: badges
 
-        if(mes[idDialog].messages[mes[idDialog].messages.length-1].user_from_id === user_object.id) $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+        if(!newMessages) {$('.messages').animate({ scrollTop: $(document).height() }, 'fast');}
 
     });
     $("#conversations ul").append($node);
