@@ -59,6 +59,20 @@ function loadChat(mes) {
         });
 
         $('#search').keyup(function() {
+
+            /*let $node = $("#"+ 1);
+            if($node.find("span.counter").length===0)
+            {
+                $node.find(".wrap").append("<span class='counter hidden'>1</span>");
+            }
+            else
+            {
+                let value = $node.find("span.counter").text();
+                $node.find("span.counter").text(parseInt(value)+1);
+            }*/
+
+
+
             $('#inputSearch').focus();
             var input = $('#inputSearch').val().trim();
 
@@ -255,6 +269,8 @@ function loadChat(mes) {
 
                 console.log("Dialog "+ dial_id + " has new message");
             }
+
+            gotoBottom('messages-container');
         }
 
         if(data.type==="dialog")
@@ -314,7 +330,7 @@ function addDialog(item, curr,mes) {
 
     $node.click(function() {
 
-        let newMessages =false;
+        var newMessages =false;
         $(".contact-profile").css('display', '')
         $(".messages").css('display', '')
         $(".message-input").css('display', '')
@@ -355,14 +371,6 @@ function addDialog(item, curr,mes) {
                     {
                         newMessages =true;
                         newBanner("New messages");
-                        //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-                        /*var offset = $(".mes-break").offset().top - $(window).scrollTop();
-
-                        if(offset < window.innerHeight){
-                            // Not in view so scroll to it
-                            $('.messages').animate({scrollTop: offset - offset/2}, "fast");
-                        }
-                        else $('.messages').animate({ scrollTop: $(document).height() }, 'fast');*/
 
                         setTimeout(function() {
                             var new_messages_banner = $(".mes-break")[0];
@@ -373,9 +381,9 @@ function addDialog(item, curr,mes) {
                 }
                 addMes(mes[idDialog].messages[i] , user2logo, is_employee_chat);
             }
-
-            $('.messages ul').children('li').last().focus();
-            gotoBottom('messages-container');
+            if(newMessages) {$(".mes-break").scrollIntoView({block: "center", behavior: "smooth"});}
+            else {gotoBottom('messages-container');}
+            newMessages = false;
         }
         // TODO: badges
 
