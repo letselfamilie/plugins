@@ -1,9 +1,14 @@
-#wpadminbar {
-  display: none;
-}
+//#wpadminbar {
+//  display: none;
+//}
 
 html, body {
-  overflow: hidden;
+  //overflow: hidden;
+}
+
+.dropdown-menu {
+  font-size: inherit!important;
+  width: auto!important;
 }
 
 body {
@@ -44,12 +49,13 @@ textarea:focus {
 }
 
 #chat-frame {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  //position: absolute;
+  //top: 0;
+  //left: 0;
+  //bottom: 0;
+  //right: 0;
   margin: auto;
+  margin-top: 20px;
 
   width: 100%;
   min-width: 360px;
@@ -692,18 +698,21 @@ img {
 
 // Scrollbar
 
-::-webkit-scrollbar {
-  width: 12px !important; /* for vertical scrollbars */
-  height: 12px !important; /* for horizontal scrollbars */
+.chat-frame{
+  ::-webkit-scrollbar {
+    width: 12px !important; /* for vertical scrollbars */
+    height: 12px !important; /* for horizontal scrollbars */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(15, 97, 185, 0.1) !important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #0f61b9 !important;
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: rgba(15, 97, 185, 0.1) !important;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #0f61b9 !important;
-}
 
 
 ul {

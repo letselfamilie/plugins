@@ -27,7 +27,7 @@ $consultant = false;
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 
     <?php wp_head(); ?>
 
@@ -107,7 +107,7 @@ $consultant = false;
 </head>
 <body>
 
-<?php //get_template_part( 'header' ); ?>
+<?php get_template_part( 'header' ); ?>
 
 
 <div id='loader' class="center lds-css ng-scope">
@@ -374,7 +374,7 @@ $consultant = false;
     </div>
 </div>
 
-<?php //get_template_part( 'footer' ); ?>
+<?php get_template_part( 'footer' ); ?>
 
 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
