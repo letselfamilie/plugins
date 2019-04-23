@@ -365,8 +365,7 @@ function addDialog(item, mes) {
     console.log("mes.curr_user " +  mes.curr_user);
 
     let $node = $(dialog_templ({id: dialog_id, photo: img, name:name, sent: fromyou, preview: (preview!== undefined)?preview: "" }));
-
-
+    
     $node.click(function() {
 
         var newMessages =false;
