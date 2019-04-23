@@ -132,6 +132,7 @@ function forum_db_tables() {
                  user_id          bigint(20) unsigned NOT NULL ,
                  post_message     text NOT NULL ,
                  is_anonym        bit(1) NOT NULL ,
+                 is_reaction      bit(1) NOT NULL DEFAULT 0,
                  create_timestamp timestamp NOT NULL DEFAULT 0,
                 PRIMARY KEY  (post_id),
                 FOREIGN KEY  (topic_id) REFERENCES ".$wpdb->prefix."f_topics (topic_id) ON DELETE CASCADE ON UPDATE CASCADE ,
