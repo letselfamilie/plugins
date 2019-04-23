@@ -91,12 +91,14 @@ class ChatSocket implements MessageComponentInterface
             $this->queryObj[$queryPair[0]] = $queryPair[1];
         }
 
-        if ($this->queryObj['consultan']==1) {
 
-        }else {
-            $user_id = trim($this->queryObj['userId']);
-            $this->users_id[$user_id] = $conn->resourceId;
+        $user_id = trim($this->queryObj['userId']);
+        $this->users_id[$user_id] = $conn->resourceId;
+
+        if ($this->queryObj['consultan']==1) {
+            $this->consultants_id[$user_id] = $conn->resourceId;
         }
+
 //        $dbconn = DBHelper::connect();
 //        $sqlQuery = "SELECT *
 //                     FROM wp_f_categories;";
