@@ -283,7 +283,7 @@ function loadChat(mes) {
 }
 
 function newBanner(message) {
-    var html_banner = '<li class="mes-break">' +
+    var html_banner = '<li id="banner" class="mes-break">' +
         '<p>' + message + '</p></li>';
 
     $(html_banner).appendTo($('.messages ul'));
@@ -310,6 +310,7 @@ function fillChat (mes) {
     {
         addDialog(res[i], curr_user_id, mes);
     }
+
 
 }
 
@@ -376,13 +377,12 @@ function addDialog(item, curr,mes) {
                         setTimeout(function() {
                             var new_messages_banner = $(".mes-break")[0];
                             if(new_messages_banner!==undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
-                            //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
                         }, 5000);
                     }
                 }
                 addMes(mes[idDialog].messages[i] , user2logo, is_employee_chat);
             }
-            if(newMessages) {$(".mes-break").scrollIntoView({block: "center", behavior: "smooth"});}
+            if(newMessages) {gotoBottom('banner');}
             else {gotoBottom('messages-container');}
             newMessages = false;
         }
