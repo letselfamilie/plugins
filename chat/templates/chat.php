@@ -291,7 +291,7 @@ $consultant = false;
             </form>
         </div>
         <?php } ?>
-        <div class="messages">
+        <div id="messages-container" class="messages">
             <ul>
                 <!--<li class="sent">
                     <img src="<?php /*echo PATH*/?>/images/user.png" alt=""/>
