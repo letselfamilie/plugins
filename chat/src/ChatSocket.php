@@ -68,6 +68,8 @@ class ChatSocket implements MessageComponentInterface
     private $users; //connections list
     private $queryObj;
 
+    private $consultants_id;
+
     public function __construct()
     {
         $this->clients = new \SplObjectStorage;
@@ -89,9 +91,12 @@ class ChatSocket implements MessageComponentInterface
             $this->queryObj[$queryPair[0]] = $queryPair[1];
         }
 
-        $user_id = trim($this->queryObj['userId']);
-        $this->users_id[$user_id] = $conn->resourceId;
+        if ($this->queryObj['consultan']==1) {
 
+        }else {
+            $user_id = trim($this->queryObj['userId']);
+            $this->users_id[$user_id] = $conn->resourceId;
+        }
 //        $dbconn = DBHelper::connect();
 //        $sqlQuery = "SELECT *
 //                     FROM wp_f_categories;";

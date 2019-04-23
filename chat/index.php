@@ -60,7 +60,8 @@ function chat_scripts()
             array('ajax_url' => admin_url('admin-ajax.php'), 'plugin_directory' => plugins_url('', __FILE__), 'site_url' => get_site_url()));
         wp_localize_script('chat-js', 'user_object',
             array(
-                'id' => wp_get_current_user()->ID
+                'id' => wp_get_current_user()->ID,
+                'role' => ((array)( wp_get_current_user()->roles )[0])[0]
             ));
     }
 }
