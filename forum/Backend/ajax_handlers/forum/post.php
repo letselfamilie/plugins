@@ -228,10 +228,12 @@ function update_post() {
     $post_message = $_POST['post_message'];
 
     if($post_id != null && $user_id != null && $post_message != null){
-      
+
+
+        $time = $wpdb->get_var("SELECT create_timestamp FROM {$wpdb->prefix}f_posts WHERE  post_id=$post_id;");
 
         $sqlQuery = "UPDATE {$wpdb->prefix}f_posts 
-                     SET post_message='". $post_message . "'
+                     SET post_message='$post_message' 
                      WHERE post_id=".$post_id." AND user_id=".$user_id.";";
         try {
             $wpdb->query($sqlQuery);

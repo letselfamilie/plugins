@@ -117,7 +117,7 @@ function forum_db_tables() {
                  cat_name         char(50) NOT NULL ,
                  user_id          bigint(20) unsigned NOT NULL ,
                  is_anonym        bit(1) NOT NULL ,
-                 create_timestamp timestamp NOT NULL ,
+                 create_timestamp timestamp NOT NULL,
                 PRIMARY KEY  (topic_id) ,
                 FOREIGN KEY  (cat_name) REFERENCES ".$wpdb->prefix."f_categories (cat_name) ON DELETE CASCADE ON UPDATE CASCADE ,
                 FOREIGN KEY  (user_id) REFERENCES ".$wpdb->prefix."users (ID) ON DELETE NO ACTION ON UPDATE NO ACTION
