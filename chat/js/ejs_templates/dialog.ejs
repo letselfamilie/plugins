@@ -1,0 +1,9 @@
+<li id="<%= id %>"  class="conversation">
+    <div class="wrap">
+        <img src=" <%= photo %> " alt=""/>
+        <div class="meta">
+            <p class="name"> <%= name %> </p>
+            <p class="preview"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>
+        </div>
+    </div>
+</li>
