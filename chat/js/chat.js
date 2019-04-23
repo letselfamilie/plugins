@@ -8,7 +8,6 @@ let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 let myprofilelogo = url_object.plugin_directory +'/images/user.png';
-let curr_user;
 let dialog_templ = ejs.compile(fs.readFileSync("./chat/js/ejs_templates/dialog.ejs", "utf8"));
 let mes_templ = ejs.compile(fs.readFileSync("./chat/js/ejs_templates/message.ejs", "utf8"));
 
@@ -30,7 +29,6 @@ $(function () {
         },
         success: function (res) {
             console.log("Res: " + res);
-            curr_user = JSON.parse(res).curr_user;
             loadChat(JSON.parse(res));
         },
         error: function (error) {

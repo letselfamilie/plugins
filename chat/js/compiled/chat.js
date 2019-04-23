@@ -30,7 +30,6 @@ $(function () {
         },
         success: function (res) {
             console.log("Res: " + res);
-            console.log("mes.curr_user in ajax " +  JSON.parse(res).curr_user + "mmmmmm");
             loadChat(JSON.parse(res));
         },
         error: function (error) {
@@ -360,7 +359,7 @@ function addDialog(item, mes) {
     name = (name===null || name ==="" || name === undefined )? "Question" : name;
 
     let preview = messages[messages.length - 1];
-    let fromyou = (messages.length!==0 && preview!==undefined)? ((mes.curr_user===undefined)? true: (preview.user_from_id === mes.curr_user)):  false ;
+    let fromyou = (messages.length!==0 && preview!==undefined)?  (preview.user_from_id === user_object.id): false ;
     console.log("preview.user_from_id " + preview.user_from_id);
     console.log("mes.curr_user " +  mes.curr_user);
 
