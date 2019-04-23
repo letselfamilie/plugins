@@ -117,7 +117,7 @@ function loadChat(mes) {
             let key = parseInt(searchObjKey (mes, d_id));
 
             var new_message = {message_id: "" + mes[Object.keys(mes).length -1 ].message_id + 1 , user_from_id:"" + user_object.id,
-                    dialog_id: ""+d_id ,is_read:"0",message_body:""+ message, create_timestamp:time};
+                dialog_id: ""+d_id ,is_read:"0",message_body:""+ message, create_timestamp:time};
 
             mes[key].messages.push(new_message );
 
@@ -125,10 +125,11 @@ function loadChat(mes) {
 
             $('.conversation.active .preview').html('<span>You: </span>' + message);
 
-           //$('.messages').animate({ scrollTop: $('.messages ul').children('li').last().position().top }, 'fast');
+            //$('.messages').animate({ scrollTop: $('.messages ul').children('li').last().position().top }, 'fast');
 
             $('.messages ul').children('li').last().focus();
 
+            gotoBottom('messages-container');
             console.log($(document).height());
         }
 
@@ -369,7 +370,7 @@ function addDialog(item, curr,mes) {
                             var new_messages_banner = $(".mes-break")[0];
                             if(new_messages_banner!==undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
                             //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-                            }, 5000);
+                        }, 5000);
                     }
                 }
                 addMes(mes[idDialog].messages[i] , user2logo, is_employee_chat);
@@ -396,6 +397,11 @@ function addMes(item, user2logo, is_employee_chat) {
     let $node = $(mes_templ({status: st, image: png, mes:item.message_body, time: item.create_timestamp }));
 
     $('.messages ul').append($node);
+}
+
+function gotoBottom(id){
+    var element = document.getElementById(id);
+    element.scrollTop = element.scrollHeight - element.clientHeight;
 }
 },{"ejs":3}],2:[function(require,module,exports){
 

@@ -128,6 +128,7 @@ function loadChat(mes) {
 
             $('.messages ul').children('li').last().focus();
 
+            gotoBottom('messages-container');
             console.log($(document).height());
         }
 
@@ -395,4 +396,9 @@ function addMes(item, user2logo, is_employee_chat) {
     let $node = $(mes_templ({status: st, image: png, mes:item.message_body, time: item.create_timestamp }));
 
     $('.messages ul').append($node);
+}
+
+function gotoBottom(id){
+    var element = document.getElementById(id);
+    element.scrollTop = element.scrollHeight - element.clientHeight;
 }
