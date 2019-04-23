@@ -197,6 +197,7 @@ function loadChat(mes) {
                     second_user_nickname:null, second_user_photo: url_object.plugin_directory +"/images/question.png",
                     messages: [m] };
 
+                
 
                 mes[Object.keys(mes).length] = newDialog;
 
