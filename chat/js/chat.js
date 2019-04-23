@@ -18,6 +18,28 @@ window.addEventListener('resize', () => {
     document.documentElement.style.setProperty('--vh', `${vh}px`);
 });
 
+/** Function for playing sounds
+ * Usage: $.playSound('http://example.org/sound')
+ * $.playSound('http://example.org/sound.wav')
+ * $.stopSound();
+ **/
+(function ($) {
+    $.extend({
+        playSound: function () {
+            return $(
+                '<audio class="sound-player" autoplay="autoplay" style="display:none;">'
+                + '<source src="' + arguments[0] + '" />'
+                + '<embed src="' + arguments[0] + '" hidden="true" autostart="true" loop="false"/>'
+                + '</audio>'
+            ).appendTo('body');
+        },
+        stopSound: function () {
+            $(".sound-player").remove();
+        }
+    });
+})(jQuery);
+
+
 $(function () {
     $.ajax({
         url: url_object.ajax_url,
@@ -237,6 +259,7 @@ function loadChat(mes) {
 
     conn.onmessage = function(e) {
         console.log(e.data);
+        $.playSound('../sounds/unconvinced.ogg');
 
         var data = JSON.parse(e.data)
 
