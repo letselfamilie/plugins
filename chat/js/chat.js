@@ -104,12 +104,12 @@ function loadChat(mes) {
                 return false;
             }
 
-            var d_id = $('.conversation.active').attr("id");
+            var d_id = parseInt($('.conversation.active').attr("id"));
 
             conn.send(JSON.stringify({
                 user_id_from:user_object.id,
                 command:'message',
-                dialog_id: 1,
+                dialog_id: d_id,
                 message: message
             }));
 
@@ -137,7 +137,10 @@ function loadChat(mes) {
 
             $('.conversation.active .preview').html('<span>You: </span>' + message);
 
-            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+           // $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+
+            $('.messages ul').children('li').last().focus();
+
             console.log($(document).height());
         }
 
