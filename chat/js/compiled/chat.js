@@ -9,8 +9,8 @@ let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 let myprofilelogo = url_object.plugin_directory +'/images/user.png';
-let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\r\n    <div class=\"wrap\">\r\n        <img src=\" <%= photo %> \" alt=\"\"/>\r\n        <div class=\"meta\">\r\n            <p class=\"name\"> <%= name %> </p>\r\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\r\n        </div>\r\n    </div>\r\n</li>\r\n");
-let mes_templ = ejs.compile("<li class=\"<%= status %>\">\r\n    <img src=\"<%= image %>\" alt=\"\"/>\r\n    <p>\r\n        <%= mes %>\r\n        <br/>\r\n        <small class=\"float-right mt-2\"><%= time %></small>\r\n    </p>\r\n</li>\r\n");
+let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\n    <div class=\"wrap\">\n        <img src=\" <%= photo %> \" alt=\"\"/>\n        <div class=\"meta\">\n            <p class=\"name\"> <%= name %> </p>\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\n        </div>\n    </div>\n</li>\n");
+let mes_templ = ejs.compile("<li class=\"<%= status %>\">\n    <img src=\"<%= image %>\" alt=\"\"/>\n    <p>\n        <%= mes %>\n        <br/>\n        <small class=\"float-right mt-2\"><%= time %></small>\n    </p>\n</li>\n");
 
 // We listen to the resize event
 window.addEventListener('resize', () => {
@@ -287,16 +287,11 @@ function loadChat(mes) {
 
                 if($node.find(".badge-counter").length===0)
                 {
-                    //$node.find(".wrap").append("<span class='counter hidden'>1</span>");
-
-                    let badge = '<span class="badge badge-counter ml-2 hidden">1</span>';
+                    let badge = '<span class="badge badge-counter ml-2">1</span>';
                     $(badge).appendTo($node.find(".wrap .meta .name"));
                 }
                 else
                 {
-                    //let value = $node.find("span.counter").text();
-                    //$node.find("span.counter").text(parseInt(value)+1);
-
                     let val = $node.find(".badge-counter").text();
                     $node.find(".badge-counter").text(parseInt(val) + 1);
                 }
@@ -349,7 +344,6 @@ function fillChat (mes) {
         addDialog(res[i], mes);
     }
 
-
 }
 
 function addDialog(item, mes) {
@@ -400,6 +394,7 @@ function addDialog(item, mes) {
         {
             let value = parseInt($node.find(".badge-counter").text());
             $node.find(".badge-counter").text(0);
+            $node.find(".badge-counter").addClass("hidden");
 
             if(mes[idDialog].messages === null || mes[idDialog].messages === undefined) mes[idDialog].messages=[];
 

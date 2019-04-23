@@ -286,16 +286,11 @@ function loadChat(mes) {
 
                 if($node.find(".badge-counter").length===0)
                 {
-                    //$node.find(".wrap").append("<span class='counter hidden'>1</span>");
-
-                    let badge = '<span class="badge badge-counter ml-2 hidden">1</span>';
+                    let badge = '<span class="badge badge-counter ml-2">1</span>';
                     $(badge).appendTo($node.find(".wrap .meta .name"));
                 }
                 else
                 {
-                    //let value = $node.find("span.counter").text();
-                    //$node.find("span.counter").text(parseInt(value)+1);
-
                     let val = $node.find(".badge-counter").text();
                     $node.find(".badge-counter").text(parseInt(val) + 1);
                 }
@@ -348,7 +343,6 @@ function fillChat (mes) {
         addDialog(res[i], mes);
     }
 
-
 }
 
 function addDialog(item, mes) {
@@ -399,6 +393,7 @@ function addDialog(item, mes) {
         {
             let value = parseInt($node.find(".badge-counter").text());
             $node.find(".badge-counter").text(0);
+            $node.find(".badge-counter").addClass("hidden");
 
             if(mes[idDialog].messages === null || mes[idDialog].messages === undefined) mes[idDialog].messages=[];
 
