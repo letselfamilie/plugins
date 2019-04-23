@@ -103,6 +103,7 @@ $(function () {
         }
     });
 
+
     function getInfAboutTopic() {
         $.ajax({
             url: url_object.ajax_url,
