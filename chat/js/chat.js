@@ -29,7 +29,6 @@ $(function () {
         },
         success: function (res) {
             console.log("Res: " + res);
-            console.log("JSON.parse(res) " +  JSON.parse(res));
             console.log("mes.curr_user in ajax " +  JSON.parse(res).curr_user + "mmmmmm");
             loadChat(JSON.parse(res));
         },
