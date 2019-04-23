@@ -9,8 +9,8 @@ let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 let myprofilelogo = url_object.plugin_directory +'/images/user.png';
-let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\r\n    <div class=\"wrap\">\r\n        <img src=\" <%= photo %> \" alt=\"\"/>\r\n        <div class=\"meta\">\r\n            <p class=\"name\"> <%= name %> </p>\r\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\r\n        </div>\r\n    </div>\r\n</li>\r\n");
-let mes_templ = ejs.compile("<li class=\"<%= status %>\">\r\n    <img src=\"<%= image %>\" alt=\"\"/>\r\n    <p>\r\n        <%= mes %>\r\n        <br/>\r\n        <small class=\"float-right mt-2\"><%= time %></small>\r\n    </p>\r\n</li>\r\n");
+let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\n    <div class=\"wrap\">\n        <img src=\" <%= photo %> \" alt=\"\"/>\n        <div class=\"meta\">\n            <p class=\"name\"> <%= name %> </p>\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\n        </div>\n    </div>\n</li>\n");
+let mes_templ = ejs.compile("<li class=\"<%= status %>\">\n    <img src=\"<%= image %>\" alt=\"\"/>\n    <p>\n        <%= mes %>\n        <br/>\n        <small class=\"float-right mt-2\"><%= time %></small>\n    </p>\n</li>\n");
 
 // We listen to the resize event
 window.addEventListener('resize', () => {
@@ -105,12 +105,12 @@ function loadChat(mes) {
                 return false;
             }
 
-            var d_id = $('.conversation.active').attr("id");
+            var d_id = parseInt($('.conversation.active').attr("id"));
 
             conn.send(JSON.stringify({
                 user_id_from:user_object.id,
                 command:'message',
-                dialog_id: 1,
+                dialog_id: d_id,
                 message: message
             }));
 
@@ -138,7 +138,10 @@ function loadChat(mes) {
 
             $('.conversation.active .preview').html('<span>You: </span>' + message);
 
-            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+           //$('.messages').animate({ scrollTop: $('.messages ul').children('li').last().position().top }, 'fast');
+
+            $('.messages ul').children('li').last().focus();
+
             console.log($(document).height());
         }
 
@@ -246,7 +249,9 @@ function loadChat(mes) {
                 var m ={ user_from_id: from, message_body: mess, create_timestamp: time};
                 addMes(m , $('.conversation.active').find("img").attr('src') , is_chat_with_employee);
 
-                $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+
+                $('.messages ul').children('li').last().focus();
+                //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
             }
             else{
 
@@ -376,7 +381,7 @@ function addDialog(item, curr,mes) {
                         setTimeout(function() {
                             var new_messages_banner = $(".mes-break")[0];
                             if(new_messages_banner!==undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
-                            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+                            //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
                             }, 5000);
                     }
                 }
@@ -385,8 +390,9 @@ function addDialog(item, curr,mes) {
         }
         // TODO: badges
 
-        $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+        //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
 
+        $('.messages ul').children('li').last().focus();
     });
     $("#conversations ul").append($node);
 }

@@ -104,12 +104,12 @@ function loadChat(mes) {
                 return false;
             }
 
-            var d_id = $('.conversation.active').attr("id");
+            var d_id = parseInt($('.conversation.active').attr("id"));
 
             conn.send(JSON.stringify({
                 user_id_from:user_object.id,
                 command:'message',
-                dialog_id: 1,
+                dialog_id: d_id,
                 message: message
             }));
 
@@ -137,7 +137,10 @@ function loadChat(mes) {
 
             $('.conversation.active .preview').html('<span>You: </span>' + message);
 
-            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+           //$('.messages').animate({ scrollTop: $('.messages ul').children('li').last().position().top }, 'fast');
+
+            $('.messages ul').children('li').last().focus();
+
             console.log($(document).height());
         }
 
@@ -245,7 +248,9 @@ function loadChat(mes) {
                 var m ={ user_from_id: from, message_body: mess, create_timestamp: time};
                 addMes(m , $('.conversation.active').find("img").attr('src') , is_chat_with_employee);
 
-                $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+
+                $('.messages ul').children('li').last().focus();
+                //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
             }
             else{
 
@@ -375,7 +380,7 @@ function addDialog(item, curr,mes) {
                         setTimeout(function() {
                             var new_messages_banner = $(".mes-break")[0];
                             if(new_messages_banner!==undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
-                            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+                            //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
                             }, 5000);
                     }
                 }
@@ -384,8 +389,9 @@ function addDialog(item, curr,mes) {
         }
         // TODO: badges
 
-        $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+        //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
 
+        $('.messages ul').children('li').last().focus();
     });
     $("#conversations ul").append($node);
 }
