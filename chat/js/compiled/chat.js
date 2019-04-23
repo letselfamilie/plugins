@@ -9,8 +9,8 @@ let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 let myprofilelogo = url_object.plugin_directory +'/images/user.png';
-let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\r\n    <div class=\"wrap\">\r\n        <img src=\" <%= photo %> \" alt=\"\"/>\r\n        <div class=\"meta\">\r\n            <p class=\"name\"> <%= name %> </p>\r\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\r\n        </div>\r\n    </div>\r\n</li>\r\n");
-let mes_templ = ejs.compile("<li class=\"<%= status %>\">\r\n    <img src=\"<%= image %>\" alt=\"\"/>\r\n    <p>\r\n        <%= mes %>\r\n        <br/>\r\n        <small class=\"float-right mt-2\"><%= time %></small>\r\n    </p>\r\n</li>\r\n");
+let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\n    <div class=\"wrap\">\n        <img src=\" <%= photo %> \" alt=\"\"/>\n        <div class=\"meta\">\n            <p class=\"name\"> <%= name %> </p>\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\n        </div>\n    </div>\n</li>\n");
+let mes_templ = ejs.compile("<li class=\"<%= status %>\">\n    <img src=\"<%= image %>\" alt=\"\"/>\n    <p>\n        <%= mes %>\n        <br/>\n        <small class=\"float-right mt-2\"><%= time %></small>\n    </p>\n</li>\n");
 
 // We listen to the resize event
 window.addEventListener('resize', () => {
@@ -143,7 +143,7 @@ function loadChat(mes) {
             $('.messages ul').children('li').last().focus();
 
             gotoBottom('messages-container');
-            console.log($(document).height());
+
         }
 
 
@@ -161,6 +161,9 @@ function loadChat(mes) {
         });
 
         $("#btn-newmessage").click(function () {
+
+            $(".conversation.active").removeClass("active");
+
             $(".contact-profile").css('display', 'none');
             $(".messages").css('display', 'none');
             $(".message-input").css('display', 'none');
@@ -171,6 +174,7 @@ function loadChat(mes) {
         });
 
         $( "#addNewDialog" ).click(function( ) {
+
             event.preventDefault();
             let topic = $("#inputTopic").val();
             let messageFirst = $("#inputFirstMessage").val();
@@ -198,19 +202,17 @@ function loadChat(mes) {
                     second_user_nickname:null, second_user_photo: url_object.plugin_directory +"/images/question.png",
                     messages: [m] };
 
-                
-
                 mes[Object.keys(mes).length] = newDialog;
 
-                console.log(mes);
 
                 addDialog(newDialog, mes);
 
-                $(".contact-profile").css('display', '');
+                $(".contact-profile").css('display', 'none');
                 $(".messages").css('display', 'none');
                 $(".message-input").css('display', 'none');
 
                 $(".new-convo").css('display', 'none');
+
             }
             else(alert("Write your issue, please"))
 
@@ -238,18 +240,14 @@ function loadChat(mes) {
             let dial_id = data.dialog_id;
             let is_chat_with_employee = data.is_employee_chat;
 
-            console.log("DialId " + dial_id);
-
             let key = searchObjKey (mes, dial_id);
 
-            console.log("key" + key);
 
             var new_message = {message_id: "" + mes[Object.keys(mes).length -1 ].message_id + 1 , user_from_id: from,
                 dialog_id: dial_id , is_read:"0", message_body:mess, create_timestamp:time};
 
             mes[key].messages.push(new_message);
 
-            console.log("mes " + mes);
 
             $("#"+ dial_id+" p.preview").text(mess);
             let $node = $("#"+ dial_id);
@@ -410,7 +408,7 @@ function addDialog(item, mes) {
 
 function addMes(item, user2logo, is_employee_chat) {
     var st = ((item.user_from_id===user_object.id) ? "sent" : "replies");
-    console.log(item.user_from_id +" "+ user_object.id);
+
     var png = ((item.user_from_id===user_object.id) ? myprofilelogo : user2logo);
 
     if(is_employee_chat==="1" && item.user_from_id!==user_object.id) png = url_object.plugin_directory +"/images/logo.png";
