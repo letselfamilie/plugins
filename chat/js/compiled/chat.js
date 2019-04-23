@@ -359,14 +359,14 @@ function addDialog(item, mes) {
     name = (name===null || name ==="" || name === undefined )? "Question" : name;
 
     let preview = messages[messages.length - 1];
-    let fromyou = (messages.length!==0 && preview!==undefined)? (preview.user_from_id === mes.curr_user):  false ;
+    let fromyou = (messages.length!==0 && preview!==undefined)? ((mes.curr_user===undefined)? true: (preview.user_from_id === mes.curr_user)):  false ;
     console.log("messages.length " +messages.length);
     console.log("preview " +preview);
     console.log("preview.user_from_id " + preview.user_from_id);
     console.log("mes.curr_user " +  mes.curr_user);
 
     let $node = $(dialog_templ({id: dialog_id, photo: img, name:name, sent: fromyou, preview: (preview!== undefined)?preview: "" }));
-    
+
     $node.click(function() {
 
         var newMessages =false;
