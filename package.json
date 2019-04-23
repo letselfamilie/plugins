@@ -12,6 +12,7 @@
     "exports": "0.0.1",
     "fs": "0.0.1-security",
     "grunt": "^1.0.3",
+    "howler": "^2.1.2",
     "require": "^2.4.20"
   },
   "devDependencies": {
