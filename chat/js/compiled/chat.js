@@ -379,11 +379,10 @@ function addDialog(item, curr,mes) {
                 addMes(mes[idDialog].messages[i] , user2logo, is_employee_chat);
             }
         }
-
         // TODO: badges
 
+        if(mes[idDialog].messages[mes[idDialog].messages.length-1].user_from_id === user_object.id) $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
 
-        if($(".mes-break")[0] === undefined) $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
     });
     $("#conversations ul").append($node);
 }
