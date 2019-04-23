@@ -248,7 +248,9 @@ function loadChat(mes) {
                 var m ={ user_from_id: from, message_body: mess, create_timestamp: time};
                 addMes(m , $('.conversation.active').find("img").attr('src') , is_chat_with_employee);
 
-                $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+
+                $('.messages ul').children('li').last().focus();
+                //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
             }
             else{
 
@@ -378,7 +380,7 @@ function addDialog(item, curr,mes) {
                         setTimeout(function() {
                             var new_messages_banner = $(".mes-break")[0];
                             if(new_messages_banner!==undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
-                            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+                            //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
                             }, 5000);
                     }
                 }
