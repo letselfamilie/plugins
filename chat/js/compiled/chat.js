@@ -9,8 +9,8 @@ let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 let myprofilelogo = url_object.plugin_directory +'/images/user.png';
-let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\n    <div class=\"wrap\">\n        <img src=\" <%= photo %> \" alt=\"\"/>\n        <div class=\"meta\">\n            <p class=\"name\"> <%= name %> </p>\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\n        </div>\n    </div>\n</li>\n");
-let mes_templ = ejs.compile("<li class=\"<%= status %>\">\n    <img src=\"<%= image %>\" alt=\"\"/>\n    <p>\n        <%= mes %>\n        <br/>\n        <small class=\"float-right mt-2\"><%= time %></small>\n    </p>\n</li>\n");
+let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\r\n    <div class=\"wrap\">\r\n        <img src=\" <%= photo %> \" alt=\"\"/>\r\n        <div class=\"meta\">\r\n            <p class=\"name\"> <%= name %> </p>\r\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\r\n        </div>\r\n    </div>\r\n</li>\r\n");
+let mes_templ = ejs.compile("<li class=\"<%= status %>\">\r\n    <img src=\"<%= image %>\" alt=\"\"/>\r\n    <p>\r\n        <%= mes %>\r\n        <br/>\r\n        <small class=\"float-right mt-2\"><%= time %></small>\r\n    </p>\r\n</li>\r\n");
 
 // We listen to the resize event
 window.addEventListener('resize', () => {
@@ -365,18 +365,19 @@ function addDialog(item, curr,mes) {
                         newMessages =true;
                         newBanner("New messages");
                         //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-                        var offset = $(".mes-break").offset().top - $(window).scrollTop();
+                        /*var offset = $(".mes-break").offset().top - $(window).scrollTop();
 
                         if(offset < window.innerHeight){
                             // Not in view so scroll to it
                             $('.messages').animate({scrollTop: offset - offset/2}, "fast");
                         }
-                        else $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+                        else $('.messages').animate({ scrollTop: $(document).height() }, 'fast');*/
 
                         setTimeout(function() {
                             var new_messages_banner = $(".mes-break")[0];
                             if(new_messages_banner!==undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
-                        }, 5000);
+                            $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+                            }, 5000);
                     }
                 }
                 addMes(mes[idDialog].messages[i] , user2logo, is_employee_chat);
