@@ -22,9 +22,6 @@ window.addEventListener('resize', () => {
 
 //http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3
 $(function () {
-    var sound = new Howl({
-        src: ['sounds/unconvinced.mp3']
-    });
 
     $.ajax({
         url: url_object.ajax_url,
@@ -244,6 +241,9 @@ function loadChat(mes) {
 
     conn.onmessage = function (e) {
         console.log(e.data);
+        var sound = new Howl({
+            src: ['sounds/unconvinced.mp3']
+        });
         sound.play();
 
         var data = JSON.parse(e.data)
