@@ -346,6 +346,7 @@ function fillChat (mes) {
 }
 
 function addDialog(item, mes) {
+    
     let dialog_id = item.dialog_id;
     let is_employee_chat = item.is_employee_chat;
     let dialog_topic = item.dialog_topic;
@@ -359,9 +360,6 @@ function addDialog(item, mes) {
 
     let preview = messages[messages.length - 1];
     let fromyou = (messages.length!==0 && preview!==undefined)?  (preview.user_from_id === user_object.id): false ;
-    console.log("preview.user_from_id " + preview.user_from_id);
-    console.log("mes.curr_user " +  mes.curr_user);
-
     let $node = $(dialog_templ({id: dialog_id, photo: img, name:name, sent: fromyou, preview: (preview!== undefined)?preview: "" }));
 
     $node.click(function() {
