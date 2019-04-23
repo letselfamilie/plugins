@@ -325,6 +325,7 @@ $(function () {
                         },
 
                         success: function (res) {
+                            console.log(res);
                             $node.find('.message').removeClass('none');
                             $node.find('.content-edit').addClass('none');
                             $node.find('.message').html(textarea.replace(/\n/g, '<br>'));
