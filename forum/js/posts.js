@@ -318,6 +318,8 @@ $(function () {
                 $node.find('.reaction-number').addClass('hide');
                 $node.find('.empty-like').addClass('hide');
                 $node.find('.full-like').addClass('hide');
+
+                $node.find('.post-text').attr('style', 'padding-bottom:8px;');
             });
 
             $node.on('click', '.save-butt', function () {
@@ -345,6 +347,7 @@ $(function () {
                             $node.find('.reaction-number').removeClass('hide');
                             $node.find('.empty-like').removeClass('hide');
                             $node.find('.full-like').removeClass('hide');
+                            $node.find('.post-text').attr('style', '');
                         },
                         error: function (error) {
                             console.log(error);
