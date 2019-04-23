@@ -124,8 +124,9 @@ class ChatSocket implements MessageComponentInterface
                     break;
 
                 case "message":
+                    $time = date("Y-m-d H:i:s");
                     $message = $data->message;
-                    $this->sendMessage($user_id_from, $room_id, $message);
+                    $this->sendMessage($user_id_from, $room_id, $message, $time);
                     $this->sendUserStoppedTypingMessage($user_id_from, $room_id);
                     break;
 
@@ -135,11 +136,18 @@ class ChatSocket implements MessageComponentInterface
                         $second_user = $data->second_user;
                         $topic = $data->topic;
 
+                        $chat_id = null;
                         if (isset($dialog_type) && isset($second_user)) {
-                            $this->addDialogToDB($user_id_from, $dialog_type, $second_user, $topic);
+                            $chat_id = $this->addDialogToDB($user_id_from, $dialog_type, $second_user, $topic);
                         }
 
-                        $message = array('message' => "New chat with ".$second_user." was added");
+                        $message = array(
+                            'message' => "New chat with ".$second_user." was added",
+                            'second_user' => $second_user,
+                            'dialog_id' => $chat_id,
+                            'dialog_type' => $dialog_type,
+                            'topic' => $topic
+                        );
                         $from->send(json_encode($message));
                     }
                     break;
@@ -187,7 +195,7 @@ class ChatSocket implements MessageComponentInterface
             'timestamp'=> time(),
         );
 
-        $clients = $this->findRoomClients($roomId);
+        $clients = ($this->findRoomInf($roomId))['users'];
 //        unset($clients[$client->getResourceId()]);
         $this->sendDataToClients($userFromId, $clients, $dataResponse);
     }
@@ -200,33 +208,39 @@ class ChatSocket implements MessageComponentInterface
             'timestamp'=> time(),
         );
 
-        $clients = $this->findRoomClients($roomId);
+        $clients = ($this->findRoomInf($roomId))['users'];
 //        unset($clients[$client->getResourceId()]);
         $this->sendDataToClients($userFromId, $clients, $dataPacket);
     }
 
-    function sendMessage($clientFromId, $roomId, $message)
+    function sendMessage($clientFromId, $roomId, $message, $time)
     {
+        $dialog_inf = $this->findRoomInf($roomId);
+
         $dataPacket = array(
             'type'=> 'message',
+            'dialog_id' => $roomId,
             'from'=> $clientFromId,
-            'message'=> $message
+            'message'=> $message,
+            'time' => $time,
+            'is_employee_chat' => $dialog_inf['is_employee_chat']
         );
 
-        $clients = $this->findRoomClients($roomId);
+        $clients = $dialog_inf['users'];
         $this->sendDataToClients($clientFromId, $clients, $dataPacket);
 
-        $this->saveMessageInDB($clientFromId, $roomId, $message);
+        $this->saveMessageInDB($clientFromId, $roomId, $message, $time);
     }
 
-    function saveMessageInDB($clientFromId, $dialogId, $message){
+    function saveMessageInDB($clientFromId, $dialogId, $message, $time){
         $dbconn = DBHelper::connect();
 
-        $sqlQuery = "INSERT INTO wp_c_messages (user_from_id, dialog_id, message_body) 
+        $sqlQuery = "INSERT INTO wp_c_messages (user_from_id, dialog_id, message_body, create_timestamp) 
                      VALUES (
                         '" . $clientFromId . "',
                         '" . $dialogId."',
-                        '" . $message."');";
+                        '" . $message."',
+                        '" . $time. "');";
         try {
             $dbconn->query($sqlQuery, \PDO::FETCH_ASSOC);
         } catch (\Exception $e) {
@@ -257,38 +271,45 @@ class ChatSocket implements MessageComponentInterface
 
         try {
             $dbconn->query($sqlQuery);
+            $last_id = $dbconn->lastInsertId();
+            DBHelper::disconnect();
+            return $last_id;
 
         } catch (\Exception $e) {
             echo "Error occured: ".$e." \n";
             DBHelper::disconnect();
+            return null;
         }
-        DBHelper::disconnect();
     }
 
-    function findRoomClients($roomId){
+    function findRoomInf($roomId){
 //        global $wpdb;
         echo "ROOMID ".$roomId;
 
         $dbconn = DBHelper::connect();
 
-        $sqlQuery = "SELECT user1_id, COALESCE(user2_id, employee_id) AS user_id
+        $sqlQuery = "SELECT user1_id, COALESCE(user2_id, employee_id) AS user_id, is_employee_chat
                      FROM wp_c_dialogs
                      WHERE dialog_id = ".$roomId.";";
 
+        $dialog_inf = array();
         $users = array();
         try {
-            foreach ($dbconn->query($sqlQuery, \PDO::FETCH_ASSOC) as $user){
-                echo "USER ".$user['user_id'].'\n';
-                $users[] = $user['user1_id'];
-                $users[] = $user['user_id'];
+            foreach ($dbconn->query($sqlQuery, \PDO::FETCH_ASSOC) as $dialog){
+                echo "USER ".$dialog['user_id'].'\n';
+                $users[] = $dialog['user1_id'];
+                $users[] = $dialog['user_id'];
+
+                $dialog_inf['is_employee_chat'] = $dialog['is_employee_chat'];
             }
+            $dialog_inf['users'] = $users;
         } catch (\Exception $e) {
             echo "Error occured: ".$e." \n";
             DBHelper::disconnect();
         }
         DBHelper::disconnect();
 
-        return $users;
+        return $dialog_inf;
     }
 
     function sendDataToClients($clientFromId, array $clients, array $packet)

@@ -14,6 +14,9 @@ add_action('wp_ajax_nopriv_'.'add_topic', 'add_topic');
 add_action('wp_ajax_'.'get_forum_topics', 'get_forum_topics');
 add_action('wp_ajax_nopriv_'.'get_forum_topics', 'get_forum_topics');
 
+add_action('wp_ajax_'.'n_topic_pages', 'n_topic_pages');
+add_action('wp_ajax_nopriv_'.'n_topic_pages', 'n_topic_pages');
+
 add_action('wp_ajax_'.'get_topic_by_id', 'get_topic_by_id');
 add_action('wp_ajax_nopriv_'.'get_topic_by_id', 'get_topic_by_id');
 
@@ -39,9 +42,14 @@ function add_topic(){
 
         try {
             $wpdb->query($sqlQuery);
+            echo json_encode($wpdb->get_var("SELECT topic_id
+                                             FROM {$wpdb->prefix}f_topics
+                                             WHERE topic_name = $topic_name AND 
+                                                   user_id = $user_id
+                                             ORDER BY create_timestamp
+                                             LIMIT 1;") * 1);
         }catch (Exception $e) {
-            echo 'Exception:', $e->getMessage(), "\n";
-            echo $sqlQuery;
+            wp_send_json_error($e->getMessage() . '\n' . $sqlQuery, '600');
         }
         
         die;
@@ -64,7 +72,9 @@ function get_forum_topics(){
                      ON {$wpdb->prefix}f_topics.topic_id = {$wpdb->prefix}f_posts.topic_id
                      WHERE cat_name = '$cat_name'
                      GROUP BY topic_name, {$wpdb->prefix}f_topics.topic_id
-                     ORDER BY posts_num DESC;";
+                     ORDER BY posts_num DESC
+                     LIMIT $_POST[per_page]
+                     OFFSET ". ( $_POST['page_number'] - 1 ) * $_POST['per_page'] .";";
 
         $topics = array();
         try {
@@ -103,6 +113,14 @@ function get_forum_topics(){
         
         die;
     }
+}
+
+function n_topic_pages() {
+    global $wpdb;
+    echo json_encode(ceil($wpdb->get_var("SELECT COUNT(*) 
+                                                FROM {$wpdb->prefix}f_topics
+                                                WHERE cat_name = $_POST[cat_name];") / $_POST['per_page']));
+    die;
 }
 
 function get_topic_by_id(){

@@ -5,13 +5,13 @@ let ejs = require('ejs');
 
 let category_templ = ejs.compile(fs.readFileSync("./forum/js/ejs_templates/forum_category.ejs", "utf8"));
 
+let paginationInit = require('./pagination');
+
 $(function () {
     let $category_table = $("#categories_list");
 
     var current_page = 1;
-    var max_page = 1;
-    var per_page = 1;
-
+    var per_page = 10;
 
     initPagination();
     function initPagination() {
@@ -24,56 +24,7 @@ $(function () {
             },
             success: function (res) {
                 max_page = res;
-                var pagina_from = 1;
-                var pagina_to = max_page > 5 ? 5 : max_page;
-                for (var i = 2; i <= pagina_to; i++) {
-                    $('.forward-arrow').before("<a class='num' href='#'>" + i + "</a>")
-                }
-
-
-                $('.pagination').find('.num').on('click', function () {
-                    $('.pagination').find('.active').removeClass('active');
-                    $(this).addClass('active');
-                    current_page = parseInt($(this).text());
-                    console.log(current_page + "/" + max_page);
-                    getCategories();
-                });
-
-                $('.pagination').find('.back-arrow').on('click', function () {
-                    if (current_page > pagina_from) {
-                        let $n = $('.pagination').find('.active');
-                        $n.removeClass('active');
-                        $n.prev().addClass('active');
-                        current_page -= 1;
-                        getCategories();
-                    } else if (current_page > 1) {
-                        pagina_to--;
-                        pagina_from--;
-                        current_page--;
-                        $('.num').each(function (n) {
-                            $(this).text(parseInt($( this ).text()) - 1)
-                        })
-                    }
-                    console.log(current_page + "/" + max_page);
-                });
-
-                $('.pagination').find('.forward-arrow').on('click', function () {
-                    if (current_page < pagina_to) {
-                        let $n = $('.pagination').find('.active');
-                        $n.removeClass('active');
-                        $n.next().addClass('active');
-                        current_page += 1;
-                        getCategories()
-                    } else if (current_page < max_page) {
-                        pagina_to++;
-                        pagina_from++;
-                        current_page++;
-                        $('.num').each(function (n) {
-                            $(this).text(parseInt($( this ).text()) + 1)
-                        })
-                    }
-                    console.log(current_page + "/" + max_page);
-                });
+                paginationInit(current_page, max_page, 5, getCategories, {});
             },
             error: function (error) {
                 console.log(error);
@@ -81,19 +32,17 @@ $(function () {
         });
     }
 
-    // "<a class='num' href='#'>$i</a>";
-
     if($category_table) {
-        getCategories();
+        getCategories(current_page);
     }
 
-    function getCategories() {
+    function getCategories(page) {
         $.ajax({
             url: url_object.ajax_url,
             type: 'POST',
             data: {
                 action: 'get_forum_categories',
-                page_number: current_page,
+                page_number: page,
                 per_page: per_page
             },
 

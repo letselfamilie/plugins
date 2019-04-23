@@ -1,6 +1,7 @@
 <?php
 /* Template Name: Posts */
 define("PATH", plugins_url('..' , __FILE__));
+$role =  ((array)( wp_get_current_user()->roles )[0])[0];
 ?>
 
 <!DOCTYPE html>
@@ -63,13 +64,20 @@ define("PATH", plugins_url('..' , __FILE__));
         <span id="added-by"></span>
 
         <?php if (is_user_logged_in()) { ?>
+            <?php
+            global $wpdb;
+            if ($role == 'administrator' || $role == 'adviser' ||
+                wp_get_current_user()->ID == $wpdb->get_var('SELECT user_id) 
+                                                             FROM {$wpbd->prefix}_f_posts   
+                                                             WHERE topic_id = $_GET[topic_id];')) { ?>
         <div id="topic-dropdown" class="dropdown">
             <img src="<?php echo PATH?>/images/more.svg">
+
             <div class="dropdown-content">
                 <p class="delete">Delete</p>
             </div>
         </div>
-
+            <?php } ?>
         <img class="star-empty" src="<?php echo PATH?>/images/star-empty.svg">
         <img class="star-full" src="<?php echo PATH?>/images/star-full.svg">
         <?php }?>
@@ -134,11 +142,13 @@ define("PATH", plugins_url('..' , __FILE__));
     } ?>
 
     <div class="pagination">
-        <a href="#">&laquo;</a>
-        <a href="#">1</a>
-        <a href="#" class="active">2</a>
-        <a href="#">3</a>
-        <a href="#">&raquo;</a>
+        <a class='back-end-arrow'><i class="fa fa-angle-double-left"></i></a>
+        <a class='back-arrow'><i class="fa fa-angle-left"></i></a>
+        <a class='before-dots'>…</a>
+        <!-- pages -->
+        <a class='after-dots'>…</a>
+        <a class='forward-arrow'><i class="fa fa-angle-right"></i></i></a>
+        <a class='forward-end-arrow'><i class="fa fa-angle-double-right"></i></a>
     </div>
 
 </div>

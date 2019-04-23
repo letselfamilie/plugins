@@ -5,6 +5,8 @@ let ejs = require('ejs');
 
 let post_templ = ejs.compile(fs.readFileSync("./forum/js/ejs_templates/forum_post.ejs", "utf8"));
 
+let paginationInit = require('./pagination');
+
 function decodeUrl(){
     let search = location.search.substring(1);
     let url_params = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
@@ -14,32 +16,58 @@ function decodeUrl(){
 $(function () {
     loader(true);
 
-
     function hasTouch() {
         return 'ontouchstart' in document.documentElement
             || navigator.maxTouchPoints > 0
             || navigator.msMaxTouchPoints > 0;
     }
 
-
     let url_params = decodeUrl();
     console.log(url_params);
 
     $('textarea').autoResize();
 
-    let topic_id = url_params != null ? url_params['topic_id'] : 1;
-    let user_id = 1;
-    let curr_user = null;
+    let topic_id = url_params != null ? url_params['topic_id'] : -1;
+    let user_id = user_object.id;
+    console.log(user_id);
+
     var respond_to_id = null;
     var posts_table = $("#posts");
     var post_to_delete = null;
     var curr_category_url = null;
 
+    var pagination_obj = {current_page: 1};
+    var per_page = 20;
+
+    if (topic_id == -1) {
+        window.location.replace(url_object.site_url + "/categories");
+    }
+
     getInfAboutTopic();
     // loadMyInfo();
     setUpListeners();
-    loadPost();
 
+    loadPost(pagination_obj.current_page);
+
+    initPagination();
+    function initPagination() {
+        $.ajax({
+            url: url_object.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'n_posts_pages',
+                per_page: per_page,
+                topic_id: topic_id
+            },
+            success: function (res) {
+                max_page = res;
+                paginationInit(pagination_obj.current_page, max_page, 5, loadPost, pagination_obj);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
 
     $(".enter-butt").on("click", function (e) {
         var parent = e.target.parentElement;
@@ -63,7 +91,7 @@ $(function () {
                     textarea.val("");
                     $('.respond-info').css('display', 'none');
                     respond_to_id = null;
-                    loadPost();
+                    loadPost(pagination_obj.current_page);
                     setUpListeners();
                 },
                 error: function (error) {
@@ -118,7 +146,7 @@ $(function () {
         }
     }
 
-    function loadPost() {
+    function loadPost(page) {
         loader(true);
 
         posts_table.find(".post-row").remove();
@@ -129,7 +157,10 @@ $(function () {
             data: {
                 action: 'get_posts',
                 topic_id: topic_id,
-                user_id: user_id
+                user_id: user_id,
+                page_number: page,
+                per_page: per_page
+
             },
 
             success: function (res) {
@@ -173,135 +204,145 @@ $(function () {
 
 
     function addPost(data) {
-        let $node = $(post_templ({post: data, user_id:user_id, url: url_object.template_directory}));
+        let $node = $(post_templ({post: data,
+                user_id:user_id,
+                url: url_object.template_directory,
+                role: user_object.role}));
 
         var is_liked = data.liked == '1';
         var n_likes = parseInt(data.n_likes);
         var n_responds = parseInt(data.n_responds);
 
 
+        if (user_id > 0) {
+            $node.on('click', '.comment-full', function () {
+                var post_text = data.post_message.substring(0, 75) + ((data.post_message.length <= 75) ? '' : "...");
+                $("#quote-text").text(data.first_name + " " + data.surname + ': ' + post_text);
 
-        $node.on('click', '.comment-full', function () {
-            var post_text = data.post_message.substring(0, 75) + ((data.post_message.length <= 75)? '': "...");
-            $("#quote-text").text(data.first_name + " " + data.surname + ': ' + post_text);
+                $('.respond-info').css('display', 'inline-block');
 
-            $('.respond-info').css('display', 'inline-block');
+                respond_to_id = data.post_id;
+                console.log(respond_to_id);
 
-            respond_to_id = data.post_id;
-            console.log(respond_to_id);
-
-            $("#enter-textarea").focus();
-        });
-
-
-        $node.on('click', '.comment-empty', function () {
-            var post_text = data.post_message.substring(0, 75) + ((data.post_message.length <= 75)? '': "...");
-            $("#quote-text").text(data.first_name + " " + data.surname + ': ' + post_text);
-
-            $('.respond-info').css('display', 'inline-block');
-
-            respond_to_id = data.post_id;
-            console.log(respond_to_id);
-
-            $("#enter-textarea").focus();
-            $('.comment-full').addClass('none');
-            $('.comment-empty').removeClass('none');
-            $node.find('.comment-full').removeClass('none');
-            $node.find('.comment-empty').addClass('none');
-        });
-
-
-        $node.on('click', '.full-like', function () {
-
-            $node.find(".empty-like").removeClass('none');
-            $node.find(".full-like").addClass('none');
-            $.ajax({
-                url: url_object.ajax_url,
-                type: 'POST',
-                data: {
-                    action: 'dislike',
-                    post_id: data.post_id,
-                    user_id: user_id
-                },
-
-                success: function (res) {
-                    console.log('disliked');
-
-                    n_likes -= 1;
-                    $node.find('.like-number').text(n_likes);
-                },
-                error: function (error) {
-                    console.log(error);
-                }
+                $("#enter-textarea").focus();
             });
 
-        });
+            $node.on('click', '.comment-empty', function () {
+                var post_text = data.post_message.substring(0, 75) + ((data.post_message.length <= 75) ? '' : "...");
+                $("#quote-text").text(data.first_name + " " + data.surname + ': ' + post_text);
 
-        $node.on('click', '.empty-like', function () {
+                $('.respond-info').css('display', 'inline-block');
 
-            $node.find(".empty-like").addClass('none');
-            $node.find(".full-like").removeClass('none');
-            $.ajax({
-                url: url_object.ajax_url,
-                type: 'POST',
-                data: {
-                    action: 'like',
-                    post_id: data.post_id,
-                    user_id: user_id
-                },
+                respond_to_id = data.post_id;
+                console.log(respond_to_id);
 
-                success: function (res) {
-                    console.log('liked');
-                    n_likes += 1;
-                    $node.find('.like-number').text(n_likes);
-                },
-                error: function (error) {
-                    console.log(error);
-                }
+                $("#enter-textarea").focus();
+                $('.comment-full').addClass('none');
+                $('.comment-empty').removeClass('none');
+                $node.find('.comment-full').removeClass('none');
+                $node.find('.comment-empty').addClass('none');
             });
-        });
 
-        $node.find('.dropdown').on('click', function() {
-            dropdown($(this))
-        });
+            $node.on('click', '.full-like', function () {
 
-        $node.on('click', '.delete', function () {
-            $('.container-blured').addClass('blur');
-            $('#delete-post-panel').attr('style', '');
-            post_to_delete = data.post_id;
-        });
-
-        $node.on('click', '.edit', function () {
-            $node.find('.content-edit').removeClass('none');
-            $node.find('.edit-textarea').text($node.find('.message').html().replace(/<br>/g, '\n'));
-            $node.find('.edit-textarea').focus();
-            $node.find('.message').addClass('none');
-        });
-
-        $node.on('click', '.save-butt', function () {
-            var textarea = $node.find('.edit-textarea').val();
-            if (textarea.trim() !== '') {
+                $node.find(".empty-like").removeClass('none');
+                $node.find(".full-like").addClass('none');
                 $.ajax({
                     url: url_object.ajax_url,
                     type: 'POST',
                     data: {
-                        action: 'update_post',
+                        action: 'dislike',
                         post_id: data.post_id,
-                        user_id: user_id,
-                        post_message: textarea
+                        user_id: user_id
                     },
 
                     success: function (res) {
-                        $node.find('.message').removeClass('none');
-                        $node.find('.content-edit').addClass('none');
-                        $node.find('.message').html(textarea.replace(/\n/g, '<br>'));
+                        console.log('disliked');
+
+                        n_likes -= 1;
+                        $node.find('.like-number').text(n_likes);
                     },
                     error: function (error) {
                         console.log(error);
                     }
                 });
-            }
-        });
+
+            });
+
+            $node.on('click', '.empty-like', function () {
+
+                $node.find(".empty-like").addClass('none');
+                $node.find(".full-like").removeClass('none');
+                $.ajax({
+                    url: url_object.ajax_url,
+                    type: 'POST',
+                    data: {
+                        action: 'like',
+                        post_id: data.post_id,
+                        user_id: user_id
+                    },
+
+                    success: function (res) {
+                        console.log('liked');
+                        n_likes += 1;
+                        $node.find('.like-number').text(n_likes);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+
+            $node.find('.dropdown').on('click', function () {
+                dropdown($(this))
+            });
+
+            $node.on('click', '.delete', function () {
+                $('.container-blured').addClass('blur');
+                $('#delete-post-panel').attr('style', '');
+                post_to_delete = data.post_id;
+            });
+
+            $node.on('click', '.edit', function () {
+                $node.find('.content-edit').removeClass('none');
+                $node.find('.edit-textarea').text($node.find('.message').html().replace(/<br>/g, '\n'));
+                $node.find('.edit-textarea').focus();
+                $node.find('.message').addClass('none');
+            });
+
+            $node.on('click', '.save-butt', function () {
+                var textarea = $node.find('.edit-textarea').val();
+                if (textarea.trim() !== '') {
+                    $.ajax({
+                        url: url_object.ajax_url,
+                        type: 'POST',
+                        data: {
+                            action: 'update_post',
+                            post_id: data.post_id,
+                            user_id: user_id,
+                            post_message: textarea
+                        },
+
+                        success: function (res) {
+                            $node.find('.message').removeClass('none');
+                            $node.find('.content-edit').addClass('none');
+                            $node.find('.message').html(textarea.replace(/\n/g, '<br>'));
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            });
+        } else {
+            $node.on('click', '.comment-empty', function () {
+                window.location.href =  url_object.site_url + "/register";
+            });
+
+            $node.on('click', '.empty-like', function () {
+                window.location.href =  url_object.site_url + "/register";
+            });
+        }
 
         posts_table.append($node);
         $node.insertBefore(".post-enter");
@@ -352,7 +393,7 @@ $(function () {
                 console.log('deleted');
                 $('.container-blured').removeClass('blur');
                 $('#delete-post-panel').attr('style', 'display:none');
-                loadPost();
+                loadPost(pagination_obj.current_page);
             },
             error: function (error) {
                 console.log(error);

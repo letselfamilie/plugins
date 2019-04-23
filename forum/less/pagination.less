@@ -1,6 +1,7 @@
 .pagination {
   display: flex;
   justify-content: flex-end;
+  margin: 6px 0 !important;
 }
 
 
@@ -10,15 +11,32 @@
   padding: 8px 16px;
   text-decoration: none;
   transition: background-color .3s;
+  margin-right: 0 !important;
+  margin-left: 3px;
   //border: 1px solid #ddd;
+
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }
 
-.pagination a.active {
-  background-color: #0e88f1;
-  color: white;
-  border: 1px solid #0e88f1;
+.pagination a.active, .pagination a:hover {
+  background-color: #0e88f1 !important;
+  color: white !important;
+  border: 1px solid #0e88f1 !important;
+  text-decoration: none !important;
+}
+
+a.active {
+  text-decoration: none !important;
 }
 
 .pagination a:hover:not(.active) {background-color: #ddd;}
 
-.pagination a:hover { background-color: inherit;}
+.after-dots, .before-dots {
+  cursor: default;
+}

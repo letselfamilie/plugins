@@ -96,6 +96,7 @@ function get_forum_categories()
 
 function n_pages() {
     global $wpdb;
-    echo json_encode(ceil($wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}f_categories;") / $_POST['per_page']));
+    echo json_encode(ceil($wpdb->get_var("SELECT COUNT(*) 
+                                                FROM {$wpdb->prefix}f_categories;") / $_POST['per_page']));
     die;
 }

@@ -24,7 +24,6 @@ wp_localize_script('categories-add-script', 'url_object',
 
 
 // Adding custom template pages
-
 add_filter('template_include', 'forum_page_template', 99);
 function forum_page_template($template)
 {
@@ -66,6 +65,8 @@ function add_forum_pages()
     }
 }
 
+
+
 add_action('wp_enqueue_scripts', 'forum_scripts');
 function forum_scripts()
 {
@@ -77,11 +78,20 @@ function forum_scripts()
         wp_enqueue_script('topics-script', plugins_url('js/compiled/topics.js', __FILE__), array('jquery'), date("h:i:s") , true);
         wp_localize_script('topics-script', 'url_object',
             array('ajax_url' => admin_url('admin-ajax.php'), 'site_url' => get_site_url()));
+        wp_localize_script('topics-script', 'user_object',
+            array(
+                'id' => wp_get_current_user()->ID
+            ));
     } else if (is_page('posts')) {
         wp_enqueue_script('posts-script', plugins_url('js/compiled/posts.js', __FILE__), array('jquery'), date("h:i:s") , true);
         wp_localize_script('posts-script', 'url_object',
             array('ajax_url' => admin_url('admin-ajax.php'), 'template_directory' => plugins_url('', __FILE__), 'site_url' => get_site_url()));
         wp_dequeue_style( 'bootstrap' );
+        wp_localize_script('posts-script', 'user_object',
+            array(
+                'id' => wp_get_current_user()->ID,
+                'role' => ((array)( wp_get_current_user()->roles )[0])[0]
+            ));
     }
 }
 
@@ -164,7 +174,6 @@ function add_category_admin_bar()
 }
 
 add_action( 'wp_before_admin_bar_render', 'add_category_admin_bar' );
-
 
 
 
