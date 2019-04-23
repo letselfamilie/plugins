@@ -356,8 +356,7 @@ function addDialog(item, mes) {
     let img = (is_employee_chat==="1")? url_object.plugin_directory +"/images/question.png" : item.second_user_photo;
     let name = (is_employee_chat==="1")? ((dialog_topic===null)? item.second_user_nickname:dialog_topic): item.second_user_nickname;
     name = (name===null || name ==="" || name === undefined )? "Question" : name;
-
-
+    
     let preview = messages[messages.length - 1];
     let fromyou = (messages.length!==0 && preview!==undefined)? (parseInt(preview.user_from_id) === parseInt(mes.curr_user)):  false ;
     console.log("fromyou " +fromyou);
