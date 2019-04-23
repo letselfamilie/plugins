@@ -138,6 +138,7 @@ function loadChat(mes) {
             $('.conversation.active .preview').html('<span>You: </span>' + message);
 
             $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
+            console.log($(document).height());
         }
 
 
