@@ -22,7 +22,6 @@ $(function () {
     }
 
 
-
     let url_params = decodeUrl();
     console.log(url_params);
 

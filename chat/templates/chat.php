@@ -110,6 +110,10 @@ $consultant = false;
 <?php //get_template_part( 'header' ); ?>
 
 
+<div id='loader' class="center lds-css ng-scope">
+    <div class="center lds-spin" style="width:100%;height:100%"><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div><div><div></div></div></div>
+</div>
+
 <div id="chat-frame">
     <div id="sidepanel">
         <div id="profile">
@@ -124,16 +128,16 @@ $consultant = false;
         </div>
         <div id="conversations">
             <ul>
-                <li class="conversation">
+                <!--<li id="2" class="conversation">
                     <div class="wrap">
-                        <img src="<?php echo PATH?>/images/question.png" alt=""/>
+                        <img src="<?php /*echo PATH*/?>/images/question.png" alt=""/>
                         <div class="meta">
                             <p class="name">I have a question about car accidents</p>
                             <p class="preview"><span>You:</span>What if...?</p>
                         </div>
                     </div>
                 </li>
-                <li class="conversation">
+                <li id="3"  class="conversation">
                     <div class="wrap">
                         <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt=""/>
                         <div class="meta">
@@ -143,7 +147,7 @@ $consultant = false;
                         </div>
                     </div>
                 </li>
-                <li class="conversation">
+                <li id="1" class="conversation">
                     <div class="wrap">
                         <img src="http://emilcarlsson.se/assets/rachelzane.png" alt=""/>
                         <div class="meta">
@@ -155,7 +159,7 @@ $consultant = false;
                 </li>
                 <li class="conversation">
                     <div class="wrap">
-                        <img src="<?php echo PATH?>/images/user.png" alt=""/>
+                        <img src="<?php /*echo PATH*/?>/images/user.png" alt=""/>
                         <div class="meta">
                             <p class="name">Karen Brown</p>
                             <p class="preview">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
@@ -165,7 +169,7 @@ $consultant = false;
                 </li>
                 <li class="conversation active">
                     <div class="wrap">
-                        <img src="<?php echo PATH?>/images/question.png" alt=""/>
+                        <img src="<?php /*echo PATH*/?>/images/question.png" alt=""/>
                         <div class="meta">
                             <p class="name">Vaccination</p>
                             <p class="preview">Sed nisi lacus sed viverra tellus in. Non odio euismod lacinia at quis
@@ -184,7 +188,7 @@ $consultant = false;
                 </li>
                 <li class="conversation">
                     <div class="wrap">
-                        <img src="<?php echo PATH?>/images/user.png" alt=""/>
+                        <img src="<?php /*echo PATH*/?>/images/user.png" alt=""/>
                         <div class="meta">
                             <p class="name preview">User</p>
                             <p class="preview">Hello.</p>
@@ -193,7 +197,7 @@ $consultant = false;
                 </li>
                 <li class="conversation">
                     <div class="wrap">
-                        <img src="<?php echo PATH?>/images/user.png" alt=""/>
+                        <img src="<?php /*echo PATH*/?>/images/user.png" alt=""/>
                         <div class="meta">
                             <p class="name">Kate</p>
                             <p class="preview">Turpis egestas sed tempus urna et pharetra pharetra massa massa. </p>
@@ -202,7 +206,7 @@ $consultant = false;
                 </li>
                 <li class="conversation">
                     <div class="wrap">
-                        <img src="<?php echo PATH?>/images/question.png" alt=""/>
+                        <img src="<?php /*echo PATH*/?>/images/question.png" alt=""/>
                         <div class="meta">
                             <p class="name">Another question</p>
                             <p class="preview"><span>You:</span>Nec ultrices dui sapien eget. </p>
@@ -211,14 +215,14 @@ $consultant = false;
                 </li>
                 <li class="conversation">
                     <div class="wrap">
-                        <img src="<?php echo PATH?>/images/question.png" alt=""/>
+                        <img src="<?php /*echo PATH*/?>/images/question.png" alt=""/>
                         <div class="meta">
                             <p class="name">A question</p>
                             <p class="preview"><span>You:</span>Nam aliquam sem et tortor consequat id porta. Sagittis
                                 vitae et leo duis ut diam quam nulla. </p>
                         </div>
                     </div>
-                </li>
+                </li>-->
             </ul>
         </div>
         <?php if (!$consultant) { ?>
@@ -239,18 +243,18 @@ $consultant = false;
             <form>
                 <div class="form-group">
                     <label>Question summary</label>
-                    <input type="text" class="form-control" name="topic" placeholder="My question is regarding...">
+                    <input id="inputTopic" type="text" class="form-control" name="topic" placeholder="My question is regarding...">
                 </div>
                 <div class="form-group">
                     <label>Message</label>
-                    <textarea class="form-control" name="text" placeholder="Tell us about your problem here" rows="3"></textarea>
+                    <textarea id="inputFirstMessage" class="form-control" name="text" placeholder="Tell us about your problem here" rows="3"></textarea>
                 </div>
-                <button type="submit">Ask</button>
+                <button id="addNewDialog" type="submit">Ask</button>
             </form>
         </div>
         <?php } ?>
 
-        <div class="contact-profile">
+        <div class="contact-profile hidden">
             <img src="<?php echo PATH?>/images/question.png" alt="question"/>
             <p id="chat-title">Vaccination</p>
 
@@ -269,6 +273,8 @@ $consultant = false;
                 </div>
             </div>
         </div>
+
+
         <?php if ($consultant) { ?>
         <div class="redirect collapse multi-collapse" id="redirectCollapse">
             <form class="input-group">
@@ -287,8 +293,8 @@ $consultant = false;
         <?php } ?>
         <div class="messages">
             <ul>
-                <li class="sent">
-                    <img src="<?php echo PATH?>/images/user.png" alt=""/>
+                <!--<li class="sent">
+                    <img src="<?php /*echo PATH*/?>/images/user.png" alt=""/>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua. In nisl nisi scelerisque eu ultrices.
@@ -296,16 +302,18 @@ $consultant = false;
                         <small class="float-right mt-2">14:02:59</small>
                     </p>
                 </li>
+
                 <li class="replies">
-                    <img src="<?php echo PATH?>/images/logo.png" alt=""/>
+                    <img src="<?php /*echo PATH*/?>/images/logo.png" alt=""/>
                     <p>
                         Cursus vitae congue mauris rhoncus aenean vel elit scelerisque.
                         <br/>
                         <small class="float-right mt-2">14:08:30</small>
                     </p>
                 </li>
+
                 <li class="replies">
-                    <img src="<?php echo PATH?>/images/logo.png" alt=""/>
+                    <img src="<?php /*echo PATH*/?>/images/logo.png" alt=""/>
                     <p>
                         Pellentesque diam volutpat commodo sed egestas egestas fringilla.
                         <br/>
@@ -313,7 +321,7 @@ $consultant = false;
                     </p>
                 </li>
                 <li class="sent">
-                    <img src="<?php echo PATH?>/images/user.png" alt=""/>
+                    <img src="<?php /*echo PATH*/?>/images/user.png" alt=""/>
                     <p>
                         Porta nibh venenatis cras sed felis eget velit aliquet sagittis. Sodales ut etiam sit amet nisl
                         purus in mollis.
@@ -322,7 +330,7 @@ $consultant = false;
                     </p>
                 </li>
                 <li class="replies">
-                    <img src="<?php echo PATH?>/images/logo.png" alt=""/>
+                    <img src="<?php /*echo PATH*/?>/images/logo.png" alt=""/>
                     <p>
                         Eleifend quam adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus.
                         <br/>
@@ -330,7 +338,7 @@ $consultant = false;
                     </p>
                 </li>
                 <li class="replies">
-                    <img src="<?php echo PATH?>/images/logo.png" alt=""/>
+                    <img src="<?php /*echo PATH*/?>/images/logo.png" alt=""/>
                     <p>
                         Eget sit amet tellus cras adipiscing enim eu.
                         <br/>
@@ -338,27 +346,26 @@ $consultant = false;
                     </p>
                 </li>
                 <li class="sent">
-                    <img src="<?php echo PATH?>/images/user.png" alt=""/>
+                    <img src="<?php /*echo PATH*/?>/images/user.png" alt=""/>
                     <p>
                         Id aliquet lectus proin nibh.
                         <br/>
                         <small class="float-right mt-2">14:18:23</small>
                     </p>
                 </li>
-                <li class="mes-break">
-                    <p>New messages<i class="fa fa-chevron-down ml-1"></i></p>
-                </li>
+
                 <li class="replies">
-                    <img src="<?php echo PATH?>/images/logo.png" alt=""/>
+                    <img src="<?php /*echo PATH*/?>/images/logo.png" alt=""/>
                     <p>
                         Sed nisi lacus sed viverra tellus in. Non odio euismod lacinia at quis risus sed vulputate odio.
                         <br/>
                         <small class="float-right mt-2">14:21:39</small>
                     </p>
-                </li>
+                </li>-->
+
             </ul>
         </div>
-        <div class="message-input">
+        <div class="message-input hidden">
             <div class="wrap">
                 <input id="message-input" type="text" placeholder="Write your message..."/>
                 <button id="send-message-butt" class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
@@ -376,3 +383,7 @@ $consultant = false;
 
 </body>
 </html>
+
+<!--<li class="mes-break">
+    <p>New messages<i class="fa fa-chevron-down ml-1"></i></p>
+</li>-->
