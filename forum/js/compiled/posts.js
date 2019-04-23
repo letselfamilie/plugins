@@ -134,7 +134,7 @@ let $ = jQuery;
 
 let ejs = require('ejs');
 
-let post_templ = ejs.compile("<tr class=\"post-row\">\n\n\n\n\n        <% if (post.is_anonym == 0) {%>\n            <td class=\"user-info\">\n\n                <img src=\"<%= post.photo %>\">\n\n                <a href=\"/\"><%= post.first_name + \" \" + post.surname %></a>\n            </td>\n        <% } else { %>\n\n                <td class=\"user-info\">\n\n                    <img src=\"<%= url %>/images/user.png\">\n\n                    <a href=\"/\">Anonym</a>\n                </td>\n        <% } %>\n    <td class=\"post-text\">\n        <span class=\"post-id\"><%= post.post_id %></span>\n\n        <p class=\"text-post\">\n            <% if (post.respond_message != null) { %>\n                <div class=\"respond-message\">\n                <span class=\"respond-to-user\"> <%= post.user_respond_to %>: </span>\n                <div class=\"text-post-message\"><%= post.respond_message.substring(0, 75) + ((post.respond_message.length <= 75)? '': \"...\") %></div></div>\n            <% } %>\n\n\n        <div class=\"message\"><%- post.post_message.replace(/\\n/g, '<br>') %></div>\n        </p>\n\n        <span class=\"date\"><%= post.create_timestamp %></span>\n\n        <span class=\"like-number\"><%= post.n_likes %></span>\n        <span class=\"reaction-number\"><%= post.n_responds %></span>\n\n        <img src=\"<%= url %>/images/like-empty.svg\" class=\"empty-like <% if (post.liked) { %>\n            <%= \" none\"%>\n        <% }%>\">\n        <img src=\"<%= url %>/images/like-full.svg\" class=\"full-like <% if (!post.liked) { %>\n            <%= \" none\"%>\n        <% }%>\">\n\n        <img src=\"<%= url %>/images/comment-full.svg\" class=\"comment-full none\">\n        <img src=\"<%= url %>/images/comment-empty.svg\" class=\"comment-empty\">\n\n        <% if (post.user_id == user_id) { %>\n        <div class=\"dropdown\">\n            <img src=\"<%= url %>/images/more.svg\">\n            <div class=\"dropdown-content\">\n                <p class=\"edit\">Edit</p>\n                <p class=\"delete\">Delete</p>\n            </div>\n        </div>\n\n\n\n        <div class=\"content-edit none\">\n            <div class=\"text-enter-container\">\n                <textarea class=\"edit-textarea\"></textarea>\n                <button class=\"save-butt\">Save\n                </button>\n            </div>\n\n        </div>\n\n\n        <% }%>\n\n\n\n\n\n\n    </td>\n</tr>");
+let post_templ = ejs.compile("<tr class=\"post-row\">\n\n\n\n\n        <% if (post.is_anonym == 0) {%>\n            <td class=\"user-info\">\n\n                <img src=\"<%= post.photo %>\">\n\n                <a href=\"/\"><%= post.first_name + \" \" + post.surname %></a>\n            </td>\n        <% } else { %>\n\n                <td class=\"user-info\">\n\n                    <img src=\"<%= url %>/images/user.png\">\n\n                    <a href=\"/\">Anonym</a>\n                </td>\n        <% } %>\n    <td class=\"post-text\">\n        <span class=\"post-id\"><%= post.post_id %></span>\n\n        <p class=\"text-post\">\n            <% if (post.respond_message != null) { %>\n                <div class=\"respond-message\">\n                <span class=\"respond-to-user\"> <%= post.user_respond_to %>: </span>\n                <div class=\"text-post-message\"><%= post.respond_message.substring(0, 75) + ((post.respond_message.length <= 75)? '': \"...\") %></div></div>\n            <% } %>\n\n\n        <div class=\"message\"><%- post.post_message.replace(/\\n/g, '<br>') %></div>\n        </p>\n\n        <span class=\"date\"><%= post.create_timestamp %></span>\n\n        <span class=\"like-number\"><%= post.n_likes %></span>\n        <span class=\"reaction-number\"><%= post.n_responds %></span>\n\n        <img src=\"<%= url %>/images/like-empty.svg\" class=\"empty-like <% if (post.liked) { %>\n            <%= \" none\"%>\n        <% }%>\">\n        <img src=\"<%= url %>/images/like-full.svg\" class=\"full-like <% if (!post.liked) { %>\n            <%= \" none\"%>\n        <% }%>\">\n\n        <img src=\"<%= url %>/images/comment-full.svg\" class=\"comment-full none\">\n        <img src=\"<%= url %>/images/comment-empty.svg\" class=\"comment-empty\">\n\n        <% if (post.user_id == user_id || role == 'administrator' || role == 'adviser') { %>\n        <div class=\"dropdown\">\n            <img src=\"<%= url %>/images/more.svg\">\n            <div class=\"dropdown-content\">\n                <p class=\"edit\">Edit</p>\n                <p class=\"delete\">Delete</p>\n            </div>\n        </div>\n\n\n\n        <div class=\"content-edit none\">\n            <div class=\"text-enter-container\">\n                <textarea class=\"edit-textarea\"></textarea>\n                <button class=\"save-butt\">Save\n                </button>\n            </div>\n\n        </div>\n\n\n        <% }%>\n\n\n\n\n\n\n    </td>\n</tr>");
 
 let paginationInit = require('./pagination');
 
@@ -146,7 +146,6 @@ function decodeUrl(){
 
 $(function () {
     loader(true);
-
 
     function hasTouch() {
         return 'ontouchstart' in document.documentElement
@@ -336,7 +335,10 @@ $(function () {
 
 
     function addPost(data) {
-        let $node = $(post_templ({post: data, user_id:user_id, url: url_object.template_directory}));
+        let $node = $(post_templ({post: data,
+                user_id:user_id,
+                url: url_object.template_directory,
+                role: user_object.role}));
 
         var is_liked = data.liked == '1';
         var n_likes = parseInt(data.n_likes);

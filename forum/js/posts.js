@@ -16,7 +16,6 @@ function decodeUrl(){
 $(function () {
     loader(true);
 
-
     function hasTouch() {
         return 'ontouchstart' in document.documentElement
             || navigator.maxTouchPoints > 0
@@ -205,7 +204,10 @@ $(function () {
 
 
     function addPost(data) {
-        let $node = $(post_templ({post: data, user_id:user_id, url: url_object.template_directory}));
+        let $node = $(post_templ({post: data,
+                user_id:user_id,
+                url: url_object.template_directory,
+                role: user_object.role}));
 
         var is_liked = data.liked == '1';
         var n_likes = parseInt(data.n_likes);
