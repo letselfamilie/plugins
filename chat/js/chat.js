@@ -204,6 +204,15 @@ function loadChat(mes) {
                 mes[Object.keys(mes).length] = newDialog;
 
 
+
+                // socket add dialog
+                conn.send(JSON.stringify({
+                    user_id_from:user_object.id,
+                    command:'new_chat',
+                    dialog_type:'employee_chat'
+                }));
+
+
                 addDialog(newDialog, mes);
 
                 $(".contact-profile").css('display', 'none');

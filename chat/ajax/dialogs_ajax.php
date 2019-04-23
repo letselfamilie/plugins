@@ -68,3 +68,5 @@ function get_dialogs(){
         }
         die;
 }
+
+

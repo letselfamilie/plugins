@@ -136,6 +136,10 @@ class ChatSocket implements MessageComponentInterface
                         $second_user = $data->second_user;
                         $topic = $data->topic;
 
+                        // TODO
+                        // if dialog_type == 'employee_chat' find free employee or random
+
+
                         $chat_id = null;
                         if (isset($dialog_type) && isset($second_user)) {
                             $chat_id = $this->addDialogToDB($user_id_from, $dialog_type, $second_user, $topic);
