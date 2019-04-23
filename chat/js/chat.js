@@ -357,10 +357,11 @@ function addDialog(item, mes) {
     let name = (is_employee_chat==="1")? ((dialog_topic===null)? item.second_user_nickname:dialog_topic): item.second_user_nickname;
     name = (name===null || name ==="" || name === undefined )? "Question" : name;
 
-    console.log("name " +name);
+
     let preview = messages[messages.length - 1];
-    let sent = (messages.length!==0 && preview!==undefined)? (preview.user_from_id == parseInt(mes.curr_user)):  false   ;
-    let $node = $(dialog_templ({id: dialog_id, photo: img, name:name, sent: sent, preview: (preview!== undefined)?preview: "" }));
+    let fromyou = (messages.length!==0 && preview!==undefined)? (parseInt(preview.user_from_id) === parseInt(mes.curr_user)):  false ;
+    console.log("fromyou " +fromyou);
+    let $node = $(dialog_templ({id: dialog_id, photo: img, name:name, sent: fromyou, preview: (preview!== undefined)?preview: "" }));
 
 
     $node.click(function() {
