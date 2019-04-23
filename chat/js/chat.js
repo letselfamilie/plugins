@@ -375,6 +375,7 @@ function addDialog(item, curr,mes) {
             }
 
             $('.messages ul').children('li').last().focus();
+            gotoBottom('messages-container');
         }
         // TODO: badges
 
