@@ -8,6 +8,7 @@ let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 let myprofilelogo = url_object.plugin_directory +'/images/user.png';
+let curr_user;
 let dialog_templ = ejs.compile(fs.readFileSync("./chat/js/ejs_templates/dialog.ejs", "utf8"));
 let mes_templ = ejs.compile(fs.readFileSync("./chat/js/ejs_templates/message.ejs", "utf8"));
 
@@ -29,7 +30,7 @@ $(function () {
         },
         success: function (res) {
             console.log("Res: " + res);
-            console.log("mes.curr_user in ajax " +  JSON.parse(res).curr_user + "mmmmmm");
+            curr_user = JSON.parse(res).curr_user;
             loadChat(JSON.parse(res));
         },
         error: function (error) {
@@ -359,7 +360,7 @@ function addDialog(item, mes) {
     name = (name===null || name ==="" || name === undefined )? "Question" : name;
 
     let preview = messages[messages.length - 1];
-    let fromyou = (messages.length!==0 && preview!==undefined)? ((mes.curr_user===undefined)? true: (preview.user_from_id === mes.curr_user)):  false ;
+    let fromyou = (messages.length!==0 && preview!==undefined)?  (preview.user_from_id === user_object.id): false ;
     console.log("preview.user_from_id " + preview.user_from_id);
     console.log("mes.curr_user " +  mes.curr_user);
 
