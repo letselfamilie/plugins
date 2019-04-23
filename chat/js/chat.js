@@ -116,7 +116,7 @@ function loadChat(mes) {
             let key = parseInt(searchObjKey (mes, d_id));
 
             var new_message = {message_id: "" + mes[Object.keys(mes).length -1 ].message_id + 1 , user_from_id:"" + user_object.id,
-                    dialog_id: ""+d_id ,is_read:"0",message_body:""+ message, create_timestamp:time};
+                dialog_id: ""+d_id ,is_read:"0",message_body:""+ message, create_timestamp:time};
 
             mes[key].messages.push(new_message );
 
@@ -124,7 +124,7 @@ function loadChat(mes) {
 
             $('.conversation.active .preview').html('<span>You: </span>' + message);
 
-           //$('.messages').animate({ scrollTop: $('.messages ul').children('li').last().position().top }, 'fast');
+            //$('.messages').animate({ scrollTop: $('.messages ul').children('li').last().position().top }, 'fast');
 
             $('.messages ul').children('li').last().focus();
 
@@ -368,7 +368,7 @@ function addDialog(item, curr,mes) {
                             var new_messages_banner = $(".mes-break")[0];
                             if(new_messages_banner!==undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
                             //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-                            }, 5000);
+                        }, 5000);
                     }
                 }
                 addMes(mes[idDialog].messages[i] , user2logo, is_employee_chat);
