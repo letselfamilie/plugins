@@ -46,7 +46,6 @@ function loadChat(mes) {
         console.log("Connection established!");
         console.log(e);
 
-
         fillChat(mes);
 
         $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
