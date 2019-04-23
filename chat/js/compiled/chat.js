@@ -205,7 +205,7 @@ function loadChat(mes) {
                     dialog_id: "4", //TODO: auto-increase dialog_id
                     is_employee_chat: "1", dialog_topic: topic, user1_id: "" + user_object.id,
                     user2_id: "6",  // TODO: auto-transfer to certain employee id
-                    second_user_nickname: null, second_user_photo: url_object.plugin_directory + "/images/question.png",
+                    second_user_nickname: null, second_user_photo: url_object.plugin_directory + "/images/question.svg",
                     messages: [m]
                 };
 
@@ -355,7 +355,7 @@ function addDialog(item, mes) {
     let user2_id = item.user2_id;
     let messages = (item.messages === null || item.messages === undefined) ? [] : item.messages;
 
-    let img = (is_employee_chat === "1") ? url_object.plugin_directory + "/images/question.png" : item.second_user_photo;
+    let img = (is_employee_chat === "1") ? url_object.plugin_directory + "/images/question.svg" : item.second_user_photo;
     let name = (is_employee_chat === "1") ? ((dialog_topic === null) ? item.second_user_nickname : dialog_topic) : item.second_user_nickname;
     name = (name === null || name === "" || name === undefined) ? "Question" : name;
 
