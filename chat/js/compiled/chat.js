@@ -64,19 +64,6 @@ function loadChat(mes) {
             $('#inputSearch').focus();
             var input = $('#inputSearch').val().trim();
 
-
-            let $node = $("#1");
-
-            if($node.find("span.counter").length===0)
-            {
-                $node.find(".wrap").append("<span class='counter hidden'>1</span>");
-            }
-            else
-            {
-                let value = $node.find("span.counter").text();
-                $node.find("span.counter").text(parseInt(value)+1);
-            }
-
             if(input!=="")
             {
                 console.log("Search "+input);
@@ -387,12 +374,14 @@ function addDialog(item, curr,mes) {
                 }
                 addMes(mes[idDialog].messages[i] , user2logo, is_employee_chat);
             }
+
+            $('.messages ul').children('li').last().focus();
         }
         // TODO: badges
 
         //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
 
-        $('.messages ul').children('li').last().focus();
+
     });
     $("#conversations ul").append($node);
 }

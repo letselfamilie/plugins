@@ -63,19 +63,6 @@ function loadChat(mes) {
             $('#inputSearch').focus();
             var input = $('#inputSearch').val().trim();
 
-
-            let $node = $("#1");
-
-            if($node.find("span.counter").length===0)
-            {
-                $node.find(".wrap").append("<span class='counter hidden'>1</span>");
-            }
-            else
-            {
-                let value = $node.find("span.counter").text();
-                $node.find("span.counter").text(parseInt(value)+1);
-            }
-
             if(input!=="")
             {
                 console.log("Search "+input);
