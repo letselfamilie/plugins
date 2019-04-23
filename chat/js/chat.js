@@ -382,7 +382,7 @@ function addDialog(item, curr,mes) {
         }
         // TODO: badges
 
-        if(!newMessages) {$('.messages').animate({ scrollTop: $(document).height() }, 'fast');}
+        $('.messages').animate({ scrollTop: $(document).height() }, 'fast');
 
     });
     $("#conversations ul").append($node);
