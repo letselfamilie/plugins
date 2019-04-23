@@ -29,6 +29,7 @@ $(function () {
         },
         success: function (res) {
             console.log("Res: " + res);
+            console.log("mes.curr_user in ajax" +  res.curr_user);
             loadChat(JSON.parse(res));
         },
         error: function (error) {
@@ -43,6 +44,7 @@ function loadChat(mes) {
     conn.onopen = function(e) {
         console.log("Connection established!");
         console.log(e);
+
 
         fillChat(mes);
 
@@ -337,7 +339,7 @@ function fillChat (mes) {
     delete res.curr_user;
     $("#conversations ul").empty();
 
-    console.log("mes.curr_user in fillChat" +  mes.curr_user);
+
     for(let i =0 ; i<Object.keys(res).length; i++)
     {
         addDialog(res[i], mes);
