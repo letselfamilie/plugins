@@ -72,8 +72,8 @@ $(function () {
     $(".enter-butt").on("click", function (e) {
         var parent = e.target.parentElement;
         console.log($('#chech-anonym', parent).is(":checked"));
-        var textarea = $('textarea', parent);
-        if (textarea.val().trim() !== "") {
+
+        if ($('#enter-textarea').val().trim() !== "") {
             $.ajax({
                 url: url_object.ajax_url,
                 type: 'POST',
@@ -82,13 +82,14 @@ $(function () {
                     response_to: (respond_to_id == null) ? 'NULL' : respond_to_id,
                     topic_id: topic_id,
                     user_id: user_id,
-                    post_message: $('textarea', parent).val(),
+                    post_message: $('#enter-textarea').val().trim(),
                     is_anonym: ($('#chech-anonym', parent).is(":checked")) ? 1 : 0
                 },
                 success: function (res) {
                     console.log("POSTED!");
                     console.log(res);
-                    textarea.val("");
+                    $('#enter-textarea').val('')
+                    $('textarea').css('height', '130px');
                     $('.respond-info').css('display', 'none');
                     respond_to_id = null;
                     loadPost(pagination_obj.current_page);
