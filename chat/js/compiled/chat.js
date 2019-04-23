@@ -338,7 +338,7 @@ function fillChat (mes) {
     delete res.curr_user;
     $("#conversations ul").empty();
 
-
+    console.log("mes.curr_user in fillChat" +  mes.curr_user);
     for(let i =0 ; i<Object.keys(res).length; i++)
     {
         addDialog(res[i], mes);
@@ -360,8 +360,6 @@ function addDialog(item, mes) {
 
     let preview = messages[messages.length - 1];
     let fromyou = (messages.length!==0 && preview!==undefined)? ((mes.curr_user===undefined)? true: (preview.user_from_id === mes.curr_user)):  false ;
-    console.log("messages.length " +messages.length);
-    console.log("preview " +preview);
     console.log("preview.user_from_id " + preview.user_from_id);
     console.log("mes.curr_user " +  mes.curr_user);
 
