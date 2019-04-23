@@ -36,11 +36,7 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
             position: absolute;
         }
 
-        input[type='checkbox'] {
-            top: inherit;
-            margin: 0;
-            bottom: 18px !important;
-        }
+
         input[type=checkbox]:before, input[type=radio]:before {
             background-color: #0c76cf;
         }
@@ -122,10 +118,12 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
                     </div>
                     <div class="text-enter-container">
                         <textarea id="enter-textarea" placeholder="Enter your message here..."></textarea>
-                        <span class="label-anonym">anonymously</span>
-                        <input type="checkbox" id="chech-anonym" name="chech-anonym">
-                        <button class="enter-butt">Enter
+                        <div class="right-align">
+                            <span class="label-anonym">anonymously</span>
+                            <input type="checkbox" id="chech-anonym" name="chech-anonym">
+                            <button class="enter-butt">Enter
                         </button>
+                        </div>
                     </div>
 
                 </div>
