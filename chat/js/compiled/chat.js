@@ -21,13 +21,11 @@ window.addEventListener('resize', () => {
     document.documentElement.style.setProperty('--vh', `${vh}px`);
 });
 
-
+//http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3
 $(function () {
     var sound = new Howl({
-        src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
+        src: ['sounds/unconvinced.mp3']
     });
-    sound.play();
-
 
     $.ajax({
         url: url_object.ajax_url,
@@ -247,7 +245,7 @@ function loadChat(mes) {
 
     conn.onmessage = function (e) {
         console.log(e.data);
-
+        sound.play();
 
         var data = JSON.parse(e.data)
 
