@@ -247,13 +247,13 @@ $(function () {
             type: 'POST',
             data: {
                 action: 'add_topic',
-                cat_name: url_params != null ? url_params['cat_name'] : '',
+                cat_name: cat_name,
                 topic_name: $('#new-topic-name').val(),
                 is_anonym: ($('#chech-anonym').is(":checked")) ? 1 : 0,
-                user_id: 1
+                user_id: user_object.id
             },
             success: function (res) {
-                window.location.href =  url_object.site_url + "/posts/?topic_id=" + res;
+               window.location.href =  url_object.site_url + "/posts/?topic_id=" + res;
             },
             error: function (error) {
                 console.log(error);

@@ -44,7 +44,7 @@ function add_topic(){
             $wpdb->query($sqlQuery);
             echo json_encode($wpdb->get_var("SELECT topic_id
                                              FROM {$wpdb->prefix}f_topics
-                                             WHERE topic_name = $topic_name AND 
+                                             WHERE topic_name = '$topic_name' AND 
                                                    user_id = $user_id
                                              ORDER BY create_timestamp
                                              LIMIT 1;") * 1);
