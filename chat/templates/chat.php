@@ -249,7 +249,7 @@ $consultant = false;
                     <label>Message</label>
                     <textarea id="inputFirstMessage" class="form-control" name="text" placeholder="Tell us about your problem here" rows="3"></textarea>
                 </div>
-                <button id="addNewDialog" type="submit">Ask</button>
+                <button id="addNewDialog">Ask</button>
             </form>
         </div>
         <?php } ?>

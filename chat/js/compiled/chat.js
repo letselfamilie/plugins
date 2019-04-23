@@ -9,8 +9,8 @@ let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 let myprofilelogo = url_object.plugin_directory +'/images/user.png';
-let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\r\n    <div class=\"wrap\">\r\n        <img src=\" <%= photo %> \" alt=\"\"/>\r\n        <div class=\"meta\">\r\n            <p class=\"name\"> <%= name %> </p>\r\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\r\n        </div>\r\n    </div>\r\n</li>\r\n");
-let mes_templ = ejs.compile("<li class=\"<%= status %>\">\r\n    <img src=\"<%= image %>\" alt=\"\"/>\r\n    <p>\r\n        <%= mes %>\r\n        <br/>\r\n        <small class=\"float-right mt-2\"><%= time %></small>\r\n    </p>\r\n</li>\r\n");
+let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\n    <div class=\"wrap\">\n        <img src=\" <%= photo %> \" alt=\"\"/>\n        <div class=\"meta\">\n            <p class=\"name\"> <%= name %> </p>\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\n        </div>\n    </div>\n</li>\n");
+let mes_templ = ejs.compile("<li class=\"<%= status %>\">\n    <img src=\"<%= image %>\" alt=\"\"/>\n    <p>\n        <%= mes %>\n        <br/>\n        <small class=\"float-right mt-2\"><%= time %></small>\n    </p>\n</li>\n");
 
 // We listen to the resize event
 window.addEventListener('resize', () => {
@@ -170,35 +170,48 @@ function loadChat(mes) {
 
         });
 
-        $( "#addNewDialog" ).submit(function( event ) {
+        $( "#addNewDialog" ).click(function( ) {
             event.preventDefault();
             let topic = $("#inputTopic").val();
             let messageFirst = $("#inputFirstMessage").val();
-            /*if(topic!== "" && messageFirst!== "")
+            if(topic!== "" )
             {
                 console.log(topic);
                 console.log(messageFirst);
 
                 // TODO: add new dialog to server
 
+                var today = new Date();
+                var day = today.getDate();
+                var month = today.getMonth()+1;
 
-                var newDialog = {dialog_id:"3", //TODO: auto-increase dialog_id
+                day = (day<10)? "0"+day : "" + day;
+                month = (month<10)? "0"+month : "" + month;
+                var time = today.getFullYear()+"-"+day+"-"+month +" "+ today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+                var m ={message_id:"1", dialog_id:"3" ,is_read: "0",
+                    user_from_id: user_object.id, message_body: messageFirst, create_timestamp: time};
+
+                var newDialog = {dialog_id:"4", //TODO: auto-increase dialog_id
                     is_employee_chat:"1", dialog_topic:topic, user1_id: ""+user_object.id,
-                    "user2_id":"6",  // TODO: auto-transfer to certain employee id
+                    user2_id:"6",  // TODO: auto-transfer to certain employee id
                     second_user_nickname:null, second_user_photo: url_object.plugin_directory +"/images/question.png",
-                    messages: [] };
+                    messages: [m] };
 
 
-                mes[Object.keys(mes).length].push(newDialog);
+                mes[Object.keys(mes).length] = newDialog;
 
                 console.log(mes);
 
-                $("#conversations ul").empty();
+                addDialog(newDialog, mes);
 
-                //fillChat(mes);
+                $(".contact-profile").css('display', '');
+                $(".messages").css('display', 'none');
+                $(".message-input").css('display', 'none');
 
-
-            }*/
+                $(".new-convo").css('display', 'none');
+            }
+            else(alert("Write your issue, please"))
 
             // TODO: add new dialog to side-bar
 
@@ -302,32 +315,33 @@ function searchObjKey (obj, query) {
 }
 
 function fillChat (mes) {
-    var curr_user_id = parseInt(mes.curr_user) ;
     var res = mes;
     delete res.curr_user;
     $("#conversations ul").empty();
+
+
     for(let i =0 ; i<Object.keys(res).length; i++)
     {
-        addDialog(res[i], curr_user_id, mes);
+        addDialog(res[i], mes);
     }
 
 
 }
 
-function addDialog(item, curr,mes) {
+function addDialog(item, mes) {
     let dialog_id = item.dialog_id;
     let is_employee_chat = item.is_employee_chat;
     let dialog_topic = item.dialog_topic;
     let user1_id = item.user1_id;
     let user2_id = item.user2_id;
-    let messages = item.messages;
+    let messages = (item.messages===null || item.messages===undefined)?[] : item.messages;
 
     let img = (is_employee_chat==="1")? url_object.plugin_directory +"/images/question.png" : item.second_user_photo;
     let name = (is_employee_chat==="1")? dialog_topic : item.second_user_nickname;
 
     let preview = messages[messages.length - 1];
-    let sent = (preview.user_from_id == curr);
-    let $node = $(dialog_templ({id: dialog_id, photo: img, name:name, sent: sent, preview:preview }));
+    let sent = (messages.length!==0 && preview!==undefined)? (preview.user_from_id == parseInt(mes.curr_user)):  false   ;
+    let $node = $(dialog_templ({id: dialog_id, photo: img, name:name, sent: sent, preview: (preview!== undefined)?preview: "" }));
 
 
     $node.click(function() {
@@ -360,10 +374,10 @@ function addDialog(item, curr,mes) {
 
         if(idDialog!== undefined && idDialog!== null)
         {
-
             let value = parseInt($node.find("span.counter").text());
             $node.find("span.counter").text(0);
 
+            if(mes[idDialog].messages === null || mes[idDialog].messages === undefined) mes[idDialog].messages=[];
 
             for(let i = 0; i< mes[idDialog].messages.length; i++)
             {
@@ -388,19 +402,17 @@ function addDialog(item, curr,mes) {
         }
         // TODO: badges
 
-        //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
-
 
     });
-    $("#conversations ul").append($node);
+    $("#conversations ul").prepend($node);
 }
 
 function addMes(item, user2logo, is_employee_chat) {
     var st = ((item.user_from_id===user_object.id) ? "sent" : "replies");
-
+    console.log(item.user_from_id +" "+ user_object.id);
     var png = ((item.user_from_id===user_object.id) ? myprofilelogo : user2logo);
 
-    if(is_employee_chat==="1") png = url_object.plugin_directory +"/images/logo.png";
+    if(is_employee_chat==="1" && item.user_from_id!==user_object.id) png = url_object.plugin_directory +"/images/logo.png";
 
     let $node = $(mes_templ({status: st, image: png, mes:item.message_body, time: item.create_timestamp }));
 
