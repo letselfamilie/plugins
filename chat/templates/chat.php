@@ -13,6 +13,9 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
 $consultant = false;
 if ($role == 'adviser') $consultant = true;
 
+if(!is_user_logged_in()) {
+    wp_redirect( get_site_url(). '/login', 302);
+}
 ?>
 
 <!DOCTYPE html>
