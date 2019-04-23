@@ -311,6 +311,13 @@ $(function () {
                 $node.find('.edit-textarea').text($node.find('.message').html().replace(/<br>/g, '\n'));
                 $node.find('.edit-textarea').focus();
                 $node.find('.message').addClass('none');
+
+                $node.find('.comment-full').addClass('hide');
+                $node.find('.comment-empty').addClass('hide');
+                $node.find('.like-number').addClass('hide');
+                $node.find('.reaction-number').addClass('hide');
+                $node.find('.empty-like').addClass('hide');
+                $node.find('.full-like').addClass('hide');
             });
 
             $node.on('click', '.save-butt', function () {
@@ -331,6 +338,13 @@ $(function () {
                             $node.find('.message').removeClass('none');
                             $node.find('.content-edit').addClass('none');
                             $node.find('.message').html(textarea.replace(/\n/g, '<br>'));
+
+                            $node.find('.comment-full').removeClass('hide');
+                            $node.find('.comment-empty').removeClass('hide');
+                            $node.find('.like-number').removeClass('hide');
+                            $node.find('.reaction-number').removeClass('hide');
+                            $node.find('.empty-like').removeClass('hide');
+                            $node.find('.full-like').removeClass('hide');
                         },
                         error: function (error) {
                             console.log(error);
