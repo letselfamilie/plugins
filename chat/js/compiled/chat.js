@@ -161,6 +161,9 @@ function loadChat(mes) {
         });
 
         $("#btn-newmessage").click(function () {
+            
+            $(".conversation.active").removeClass("active");
+
             $(".contact-profile").css('display', 'none');
             $(".messages").css('display', 'none');
             $(".message-input").css('display', 'none');
@@ -171,6 +174,7 @@ function loadChat(mes) {
         });
 
         $( "#addNewDialog" ).click(function( ) {
+
             event.preventDefault();
             let topic = $("#inputTopic").val();
             let messageFirst = $("#inputFirstMessage").val();
@@ -208,7 +212,7 @@ function loadChat(mes) {
                 $(".message-input").css('display', 'none');
 
                 $(".new-convo").css('display', 'none');
-                $(".conversation.active").removeClass("active");
+
             }
             else(alert("Write your issue, please"))
 
