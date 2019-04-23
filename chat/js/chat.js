@@ -269,6 +269,8 @@ function loadChat(mes) {
 
                 console.log("Dialog "+ dial_id + " has new message");
             }
+
+            gotoBottom('messages-container');
         }
 
         if(data.type==="dialog")
