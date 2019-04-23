@@ -228,7 +228,8 @@ function update_post() {
     $post_message = $_POST['post_message'];
 
     if($post_id != null && $user_id != null && $post_message != null){
-      
+
+
 
         $sqlQuery = "UPDATE {$wpdb->prefix}f_posts 
                      SET post_message='". $post_message . "'
