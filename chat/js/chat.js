@@ -386,12 +386,14 @@ function addDialog(item, curr,mes) {
                 }
                 addMes(mes[idDialog].messages[i] , user2logo, is_employee_chat);
             }
+
+            $('.messages ul').children('li').last().focus();
         }
         // TODO: badges
 
         //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
 
-        $('.messages ul').children('li').last().focus();
+
     });
     $("#conversations ul").append($node);
 }
