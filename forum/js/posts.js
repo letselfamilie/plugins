@@ -83,7 +83,8 @@ $(function () {
                     topic_id: topic_id,
                     user_id: user_id,
                     post_message: $('#enter-textarea').val().trim(),
-                    is_anonym: ($('#chech-anonym', parent).is(":checked")) ? 1 : 0
+                    is_anonym: ($('#chech-anonym', parent).is(":checked")) ? 1 : 0,
+                    is_reaction: (respond_to_id == null) ? 0 : 1
                 },
                 success: function (res) {
                     console.log("POSTED!");

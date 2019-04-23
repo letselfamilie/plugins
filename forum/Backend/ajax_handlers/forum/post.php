@@ -39,12 +39,13 @@ function add_post(){
     $user_id = $_POST['user_id'];
     $post_message = $_POST['post_message'];
     $is_anonym = $_POST['is_anonym'];
+    $is_reaction = $_POST['is_reaction'];
 
     if($response_to != null && $topic_id != null && $user_id != null && $post_message != null && $is_anonym != null){
-      
+        if ( $is_reaction == null ) $is_reaction = 0;
 
-        $sqlQuery = "INSERT INTO {$wpdb->prefix}f_posts (response_to, topic_id, user_id, post_message, is_anonym, create_timestamp) 
-                     VALUES ('".$response_to."', '".$topic_id."', '".$user_id."', '".$post_message."', ".$is_anonym.", CURRENT_TIMESTAMP);";
+        $sqlQuery = "INSERT INTO {$wpdb->prefix}f_posts (response_to, topic_id, user_id, post_message, is_anonym, create_timestamp, is_reaction) 
+                     VALUES ('$response_to', '$topic_id', '$user_id', '$post_message', $is_anonym, CURRENT_TIMESTAMP, $is_reaction);";
         $sqlQuery = str_replace("'NULL'", "NULL", $sqlQuery);
 
 
@@ -73,6 +74,7 @@ function get_forum_posts(){
                          p.user_id as user_id, 
                          p.is_anonym,
                          p2.user_id AS user_respond_to, 
+                         p.is_reaction, 
                          (SELECT COUNT(*)
                           FROM {$wpdb->prefix}f_likes
                           WHERE post_id = p.post_id) AS n_likes, 
