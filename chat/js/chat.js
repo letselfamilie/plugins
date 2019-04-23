@@ -37,7 +37,6 @@ $(function () {
     });
 });
 
-
 function loadChat(mes) {
     let conn = new WebSocket('ws://178.128.202.94:8000/?userId='+user_object.id);
     conn.onopen = function(e) {
