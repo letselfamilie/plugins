@@ -60,15 +60,15 @@ function get_dialogs() {
                 // }
 
 
-                $from_message = ($_POST['from'] == null)? 1 : $_POST['from'];
+                $from_message = ($_POST['from'] == null)? 0 : $_POST['from'];
                 $to_message = ($_POST['to'] == null)? 20 : $_POST['to'];
 
                 $sqlQuery2 = "SELECT *
                               FROM {$wpdb->prefix}c_messages
                               WHERE dialog_id = '".$dialog['dialog_id']."'
                               ORDER BY create_timestamp DESC
-                              LIMIT 19 
-                              OFFSET 1;";
+                              LIMIT 9
+                              OFFSET 0;";
 
                 $dialog['messages'] = array();
                 foreach (array_reverse($wpdb->get_results($sqlQuery2, ARRAY_A)) as $message) {
