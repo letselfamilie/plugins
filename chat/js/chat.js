@@ -12,6 +12,7 @@ document.documentElement.style.setProperty('--vh', `${vh}px`);
 let myprofilelogo = url_object.plugin_directory + '/images/user.png';
 let dialog_templ = ejs.compile(fs.readFileSync("./chat/js/ejs_templates/dialog.ejs", "utf8"));
 let mes_templ = ejs.compile(fs.readFileSync("./chat/js/ejs_templates/message.ejs", "utf8"));
+let conn;
 
 // We listen to the resize event
 window.addEventListener('resize', () => {
@@ -43,7 +44,7 @@ $(function () {
 function loadChat(mes) {
     let is_consultant = (user_object.role == 'adviser');
     let url = 'ws://178.128.202.94:8000/?userId=' + user_object.id + '&consultan=' + ((is_consultant) ? 1 : 0);
-    let conn = new WebSocket(url);
+    conn = new WebSocket(url);
 
     conn.onopen = function (e) {
         console.log("Connection established.");
@@ -405,6 +406,15 @@ function addDialog(item, mes) {
 
         if (idDialog !== undefined && idDialog !== null) {
             let value = parseInt($node.find(".badge-counter").text());
+
+            if(value>0)
+            {
+                conn.send(JSON.stringify({
+                    command: 'mark_messages',
+                    dialog_id: idDialog,
+                }));
+            }
+
             $node.find(".badge-counter").text(0);
             $node.find(".badge-counter").addClass("hidden");
 
