@@ -54,6 +54,7 @@ function loadChat(mes) {
 
         fillChat(mes);
 
+        
         $('.messages').animate({scrollTop: $(document).height()}, 'fast');
 
         $('.submit').click(function () {

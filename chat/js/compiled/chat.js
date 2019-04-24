@@ -51,10 +51,11 @@ function loadChat(mes) {
     conn.onopen = function (e) {
         console.log("Connection established.");
         console.log(e);
-        console.log("user_object" + user_object);
+        console.log("user_object" + user_object.toString());
 
         fillChat(mes);
 
+        
         $('.messages').animate({scrollTop: $(document).height()}, 'fast');
 
         $('.submit').click(function () {
