@@ -27,7 +27,7 @@ add_action('wp_ajax_' . 'get_dialogs', 'get_dialogs');
    });
  */
 
-function get_dialogs(){
+function get_dialogs() {
     global $wpdb;
 
     $user_id = get_current_user_id();
@@ -40,15 +40,15 @@ function get_dialogs(){
     $dialogs = array();
     $dialogs['curr_user'] = $user_id;
         try {
-            foreach ($wpdb->get_results($sqlQuery, ARRAY_A) as $dialog){
+            foreach ($wpdb->get_results($sqlQuery, ARRAY_A) as $dialog) {
                 $second_id = $dialog['user1_id'] == $user_id ? $dialog['user2_id'] : $dialog['user1_id'];
                 $dialog['second_user_nickname'] = get_user_meta($second_id, 'nickname', true);
 
-          //      if(um_profile('profile_photo')){
-                $dialog['second_user_photo'] = get_avatar_url($second_id, null);
-           //     } else{
-           //         $dialog['second_user_photo'] = um_get_default_avatar_uri();
-          //      }
+                // if(um_profile('profile_photo')) {
+                       $dialog['second_user_photo'] = get_avatar_url($second_id, null);
+                // } else{
+                //     $dialog['second_user_photo'] = um_get_default_avatar_uri();
+                // }
 
                 $sqlQuery2 = "SELECT *
                               FROM {$wpdb->prefix}c_messages
@@ -56,7 +56,7 @@ function get_dialogs(){
                               ORDER BY create_timestamp;";
 
                 $dialog['messages'] = array();
-                foreach ($wpdb->get_results($sqlQuery2, ARRAY_A) as $message){
+                foreach ($wpdb->get_results($sqlQuery2, ARRAY_A) as $message) {
                     $dialog['messages'][] = $message;
                 }
                 $dialogs[] = $dialog;
@@ -66,7 +66,7 @@ function get_dialogs(){
         } catch (Exception $e) {
             wp_send_json_error($e->getMessage() . '\n' . $sqlQuery, '600');
         }
-        die;
+    die;
 }
 
 

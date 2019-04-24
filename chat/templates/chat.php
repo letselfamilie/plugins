@@ -87,6 +87,20 @@ if(!is_user_logged_in()) {
         .fa {
             font-family: FontAwesome !important;
         }
+
+        <?php if (!$consultant) { ?>
+        #chat-frame #sidepanel #conversations {
+            height: calc(100% - 168px);
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+        <?php } else { ?>
+        #chat-frame #sidepanel #conversations {
+            height: 100%;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+        <?php } ?>
     </style>
 
 </head>
