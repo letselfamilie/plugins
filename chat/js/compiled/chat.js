@@ -11,8 +11,8 @@ let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 let myprofilelogo = url_object.plugin_directory + '/images/user.png';
-let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\r\n    <div class=\"wrap\">\r\n        <img src=\" <%= photo %> \" alt=\"\"/>\r\n        <div class=\"meta\">\r\n            <p class=\"name\"> <%= name %> </p>\r\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\r\n        </div>\r\n    </div>\r\n</li>\r\n");
-let mes_templ = ejs.compile("<li class=\"<%= status %>\">\r\n    <img src=\"<%= image %>\" alt=\"\"/>\r\n    <p>\r\n        <%= mes %>\r\n        <br/>\r\n        <small class=\"float-right mt-2\"><%= time %></small>\r\n    </p>\r\n</li>\r\n");
+let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\n    <div class=\"wrap\">\n        <img src=\" <%= photo %> \" alt=\"\"/>\n        <div class=\"meta\">\n            <p class=\"name\"> <%= name %> </p>\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\n        </div>\n    </div>\n</li>\n");
+let mes_templ = ejs.compile("<li class=\"<%= status %>\">\n    <img src=\"<%= image %>\" alt=\"\"/>\n    <p>\n        <%= mes %>\n        <br/>\n        <small class=\"float-right mt-2\"><%= time %></small>\n    </p>\n</li>\n");
 
 // We listen to the resize event
 window.addEventListener('resize', () => {
@@ -23,7 +23,6 @@ window.addEventListener('resize', () => {
 
 //http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3
 $(function () {
-
     $.ajax({
         url: url_object.ajax_url,
         type: 'POST',
@@ -43,10 +42,12 @@ $(function () {
 });
 
 function loadChat(mes) {
-    var is_consultant = (user_object.role == 'adviser');
-    let conn = new WebSocket('ws://178.128.202.94:8000/?userId=' + user_object.id + '&consultan=' + ((is_consultant) ? 1 : 0));
+    let is_consultant = (user_object.role == 'adviser');
+    let url = 'ws://178.128.202.94:8000/?userId=' + user_object.id + '&consultan=' + ((is_consultant) ? 1 : 0);
+    let conn = new WebSocket(url);
+
     conn.onopen = function (e) {
-        console.log("Connection established!");
+        console.log("Connection established.");
         console.log(e);
 
         fillChat(mes);
@@ -65,18 +66,6 @@ function loadChat(mes) {
         });
 
         $('#search').keyup(function () {
-
-            /*let $node = $("#"+ 1);
-            if($node.find("span.counter").length===0)
-            {
-                $node.find(".wrap").append("<span class='counter hidden'>1</span>");
-            }
-            else
-            {
-                let value = $node.find("span.counter").text();
-                $node.find("span.counter").text(parseInt(value)+1);
-            }*/
-
 
             $('#inputSearch').focus();
             var input = $('#inputSearch').val().trim();
@@ -161,6 +150,7 @@ function loadChat(mes) {
             newBanner("This problem has been resolved");
 
             // TODO: deprive of the possibility to send messages in a resolved dialog
+            // TODO: add this unfo to server
 
         });
 
@@ -173,7 +163,7 @@ function loadChat(mes) {
             $(".message-input").css('display', 'none');
 
             $(".new-convo").css('display', 'block');
-            // TODO: add new dialog to server and to side-bar
+            // TODO: add new dialog to server
 
         });
 
@@ -288,7 +278,6 @@ function loadChat(mes) {
 
 
                 $('.messages ul').children('li').last().focus();
-                //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
             } else {
 
                 if ($node.find(".badge-counter").length === 0) {
@@ -323,13 +312,13 @@ function newBanner(message) {
 }
 
 function searchObjKey(obj, query) {
-
     var new_obj = obj;
 
     delete new_obj.curr_user;
 
     for (let key in new_obj) {
-        if (new_obj[key].dialog_id == query) return key;
+        if (new_obj[key].dialog_id == query)
+            return key;
     }
     return null;
 }
@@ -339,11 +328,9 @@ function fillChat(mes) {
     delete res.curr_user;
     $("#conversations ul").empty();
 
-
     for (let i = 0; i < Object.keys(res).length; i++) {
         addDialog(res[i], mes);
     }
-
 }
 
 function addDialog(item, mes) {
@@ -368,6 +355,26 @@ function addDialog(item, mes) {
         sent: fromyou,
         preview: (preview !== undefined) ? preview : ""
     }));
+
+    for(var i = messages.length-1; i>0; i--)
+    {
+        if(messages[i].is_read ==="1")
+        {
+            break;
+        }
+    }
+    let N_unread = messages.length -1 - i;
+
+    if(N_unread>0)
+    {
+        if ($node.find(".badge-counter").length === 0) {
+            let badge = '<span class="badge badge-counter ml-2">' + N_unread+ '</span>';
+            $(badge).appendTo($node.find(".wrap .meta .name"));
+        } else {
+            let val = $node.find(".badge-counter").text();
+            $node.find(".badge-counter").text(N_unread);
+        }
+    }
 
     $node.click(function () {
 

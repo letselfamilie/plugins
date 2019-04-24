@@ -66,18 +66,6 @@ function loadChat(mes) {
 
         $('#search').keyup(function () {
 
-            /*let $node = $("#"+ 1);
-            if($node.find("span.counter").length===0)
-            {
-                $node.find(".wrap").append("<span class='counter hidden'>1</span>");
-            }
-            else
-            {
-                let value = $node.find("span.counter").text();
-                $node.find("span.counter").text(parseInt(value)+1);
-            }*/
-
-
             $('#inputSearch').focus();
             var input = $('#inputSearch').val().trim();
 
@@ -161,6 +149,7 @@ function loadChat(mes) {
             newBanner("This problem has been resolved");
 
             // TODO: deprive of the possibility to send messages in a resolved dialog
+            // TODO: add this unfo to server
 
         });
 
@@ -173,7 +162,7 @@ function loadChat(mes) {
             $(".message-input").css('display', 'none');
 
             $(".new-convo").css('display', 'block');
-            // TODO: add new dialog to server and to side-bar
+            // TODO: add new dialog to server
 
         });
 
@@ -288,7 +277,6 @@ function loadChat(mes) {
 
 
                 $('.messages ul').children('li').last().focus();
-                //$('.messages').animate({ scrollTop: $(document).height() }, 'fast');
             } else {
 
                 if ($node.find(".badge-counter").length === 0) {
@@ -339,11 +327,9 @@ function fillChat(mes) {
     delete res.curr_user;
     $("#conversations ul").empty();
 
-
     for (let i = 0; i < Object.keys(res).length; i++) {
         addDialog(res[i], mes);
     }
-
 }
 
 function addDialog(item, mes) {
@@ -368,6 +354,26 @@ function addDialog(item, mes) {
         sent: fromyou,
         preview: (preview !== undefined) ? preview : ""
     }));
+
+    for(var i = messages.length-1; i>0; i--)
+    {
+        if(messages[i].is_read ==="1")
+        {
+            break;
+        }
+    }
+    let N_unread = messages.length -1 - i;
+
+    if(N_unread>0)
+    {
+        if ($node.find(".badge-counter").length === 0) {
+            let badge = '<span class="badge badge-counter ml-2">' + N_unread+ '</span>';
+            $(badge).appendTo($node.find(".wrap .meta .name"));
+        } else {
+            let val = $node.find(".badge-counter").text();
+            $node.find(".badge-counter").text(N_unread);
+        }
+    }
 
     $node.click(function () {
 
