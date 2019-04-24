@@ -362,8 +362,7 @@ function loadChat(mes) {
 
                 addDialog(newDialog, mes);
 
-                console.log(user_object.user_id + '==' +  first_user_id);
-                if (user_object.user_id == first_user_id) {
+                if (user_object.id == first_user_id) {
                     $('#' + dialog_id).click();
                 }
 
