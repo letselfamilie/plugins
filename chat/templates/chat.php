@@ -153,7 +153,7 @@ if(!is_user_logged_in()) {
             <div class="new-convo-header">
                 <p>New question</p>
             </div>
-            <form>
+            <form id="form-question">
                 <div class="form-group">
                     <label>Question summary</label>
                     <input id="inputTopic" type="text" class="form-control" name="topic" placeholder="My question is regarding...">

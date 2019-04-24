@@ -60,6 +60,11 @@ function loadChat(mes) {
             newMessage();
         });
 
+        $('#form-question').on('submit', function () {
+            e.preventDefault();
+            return false;
+        });
+
         $(window).on('keydown', function (e) {
             if (e.which == 13) {
                 newMessage();
