@@ -426,7 +426,6 @@ function fillChat(mes) {
         addDialog(res[i], mes);
     }
 
-
     let url = new URL(window.location.href);
     let d_id = url.searchParams.get("dialog_id");
 
@@ -435,12 +434,12 @@ function fillChat(mes) {
         conn.send(JSON.stringify({
             user_id_from: user_object.id,
             command: 'new_chat',
-            dialog_type: 'user_chat'
+            dialog_type: 'user_chat',
+            dialog_id : d_id
         }));
 
         $("#" + d_id).click();
     }
-
 }
 
 function addDialog(item, mes) {
@@ -465,7 +464,6 @@ function addDialog(item, mes) {
         sent: fromyou,
         preview: (preview !== undefined) ? preview : ""
     }));
-
 
 
     let N_unread = 0;
