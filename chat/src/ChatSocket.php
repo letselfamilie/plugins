@@ -52,6 +52,12 @@
  * }
  *
  *
+ * to mark messages as read
+ *
+ * {
+ *   command:'mark_messages',
+ *   dialog_id:1
+ * }
 */
 
 namespace MyApp;
@@ -193,6 +199,24 @@ class ChatSocket implements MessageComponentInterface
                         }
                     }
                     break;
+                case 'mark_messages':
+                    if(isset($room_id)){
+                        if($this->markMessages($room_id)){
+                            $message = array(
+                                'message' => 'Messages marked as read in dialog '.$room_id
+                            );
+                        }else{
+                            $message = array(
+                                'message' => 'Error happened while marking messages in dialog '.$room_id
+                            );
+                        }
+                    }else{
+                        $message = array(
+                            'message' => 'Dialog id is not specified'
+                        );
+                    }
+                    $from->send(json_encode($message));
+                    break;
                 default:
                     $message = array('message' => 'default action');
                     $from->send(json_encode($message));
@@ -268,6 +292,24 @@ class ChatSocket implements MessageComponentInterface
         $this->sendDataToClients($clientFromId, $clients, $dataPacket);
 
         $this->saveMessageInDB($clientFromId, $roomId, $message, $time);
+    }
+
+    function markMessages($dialog_id){
+        $dbconn = DBHelper::connect();
+
+        $sqlQuery = "UPDATE wp_c_messages
+                     SET is_read = 1
+                     WHERE dialog_id=".$dialog_id." AND is_read = 0;";
+
+        try {
+            $dbconn->query($sqlQuery, \PDO::FETCH_ASSOC);
+        } catch (\Exception $e) {
+            echo "Error occured: ".$e." \n";
+            DBHelper::disconnect();
+            return false;
+        }
+        DBHelper::disconnect();
+        return true;
     }
 
     function saveMessageInDB($clientFromId, $dialogId, $message, $time){
