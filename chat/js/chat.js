@@ -232,9 +232,7 @@ function loadChat(mes) {
 
     conn.onmessage = function (e) {
         console.log(e.data);
-
         var data = JSON.parse(e.data)
-
         console.log("e.data.type " + data.type);
 
         if (data.type === "message") {
