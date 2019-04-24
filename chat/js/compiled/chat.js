@@ -562,12 +562,12 @@ function addDialog(item, mes) {
                 addMes(mes[idDialog].messages[i], user2logo, is_employee_chat);
             }
 
-            gotoBottom('messages-container');
+            //gotoBottom('messages-container');
 
         }
         // TODO: badges
 
-
+        scrollToBanner();
     });
     $("#conversations ul").prepend($node);
 }
@@ -589,7 +589,12 @@ function gotoBottom(id) {
     element.scrollTop = element.scrollHeight - element.clientHeight;
 }
 
-
+function scrollToBanner() {
+    var scrollPos = $('#banner').position().top; // use the text of the span to create an ID and get the top position of that element
+    $('#banner').animate({ // animate your right div
+        scrollTop: scrollPos // to the position of the target
+    }, 400);
+}
 
 
 
