@@ -50,11 +50,15 @@ function loadChat(mes) {
     conn.onopen = function (e) {
         console.log("Connection established.");
         console.log(e);
-        console.log("user_object" + user_object.toString());
+
+
+        var keys = Object.keys(user_object);
+
+        console.log("user_object" + keys);
 
         fillChat(mes);
 
-        
+
         $('.messages').animate({scrollTop: $(document).height()}, 'fast');
 
         $('.submit').click(function () {
@@ -319,7 +323,7 @@ function loadChat(mes) {
 
 
 
-            if($('#'+dialog_id).length!==0)
+            if($('#'+dialog_id).length>0)
             {
                 console.log("New dialog won't be created as it already exists");
                 return;
