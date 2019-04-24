@@ -390,6 +390,7 @@ function fillChat(mes) {
         addDialog(res[i], mes);
     }
 
+    
     let url = new URL(window.location.href);
     let d_id = url.searchParams.get("dialog_id");
     $("#" + d_id).addClass("active");

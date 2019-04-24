@@ -34,10 +34,6 @@ $(function () {
         },
         success: function (res) {
             console.log("Res: " + res);
-            let url = new URL(window.location.href);
-            let c = url.searchParams.get("dialog_id");
-            console.log("C== "+c);
-            console.log("url== "+url);
             loadChat(JSON.parse(res));
         },
         error: function (error) {
@@ -395,7 +391,10 @@ function fillChat(mes) {
         addDialog(res[i], mes);
     }
 
-
+    
+    let url = new URL(window.location.href);
+    let d_id = url.searchParams.get("dialog_id");
+    $("#" + d_id).addClass("active");
 
 }
 
