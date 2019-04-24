@@ -9,7 +9,7 @@ const {Howl, Howler} = require('howler');
 let vh = window.innerHeight * 0.01;
 // Then we set the value in the --vh custom property to the root of the document
 document.documentElement.style.setProperty('--vh', `${vh}px`);
-
+let default_photo = "http://178.128.202.94/wp-content/plugins/ultimate-member/assets/img/default_avatar.jpg"
 let myprofilelogo = url_object.plugin_directory + '/images/user.png';
 let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\r\n    <div class=\"wrap\">\r\n        <img src=\" <%= photo %> \" alt=\"\"/>\r\n        <div class=\"meta\">\r\n            <p class=\"name\"> <%= name %> </p>\r\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\r\n        </div>\r\n    </div>\r\n</li>\r\n");
 let mes_templ = ejs.compile("<li class=\"<%= status %>\">\r\n    <img src=\"<%= image %>\" alt=\"\"/>\r\n    <p>\r\n        <%= mes %>\r\n        <br/>\r\n        <small class=\"float-right mt-2\"><%= time %></small>\r\n    </p>\r\n</li>\r\n");
@@ -203,6 +203,7 @@ function loadChat(mes) {
 
     };
 
+
     conn.onmessage = function (e) {
         console.log(e.data);
         var data = JSON.parse(e.data)
@@ -278,52 +279,113 @@ function loadChat(mes) {
             gotoBottom('messages-container');
         }
 
-        /*if (data.type === "new_chat") {
+        if (data.type === "new_chat") {
+            console.log(data.message);
+
+            /*{
+                "message":"New chat with employee 3 was added",
+                "topic":"blsbla",
+                "is_emp_available":false,
+                "type":"new_chat",
+                "second_user":"3",
+                "dialog_id":"14",
+                "dialog_type":"employee_chat",
+                "first_message":
+                {
+                    'message' => $first_message,
+                    'time' => $time,
+                    'from'=> $user_id_from
+                },
+                "user_info_1": {
+                "user_id":"1",
+                    "user_login":"Letsel",
+                    "user_photo":null
+            },
+                "user_info_2": {
+                "user_id":"3",
+                    "user_login":"blsbla",
+                    "user_photo":null
+            }
+            }*/
 
             let message = data.message;
-            let second_user = data.second_user;
+            let first_user_id = data.user_info_1.user_id;
+            let second_user_id = data.user_info_2.user_id; //id second user
+            let first_user_name = data.user_info_1.user_login;
+            let first_user_photo = data.user_info_1.user_photo;
+            let second_user_name = data.user_info_2.user_login;
+            let second_user_photo = data.user_info_2.user_photo;
             let dialog_id = data.dialog_id;
             let dialog_type = data.dialog_type; //  employee_chat || user_chat
             let topic = data.topic;  // absent for user
             let is_emp_available =  data.is_emp_available; //absent for user
-
-            var today = new Date();
-            var day = today.getDate();
-            var month = today.getMonth() + 1;
-
-            day = (day < 10) ? "0" + day : "" + day;
-            month = (month < 10) ? "0" + month : "" + month;
-            var time = today.getFullYear() + "-" + day + "-" + month + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-
-            var m = {
-                message_id: "1", dialog_id: "3", is_read: "0",
-                user_from_id: user_object.id, message_body: messageFirst, create_timestamp: time
-            };
+            let first_message = data.first_message;
 
 
-            var newDialog = {
-                dialog_id: mes.length, //TODO: auto-increase dialog_id
-                is_employee_chat: "1",
-                dialog_topic: topic,
-                user1_id: "" + user_object.id,
-                user2_id: null,
-                second_user_nickname: null,
-                second_user_photo: url_object.plugin_directory + "/images/question.png",
-                messages: [m]
-            };
+            let isread = (second_user_id!==user_object.id)?"1":"0";
 
-            mes[Object.keys(mes).length] = newDialog;
+            var m = (first_message===null || first_message===undefined || first_message.message==="")? [] :
+                [{
+                    message_id: "1",
+                    dialog_id: ""+ dialog_id,
+                    is_read: isread,
+                    user_from_id: first_message.from,
+                    message_body: first_message.message,
+                    create_timestamp: first_message.time
+                }];
 
+            if(dialog_type==="employee_chat")
+            {
 
+                var newDialog = {
+                    dialog_id: dialog_id,
+                    is_employee_chat: "1",
+                    dialog_topic: topic,
+                    user1_id: "" + user_object.id,
+                    user2_id: second_user_id,
+                    second_user_nickname: null,
+                    second_user_photo: url_object.plugin_directory + "/images/question.png",
+                    messages: m
+                };
 
+                mes[Object.keys(mes).length] = newDialog;
 
-            addDialog(newDialog, mes);
+                addDialog(newDialog, mes);
 
-            $(".contact-profile").css('display', 'none');
-            $(".messages").css('display', 'none');
-            $(".message-input").css('display', 'none');
+                if(!is_emp_available)
+                {
+                    alert ("The consultant is not available at the moment.");
+                }
 
-            $(".new-convo").css('display', 'none');
+                if(second_user_id===user_object.id)
+                {
+                    $(".contact-profile").css('display', 'none');
+                    $(".messages").css('display', 'none');
+                    $(".message-input").css('display', 'none');
+                    $(".new-convo").css('display', 'none');
+                }
+
+            }
+
+            if(dialog_type==="user_chat")
+            {
+                console.log(message);
+
+                var newDialog = {
+                    dialog_id: dialog_id,
+                    is_employee_chat: "0",
+                    dialog_topic: topic,
+                    user1_id: "" + user_object.id,
+                    user2_id: second_user_id,
+                    second_user_nickname: second_user_name,
+                    second_user_photo: default_photo,
+                    messages: []
+                };
+
+                mes[Object.keys(mes).length] = newDialog;
+
+                addDialog(newDialog, mes);
+            }
 
 
 
@@ -333,34 +395,8 @@ function loadChat(mes) {
             sound.play();
 
 
-
-
-
-            if(dialog_type==="employee_chat")
-            {
-                console.log("new chat with employee");
-                console.log(message);
-
-                var newDialog = {
-                    dialog_id: dialog_id,
-                    is_employee_chat: "1",
-                    dialog_topic: topic,
-                    user1_id: "" + user_object.id,
-                    user2_id: null,  // TODO: auto-transfer to certain employee id
-                    second_user_nickname: null,
-                    second_user_photo: url_object.plugin_directory + "/images/question.png",
-                    messages: []
-                };
-
-                mes[Object.keys(mes).length] = newDialog;
-
-                addDialog(newDialog, mes);
-
-            }
-
-        }*/
+        }
     };
-
 }
 
 function newBanner(message) {
@@ -394,7 +430,17 @@ function fillChat(mes) {
 
     let url = new URL(window.location.href);
     let d_id = url.searchParams.get("dialog_id");
-    $("#" + d_id).click();
+
+    if(d_id!==null)
+    {
+        conn.send(JSON.stringify({
+            user_id_from: user_object.id,
+            command: 'new_chat',
+            dialog_type: 'user_chat'
+        }));
+
+        $("#" + d_id).click();
+    }
 
 }
 
@@ -518,7 +564,6 @@ function addDialog(item, mes) {
 
             gotoBottom('messages-container');
 
-            newMessages = false;
         }
         // TODO: badges
 
@@ -543,6 +588,12 @@ function gotoBottom(id) {
     var element = document.getElementById(id);
     element.scrollTop = element.scrollHeight - element.clientHeight;
 }
+
+
+
+
+
+
 
 },{"ejs":3,"howler":6}],2:[function(require,module,exports){
 
