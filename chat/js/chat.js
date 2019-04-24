@@ -272,6 +272,7 @@ function loadChat(mes) {
                 console.log("marked read/ id: " + dial_id);
                 
                 $('.messages ul').children('li').last().focus();
+
             } else {
 
                 if ($node.find(".badge-counter").length === 0) {
@@ -280,6 +281,7 @@ function loadChat(mes) {
                 } else {
                     let val = $node.find(".badge-counter").text();
                     $node.find(".badge-counter").text(parseInt(val) + 1);
+                    $node.removeClass("hidden");
                 }
 
                 // TODO: add badges of new messages + counter to the conversation
