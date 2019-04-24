@@ -321,6 +321,9 @@ function loadChat(mes) {
             let first_message = data.first_message;
 
 
+            if($('#'+dialog_id).length===0) return;
+
+
             let isread = (second_user_id!==user_object.id)?"1":"0";
 
             var m = (first_message===null || first_message===undefined || first_message.message==="")? [] :
