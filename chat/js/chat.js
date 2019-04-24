@@ -591,10 +591,8 @@ function gotoBottom(id) {
 }
 
 function scrollToBanner() {
-    var scrollPos = $('#banner').position().top; // use the text of the span to create an ID and get the top position of that element
-    $('#banner').animate({ // animate your right div
-        scrollTop: scrollPos // to the position of the target
-    }, 400);
+    var topPos = document.getElementById('banner').offsetTop;
+    document.getElementById('messages-container').scrollTop = topPos-10;
 }
 
 
