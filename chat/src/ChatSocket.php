@@ -224,7 +224,7 @@ class ChatSocket implements MessageComponentInterface
                                         $this->saveMessageInDB($user_id_from, $chat_id, $first_message, $time);
 
                                         $message = array(
-                                            'message' => "New chat with employee ".$second_user." was added",
+                                            'message' => "New chat between employee {$second_user} and ".$user_id_from." was added",
                                             'topic' => $topic,
                                             'is_emp_available'=>$is_emp_available,
                                             'first_message'=> array(
@@ -256,7 +256,7 @@ class ChatSocket implements MessageComponentInterface
                                     echo "Second user ".$second_user;
 
                                     $message = array(
-                                        'message' => "New chat with user ".$second_user." was added"
+                                        'message' => "New chat between users {$user_id_from} and ".$second_user." was added"
                                     );
                                     $userInfo2 = $this->getUserInfo($second_user);
                                 }
@@ -280,6 +280,8 @@ class ChatSocket implements MessageComponentInterface
                             $message['user_info_2'] = $userInfo2;
                             $from->send(json_encode($message));
 
+                            $message['user_info_1'] = $userInfo2;
+                            $message['user_info_2'] = $userInfo1;
                             $message['second_user'] = $user_id_from;
                             $this->sendDialogToSecondUser($second_user, $message);
                         }
