@@ -164,12 +164,14 @@ class ChatSocket implements MessageComponentInterface
 
                                     if ($employee_id < 0) {
                                         $message = array(
+                                            'type'=> 'new_chat',
                                             'message' => "Sorry, all employees are unavailable now. Please, try to ask your question later"
                                         );
                                     } else {
                                         $chat_id = $this->addDialogToDB($user_id_from, $dialog_type, $employee_id, $topic);
 
                                         $message = array(
+                                            'type'=> 'new_chat',
                                             'message' => "New chat with employee ".$employee_id." was added",
                                             'second_user' => $employee_id,
                                             'dialog_id' => $chat_id,
@@ -184,6 +186,7 @@ class ChatSocket implements MessageComponentInterface
                                     $chat_id = $this->addDialogToDB($user_id_from, $dialog_type, $second_user, null);
 
                                     $message = array(
+                                        'type'=> 'new_chat',
                                         'message' => "New chat with user ".$second_user." was added",
                                         'second_user' => $second_user,
                                         'dialog_id' => $chat_id,
@@ -193,6 +196,7 @@ class ChatSocket implements MessageComponentInterface
                                 break;
                                 default:
                                     $message = array(
+                                        'type'=> 'new_chat',
                                         'message' => "Unavailable dialog type"
                                     );
                             }
@@ -205,6 +209,7 @@ class ChatSocket implements MessageComponentInterface
                         if($this->markMessages($room_id)){
                             //message for user
                             $message = array(
+                                'type'=> 'mark_messages',
                                 'message' => 'Messages marked as read in dialog '.$room_id
                             );
 //                            //message for other users in chat
@@ -219,18 +224,23 @@ class ChatSocket implements MessageComponentInterface
 //                            $this->sendDataToClients($user_id_from, $clients, $dataPacket);
                         }else{
                             $message = array(
+                                'type'=> 'mark_messages',
                                 'message' => 'Error happened while marking messages in dialog '.$room_id
                             );
                         }
                     }else{
                         $message = array(
+                            'type'=> 'mark_messages',
                             'message' => 'Dialog id or user id is not specified'
                         );
                     }
                     $from->send(json_encode($message));
                     break;
                 default:
-                    $message = array('message' => 'default action');
+                    $message = array(
+                        'type'=> 'default',
+                        'message' => 'default action'
+                    );
                     $from->send(json_encode($message));
                     break;
             }

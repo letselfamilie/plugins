@@ -269,7 +269,7 @@ function loadChat(mes) {
                     command: 'mark_messages',
                     dialog_id: dial_id
                 }));
-                console.log("marked read/ id: " + dial_id);
+
                 
                 $('.messages ul').children('li').last().focus();
 
@@ -278,12 +278,12 @@ function loadChat(mes) {
                 if ($node.find(".badge-counter").length === 0) {
                     let badge = '<span class="badge badge-counter ml-2">1</span>';
                     $(badge).appendTo($node.find(".wrap .meta .name"));
-                    $(badge).removeClass("hidden");
                 } else {
                     let val = $node.find(".badge-counter").text();
                     $node.find(".badge-counter").text(parseInt(val) + 1);
-                    $node.removeClass("hidden");
                 }
+
+                $node.find(".badge-counter").removeClass("hidden");
 
                 // TODO: add badges of new messages + counter to the conversation
 
