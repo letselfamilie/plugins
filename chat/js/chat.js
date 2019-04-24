@@ -406,7 +406,6 @@ function addDialog(item, mes) {
 
         if (idDialog !== undefined && idDialog !== null) {
             let value = parseInt($node.find(".badge-counter").text());
-
             if(value>0)
             {
                 conn.send(JSON.stringify({
