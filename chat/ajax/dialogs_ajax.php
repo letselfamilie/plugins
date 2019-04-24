@@ -33,13 +33,18 @@ function get_dialogs() {
     $user_id = get_current_user_id();
 
     $sqlQuery = "SELECT dialog_id, is_employee_chat, dialog_topic, user1_id,
-                                        COALESCE (user2_id, employee_id) AS user2_id, (SELECT COUNT(*)
-                                                                                       FROM {$wpdb->prefix}c_messages
-                                                                                       WHERE dialog_id = D.dialog_id
-                                                                                           AND is_read = 0) AS unread_msg
+                        COALESCE (user2_id, employee_id) AS user2_id, 
+                        (SELECT COUNT(*)
+                         FROM {$wpdb->prefix}c_messages
+                         WHERE dialog_id = D.dialog_id
+                              AND is_read = 0) AS unread_msg,
+                        (SELECT MAX(create_timestamp)
+                         FROM {$wpdb->prefix}c_messages
+                         WHERE dialog_id = D.dialog_id) AS last_message_timestamp                                                                  
                  FROM {$wpdb->prefix}c_dialogs D
                  WHERE user1_id = ".$user_id." OR 
-                    IF (user2_id IS NOT NULL, user2_id = ".$user_id." , employee_id = ".$user_id.");";
+                    IF (user2_id IS NOT NULL, user2_id = ".$user_id." , employee_id = ".$user_id.")
+                 ORDER BY last_message_timestamp DESC;";
 
     $dialogs = array();
     $dialogs['curr_user'] = $user_id;
@@ -65,6 +70,10 @@ function get_dialogs() {
                 }
                 $dialogs[] = $dialog;
             }
+
+
+
+
             echo json_encode($dialogs, JSON_UNESCAPED_UNICODE);
 
         } catch (Exception $e) {
