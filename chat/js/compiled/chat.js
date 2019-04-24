@@ -593,7 +593,8 @@ function gotoBottom(id) {
 
 function scrollToBanner() {
     var topPos = document.getElementById('banner').offsetTop;
-    document.getElementById('messages-container').scrollTop = topPos + 100;
+    document.getElementById('messages-container').scrollTop = topPos;
+    $('#messages-container').scrollTop( $('#messages-container').scrollTop() - 100);
 }
 
 
