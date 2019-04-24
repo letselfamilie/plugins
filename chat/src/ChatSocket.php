@@ -54,11 +54,10 @@
  *
  * to mark messages as read
  *
-{
-command:'mark_messages',
-dialog_id:1,
-user_id_from:user_object.id
-}
+ * {
+ *   command:'mark_messages',
+ *   dialog_id:1
+ * }
 */
 
 namespace MyApp;

@@ -251,24 +251,12 @@ function loadChat(mes) {
 
             let key = searchObjKey(mes, dial_id);
 
-
-            var new_message = {
-                message_id: "" + mes[Object.keys(mes).length - 1].message_id + 1,
-                user_from_id: from,
-                dialog_id: dial_id,
-                is_read: "0",
-                message_body: mess,
-                create_timestamp: time
-            };
-
-            mes[key].messages.push(new_message);
-
-
             $("#" + dial_id + " p.preview").text(mess);
             let $node = $("#" + dial_id);
             $node.detach();
             $node.prependTo("#conversations ul");
 
+            let isRead = "0";
 
             if ($node.hasClass("active")) {
 
@@ -276,7 +264,15 @@ function loadChat(mes) {
                 var m = {user_from_id: from, message_body: mess, create_timestamp: time};
                 addMes(m, $('.conversation.active').find("img").attr('src'), is_chat_with_employee);
 
+                isRead = "1";
 
+                conn.send(JSON.stringify({
+                    command: 'mark_messages',
+                    dialog_id: dial_id
+                }));
+
+                console.log("marked read/ id: " + dial_id);
+                
                 $('.messages ul').children('li').last().focus();
             } else {
 
@@ -293,6 +289,19 @@ function loadChat(mes) {
 
                 console.log("Dialog " + dial_id + " has new message");
             }
+
+
+            var new_message = {
+                message_id: "" + mes[Object.keys(mes).length - 1].message_id + 1,
+                user_from_id: from,
+                dialog_id: dial_id,
+                is_read: isRead,
+                message_body: mess,
+                create_timestamp: time
+            };
+
+            mes[key].messages.push(new_message);
+
 
             gotoBottom('messages-container');
         }
@@ -422,12 +431,10 @@ function addDialog(item, mes) {
             {
                 conn.send(JSON.stringify({
                     command: 'mark_messages',
-                    dialog_id: idDialogHTML,
-                    user_id_from: user_object.id
+                    dialog_id: idDialogHTML
                 }));
 
                 console.log("marked read/ id: " + idDialogHTML);
-
             }
 
             $node.find(".badge-counter").text(0);
