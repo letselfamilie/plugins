@@ -25,13 +25,64 @@
  *
  * to start new chat
  *
+ * for employee chat
  * {
     user_id_from:user_object.id,
     command:'new_chat',
-    dialog_type:'employee_chat' or 'user_chat',
-    second_user:1 (shouldn't be specified if employee_chat),
-    topic: 'natural disasters' (shouldn't be specified if user_chat)
+    dialog_type:'employee_chat',
+    topic: 'natural disasters'
     }
+ *
+ * for user chat
+ * {
+    user_id_from:user_object.id,
+    command:'new_chat',
+    dialog_type:'user_chat',
+    second_user:1
+   }
+ *
+ *
+ * data, returned by socket on new_chat request
+ * ______________________
+ *
+ * for employee chat
+ *
+ * if there is not any available employee
+ *
+ * {
+    type: 'new_chat',
+    message: "New chat with employee ".$employee_id." was added",
+    second_user: $employee_id,
+    dialog_id: $chat_id,
+    dialog_type: $dialog_type,
+    topic: $topic,
+    is_emp_available: true/false
+   }
+ *
+ *
+ * if there is available employee
+ *
+ *  {
+      type: 'new_chat',
+      message: "New chat with employee ".$employee_id." was added",
+      second_user: $employee_id,
+      dialog_id: $chat_id,
+      dialog_type: $dialog_type,
+      topic: $topic
+    }
+ *
+ *
+ * for user chat
+ *
+ *  {
+        type: 'new_chat',
+        message: "New chat with user ".$second_user." was added",
+        second_user: $second_user,
+        dialog_id: $chat_id,
+        dialog_type: $dialog_type
+    }
+ *
+ *_______________________
  *
  *
  * to send user start typing event
@@ -98,26 +149,20 @@ class ChatSocket implements MessageComponentInterface
             $this->queryObj[$queryPair[0]] = $queryPair[1];
         }
 
-
         $user_id = trim($this->queryObj['userId']);
-        $this->users_id[$user_id] = $conn->resourceId;
+
+        if(!array_key_exists($user_id, $this->users_id))
+            $this->users_id[$user_id] = array();
+        $this->users_id[$user_id][] = $conn->resourceId;
 
         if ($this->queryObj['consultan'] == '1') {
-            $this->consultants_id[$user_id] = $conn->resourceId;
+            if(!array_key_exists($user_id, $this->consultants_id))
+                $this->consultants_id[$user_id] = array();
+
+            $this->consultants_id[$user_id][] = $conn->resourceId;
             echo "Consultant connected ".$user_id."\n";
         }
 
-  //      echo $cookiesArr;
-//        $dbconn = DBHelper::connect();
-//        $sqlQuery = "SELECT *
-//                     FROM wp_f_categories;";
-//        try {
-//            $dbconn->query($sqlQuery, \PDO::FETCH_ASSOC);
-//        } catch (\Exception $e) {
-//            echo "Error occured: ".$e." \n";
-//            DBHelper::disconnect();
-//        }
-//        DBHelper::disconnect();
         echo "User connected ".$user_id."\n";
         echo "New connection! ({$conn->resourceId})\n";
     }
@@ -125,6 +170,8 @@ class ChatSocket implements MessageComponentInterface
     public function onMessage(ConnectionInterface $from, $msg)
     {
         $data = json_decode($msg);
+
+        $conn_id = $from->resourceId;
 
         if (isset($data->command)) {
             $room_id = $data->dialog_id;
@@ -143,7 +190,7 @@ class ChatSocket implements MessageComponentInterface
                     $time = date("Y-m-d H:i:s");
                     $message = $data->message;
 
-                    $this->sendMessage($user_id_from, $room_id, $message, $time);
+                    $this->sendMessage($conn_id, $user_id_from, $room_id, $message, $time);
                     $this->sendUserStoppedTypingMessage($user_id_from, $room_id);
                     break;
 
@@ -157,41 +204,59 @@ class ChatSocket implements MessageComponentInterface
 
                         if(isset($dialog_type)) {
                             switch ($dialog_type){
-
                                 case "employee_chat": {
                                     $topic = $data->topic;
-                                    $employee_id = $this->getEmployeeId();
+                                    $first_message = $data->message;
+                                    $second_user = $this->getAvailableEmployeeId();
+                                    $is_emp_available = true;
 
-                                    if ($employee_id < 0) {
+                                    if ($second_user < 0) {
+                                        $second_user = $this->getEmployeeId();
+                                        $is_emp_available = false;
+                                    }
+
+                                    if($second_user > -1){
+                                        $chat_id = $this->addDialogToDB($user_id_from, $dialog_type, $second_user, $topic);
+
+                                        $time = date("Y-m-d H:i:s");
+                        //                $this->sendMessage($conn_id, $user_id_from, $chat_id, $first_message, $time);
+                                        $this->saveMessageInDB($user_id_from, $chat_id, $first_message, $time);
+
+                                        $message = array(
+                                            'message' => "New chat with employee ".$second_user." was added",
+                                            'topic' => $topic,
+                                            'is_emp_available'=>$is_emp_available,
+                                            'first_message'=> array(
+                                                'message' => $first_message,
+                                                'time' => $time,
+                                                'from'=> $user_id_from
+                                            )
+                                        );
+
+                                        $userInfo2 = array(
+                                            'user_id' => $second_user,
+                                            'user_login' => $topic,
+                                            'user_photo' => null
+                                        );
+
+                                    }else{
                                         $message = array(
                                             'type'=> 'new_chat',
-                                            'message' => "Sorry, all employees are unavailable now. Please, try to ask your question later"
+                                            'message' => "No employee in database"
                                         );
-                                    } else {
-                                        $chat_id = $this->addDialogToDB($user_id_from, $dialog_type, $employee_id, $topic);
-
-                                        $message = array(
-                                            'type'=> 'new_chat',
-                                            'message' => "New chat with employee ".$employee_id." was added",
-                                            'second_user' => $employee_id,
-                                            'dialog_id' => $chat_id,
-                                            'dialog_type' => $dialog_type,
-                                            'topic' => $topic
-                                        );
+                                        $from->send(json_encode($message));
+                                        return;
                                     }
                                 }
                                 break;
                                 case "user_chat":{
                                     $second_user = $data->second_user;
                                     $chat_id = $this->addDialogToDB($user_id_from, $dialog_type, $second_user, null);
-
                                     $message = array(
-                                        'type'=> 'new_chat',
-                                        'message' => "New chat with user ".$second_user." was added",
-                                        'second_user' => $second_user,
-                                        'dialog_id' => $chat_id,
-                                        'dialog_type' => $dialog_type
+                                        'message' => "New chat with user ".$second_user." was added"
                                     );
+
+                                    $userInfo2 = $this->getUserInfo($second_user);
                                 }
                                 break;
                                 default:
@@ -199,8 +264,21 @@ class ChatSocket implements MessageComponentInterface
                                         'type'=> 'new_chat',
                                         'message' => "Unavailable dialog type"
                                     );
+                                    $from->send(json_encode($message));
+                                    return;
                             }
+
+                            $userInfo1 = $this->getUserInfo($user_id_from);
+
+                            $message['type'] = 'new_chat';
+                            $message['second_user'] = $second_user;
+                            $message['dialog_id'] = $chat_id;
+                            $message['dialog_type'] = $dialog_type;
+                            $message['user_info_1'] = $userInfo1;
+                            $message['user_info_2'] = $userInfo2;
+
                             $from->send(json_encode($message));
+                            $this->sendDialogToSecondUser($second_user, $message);
                         }
                     }
                     break;
@@ -247,16 +325,72 @@ class ChatSocket implements MessageComponentInterface
         }
     }
 
+
+    function getUserInfo($userId){
+        $dbconn = DBHelper::connect();
+
+        $sqlQuery = "SELECT ID as user_id, user_login
+                     FROM wp_users
+                     WHERE ID = ".$userId.";";
+
+        $users = array();
+        try {
+            foreach ($dbconn->query($sqlQuery, \PDO::FETCH_ASSOC) as $user){
+                $user['user_photo'] = null;
+                $users[] = $user;
+            }
+            DBHelper::disconnect();
+            return count($users) > 0 ? $users[0] : null;
+
+        } catch (\Exception $e) {
+            echo "Error occured: ".$e." \n";
+            DBHelper::disconnect();
+            return null;
+        }
+    }
+
+    function sendDialogToSecondUser($user_id, $packet){
+        $this->sendDialogToClients([$user_id], $packet);
+    }
+
+
+
     public function onClose(ConnectionInterface $conn)
     {
         $this->clients->detach($conn);
 
-        if(in_array ($conn->resourceId, $this->users_id)){
-            $key = array_search ($conn->resourceId, $this->users_id);
-            unset($this->users_id[$key]);
-            unset($this->consultants_id[$key]);
+        $user_id = -1;
+        foreach ($this->users_id as $id => $user_conns){
+            if(in_array ($conn->resourceId, $user_conns)){
+                $key = array_search ($conn->resourceId, $user_conns);
+                unset($this->users_id[$id][$key]);
+                $user_id = $id;
+                break;
+            }
         }
 
+        if($user_id > -1 && empty($this->users_id[$user_id]))
+            unset($this->users_id[$user_id]);
+
+        $cons_id = -1;
+        foreach ($this->consultants_id as $id => $user_conns){
+            if(in_array ($conn->resourceId, $user_conns)){
+                $key = array_search ($conn->resourceId, $user_conns);
+                unset($this->consultants_id[$id][$key]);
+                $cons_id = $id;
+                break;
+            }
+        }
+
+        if($cons_id > -1 && empty($this->consultants_id[$cons_id]))
+            unset($this->consultants_id[$cons_id]);
+
+//        if(in_array ($conn->resourceId, $this->users_id)){
+//            $key = array_search ($conn->resourceId, $this->users_id);
+//
+//            unset($this->users_id[$key]);
+//            unset($this->consultants_id[$key]);
+//        }
         echo "Connection {$conn->resourceId} has disconnected\n";
     }
 
@@ -266,10 +400,42 @@ class ChatSocket implements MessageComponentInterface
         $conn->close();
     }
 
+
     function getEmployeeId(){
+        $dbconn = DBHelper::connect();
+
+        $sqlQuery = "SELECT ID, meta_value AS wp_capabilities
+                     FROM wp_users INNER JOIN wp_usermeta ON wp_users.ID = wp_usermeta.user_id
+                     WHERE meta_key = 'wp_capabilities';";
+
+        $employees = array();
+        try {
+            foreach ($dbconn->query($sqlQuery, \PDO::FETCH_ASSOC) as $user){
+                $roles = unserialize($user['wp_capabilities']);
+
+                echo $user['wp_capabilities'];
+                var_dump ($roles);
+
+                if(array_key_exists('adviser', $roles)){
+                    $employees[] = $user['ID'];
+                }
+            }
+            $randIndex = array_rand($employees);
+            DBHelper::disconnect();
+            return $employees[$randIndex];
+
+        } catch (\Exception $e) {
+            echo "Error occured: ".$e." \n";
+            DBHelper::disconnect();
+            return -1;
+        }
+    }
+
+    function getAvailableEmployeeId(){
         $randIndex = array_rand($this->consultants_id);
         return isset($randIndex) ? $randIndex : -1;
     }
+
 
     function sendUserStartedTypingMessage($userFromId, $roomId)
     {
@@ -297,7 +463,8 @@ class ChatSocket implements MessageComponentInterface
         $this->sendDataToClients($userFromId, $clients, $dataPacket);
     }
 
-    function sendMessage($clientFromId, $roomId, $message, $time)
+
+    function sendMessage($conn_id, $clientFromId, $roomId, $message, $time)
     {
         $dialog_inf = $this->findRoomInf($roomId);
 
@@ -311,7 +478,7 @@ class ChatSocket implements MessageComponentInterface
         );
 
         $clients = $dialog_inf['users'];
-        $this->sendDataToClients($clientFromId, $clients, $dataPacket);
+        $this->sendMessageToClients($conn_id, $clientFromId, $clients, $dataPacket);
         $this->saveMessageInDB($clientFromId, $roomId, $message, $time);
     }
 
@@ -413,13 +580,46 @@ class ChatSocket implements MessageComponentInterface
         return $dialog_inf;
     }
 
+
+    function sendDialogToClients(array $clients, array $dataPacket){
+        foreach ($clients AS $client) {
+            if(array_key_exists($client, $this->users_id)) {
+                echo $client;
+                $conn_arr = $this->users_id[$client];
+                foreach ($conn_arr as $conn_id){
+                        $conn = $this->users[$conn_id];
+                        $this->sendData($conn, $dataPacket);
+                }
+            }
+        }
+    }
+
+    function sendMessageToClients($from_conn_id, $clientFromId, array $clients, array $dataPacket){
+        foreach ($clients AS $client) {
+            if(array_key_exists($client, $this->users_id)) {
+                echo $client;
+                $conn_arr = $this->users_id[$client];
+                foreach ($conn_arr as $conn_id){
+
+                    if($conn_id != $from_conn_id){
+                        $conn = $this->users[$conn_id];
+                        $this->sendData($conn, $dataPacket);
+                    }
+                }
+            }
+        }
+    }
+
     function sendDataToClients($clientFromId, array $clients, array $packet)
     {
         foreach ($clients AS $client) {
             if(array_key_exists($client, $this->users_id) && $client != $clientFromId) {
                 echo $client;
-                $conn = $this->users[$this->users_id[$client]];
-                $this->sendData($conn, $packet);
+                $conn_arr = $this->users_id[$client];
+                foreach ($conn_arr as $conn_id){
+                    $conn = $this->users[$conn_id];
+                    $this->sendData($conn, $packet);
+                }
             }
         }
     }
