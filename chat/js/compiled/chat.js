@@ -35,7 +35,7 @@ $(function () {
         success: function (res) {
             console.log("Res: " + res);
             let url = new URL(window.location.href);
-            let c = url.searchParams.get("c");
+            let c = url.searchParams.get("dialog_id");
             console.log("C== "+c);
             console.log("url== "+url);
             loadChat(JSON.parse(res));
@@ -51,7 +51,7 @@ function loadChat(mes) {
     let url = 'ws://178.128.202.94:8000/?userId=' + user_object.id + '&consultan=' + ((is_consultant) ? 1 : 0);
     conn = new WebSocket(url);
 
-    
+
     conn.onopen = function (e) {
         console.log("Connection established.");
         console.log(e);
