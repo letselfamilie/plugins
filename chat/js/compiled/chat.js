@@ -592,9 +592,11 @@ function gotoBottom(id) {
 }
 
 function scrollToBanner() {
-    var topPos = document.getElementById('banner').offsetTop;
-    document.getElementById('messages-container').scrollTop = topPos;
-    $('#messages-container').scrollTop( $('#messages-container').scrollTop() - 100);
+    if (document.getElementById('banner') != null) {
+        var topPos = document.getElementById('banner').offsetTop;
+        document.getElementById('messages-container').scrollTop = topPos;
+        $('#messages-container').scrollTop($('#messages-container').scrollTop() - 100);
+    }
 }
 
 
