@@ -56,8 +56,7 @@
  *
 {
 command:'mark_messages',
-dialog_id:1,
-user_id_from:user_object.id
+dialog_id:1
 }
 */
 
@@ -202,24 +201,22 @@ class ChatSocket implements MessageComponentInterface
                     }
                     break;
                 case 'mark_messages':
-                    if(isset($room_id) && isset($user_id_from)){
+                    if(isset($room_id) ){
                         if($this->markMessages($room_id)){
                             //message for user
                             $message = array(
                                 'message' => 'Messages marked as read in dialog '.$room_id
                             );
-
-                            //message for other users in chat
-                            $dataPacket = array(
-                                'type'=> 'mark_messages',
-                                'dialog_id' => $room_id,
-                                'from'=> $user_id_from,
-                                'message'=> 'Messages was read by '.$user_id_from.' in dialog '.$room_id
-                            );
-                            $dialog_inf = $this->findRoomInf($room_id);
-                            $clients = $dialog_inf['users'];
-                            $this->sendDataToClients($user_id_from, $clients, $dataPacket);
-
+//                            //message for other users in chat
+//                            $dataPacket = array(
+//                                'type'=> 'mark_messages',
+//                                'dialog_id' => $room_id,
+//                                'from'=> $user_id_from,
+//                                'message'=> 'Messages was read by '.$user_id_from.' in dialog '.$room_id
+//                            );
+//                            $dialog_inf = $this->findRoomInf($room_id);
+//                            $clients = $dialog_inf['users'];
+//                            $this->sendDataToClients($user_id_from, $clients, $dataPacket);
                         }else{
                             $message = array(
                                 'message' => 'Error happened while marking messages in dialog '.$room_id
