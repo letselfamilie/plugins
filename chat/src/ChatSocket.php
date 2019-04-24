@@ -278,8 +278,9 @@ class ChatSocket implements MessageComponentInterface
                             $message['dialog_type'] = $dialog_type;
                             $message['user_info_1'] = $userInfo1;
                             $message['user_info_2'] = $userInfo2;
-
                             $from->send(json_encode($message));
+
+                            $message['second_user'] = $user_id_from;
                             $this->sendDialogToSecondUser($second_user, $message);
                         }
                     }
@@ -355,7 +356,6 @@ class ChatSocket implements MessageComponentInterface
         $this->sendDialogToClients([$user_id], $packet);
     }
 
-
     public function onClose(ConnectionInterface $conn)
     {
         $this->clients->detach($conn);
@@ -394,7 +394,6 @@ class ChatSocket implements MessageComponentInterface
 //        }
         echo "Connection {$conn->resourceId} has disconnected\n";
     }
-
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
         echo "An error has occurred: {$e->getMessage()}\n";
