@@ -306,6 +306,10 @@ function loadChat(mes) {
                     "user_photo":null
             }
             }*/
+            let dialog_id = data.dialog_id;
+
+            if($('#'+dialog_id).length!==0) return;
+            console.log($('#'+dialog_id).length);
 
             let message = data.message;
             let first_user_id = data.user_info_1.user_id;
@@ -314,11 +318,11 @@ function loadChat(mes) {
             let first_user_photo = data.user_info_1.user_photo;
             let second_user_name = data.user_info_2.user_login;
             let second_user_photo = data.user_info_2.user_photo;
-            let dialog_id = data.dialog_id;
             let dialog_type = data.dialog_type; //  employee_chat || user_chat
             let topic = data.topic;  // absent for user
             let is_emp_available =  data.is_emp_available; //absent for user
             let first_message = data.first_message;
+
 
 
             let isread = (second_user_id!==user_object.id)?"1":"0";
@@ -426,7 +430,6 @@ function fillChat(mes) {
         addDialog(res[i], mes);
     }
 
-
     let url = new URL(window.location.href);
     let d_id = url.searchParams.get("dialog_id");
 
@@ -435,12 +438,12 @@ function fillChat(mes) {
         conn.send(JSON.stringify({
             user_id_from: user_object.id,
             command: 'new_chat',
-            dialog_type: 'user_chat'
+            dialog_type: 'user_chat',
+            dialog_id : d_id
         }));
 
         $("#" + d_id).click();
     }
-
 }
 
 function addDialog(item, mes) {
@@ -465,7 +468,6 @@ function addDialog(item, mes) {
         sent: fromyou,
         preview: (preview !== undefined) ? preview : ""
     }));
-
 
 
     let N_unread = 0;
