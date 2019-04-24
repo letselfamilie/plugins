@@ -413,6 +413,7 @@ function addDialog(item, mes) {
                     command: 'mark_messages',
                     dialog_id: idDialog,
                 }));
+                console.log("marked read");
             }
 
             $node.find(".badge-counter").text(0);
@@ -434,11 +435,9 @@ function addDialog(item, mes) {
                 }
                 addMes(mes[idDialog].messages[i], user2logo, is_employee_chat);
             }
-            if (newMessages) {
-                gotoBottom('banner');
-            } else {
-                gotoBottom('messages-container');
-            }
+
+            gotoBottom('messages-container');
+
             newMessages = false;
         }
         // TODO: badges
