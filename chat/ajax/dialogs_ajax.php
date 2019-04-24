@@ -60,8 +60,8 @@ function get_dialogs() {
                 // }
 
 
-                $from_message = 0;//($_POST['from'] == null)? 0 : $_POST['from'];
-                $to_message = 20;//($_POST['to'] == null)? 20 : $_POST['to'];
+                $from_message = (isset($_POST['from']))? $_POST['from'] : 0;
+                $to_message = (isset($_POST['to']))? $_POST['to'] : 20;
 
                 $sqlQuery2 = "SELECT *
                               FROM {$wpdb->prefix}c_messages
