@@ -285,8 +285,7 @@ function loadChat(mes) {
                 }
 
                 // TODO: add badges of new messages + counter to the conversation
-
-
+                
                 console.log("Dialog " + dial_id + " has new message");
             }
 
