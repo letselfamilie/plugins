@@ -414,6 +414,7 @@ function addDialog(item, mes) {
                     command: 'mark_messages',
                     dialog_id: idDialog,
                 }));
+                console.log("dialog_id "+ idDialog);
                 console.log("marked read");
             }
 
