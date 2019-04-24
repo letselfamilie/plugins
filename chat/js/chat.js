@@ -36,6 +36,7 @@ $(function () {
             let url = new URL(window.location.href);
             let c = url.searchParams.get("c");
             console.log("C== "+c);
+            console.log("url== "+url);
             loadChat(JSON.parse(res));
         },
         error: function (error) {
