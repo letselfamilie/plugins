@@ -44,7 +44,7 @@ function get_dialogs() {
                  FROM {$wpdb->prefix}c_dialogs D
                  WHERE user1_id = ".$user_id." OR 
                     IF (user2_id IS NOT NULL, user2_id = ".$user_id." , employee_id = ".$user_id.")
-                 ORDER BY last_message_timestamp DESC;";
+                 ORDER BY last_message_timestamp;";
 
     $dialogs = array();
     $dialogs['curr_user'] = $user_id;
