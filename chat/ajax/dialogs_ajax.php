@@ -74,3 +74,26 @@ function get_dialogs() {
 }
 
 
+add_action('wp_ajax_' . 'add_dialogs', 'add_dialogs');
+add_action('wp_ajax_nopriv_' . 'add_dialogs', 'add_dialogs');
+
+
+function add_dialogs() {
+    global $wpdb;
+    $user_id = get_current_user_id();
+
+    $user_id_to = $_GET['user_to'];
+    $employee_id = $_GET['employee_id'];
+    $dialog_topic = $_GET['dialog_topic'];
+
+
+    if ($user_id_to != null && $user_id != null) {
+        $wpdb->query("INSERT INTO {$wpdb->prefix}c_dialog 
+                      (user1_id, user2_id, employee_id, is_employee_chat, dialog_topic) 
+                      VALUES ($user_id, $user_id_to, null, 0, null)");
+    } else if ($user_id != null && $employee_id != null && $dialog_topic != null) {
+        $wpdb->query("INSERT INTO {$wpdb->prefix}c_dialog 
+                      (user1_id, user2_id, employee_id, is_employee_chat, dialog_topic) 
+                      VALUES ($user_id, null, $employee_id, 1, $dialog_topic)");
+    }
+}

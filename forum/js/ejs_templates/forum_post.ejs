@@ -6,7 +6,13 @@
 
                 <img src="<%= post.photo %>">
 
-                <a href="/"><%= post.first_name + " " + post.surname %></a>
+                <a class="dropdown">
+                    <div class="name"><%= post.first_name + " " + post.surname %></div>
+                    <div class="dropdown-content">
+                        <p class="send-message">Send message</p>
+                    </div>
+                </a>
+
             </td>
         <% } else { %>
 
@@ -14,7 +20,7 @@
 
                     <img src="<%= url %>/images/user.png">
 
-                    <a href="/">Anonym</a>
+                    <a>Anonym</a>
                 </td>
         <% } %>
     <td class="post-text">
