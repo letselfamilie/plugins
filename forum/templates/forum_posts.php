@@ -97,7 +97,7 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
 
                 <img id="my-photo" src="<?php echo get_avatar_url(get_current_user_id())?>">
 
-                <a id="my-name" href="<?php PATH?>/">
+                <a id="my-name">
                     <?php
                     if ($current_user->user_firstname == '') {
                         echo $current_user->user_login;

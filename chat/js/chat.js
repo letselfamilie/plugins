@@ -46,6 +46,7 @@ function loadChat(mes) {
     let url = 'ws://178.128.202.94:8000/?userId=' + user_object.id + '&consultan=' + ((is_consultant) ? 1 : 0);
     conn = new WebSocket(url);
 
+
     conn.onopen = function (e) {
         console.log("Connection established.");
         console.log(e);
@@ -121,9 +122,13 @@ function loadChat(mes) {
             let key = parseInt(searchObjKey(mes, d_id));
 
             var new_message = {
-                message_id: "" + mes[Object.keys(mes).length - 1].message_id + 1, user_from_id: "" + user_object.id,
-                dialog_id: "" + d_id, is_read: "0", message_body: "" + message, create_timestamp: time
+                message_id: "" + mes[Object.keys(mes).length - 1].message_id + 1,
+                user_from_id: "" + user_object.id,
+                dialog_id: "" + d_id, is_read: "0",
+                message_body: "" + message,
+                create_timestamp: time
             };
+
 
             mes[key].messages.push(new_message);
 
@@ -167,61 +172,28 @@ function loadChat(mes) {
 
         });
 
-        $("#addNewDialog").click(function () {
-
-            event.preventDefault();
+        $("#addNewDialog").click(function ()
+        {
             let topic = $("#inputTopic").val();
             let messageFirst = $("#inputFirstMessage").val();
+            messageFirst= (messageFirst===null || messageFirst===undefined)? "" : messageFirst;
             if (topic !== "") {
                 console.log(topic);
                 console.log(messageFirst);
-
-                // TODO: add new dialog to server
-
-                var today = new Date();
-                var day = today.getDate();
-                var month = today.getMonth() + 1;
-
-                day = (day < 10) ? "0" + day : "" + day;
-                month = (month < 10) ? "0" + month : "" + month;
-                var time = today.getFullYear() + "-" + day + "-" + month + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-
-                var m = {
-                    message_id: "1", dialog_id: "3", is_read: "0",
-                    user_from_id: user_object.id, message_body: messageFirst, create_timestamp: time
-                };
-
-                var newDialog = {
-                    dialog_id: "4", //TODO: auto-increase dialog_id
-                    is_employee_chat: "1", dialog_topic: topic, user1_id: "" + user_object.id,
-                    user2_id: "6",  // TODO: auto-transfer to certain employee id
-                    second_user_nickname: null, second_user_photo: url_object.plugin_directory + "/images/question.png",
-                    messages: [m]
-                };
-
-                mes[Object.keys(mes).length] = newDialog;
 
 
                 // socket add dialog
                 conn.send(JSON.stringify({
                     user_id_from: user_object.id,
                     command: 'new_chat',
-                    dialog_type: 'employee_chat'
-                    // TODO
+                    dialog_type: 'employee_chat',
+                    topic: topic,
+                    message: messageFirst
                 }));
 
-
-                addDialog(newDialog, mes);
-
-                $(".contact-profile").css('display', 'none');
-                $(".messages").css('display', 'none');
-                $(".message-input").css('display', 'none');
-
-                $(".new-convo").css('display', 'none');
+                console.log("Request of creating new dialog has been sent to server");
 
             } else (alert("Write your issue, please"))
-
-            // TODO: add new dialog to side-bar
 
             // TODO: check form for being filled in
 
@@ -302,13 +274,90 @@ function loadChat(mes) {
 
             mes[key].messages.push(new_message);
 
-
             gotoBottom('messages-container');
         }
 
-        if (data.type === "dialog") {
-            // TODO: when someone wants to create new dialog with you
-        }
+        /*if (data.type === "new_chat") {
+
+            let message = data.message;
+            let second_user = data.second_user;
+            let dialog_id = data.dialog_id;
+            let dialog_type = data.dialog_type; //  employee_chat || user_chat
+            let topic = data.topic;  // absent for user
+            let is_emp_available =  data.is_emp_available; //absent for user
+
+            var today = new Date();
+            var day = today.getDate();
+            var month = today.getMonth() + 1;
+
+            day = (day < 10) ? "0" + day : "" + day;
+            month = (month < 10) ? "0" + month : "" + month;
+            var time = today.getFullYear() + "-" + day + "-" + month + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+            var m = {
+                message_id: "1", dialog_id: "3", is_read: "0",
+                user_from_id: user_object.id, message_body: messageFirst, create_timestamp: time
+            };
+
+
+            var newDialog = {
+                dialog_id: mes.length, //TODO: auto-increase dialog_id
+                is_employee_chat: "1",
+                dialog_topic: topic,
+                user1_id: "" + user_object.id,
+                user2_id: null,
+                second_user_nickname: null,
+                second_user_photo: url_object.plugin_directory + "/images/question.png",
+                messages: [m]
+            };
+
+            mes[Object.keys(mes).length] = newDialog;
+
+
+
+
+            addDialog(newDialog, mes);
+
+            $(".contact-profile").css('display', 'none');
+            $(".messages").css('display', 'none');
+            $(".message-input").css('display', 'none');
+
+            $(".new-convo").css('display', 'none');
+
+
+
+            var sound = new Howl({
+                src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
+            });
+            sound.play();
+
+
+
+
+
+            if(dialog_type==="employee_chat")
+            {
+                console.log("new chat with employee");
+                console.log(message);
+
+                var newDialog = {
+                    dialog_id: dialog_id,
+                    is_employee_chat: "1",
+                    dialog_topic: topic,
+                    user1_id: "" + user_object.id,
+                    user2_id: null,  // TODO: auto-transfer to certain employee id
+                    second_user_nickname: null,
+                    second_user_photo: url_object.plugin_directory + "/images/question.png",
+                    messages: []
+                };
+
+                mes[Object.keys(mes).length] = newDialog;
+
+                addDialog(newDialog, mes);
+
+            }
+
+        }*/
     };
 
 }
@@ -340,6 +389,12 @@ function fillChat(mes) {
     for (let i = 0; i < Object.keys(res).length; i++) {
         addDialog(res[i], mes);
     }
+
+
+    let url = new URL(window.location.href);
+    let d_id = url.searchParams.get("dialog_id");
+    $("#" + d_id).click();
+
 }
 
 function addDialog(item, mes) {
