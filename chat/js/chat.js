@@ -411,9 +411,9 @@ function addDialog(item, mes) {
             {
                 conn.send(JSON.stringify({
                     command: 'mark_messages',
-                    dialog_id: idDialog,
+                    dialog_id: idDialogHTML,
                 }));
-                console.log("dialog_id "+ idDialog);
+                console.log("dialog_id "+ idDialogHTML);
                 console.log("marked read");
             }
 
