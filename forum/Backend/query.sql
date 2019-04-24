@@ -1,4 +1,3 @@
-SELECT *
-FROM (wp_f_posts p INNER JOIN wp_users u ON p.user_id = u.ID)
-      LEFT OUTER JOIN wp_f_posts p2 ON p.response_to = p2.post_id
-WHERE p.topic_id = 1;
+SELECT dialog_id
+FROM wp_c_dialogs
+WHERE (user1_id = 2 AND user2_id = 3) OR (user1_id = 21 AND user2_id = 3);

@@ -74,3 +74,41 @@ function get_dialogs() {
 }
 
 
+add_action('wp_ajax_' . 'add_dialog', 'add_dialog');
+add_action('wp_ajax_nopriv_' . 'add_dialog', 'add_dialog');
+
+
+function add_dialog() {
+    global $wpdb;
+    $user_id = get_current_user_id();
+
+    $user_id_to = $_POST['user_to'];
+    $employee_id = $_POST['employee_id'];
+    $dialog_topic = $_POST['dialog_topic'];
+
+    try {
+        if ($user_id_to != null && $user_id != null) {
+
+            $sqlQuery = "SELECT dialog_id
+                         FROM {$wpdb->prefix}c_dialogs
+                         WHERE (user1_id = $user_id_to AND user2_id = $user_id) 
+                            OR (user1_id = $user_id AND user2_id = $user_id_to)
+                         LIMIT 1;";
+            if ($wpdb->get_var($sqlQuery) == null) {
+                $wpdb->query("INSERT INTO {$wpdb->prefix}c_dialogs 
+                              (user1_id, user2_id, employee_id, is_employee_chat, dialog_topic) 
+                              VALUES ($user_id, $user_id_to, null, 0, null)");
+            }
+            echo json_encode($wpdb->get_var($sqlQuery) * 1, JSON_UNESCAPED_UNICODE);
+        }
+        // to creat chat with employee
+//    else if ($user_id != null && $employee_id != null && $dialog_topic != null) {
+//        $wpdb->query("INSERT INTO {$wpdb->prefix}c_dialogs
+//                      (user1_id, user2_id, employee_id, is_employee_chat, dialog_topic)
+//                      VALUES ($user_id, null, $employee_id, 1, $dialog_topic)");
+//    }
+    } catch (Exception $e) {
+        wp_send_json_error($e->getMessage(), '600');
+    }
+    die;
+}
