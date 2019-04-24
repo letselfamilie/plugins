@@ -32,8 +32,12 @@ function get_dialogs() {
 
     $user_id = get_current_user_id();
 
-    $sqlQuery = "SELECT dialog_id, is_employee_chat, dialog_topic, user1_id, COALESCE (user2_id, employee_id) AS user2_id
-                 FROM {$wpdb->prefix}c_dialogs 
+    $sqlQuery = "SELECT dialog_id, is_employee_chat, dialog_topic, user1_id,
+                                        COALESCE (user2_id, employee_id) AS user2_id, (SELECT COUNT(*)
+                                                                                       FROM {$wpdb->prefix}c_messages
+                                                                                       WHERE dialog_id = D.dialog_id
+                                                                                           AND is_read = 0) AS unread_msg
+                 FROM {$wpdb->prefix}c_dialogs D
                  WHERE user1_id = ".$user_id." OR 
                     IF (user2_id IS NOT NULL, user2_id = ".$user_id." , employee_id = ".$user_id.");";
 
@@ -45,7 +49,7 @@ function get_dialogs() {
                 $dialog['second_user_nickname'] = get_user_meta($second_id, 'nickname', true);
 
                 // if(um_profile('profile_photo')) {
-                       $dialog['second_user_photo'] = get_avatar_url($second_id, null);
+                $dialog['second_user_photo'] = get_avatar_url($second_id, null);
                 // } else{
                 //     $dialog['second_user_photo'] = um_get_default_avatar_uri();
                 // }
