@@ -362,6 +362,10 @@ function loadChat(mes) {
 
                 addDialog(newDialog, mes);
 
+                // if (user_object.user_id == first_user_id) {
+                    $('#' + dialog_id).click();
+                // }
+
                 if(!is_emp_available)
                 {
                     alert ("The consultant is not available at the moment.");
