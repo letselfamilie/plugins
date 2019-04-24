@@ -265,7 +265,8 @@ function loadChat(mes) {
                     $(badge).appendTo($node.find(".wrap .meta .name"));
                 } else {
                     let val = $node.find(".badge-counter").text();
-                    $node.find(".badge-counter").text(parseInt(val) + 1);
+
+                    $node.find(".badge-counter").text(isNaN(parseInt(val))? 1 : parseInt(val) + 1);
                 }
 
                 $node.find(".badge-counter").removeClass("hidden");
@@ -374,11 +375,32 @@ function loadChat(mes) {
 
                 mes[Object.keys(mes).length] = newDialog;
 
+
+
+
+
+                if(m===[])
+                {
+                    $("#"+dialog_id).find();
+                }
+
+
                 addDialog(newDialog, mes);
 
                 if (user_object.id == first_user_id) {
                     $('#' + dialog_id).click();
                 }
+
+                if ($("#"+dialog_id).find(".badge-counter").length === 0) {
+                    let badge = '<span class="badge badge-counter ml-2">' + (m===[])? "new" : 1 + '</span>';
+                    $(badge).appendTo($("#"+dialog_id).find(".wrap .meta .name"));
+                    $(badge).removeClass("hidden");
+
+                } else {
+                    $("#"+dialog_id).find(".badge-counter").text((m===[])? "new" : 1 );
+                    $("#"+dialog_id).removeClass("hidden");
+                }
+
 
                 if(!is_emp_available)
                 {
@@ -392,6 +414,8 @@ function loadChat(mes) {
                     $(".message-input").css('display', 'none');
                     $(".new-convo").css('display', 'none');
                 }
+
+
 
             }
 
@@ -413,6 +437,18 @@ function loadChat(mes) {
                 mes[Object.keys(mes).length] = newDialog;
 
                 addDialog(newDialog, mes);
+
+
+                if ($("#"+dialog_id).find(".badge-counter").length === 0) {
+                    let badge = '<span class="badge badge-counter ml-2">new</span>';
+                    $(badge).appendTo($("#"+dialog_id).find(".wrap .meta .name"));
+                    $(badge).removeClass("hidden");
+
+                } else {
+                    $("#"+dialog_id).find(".badge-counter").text("new");
+                    $("#"+dialog_id).removeClass("hidden");
+                }
+
             }
 
 
@@ -522,7 +558,6 @@ function addDialog(item, mes) {
             $(badge).removeClass("hidden");
 
         } else {
-            let val = $node.find(".badge-counter").text();
             $node.find(".badge-counter").text(N_unread);
             $node.removeClass("hidden");
         }
@@ -560,6 +595,7 @@ function addDialog(item, mes) {
 
         if (idDialog !== undefined && idDialog !== null) {
             let value = parseInt($node.find(".badge-counter").text());
+
             if(value>0)
             {
                 conn.send(JSON.stringify({
