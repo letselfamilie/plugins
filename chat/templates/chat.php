@@ -84,27 +84,6 @@ if(!is_user_logged_in()) {
             border-spacing: 0;
         }
 
-        .messages::-webkit-scrollbar, #conversations::-webkit-scrollbar
-        {
-            width: 12px !important;  /* for vertical scrollbars */
-            height: 12px !important; /* for horizontal scrollbars */
-        }
-
-        .messages::-webkit-scrollbar-track, #conversations::-webkit-scrollbar-track
-        {
-            background: rgba(15, 97, 185, 0.1) !important;
-        }
-
-        .messages::-webkit-scrollbar-thumb
-        {
-            background: #0f61b9 !important;
-        }
-
-        #conversations::-webkit-scrollbar-thumb
-        {
-            background: #0c76cf !important;
-        }
-
         .fa {
             font-family: FontAwesome !important;
         }

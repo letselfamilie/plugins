@@ -41,10 +41,12 @@ $(function () {
 });
 
 function loadChat(mes) {
-    var is_consultant = (user_object.role == 'adviser');
-    let conn = new WebSocket('ws://178.128.202.94:8000/?userId=' + user_object.id + '&consultan=' + ((is_consultant) ? 1 : 0));
+    let is_consultant = (user_object.role == 'adviser');
+    let url = 'ws://178.128.202.94:8000/?userId=' + user_object.id + '&consultan=' + ((is_consultant) ? 1 : 0);
+    let conn = new WebSocket(url);
+
     conn.onopen = function (e) {
-        console.log("Connection established!");
+        console.log("Connection established.");
         console.log(e);
 
         fillChat(mes);
