@@ -270,7 +270,6 @@ function loadChat(mes) {
                     command: 'mark_messages',
                     dialog_id: dial_id
                 }));
-
                 console.log("marked read/ id: " + dial_id);
                 
                 $('.messages ul').children('li').last().focus();
