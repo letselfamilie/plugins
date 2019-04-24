@@ -59,13 +59,19 @@ function get_dialogs() {
                 //     $dialog['second_user_photo'] = um_get_default_avatar_uri();
                 // }
 
+
+                $from_message = ($_POST['from'] == null)? 1 : $_POST['from'];
+                $to_message = ($_POST['to'] == null)? 20 : $_POST['to'];
+
                 $sqlQuery2 = "SELECT *
                               FROM {$wpdb->prefix}c_messages
                               WHERE dialog_id = '".$dialog['dialog_id']."'
-                              ORDER BY create_timestamp;";
+                              ORDER BY create_timestamp DESC
+                              LIMIT " . ($from_message - $to_message + 1) . " 
+                              OFFSET $from_message;";
 
                 $dialog['messages'] = array();
-                foreach ($wpdb->get_results($sqlQuery2, ARRAY_A) as $message) {
+                foreach (array_reverse($wpdb->get_results($sqlQuery2, ARRAY_A)) as $message) {
                     $dialog['messages'][] = $message;
                 }
                 $dialogs[] = $dialog;
