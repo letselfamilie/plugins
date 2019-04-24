@@ -361,9 +361,10 @@ function loadChat(mes) {
 
                 addDialog(newDialog, mes);
 
-                // if (user_object.user_id == first_user_id) {
+                console.log(user_object.user_id + '==' +  first_user_id);
+                if (user_object.user_id == first_user_id) {
                     $('#' + dialog_id).click();
-                // }
+                }
 
                 if(!is_emp_available)
                 {
