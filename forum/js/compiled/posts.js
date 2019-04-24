@@ -486,13 +486,31 @@ $(function () {
                     });
                 }
             });
+
+            $node.on('click', '.send-message', function () {
+                $.ajax({
+                    url: url_object.ajax_url,
+                    type: 'POST',
+                    data: {
+                        action: 'add_dialog',
+                        user_to: data.user_id
+                    },
+                    success: function (res) {
+                        window.location.href = url_object.site_url + "/chat?dialog_id=" + res;
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+
         } else {
             $node.on('click', '.comment-empty', function () {
-                window.location.href =  url_object.site_url + "/register";
+                window.location.href =  url_object.site_url + "/login";
             });
 
             $node.on('click', '.empty-like', function () {
-                window.location.href =  url_object.site_url + "/register";
+                window.location.href =  url_object.site_url + "/login";
             });
         }
 
