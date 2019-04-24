@@ -133,6 +133,7 @@ class ChatSocket implements MessageComponentInterface
         $this->users_id = array();
         $this->users = array();
         $this->queryObj = array();
+        $this->consultants_id = array();
     }
 
     public function onOpen(ConnectionInterface $conn)
@@ -250,8 +251,10 @@ class ChatSocket implements MessageComponentInterface
                                 }
                                 break;
                                 case "user_chat":{
-                                    $second_user = $data->second_user;
-                                    $chat_id = $this->addDialogToDB($user_id_from, $dialog_type, $second_user, null);
+                                    $chat_id = $data->dialog_id;
+                                    $second_user = $this->getSecondUser($chat_id, $user_id_from);
+                                   // $second_user = $data->second_user;
+                                   // $chat_id = $this->addDialogToDB($user_id_from, $dialog_type, $second_user, null);
                                     $message = array(
                                         'message' => "New chat with user ".$second_user." was added"
                                     );
@@ -578,6 +581,18 @@ class ChatSocket implements MessageComponentInterface
         DBHelper::disconnect();
 
         return $dialog_inf;
+    }
+
+    function getSecondUser($chat_id, $user_from_id){
+        $dialog_inf = $this->findRoomInf($chat_id);
+        $users = $dialog_inf['users'];
+        $user_from_id = array_search($user_from_id, $users);
+
+        if(!empty($user_from_id)){
+            unset($users[$user_from_id]);
+            return $users[0];
+        }
+        return -1;
     }
 
 
