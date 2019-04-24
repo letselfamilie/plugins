@@ -357,17 +357,27 @@ function addDialog(item, mes) {
         preview: (preview !== undefined) ? preview : ""
     }));
 
+
+
+    let N_unread = 0;
     for(var i = messages.length-1; i>0; i--)
     {
         if(messages[i].is_read ==="1")
         {
             break;
         }
+        else
+        {
+            if(messages[i].user_from_id !== user_object.id)
+            {
+                N_unread++;
+            }
+        }
     }
-    let N_unread = messages.length -1 - i;
 
     if(N_unread>0)
     {
+
         if ($node.find(".badge-counter").length === 0) {
             let badge = '<span class="badge badge-counter ml-2">' + N_unread+ '</span>';
             $(badge).appendTo($node.find(".wrap .meta .name"));
@@ -376,6 +386,8 @@ function addDialog(item, mes) {
             $node.find(".badge-counter").text(N_unread);
         }
     }
+
+
 
     $node.click(function () {
 
@@ -415,7 +427,7 @@ function addDialog(item, mes) {
                     user_id_from: user_object.id
                 }));
 
-                console.log("dialog_id "+ idDialogHTML); console.log("marked read");
+                console.log("marked read/ id: " + idDialogHTML);
 
             }
 
