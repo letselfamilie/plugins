@@ -67,8 +67,8 @@ function get_dialogs() {
                               FROM {$wpdb->prefix}c_messages
                               WHERE dialog_id = '".$dialog['dialog_id']."'
                               ORDER BY create_timestamp DESC
-                              LIMIT " . ($to_message - $from_message + 1) . " 
-                              OFFSET $from_message;";
+                              LIMIT 19 
+                              OFFSET 1;";
 
                 $dialog['messages'] = array();
                 foreach (array_reverse($wpdb->get_results($sqlQuery2, ARRAY_A)) as $message) {
