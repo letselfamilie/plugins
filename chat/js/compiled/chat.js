@@ -309,8 +309,7 @@ function loadChat(mes) {
             }*/
             let dialog_id = data.dialog_id;
 
-            if($('#'+dialog_id).length===0) return;
-
+            if($('#'+dialog_id).length!==0) return;
             console.log($('#'+dialog_id).length);
 
             let message = data.message;
