@@ -592,7 +592,7 @@ function gotoBottom(id) {
 
 function scrollToBanner() {
     var topPos = document.getElementById('banner').offsetTop;
-    document.getElementById('messages-container').scrollTop = topPos + 2000;
+    document.getElementById('messages-container').scrollTop = topPos + 100;
 }
 
 
