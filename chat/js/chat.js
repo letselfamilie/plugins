@@ -278,6 +278,7 @@ function loadChat(mes) {
                 if ($node.find(".badge-counter").length === 0) {
                     let badge = '<span class="badge badge-counter ml-2">1</span>';
                     $(badge).appendTo($node.find(".wrap .meta .name"));
+                    $(badge).removeClass("hidden");
                 } else {
                     let val = $node.find(".badge-counter").text();
                     $node.find(".badge-counter").text(parseInt(val) + 1);
@@ -285,7 +286,7 @@ function loadChat(mes) {
                 }
 
                 // TODO: add badges of new messages + counter to the conversation
-                
+
                 console.log("Dialog " + dial_id + " has new message");
             }
 
@@ -388,9 +389,12 @@ function addDialog(item, mes) {
         if ($node.find(".badge-counter").length === 0) {
             let badge = '<span class="badge badge-counter ml-2">' + N_unread+ '</span>';
             $(badge).appendTo($node.find(".wrap .meta .name"));
+            $(badge).removeClass("hidden");
+
         } else {
             let val = $node.find(".badge-counter").text();
             $node.find(".badge-counter").text(N_unread);
+            $node.removeClass("hidden");
         }
     }
 
