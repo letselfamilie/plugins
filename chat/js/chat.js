@@ -22,7 +22,6 @@ window.addEventListener('resize', () => {
 
 //http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3
 $(function () {
-
     $.ajax({
         url: url_object.ajax_url,
         type: 'POST',
@@ -322,13 +321,13 @@ function newBanner(message) {
 }
 
 function searchObjKey(obj, query) {
-
     var new_obj = obj;
 
     delete new_obj.curr_user;
 
     for (let key in new_obj) {
-        if (new_obj[key].dialog_id == query) return key;
+        if (new_obj[key].dialog_id == query)
+            return key;
     }
     return null;
 }

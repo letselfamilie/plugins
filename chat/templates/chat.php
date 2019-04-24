@@ -134,98 +134,12 @@ if(!is_user_logged_in()) {
         </div>
         <div id="conversations">
             <ul>
-                <!--<li id="2" class="conversation">
+                <!--<li id="2" class="conversation active">
                     <div class="wrap">
                         <img src="<?php /*echo PATH*/?>/images/question.png" alt=""/>
                         <div class="meta">
                             <p class="name">I have a question about car accidents</p>
                             <p class="preview"><span>You:</span>What if...?</p>
-                        </div>
-                    </div>
-                </li>
-                <li id="3"  class="conversation">
-                    <div class="wrap">
-                        <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt=""/>
-                        <div class="meta">
-                            <p class="name">John Smith</p>
-                            <p class="preview">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua.</p>
-                        </div>
-                    </div>
-                </li>
-                <li id="1" class="conversation">
-                    <div class="wrap">
-                        <img src="http://emilcarlsson.se/assets/rachelzane.png" alt=""/>
-                        <div class="meta">
-                            <p class="name">Jane</p>
-                            <p class="preview">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                                ut aliquip ex ea commodo consequat. </p>
-                        </div>
-                    </div>
-                </li>
-                <li class="conversation">
-                    <div class="wrap">
-                        <img src="<?php /*echo PATH*/?>/images/user.png" alt=""/>
-                        <div class="meta">
-                            <p class="name">Karen Brown</p>
-                            <p class="preview">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                                dolore eu fugiat nulla pariatur.</p>
-                        </div>
-                    </div>
-                </li>
-                <li class="conversation active">
-                    <div class="wrap">
-                        <img src="<?php /*echo PATH*/?>/images/question.png" alt=""/>
-                        <div class="meta">
-                            <p class="name">Vaccination</p>
-                            <p class="preview">Sed nisi lacus sed viverra tellus in. Non odio euismod lacinia at quis
-                                risus sed vulputate odio. </p>
-                        </div>
-                    </div>
-                </li>
-                <li class="conversation">
-                    <div class="wrap">
-                        <img src="http://emilcarlsson.se/assets/haroldgunderson.png" alt=""/>
-                        <div class="meta">
-                            <p class="name">Jason</p>
-                            <p class="preview"><span>You:</span>Thank you.</p>
-                        </div>
-                    </div>
-                </li>
-                <li class="conversation">
-                    <div class="wrap">
-                        <img src="<?php /*echo PATH*/?>/images/user.png" alt=""/>
-                        <div class="meta">
-                            <p class="name preview">User</p>
-                            <p class="preview">Hello.</p>
-                        </div>
-                    </div>
-                </li>
-                <li class="conversation">
-                    <div class="wrap">
-                        <img src="<?php /*echo PATH*/?>/images/user.png" alt=""/>
-                        <div class="meta">
-                            <p class="name">Kate</p>
-                            <p class="preview">Turpis egestas sed tempus urna et pharetra pharetra massa massa. </p>
-                        </div>
-                    </div>
-                </li>
-                <li class="conversation">
-                    <div class="wrap">
-                        <img src="<?php /*echo PATH*/?>/images/question.png" alt=""/>
-                        <div class="meta">
-                            <p class="name">Another question</p>
-                            <p class="preview"><span>You:</span>Nec ultrices dui sapien eget. </p>
-                        </div>
-                    </div>
-                </li>
-                <li class="conversation">
-                    <div class="wrap">
-                        <img src="<?php /*echo PATH*/?>/images/question.png" alt=""/>
-                        <div class="meta">
-                            <p class="name">A question</p>
-                            <p class="preview"><span>You:</span>Nam aliquam sem et tortor consequat id porta. Sagittis
-                                vitae et leo duis ut diam quam nulla. </p>
                         </div>
                     </div>
                 </li>-->
@@ -316,59 +230,7 @@ if(!is_user_logged_in()) {
                         <br/>
                         <small class="float-right mt-2">14:08:30</small>
                     </p>
-                </li>
-
-                <li class="replies">
-                    <img src="<?php /*echo PATH*/?>/images/logo.png" alt=""/>
-                    <p>
-                        Pellentesque diam volutpat commodo sed egestas egestas fringilla.
-                        <br/>
-                        <small class="float-right mt-2">14:11:32</small>
-                    </p>
-                </li>
-                <li class="sent">
-                    <img src="<?php /*echo PATH*/?>/images/user.png" alt=""/>
-                    <p>
-                        Porta nibh venenatis cras sed felis eget velit aliquet sagittis. Sodales ut etiam sit amet nisl
-                        purus in mollis.
-                        <br/>
-                        <small class="float-right mt-2">14:13:08</small>
-                    </p>
-                </li>
-                <li class="replies">
-                    <img src="<?php /*echo PATH*/?>/images/logo.png" alt=""/>
-                    <p>
-                        Eleifend quam adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus.
-                        <br/>
-                        <small class="float-right mt-2">14:14:54</small>
-                    </p>
-                </li>
-                <li class="replies">
-                    <img src="<?php /*echo PATH*/?>/images/logo.png" alt=""/>
-                    <p>
-                        Eget sit amet tellus cras adipiscing enim eu.
-                        <br/>
-                        <small class="float-right mt-2">14:16:21</small>
-                    </p>
-                </li>
-                <li class="sent">
-                    <img src="<?php /*echo PATH*/?>/images/user.png" alt=""/>
-                    <p>
-                        Id aliquet lectus proin nibh.
-                        <br/>
-                        <small class="float-right mt-2">14:18:23</small>
-                    </p>
-                </li>
-
-                <li class="replies">
-                    <img src="<?php /*echo PATH*/?>/images/logo.png" alt=""/>
-                    <p>
-                        Sed nisi lacus sed viverra tellus in. Non odio euismod lacinia at quis risus sed vulputate odio.
-                        <br/>
-                        <small class="float-right mt-2">14:21:39</small>
-                    </p>
                 </li>-->
-
             </ul>
         </div>
         <div class="message-input hidden">
