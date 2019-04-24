@@ -51,6 +51,7 @@ function loadChat(mes) {
     conn.onopen = function (e) {
         console.log("Connection established.");
         console.log(e);
+        console.log("user_object" + user_object);
 
         fillChat(mes);
 
@@ -393,7 +394,7 @@ function loadChat(mes) {
             if(dialog_type==="user_chat")
             {
                 console.log("User chat view is requested to be created");
-
+                console.log(message);
                 var newDialog = {
                     dialog_id: dialog_id,
                     is_employee_chat: "0",
