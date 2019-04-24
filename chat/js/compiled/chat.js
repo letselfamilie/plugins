@@ -11,8 +11,8 @@ let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 let myprofilelogo = url_object.plugin_directory + '/images/user.png';
-let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\r\n    <div class=\"wrap\">\r\n        <img src=\" <%= photo %> \" alt=\"\"/>\r\n        <div class=\"meta\">\r\n            <p class=\"name\"> <%= name %> </p>\r\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\r\n        </div>\r\n    </div>\r\n</li>\r\n");
-let mes_templ = ejs.compile("<li class=\"<%= status %>\">\r\n    <img src=\"<%= image %>\" alt=\"\"/>\r\n    <p>\r\n        <%= mes %>\r\n        <br/>\r\n        <small class=\"float-right mt-2\"><%= time %></small>\r\n    </p>\r\n</li>\r\n");
+let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\n    <div class=\"wrap\">\n        <img src=\" <%= photo %> \" alt=\"\"/>\n        <div class=\"meta\">\n            <p class=\"name\"> <%= name %> </p>\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\n        </div>\n    </div>\n</li>\n");
+let mes_templ = ejs.compile("<li class=\"<%= status %>\">\n    <img src=\"<%= image %>\" alt=\"\"/>\n    <p>\n        <%= mes %>\n        <br/>\n        <small class=\"float-right mt-2\"><%= time %></small>\n    </p>\n</li>\n");
 let conn;
 
 // We listen to the resize event
@@ -34,6 +34,9 @@ $(function () {
         },
         success: function (res) {
             console.log("Res: " + res);
+            let url = new URL(window.location.href);
+            let c = url.searchParams.get("c");
+            console.log("C== "+c);
             loadChat(JSON.parse(res));
         },
         error: function (error) {
@@ -122,9 +125,13 @@ function loadChat(mes) {
             let key = parseInt(searchObjKey(mes, d_id));
 
             var new_message = {
-                message_id: "" + mes[Object.keys(mes).length - 1].message_id + 1, user_from_id: "" + user_object.id,
-                dialog_id: "" + d_id, is_read: "0", message_body: "" + message, create_timestamp: time
+                message_id: "" + mes[Object.keys(mes).length - 1].message_id + 1,
+                user_from_id: "" + user_object.id,
+                dialog_id: "" + d_id, is_read: "0",
+                message_body: "" + message,
+                create_timestamp: time
             };
+
 
             mes[key].messages.push(new_message);
 
@@ -168,64 +175,28 @@ function loadChat(mes) {
 
         });
 
-        $("#addNewDialog").click(function () {
-
+        $("#addNewDialog").click(function ()
+        {
             let topic = $("#inputTopic").val();
             let messageFirst = $("#inputFirstMessage").val();
+            messageFirst= (messageFirst===null || messageFirst===undefined)? "" : messageFirst;
             if (topic !== "") {
                 console.log(topic);
                 console.log(messageFirst);
 
-                // TODO: add new dialog to server
 
-                var today = new Date();
-                var day = today.getDate();
-                var month = today.getMonth() + 1;
-
-                day = (day < 10) ? "0" + day : "" + day;
-                month = (month < 10) ? "0" + month : "" + month;
-                var time = today.getFullYear() + "-" + day + "-" + month + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-
-                var m = {
-                    message_id: "1", dialog_id: "3", is_read: "0",
-                    user_from_id: user_object.id, message_body: messageFirst, create_timestamp: time
-                };
-
-
-                var newDialog = {
-                    dialog_id: mes.length, //TODO: auto-increase dialog_id
-                    is_employee_chat: "1",
-                    dialog_topic: topic,
-                    user1_id: "" + user_object.id,
-                    user2_id: null,
-                    second_user_nickname: null,
-                    second_user_photo: url_object.plugin_directory + "/images/question.png",
-                    messages: [m]
-                };
-
-                mes[Object.keys(mes).length] = newDialog;
-
-/*
                 // socket add dialog
                 conn.send(JSON.stringify({
                     user_id_from: user_object.id,
                     command: 'new_chat',
                     dialog_type: 'employee_chat',
-                    topic: topic
-                }));*/
+                    topic: topic,
+                    message: messageFirst
+                }));
 
-
-                addDialog(newDialog, mes);
-
-                $(".contact-profile").css('display', 'none');
-                $(".messages").css('display', 'none');
-                $(".message-input").css('display', 'none');
-
-                $(".new-convo").css('display', 'none');
+                console.log("Request of creating new dialog has been sent to server");
 
             } else (alert("Write your issue, please"))
-
-            // TODO: add new dialog to side-bar
 
             // TODO: check form for being filled in
 
@@ -306,26 +277,10 @@ function loadChat(mes) {
 
             mes[key].messages.push(new_message);
 
-
             gotoBottom('messages-container');
         }
 
-        if (data.type === "new_chat") {
-
-            var sound = new Howl({
-                src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
-            });
-            sound.play();
-
-
-           /* {
-                type: 'new_chat',
-                    message: "New chat with employee ".$employee_id." was added",
-                second_user: $employee_id,
-                dialog_id: $chat_id,
-                dialog_type: $dialog_type,
-                topic: $topic
-            }*/
+        /*if (data.type === "new_chat") {
 
             let message = data.message;
             let second_user = data.second_user;
@@ -333,6 +288,54 @@ function loadChat(mes) {
             let dialog_type = data.dialog_type; //  employee_chat || user_chat
             let topic = data.topic;  // absent for user
             let is_emp_available =  data.is_emp_available; //absent for user
+
+            var today = new Date();
+            var day = today.getDate();
+            var month = today.getMonth() + 1;
+
+            day = (day < 10) ? "0" + day : "" + day;
+            month = (month < 10) ? "0" + month : "" + month;
+            var time = today.getFullYear() + "-" + day + "-" + month + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+            var m = {
+                message_id: "1", dialog_id: "3", is_read: "0",
+                user_from_id: user_object.id, message_body: messageFirst, create_timestamp: time
+            };
+
+
+            var newDialog = {
+                dialog_id: mes.length, //TODO: auto-increase dialog_id
+                is_employee_chat: "1",
+                dialog_topic: topic,
+                user1_id: "" + user_object.id,
+                user2_id: null,
+                second_user_nickname: null,
+                second_user_photo: url_object.plugin_directory + "/images/question.png",
+                messages: [m]
+            };
+
+            mes[Object.keys(mes).length] = newDialog;
+
+
+
+
+            addDialog(newDialog, mes);
+
+            $(".contact-profile").css('display', 'none');
+            $(".messages").css('display', 'none');
+            $(".message-input").css('display', 'none');
+
+            $(".new-convo").css('display', 'none');
+
+
+
+            var sound = new Howl({
+                src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
+            });
+            sound.play();
+
+
+
 
 
             if(dialog_type==="employee_chat")
@@ -357,7 +360,7 @@ function loadChat(mes) {
 
             }
 
-        }
+        }*/
     };
 
 }
@@ -389,6 +392,9 @@ function fillChat(mes) {
     for (let i = 0; i < Object.keys(res).length; i++) {
         addDialog(res[i], mes);
     }
+
+
+
 }
 
 function addDialog(item, mes) {
