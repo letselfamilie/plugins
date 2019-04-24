@@ -285,7 +285,7 @@ function loadChat(mes) {
         }
 
         if (data.type === "new_chat") {
-            console.log(data.message);
+
 
             /*{
                 "message":"New chat with employee 3 was added",
@@ -314,8 +314,14 @@ function loadChat(mes) {
             }*/
             let dialog_id = data.dialog_id;
 
-            if($('#'+dialog_id).length!==0) return;
-            console.log($('#'+dialog_id).length);
+
+
+
+            if($('#'+dialog_id).length!==0)
+            {
+                console.log("New dialog won't be created as it already exists");
+                return;
+            }
 
             let message = data.message;
             let first_user_id = data.user_info_1.user_id;
@@ -329,6 +335,8 @@ function loadChat(mes) {
             let is_emp_available =  data.is_emp_available; //absent for user
             let first_message = data.first_message;
 
+
+            console.log("I received request to create new dialog view");
 
 
             let isread = (second_user_id!==user_object.id)?"1":"0";
@@ -345,6 +353,7 @@ function loadChat(mes) {
 
             if(dialog_type==="employee_chat")
             {
+                console.log("Employee chat view is requested to be created");
 
                 var newDialog = {
                     dialog_id: dialog_id,
@@ -378,7 +387,7 @@ function loadChat(mes) {
 
             if(dialog_type==="user_chat")
             {
-                console.log(message);
+                console.log("User chat view is requested to be created");
 
                 var newDialog = {
                     dialog_id: dialog_id,
@@ -397,7 +406,7 @@ function loadChat(mes) {
             }
 
 
-
+            console.log(data.message);
             var sound = new Howl({
                 src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
             });
@@ -447,6 +456,8 @@ function fillChat(mes) {
             dialog_type: 'user_chat',
             dialog_id : d_id
         }));
+
+        console.log("Requset to create new dialog with user has been sent");
 
         $("#" + d_id).click();
     }
