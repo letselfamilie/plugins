@@ -307,6 +307,11 @@ function loadChat(mes) {
                     "user_photo":null
             }
             }*/
+            let dialog_id = data.dialog_id;
+
+            if($('#'+dialog_id).length===0) return;
+
+            console.log($('#'+dialog_id).length);
 
             let message = data.message;
             let first_user_id = data.user_info_1.user_id;
@@ -315,14 +320,11 @@ function loadChat(mes) {
             let first_user_photo = data.user_info_1.user_photo;
             let second_user_name = data.user_info_2.user_login;
             let second_user_photo = data.user_info_2.user_photo;
-            let dialog_id = data.dialog_id;
             let dialog_type = data.dialog_type; //  employee_chat || user_chat
             let topic = data.topic;  // absent for user
             let is_emp_available =  data.is_emp_available; //absent for user
             let first_message = data.first_message;
 
-
-            if($('#'+dialog_id).length===0) return;
 
 
             let isread = (second_user_id!==user_object.id)?"1":"0";

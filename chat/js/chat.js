@@ -310,6 +310,8 @@ function loadChat(mes) {
 
             if($('#'+dialog_id).length===0) return;
 
+            console.log($('#'+dialog_id).length);
+
             let message = data.message;
             let first_user_id = data.user_info_1.user_id;
             let second_user_id = data.user_info_2.user_id; //id second user
