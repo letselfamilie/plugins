@@ -50,6 +50,7 @@ function loadChat(mes) {
     let url = 'ws://178.128.202.94:8000/?userId=' + user_object.id + '&consultan=' + ((is_consultant) ? 1 : 0);
     conn = new WebSocket(url);
 
+    
     conn.onopen = function (e) {
         console.log("Connection established.");
         console.log(e);
