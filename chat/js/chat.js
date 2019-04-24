@@ -199,6 +199,7 @@ function loadChat(mes) {
 
 
         });
+        return false;
 
     };
 
