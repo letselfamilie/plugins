@@ -414,8 +414,8 @@ function addDialog(item, mes) {
                     user_id_from: user_object.id
                 }));
 
-                console.log("dialog_id "+ idDialogHTML);
-                console.log("marked read");
+                console.log("dialog_id "+ idDialogHTML); console.log("marked read");
+
             }
 
             $node.find(".badge-counter").text(0);
