@@ -170,7 +170,6 @@ function loadChat(mes) {
 
         $("#addNewDialog").click(function () {
 
-            event.preventDefault();
             let topic = $("#inputTopic").val();
             let messageFirst = $("#inputFirstMessage").val();
             if (topic !== "") {
@@ -192,24 +191,28 @@ function loadChat(mes) {
                     user_from_id: user_object.id, message_body: messageFirst, create_timestamp: time
                 };
 
+
                 var newDialog = {
-                    dialog_id: "4", //TODO: auto-increase dialog_id
-                    is_employee_chat: "1", dialog_topic: topic, user1_id: "" + user_object.id,
-                    user2_id: "6",  // TODO: auto-transfer to certain employee id
-                    second_user_nickname: null, second_user_photo: url_object.plugin_directory + "/images/question.png",
+                    dialog_id: mes.length, //TODO: auto-increase dialog_id
+                    is_employee_chat: "1",
+                    dialog_topic: topic,
+                    user1_id: "" + user_object.id,
+                    user2_id: null,
+                    second_user_nickname: null,
+                    second_user_photo: url_object.plugin_directory + "/images/question.png",
                     messages: [m]
                 };
 
                 mes[Object.keys(mes).length] = newDialog;
 
-
+/*
                 // socket add dialog
                 conn.send(JSON.stringify({
                     user_id_from: user_object.id,
                     command: 'new_chat',
-                    dialog_type: 'employee_chat'
-                    // TODO
-                }));
+                    dialog_type: 'employee_chat',
+                    topic: topic
+                }));*/
 
 
                 addDialog(newDialog, mes);
@@ -307,8 +310,53 @@ function loadChat(mes) {
             gotoBottom('messages-container');
         }
 
-        if (data.type === "dialog") {
-            // TODO: when someone wants to create new dialog with you
+        if (data.type === "new_chat") {
+
+            var sound = new Howl({
+                src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
+            });
+            sound.play();
+
+
+           /* {
+                type: 'new_chat',
+                    message: "New chat with employee ".$employee_id." was added",
+                second_user: $employee_id,
+                dialog_id: $chat_id,
+                dialog_type: $dialog_type,
+                topic: $topic
+            }*/
+
+            let message = data.message;
+            let second_user = data.second_user;
+            let dialog_id = data.dialog_id;
+            let dialog_type = data.dialog_type; //  employee_chat || user_chat
+            let topic = data.topic;  // absent for user
+            let is_emp_available =  data.is_emp_available; //absent for user
+
+
+            if(dialog_type==="employee_chat")
+            {
+                console.log("new chat with employee");
+                console.log(message);
+
+                var newDialog = {
+                    dialog_id: dialog_id,
+                    is_employee_chat: "1",
+                    dialog_topic: topic,
+                    user1_id: "" + user_object.id,
+                    user2_id: null,  // TODO: auto-transfer to certain employee id
+                    second_user_nickname: null,
+                    second_user_photo: url_object.plugin_directory + "/images/question.png",
+                    messages: []
+                };
+
+                mes[Object.keys(mes).length] = newDialog;
+
+                addDialog(newDialog, mes);
+
+            }
+
         }
     };
 
