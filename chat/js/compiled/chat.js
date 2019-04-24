@@ -234,16 +234,17 @@ function loadChat(mes) {
     conn.onmessage = function (e) {
         console.log(e.data);
 
-        var sound = new Howl({
-            src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
-        });
-        sound.play();
-
         var data = JSON.parse(e.data)
 
         console.log("e.data.type " + data.type);
 
         if (data.type === "message") {
+
+            var sound = new Howl({
+                src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
+            });
+            sound.play();
+
             let from = data.from;
             let time = data.time;
             let mess = data.message;
