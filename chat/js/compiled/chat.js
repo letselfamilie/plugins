@@ -510,6 +510,9 @@ function fillChat(mes) {
 function addDialog(item, mes) {
 
     let dialog_id = item.dialog_id;
+
+
+
     let is_employee_chat = item.is_employee_chat;
     let dialog_topic = item.dialog_topic;
     let user1_id = item.user1_id;
@@ -572,6 +575,8 @@ function addDialog(item, mes) {
         $(".new-convo").css('display', 'none');
         $('.contact-profile').removeClass("hidden");
         $('.message-input').removeClass("hidden");
+
+        $("#chat-title").text(name);
 
         var idDialogHTML = $(this).attr('id');
 
