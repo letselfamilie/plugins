@@ -335,6 +335,18 @@ function loadChat(mes) {
             if($('#'+dialog_id).length>0)
             {
                 console.log("New dialog won't be created as it already exists");
+
+                if(dialog_id!==null)
+                {
+                    let $node = $("#" + dialog_id);
+                    $node.detach();
+                    $node.prependTo("#conversations ul");
+                    $node.click();
+                    console.log("you created new chat with user ");
+                }
+
+                
+
                 return;
             }
 

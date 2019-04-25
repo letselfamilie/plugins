@@ -336,6 +336,18 @@ function loadChat(mes) {
             if($('#'+dialog_id).length>0)
             {
                 console.log("New dialog won't be created as it already exists");
+
+                if(dialog_id!==null)
+                {
+                    let $node = $("#" + dialog_id);
+                    $node.detach();
+                    $node.prependTo("#conversations ul");
+                    $node.click();
+                    console.log("you created new chat with user ");
+                }
+
+                
+
                 return;
             }
 
@@ -366,6 +378,9 @@ function loadChat(mes) {
                     message_body: first_message.message,
                     create_timestamp: first_message.time
                 }];
+
+
+            console.log("dialog_type" + dialog_type)
 
             if(dialog_type==="employee_chat")
             {
@@ -416,10 +431,8 @@ function loadChat(mes) {
                     $(".message-input").css('display', 'none');
                     $(".new-convo").css('display', 'none');
                 }
-
-
-
             }
+
 
             if(dialog_type==="user_chat")
             {
