@@ -380,8 +380,7 @@ function loadChat(mes) {
                 mes[Object.keys(mes).length] = newDialog;
 
                 addDialog(newDialog, mes);
-
-
+                
                 if (user_object.id == first_user_id) { //TODO
                     $('#' + dialog_id).click();
 
