@@ -400,8 +400,7 @@ function loadChat(mes) {
                     $("#"+dialog_id).removeClass("hidden");
                     console.log("length:false "+$("#"+dialog_id).find(".badge-counter").length);
                 }
-
-
+                
                 if(!is_emp_available)
                 {
                     alert ("The consultant is not available at the moment.");
