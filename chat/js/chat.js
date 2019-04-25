@@ -54,7 +54,6 @@ $(function () {
                             //
                             // addMes(res, null, null, true)
 
-
                         },
                         error: function (error) {
                             console.log(error);
