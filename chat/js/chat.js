@@ -51,6 +51,7 @@ $(function () {
                         success: function (res) {
                             console.log($('#messages-container').find('ul').find('li').length);
                             console.log("new mess: " + res);
+                            addMes(res, null, null, true)
 
 
 
