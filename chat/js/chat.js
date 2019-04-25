@@ -49,11 +49,11 @@ $(function () {
                 data: {
                     action: 'get_messages',
                     dialog_id: d_id,
-                    from: $('messages-container').find('ul').length,
-                    to: $('messages-container').find('ul').length + 20
+                    from: $('#messages-container').find('ul').length,
+                    to: $('#messages-container').find('ul').length + 20
                 },
                 success: function (res) {
-                    console.log($('messages-container').find('ul').length);
+                    console.log($('#messages-container').find('ul').length);
                     console.log("new mess: " + res);
                 },
                 error: function (error) {
