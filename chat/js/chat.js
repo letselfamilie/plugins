@@ -386,7 +386,7 @@ function loadChat(mes) {
                 }
 
 
-                if ($("#"+dialog_id).find(".badge-counter").length === 0 && user_object.role != 'adviser') {
+                if ($("#"+dialog_id).find(".badge-counter").length === 0 && user_object.role == 'adviser') {
                     let badge = '<span class="badge badge-counter ml-2">new</span>';
                     $(badge).appendTo($("#"+dialog_id).find(".wrap .meta .name"));
                     $(badge).removeClass("hidden");
