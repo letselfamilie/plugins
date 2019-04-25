@@ -663,11 +663,10 @@ function addDialog(item, mes) {
             }
 
             //gotoBottom('messages-container');
-
         }
         // TODO: badges
 
-        scrollToBanner();
+        //scrollToBanner();
     });
     $("#conversations ul").prepend($node);
 }
