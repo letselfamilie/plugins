@@ -394,11 +394,11 @@ function loadChat(mes) {
                     $(badge).appendTo($("#"+dialog_id).find(".wrap .meta .name"));
                     $(badge).removeClass("hidden");
 
-                    console.log("length "+$("#"+dialog_id).find(".badge-counter").length);
+                    console.log("length:true "+$("#"+dialog_id).find(".badge-counter").length);
                 } else {
                     $("#"+dialog_id).find(".badge-counter").text((m===[])? "new" : 1 );
                     $("#"+dialog_id).removeClass("hidden");
-                    console.log("length "+$("#"+dialog_id).find(".badge-counter").length);
+                    console.log("length:false "+$("#"+dialog_id).find(".badge-counter").length);
                 }
 
 
