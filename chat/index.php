@@ -58,10 +58,14 @@ function chat_scripts()
 
         wp_localize_script('chat-js', 'url_object',
             array('ajax_url' => admin_url('admin-ajax.php'), 'plugin_directory' => plugins_url('', __FILE__), 'site_url' => get_site_url()));
+
+        $current_user = wp_get_current_user();
         wp_localize_script('chat-js', 'user_object',
             array(
-                'id' => wp_get_current_user()->ID,
-                'role' => ((array)( wp_get_current_user()->roles )[0])[0]
+                'id' => $current_user->ID,
+                'role' => ((array)( wp_get_current_user()->roles )[0])[0],
+                'username' => $current_user->user_firstname . " " . $current_user->user_lastname,
+                'photo' => get_avatar_data($current_user->ID, null)['url']
             ));
     }
 }
