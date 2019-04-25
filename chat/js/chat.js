@@ -54,6 +54,7 @@ $(function () {
                             //
                             // addMes(res, null, null, true)
 
+
                         },
                         error: function (error) {
                             console.log(error);
@@ -157,7 +158,7 @@ function loadChat(mes) {
             day = (day < 10) ? "0" + day : "" + day;
             month = (month < 10) ? "0" + month : "" + month;
 
-            var time = day + "." + month + "." + today.getFullYear() + " " + today.getHours()+3 + ":" + today.getMinutes() + ":" + today.getSeconds();
+            var time = today.getFullYear() + "-" + day + "-" + month + " " + today.getHours()+3 + ":" + today.getMinutes() + ":" + today.getSeconds();
 
             var m = {user_from_id: user_object.id, message_body: message, create_timestamp: time};
 
