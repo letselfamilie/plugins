@@ -458,7 +458,7 @@ function loadChat(mes) {
                 let url = new URL(window.location.href);
                 let d_id = url.searchParams.get("dialog_id");
 
-                console.log(d_id);
+                console.log("d_id " +d_id);
                 if(d_id!==null)
                 {
                     let $node = $("#" + d_id);
