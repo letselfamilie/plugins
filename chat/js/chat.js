@@ -327,9 +327,8 @@ function loadChat(mes) {
                     "user_photo":null
             }
             }*/
+
             let dialog_id = data.dialog_id;
-
-
 
 
             if($('#'+dialog_id).length>0)
@@ -379,7 +378,7 @@ function loadChat(mes) {
                 }];
 
 
-            console.log("dialog_type" + dialog_type)
+            console.log("dialog_type" + dialog_type);
 
             if(dialog_type==="employee_chat")
             {
@@ -436,8 +435,6 @@ function loadChat(mes) {
             if(dialog_type==="user_chat")
             {
                 console.log("User chat view is requested to be created");
-                console.log(message);
-
 
 
 
@@ -467,6 +464,8 @@ function loadChat(mes) {
                 } else {
                     $("#"+dialog_id).find(".badge-counter").text("new");
                     $("#"+dialog_id).removeClass("hidden");
+                    $("#"+dialog_id).detach();
+                    $("#"+dialog_id).prependTo("#conversations ul");
                 }
 
                 let url = new URL(window.location.href);
