@@ -328,14 +328,25 @@ function loadChat(mes) {
                     "user_photo":null
             }
             }*/
+
             let dialog_id = data.dialog_id;
-
-
 
 
             if($('#'+dialog_id).length>0)
             {
                 console.log("New dialog won't be created as it already exists");
+
+                if(dialog_id!==null)
+                {
+                    let $node = $("#" + dialog_id);
+                    $node.detach();
+                    $node.prependTo("#conversations ul");
+                    $node.click();
+                    console.log("you created new chat with user ");
+                }
+
+
+
                 return;
             }
 
@@ -366,6 +377,9 @@ function loadChat(mes) {
                     message_body: first_message.message,
                     create_timestamp: first_message.time
                 }];
+
+
+            console.log("dialog_type" + dialog_type);
 
             if(dialog_type==="employee_chat")
             {
@@ -416,15 +430,15 @@ function loadChat(mes) {
                     $(".message-input").css('display', 'none');
                     $(".new-convo").css('display', 'none');
                 }
-
-
-
             }
+
 
             if(dialog_type==="user_chat")
             {
                 console.log("User chat view is requested to be created");
-                console.log(message);
+
+
+
                 var newDialog = {
                     dialog_id: dialog_id,
                     is_employee_chat: "0",
@@ -438,7 +452,7 @@ function loadChat(mes) {
 
                 mes[Object.keys(mes).length] = newDialog;
 
-                console.log(topic);
+                console.log(newDialog);
 
                 addDialog(newDialog, mes);
 
@@ -446,11 +460,28 @@ function loadChat(mes) {
                     let badge = '<span class="badge badge-counter ml-2">new</span>';
                     $(badge).appendTo($("#"+dialog_id).find(".wrap .meta .name"));
                     $(badge).removeClass("hidden");
-
+                    //$("#"+dialog_id).detach();
+                    //$("#"+dialog_id).prependTo("#conversations ul");
                 } else {
                     $("#"+dialog_id).find(".badge-counter").text("new");
                     $("#"+dialog_id).removeClass("hidden");
+                    //$("#"+dialog_id).detach();
+                    //$("#"+dialog_id).prependTo("#conversations ul");
                 }
+
+                let url = new URL(window.location.href);
+                let d_id = url.searchParams.get("dialog_id");
+
+                if(d_id!==null)
+                {
+                    let $node = $("#" + d_id);
+                    $node.detach();
+                    $node.prependTo("#conversations ul");
+                    $node.click();
+                    console.log("you created new chat with user ");
+                }
+
+
 
             }
 
@@ -507,7 +538,6 @@ function fillChat(mes) {
         }));
 
         console.log("Requestt to create new dialog with user has been sent");
-
     }
 }
 
@@ -1786,7 +1816,7 @@ module.exports={
   "_args": [
     [
       "ejs@2.6.1",
-      "/Applications/MAMP/htdocs/LetselFamilie/wp-content/plugins"
+      "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins"
     ]
   ],
   "_from": "ejs@2.6.1",
@@ -1810,7 +1840,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/ejs/-/ejs-2.6.1.tgz",
   "_spec": "2.6.1",
-  "_where": "/Applications/MAMP/htdocs/LetselFamilie/wp-content/plugins",
+  "_where": "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins",
   "author": {
     "name": "Matthew Eernisse",
     "email": "mde@fleegix.org",
