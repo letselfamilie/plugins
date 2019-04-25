@@ -27,7 +27,7 @@ if(!is_user_logged_in()) {
 
     <link rel="stylesheet/less" type="text/css" href="<?php echo PATH?>/less/chat.less" />
 
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,600,700,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,600,700,300' rel='stylesheet' type='text/css'>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
