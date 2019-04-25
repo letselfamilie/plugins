@@ -667,7 +667,7 @@ function addDialog(item, mes) {
         }
         // TODO: badges
 
-        scrollToBanner();
+        //scrollToBanner();
     });
     $("#conversations ul").prepend($node);
 }
