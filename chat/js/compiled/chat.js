@@ -421,6 +421,10 @@ function loadChat(mes) {
             {
                 console.log("User chat view is requested to be created");
                 console.log(message);
+
+
+
+
                 var newDialog = {
                     dialog_id: dialog_id,
                     is_employee_chat: "0",
@@ -447,6 +451,19 @@ function loadChat(mes) {
                     $("#"+dialog_id).find(".badge-counter").text("new");
                     $("#"+dialog_id).removeClass("hidden");
                 }
+
+                let url = new URL(window.location.href);
+                let d_id = url.searchParams.get("dialog_id");
+
+                if(d_id!==null)
+                {
+                    let $node = $("#" + d_id);
+                    $node.detach();
+                    $node.prependTo("#conversations ul");
+                    $node.click();
+                }
+
+
 
             }
 
@@ -503,7 +520,6 @@ function fillChat(mes) {
         }));
 
         console.log("Requestt to create new dialog with user has been sent");
-
     }
 }
 
