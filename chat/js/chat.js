@@ -366,6 +366,9 @@ function loadChat(mes) {
                     create_timestamp: first_message.time
                 }];
 
+
+            console.log("dialog_type" + dialog_type)
+
             if(dialog_type==="employee_chat")
             {
                 console.log("Employee chat view is requested to be created");
@@ -415,10 +418,8 @@ function loadChat(mes) {
                     $(".message-input").css('display', 'none');
                     $(".new-convo").css('display', 'none');
                 }
-
-
-
             }
+
 
             if(dialog_type==="user_chat")
             {
