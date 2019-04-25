@@ -41,7 +41,7 @@ $(function () {
     });
 
     $('#messages-container').on('scroll', function () {
-        console.log('scroll');
+        console.log($('#messages-container').scrollTop());
     })
 });
 
