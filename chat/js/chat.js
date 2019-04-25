@@ -381,8 +381,12 @@ function loadChat(mes) {
 
                 addDialog(newDialog, mes);
 
-                if (user_object.id == first_user_id && user_object.role != 'adviser') { //TODO
+                if (user_object.role != 'adviser') {
                     $('#' + dialog_id).click();
+                }
+                else
+                {
+
                 }
 
                 if ($("#"+dialog_id).find(".badge-counter").length === 0) {
@@ -390,9 +394,11 @@ function loadChat(mes) {
                     $(badge).appendTo($("#"+dialog_id).find(".wrap .meta .name"));
                     $(badge).removeClass("hidden");
 
+                    console.log("length "+$("#"+dialog_id).find(".badge-counter").length);
                 } else {
                     $("#"+dialog_id).find(".badge-counter").text((m===[])? "new" : 1 );
                     $("#"+dialog_id).removeClass("hidden");
+                    console.log("length "+$("#"+dialog_id).find(".badge-counter").length);
                 }
 
 
