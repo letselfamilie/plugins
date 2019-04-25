@@ -464,6 +464,7 @@ function loadChat(mes) {
                     $node.detach();
                     $node.prependTo("#conversations ul");
                     $node.click();
+                    console.log("you created new chat with user ");
                 }
 
 
