@@ -204,6 +204,7 @@ $(function () {
         var parent = e.target.parentElement;
         console.log($('#chech-anonym', parent).is(":checked"));
 
+
         if ($('#enter-textarea').val().trim() !== "") {
             $.ajax({
                 url: url_object.ajax_url,

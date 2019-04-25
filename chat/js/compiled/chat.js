@@ -42,7 +42,26 @@ $(function () {
     });
 
     $('#messages-container').on('scroll', function () {
-        console.log($('#messages-container').scrollTop());
+        if ($('#messages-container').scrollTop() < 1) {
+            var d_id = parseInt($('.conversation.active').attr("id"));
+            $.ajax({
+                url: url_object.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'get_messages',
+                    dialog_id: d_id,
+                    from: $('messages-container').find('ul').length,
+                    to: $('messages-container').find('ul').length + 20
+                },
+                success: function (res) {
+                    console.log($('messages-container').find('ul').length);
+                    console.log("new mess: " + res);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
     })
 });
 
