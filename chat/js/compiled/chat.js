@@ -35,34 +35,40 @@ $(function () {
         success: function (res) {
             console.log("Res: " + res);
             loadChat(JSON.parse(res));
+
+
+            $('#messages-container').on('scroll', function () {
+                if ($('#messages-container').scrollTop() < 1) {
+                    var d_id = parseInt($('.conversation.active').attr("id"));
+                    $.ajax({
+                        url: url_object.ajax_url,
+                        type: 'POST',
+                        data: {
+                            action: 'get_messages',
+                            dialog_id: d_id,
+                            from: $('#messages-container').find('ul').find('li').length,
+                            to: $('#messages-container').find('ul').find('li').length + 20
+                        },
+                        success: function (res) {
+                            console.log($('#messages-container').find('ul').find('li').length);
+                            console.log("new mess: " + res);
+
+
+
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            })
         },
         error: function (error) {
             console.log(error);
         }
     });
 
-    $('#messages-container').on('scroll', function () {
-        if ($('#messages-container').scrollTop() < 1) {
-            var d_id = parseInt($('.conversation.active').attr("id"));
-            $.ajax({
-                url: url_object.ajax_url,
-                type: 'POST',
-                data: {
-                    action: 'get_messages',
-                    dialog_id: d_id,
-                    from: $('#messages-container').find('ul').find('li').length,
-                    to: $('#messages-container').find('ul').find('li').length + 20
-                },
-                success: function (res) {
-                    console.log($('#messages-container').find('ul').find('li').length);
-                    console.log("new mess: " + res);
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        }
-    })
+
 });
 
 function loadChat(mes) {
@@ -691,7 +697,7 @@ function addDialog(item, mes) {
     $("#conversations ul").prepend($node);
 }
 
-function addMes(item, user2logo, is_employee_chat) {
+function addMes(item, user2logo, is_employee_chat, prepend) {
     var st = ((item.user_from_id === user_object.id) ? "sent" : "replies");
 
     var png = ((item.user_from_id === user_object.id) ? myprofilelogo : user2logo);
@@ -700,7 +706,11 @@ function addMes(item, user2logo, is_employee_chat) {
 
     let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: item.create_timestamp}));
 
-    $('.messages ul').append($node);
+    if (prepend) {
+        $('.messages ul').prepend($node);
+    } else {
+        $('.messages ul').append($node);
+    }
 }
 
 function gotoBottom(id) {
