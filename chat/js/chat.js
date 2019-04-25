@@ -663,7 +663,6 @@ function addDialog(item, mes) {
             }
 
             //gotoBottom('messages-container');
-
         }
         // TODO: badges
 
