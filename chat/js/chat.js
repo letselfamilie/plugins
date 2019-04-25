@@ -381,6 +381,8 @@ function loadChat(mes) {
 
                 addDialog(newDialog, mes);
 
+                console.log(topic);
+
                 if (user_object.role != 'adviser') {
                     $('#' + dialog_id).click();
                 }
@@ -391,11 +393,10 @@ function loadChat(mes) {
                     $(badge).appendTo($("#"+dialog_id).find(".wrap .meta .name"));
                     $(badge).removeClass("hidden");
 
-                    console.log("length:true "+$("#"+dialog_id).find(".badge-counter").length);
                 } else {
                     $("#"+dialog_id).find(".badge-counter").text((m===[])? "new" : 1 );
                     $("#"+dialog_id).removeClass("hidden");
-                    console.log("length:false "+$("#"+dialog_id).find(".badge-counter").length);
+
                 }
 
                 if(!is_emp_available)
