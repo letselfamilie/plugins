@@ -384,13 +384,10 @@ function loadChat(mes) {
                 if (user_object.role != 'adviser') {
                     $('#' + dialog_id).click();
                 }
-                else
-                {
 
-                }
 
-                if ($("#"+dialog_id).find(".badge-counter").length === 0) {
-                    let badge = '<span class="badge badge-counter ml-2">' + (m===[])? "new" : 1 + '</span>';
+                if ($("#"+dialog_id).find(".badge-counter").length === 0 && user_object.role != 'adviser') {
+                    let badge = '<span class="badge badge-counter ml-2">new</span>';
                     $(badge).appendTo($("#"+dialog_id).find(".wrap .meta .name"));
                     $(badge).removeClass("hidden");
 
@@ -400,7 +397,7 @@ function loadChat(mes) {
                     $("#"+dialog_id).removeClass("hidden");
                     console.log("length:false "+$("#"+dialog_id).find(".badge-counter").length);
                 }
-                
+
                 if(!is_emp_available)
                 {
                     alert ("The consultant is not available at the moment.");
