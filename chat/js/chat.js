@@ -345,7 +345,7 @@ function loadChat(mes) {
                     console.log("you created new chat with user ");
                 }
 
-                
+
 
                 return;
             }
@@ -462,7 +462,8 @@ function loadChat(mes) {
                     let badge = '<span class="badge badge-counter ml-2">new</span>';
                     $(badge).appendTo($("#"+dialog_id).find(".wrap .meta .name"));
                     $(badge).removeClass("hidden");
-
+                    $("#"+dialog_id).detach();
+                    $node.prependTo("#conversations ul");
                 } else {
                     $("#"+dialog_id).find(".badge-counter").text("new");
                     $("#"+dialog_id).removeClass("hidden");
@@ -470,8 +471,7 @@ function loadChat(mes) {
 
                 let url = new URL(window.location.href);
                 let d_id = url.searchParams.get("dialog_id");
-
-                console.log("d_id " +d_id);
+                
                 if(d_id!==null)
                 {
                     let $node = $("#" + d_id);
