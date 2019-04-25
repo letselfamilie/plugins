@@ -430,6 +430,8 @@ function loadChat(mes) {
 
                 mes[Object.keys(mes).length] = newDialog;
 
+                console.log(topic);
+
                 addDialog(newDialog, mes);
 
                 if ($("#"+dialog_id).find(".badge-counter").length === 0) {
