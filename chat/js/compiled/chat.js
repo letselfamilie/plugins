@@ -40,6 +40,10 @@ $(function () {
             console.log(error);
         }
     });
+
+    $('#messages-container').on('scroll', function () {
+        console.log($('#messages-container').scrollTop());
+    })
 });
 
 function loadChat(mes) {
@@ -1798,7 +1802,7 @@ module.exports={
   "_args": [
     [
       "ejs@2.6.1",
-      "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins"
+      "/Applications/MAMP/htdocs/LetselFamilie/wp-content/plugins"
     ]
   ],
   "_from": "ejs@2.6.1",
@@ -1822,7 +1826,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/ejs/-/ejs-2.6.1.tgz",
   "_spec": "2.6.1",
-  "_where": "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins",
+  "_where": "/Applications/MAMP/htdocs/LetselFamilie/wp-content/plugins",
   "author": {
     "name": "Matthew Eernisse",
     "email": "mde@fleegix.org",
