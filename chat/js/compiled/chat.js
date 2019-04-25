@@ -47,6 +47,10 @@ function loadChat(mes) {
     let url = 'ws://178.128.202.94:8000/?userId=' + user_object.id + '&consultan=' + ((is_consultant) ? 1 : 0);
     conn = new WebSocket(url);
 
+    $("#profile-img").attr('src',user_object.photo);
+
+    $("#profile").find("p").text(user_object.username);
+
 
     conn.onopen = function (e) {
         console.log("Connection established.");
@@ -382,7 +386,7 @@ function loadChat(mes) {
 
                 if(m===[])
                 {
-                    $("#"+dialog_id).find();
+                    $("#"+dialog_id).find();  //TODO
                 }
 
 
@@ -438,7 +442,6 @@ function loadChat(mes) {
                 mes[Object.keys(mes).length] = newDialog;
 
                 addDialog(newDialog, mes);
-
 
                 if ($("#"+dialog_id).find(".badge-counter").length === 0) {
                     let badge = '<span class="badge badge-counter ml-2">new</span>';
