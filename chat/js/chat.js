@@ -380,17 +380,10 @@ function loadChat(mes) {
                 mes[Object.keys(mes).length] = newDialog;
 
                 addDialog(newDialog, mes);
-                
-                if (user_object.id == first_user_id) { //TODO
+
+                if (user_object.id == first_user_id && user_object.role != 'adviser') { //TODO
                     $('#' + dialog_id).click();
-
-                    console.log("$('#' + dialog_id).click() " + "user_1_id: "+first_user_id + " user_object.id "+user_object.id);
                 }
-                else
-                {
-                    console.log("user_object.id != first_user_id");
-                }
-
 
                 if ($("#"+dialog_id).find(".badge-counter").length === 0) {
                     let badge = '<span class="badge badge-counter ml-2">' + (m===[])? "new" : 1 + '</span>';
