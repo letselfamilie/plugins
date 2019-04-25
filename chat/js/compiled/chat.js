@@ -380,20 +380,13 @@ function loadChat(mes) {
 
                 mes[Object.keys(mes).length] = newDialog;
 
-
-
-
-
-                if(m===[])
-                {
-                    $("#"+dialog_id).find();  //TODO
-                }
-
-
                 addDialog(newDialog, mes);
 
-                if (user_object.id == first_user_id) {
+
+                if (user_object.id == first_user_id) { //TODO
                     $('#' + dialog_id).click();
+
+                    console.log("$('#' + dialog_id).click() " + "user_1_id: "+first_user_id + " user_object.id");
                 }
 
                 if ($("#"+dialog_id).find(".badge-counter").length === 0) {
@@ -507,9 +500,8 @@ function fillChat(mes) {
             dialog_id : d_id
         }));
 
-        console.log("Requset to create new dialog with user has been sent");
+        console.log("Requestt to create new dialog with user has been sent");
 
-        $("#" + d_id).click();
     }
 }
 
@@ -593,7 +585,7 @@ function addDialog(item, mes) {
         var user2name = $(this).find(".name").text();
 
         $('.contact-profile img').attr('src', user2logo);
-        $('.contact-profile p').text(user2name);
+        if($('.contact-profile p').text()==="") $('.contact-profile p').text(user2name);
 
         $('.messages ul').empty();
 
