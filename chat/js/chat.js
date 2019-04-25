@@ -39,6 +39,10 @@ $(function () {
             console.log(error);
         }
     });
+
+    $('#messages-container').on('scroll', function () {
+        console.log('scroll');
+    })
 });
 
 function loadChat(mes) {
