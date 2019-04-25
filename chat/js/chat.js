@@ -451,7 +451,7 @@ function loadChat(mes) {
 
                 mes[Object.keys(mes).length] = newDialog;
 
-                console.log(topic);
+                console.log(newDialog);
 
                 addDialog(newDialog, mes);
 

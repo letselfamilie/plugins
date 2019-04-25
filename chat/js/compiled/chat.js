@@ -452,7 +452,7 @@ function loadChat(mes) {
 
                 mes[Object.keys(mes).length] = newDialog;
 
-                console.log(topic);
+                console.log(newDialog);
 
                 addDialog(newDialog, mes);
 
@@ -460,13 +460,13 @@ function loadChat(mes) {
                     let badge = '<span class="badge badge-counter ml-2">new</span>';
                     $(badge).appendTo($("#"+dialog_id).find(".wrap .meta .name"));
                     $(badge).removeClass("hidden");
-                    $("#"+dialog_id).detach();
-                    $("#"+dialog_id).prependTo("#conversations ul");
+                    //$("#"+dialog_id).detach();
+                    //$("#"+dialog_id).prependTo("#conversations ul");
                 } else {
                     $("#"+dialog_id).find(".badge-counter").text("new");
                     $("#"+dialog_id).removeClass("hidden");
-                    $("#"+dialog_id).detach();
-                    $("#"+dialog_id).prependTo("#conversations ul");
+                    //$("#"+dialog_id).detach();
+                    //$("#"+dialog_id).prependTo("#conversations ul");
                 }
 
                 let url = new URL(window.location.href);
