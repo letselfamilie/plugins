@@ -72,7 +72,7 @@ function get_forum_topics(){
                      ON {$wpdb->prefix}f_topics.topic_id = {$wpdb->prefix}f_posts.topic_id
                      WHERE cat_name = '$cat_name'
                      GROUP BY topic_name, {$wpdb->prefix}f_topics.topic_id
-                     ORDER BY posts_num DESC
+                     ORDER BY posts_num DESC, {$wpdb->prefix}f_posts.create_timestamp
                      LIMIT $_POST[per_page]
                      OFFSET ". ( $_POST['page_number'] - 1 ) * $_POST['per_page'] .";";
 
