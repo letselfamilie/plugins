@@ -736,11 +736,21 @@ $(function () {
 
     document.addEventListener("touchstart", function(){}, true);
 
+    window.onscroll = function() {scrollFunction()};
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("top-butt").style.display = "block";
+        } else {
+            document.getElementById("top-butt").style.display = "none";
+        }
+    }
 
+    $('#top-butt').on('click', function () {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    })
 
 });
-
-
 
 
 },{"./pagination":1,"ejs":4}],3:[function(require,module,exports){
