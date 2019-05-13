@@ -1,6 +1,6 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, pagination_obj) {
-
+    $('.num').remove();
     max_page = (max_page > 0) ? max_page : 1;
 
     pagination_obj = {
@@ -8,7 +8,7 @@ module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, paginati
         pagina_from: 1,
         pagina_to: max_page > n_pages ? n_pages : max_page
     }
-
+    updateFunc(pagination_obj.current_page);
 
     createNums();
     let $n = $('.before-dots');
@@ -181,10 +181,8 @@ $(function () {
     // loadMyInfo();
     setUpListeners();
 
-    loadPost(pagination_obj.current_page);
-
     initPagination();
-    function initPagination() {
+    function initPagination(curr_p=1) {
         $.ajax({
             url: url_object.ajax_url,
             type: 'POST',
@@ -195,6 +193,7 @@ $(function () {
             },
             success: function (res) {
                 max_page = res;
+                pagination_obj.current_page = curr_p
                 paginationInit(pagination_obj.current_page, max_page, 5, loadPost, pagination_obj);
             },
             error: function (error) {
@@ -229,9 +228,22 @@ $(function () {
                     $('.respond-info').css('display', 'none');
                     respond_to_id = null;
 
-                    initPagination();
-                    loadPost(max_page);
-                    scroll_down = true;
+                    $.ajax({
+                        url: url_object.ajax_url,
+                        type: 'POST',
+                        data: {
+                            action: 'n_posts_pages',
+                            per_page: per_page,
+                            topic_id: topic_id
+                        },
+                        success: function (res) {
+                            scroll_down = true;
+                            initPagination(res);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
 
                     setUpListeners();
                 },

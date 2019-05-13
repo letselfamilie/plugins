@@ -50,10 +50,8 @@ $(function () {
     // loadMyInfo();
     setUpListeners();
 
-    loadPost(pagination_obj.current_page);
-
     initPagination();
-    function initPagination() {
+    function initPagination(curr_p=1) {
         $.ajax({
             url: url_object.ajax_url,
             type: 'POST',
@@ -64,6 +62,7 @@ $(function () {
             },
             success: function (res) {
                 max_page = res;
+                pagination_obj.current_page = curr_p
                 paginationInit(pagination_obj.current_page, max_page, 5, loadPost, pagination_obj);
             },
             error: function (error) {
@@ -98,9 +97,22 @@ $(function () {
                     $('.respond-info').css('display', 'none');
                     respond_to_id = null;
 
-                    initPagination();
-                    loadPost(max_page);
-                    scroll_down = true;
+                    $.ajax({
+                        url: url_object.ajax_url,
+                        type: 'POST',
+                        data: {
+                            action: 'n_posts_pages',
+                            per_page: per_page,
+                            topic_id: topic_id
+                        },
+                        success: function (res) {
+                            scroll_down = true;
+                            initPagination(res);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
 
                     setUpListeners();
                 },
