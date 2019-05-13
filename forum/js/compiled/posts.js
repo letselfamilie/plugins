@@ -226,8 +226,12 @@ $(function () {
                     $('.respond-info').css('display', 'none');
                     respond_to_id = null;
 
+                    //loadPost(pagination_obj.current_page);
                     $('.forward-end-arrow').click();
                     $('.forward-arrow').prev().click();
+
+                    window.scrollTo(0,document.body.scrollHeight);
+
 
                     setUpListeners();
                 },
