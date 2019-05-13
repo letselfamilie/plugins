@@ -147,7 +147,7 @@ let $ = jQuery;
 
 let ejs = require('ejs');
 
-let topic_templ = ejs.compile("<tr class=\"topic-row\">\n    <td class=\"topic-name\"><a href=\"<%= url%>/posts/?topic_id=<%= encodeURI(topic.topic_id)%>\"><%= topic.topic_name%></a></td>\n    <td class=\"authors\"><%= topic.authors_num%></td>\n    <td class=\"num-posts\"><%= topic.posts_num%></td>\n    <td class=\"last-post\">\n        <% if (topic.last_post_user_login != null) { %>\n        <a href=\"<%= url%>/posts/?topic_id=<%= encodeURI(topic.topic_id)%>\">by <%= topic.last_post_user_login %> on <%= topic.last_post_time%></a>\n        <% } else { %>\n            -\n        <% } %>\n    </td>\n</tr>");
+let topic_templ = ejs.compile("<%\nDate.prototype.ddmmyyyyhhmm = function() {\n    var mm = this.getMonth() + 1;\n    var dd = this.getDate();\n\n    var HH = this.getHours();\n    var MM = this.getMinutes();\n    return ((dd>9 ? '' : '0') + dd) + '-' + ((mm>9 ? '' : '0') + mm) +  '-' + this.getFullYear() + ' ' +\n            ((HH > 9 ? '' : '0') + HH) + ':' + ((MM > 9 ? '' : '0') + MM);\n};\n%>\n\n<tr class=\"topic-row\">\n    <td class=\"topic-name\"><a href=\"<%= url%>/posts/?topic_id=<%= encodeURI(topic.topic_id)%>\"><%= topic.topic_name%></a></td>\n    <td class=\"authors\"><%= topic.authors_num%></td>\n    <td class=\"num-posts\"><%= topic.posts_num%></td>\n    <td class=\"last-post\">\n        <% if (topic.last_post_user_login != null) { %>\n        <a href=\"<%= url%>/posts/?topic_id=<%= encodeURI(topic.topic_id)%>\">by <%= topic.last_post_user_login %> on <%=  new Date(topic.last_post_time).ddmmyyyyhhmm() %></a>\n        <% } else { %>\n            -\n        <% } %>\n    </td>\n</tr>");
 
 let paginationInit = require('./pagination');
 

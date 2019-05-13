@@ -38,10 +38,11 @@
             <% } %>
 
 
+
         <div class="message"><%- post.post_message.replace(/\n/g, '<br>') %></div>
         </p>
 
-        <span class="date"><%= post.create_timestamp %></span>
+        <span class="date"><%= new Date(post.create_timestamp).ddmmyyyyhhmm() %></span>
 
         <span class="like-number"><%= post.n_likes %></span>
         <span class="reaction-number"><%= post.n_responds %></span>

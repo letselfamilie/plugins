@@ -3,6 +3,16 @@ let $ = jQuery;
 let fs = require('fs');
 let ejs = require('ejs');
 
+Date.prototype.ddmmyyyyhhmm = function() {
+    var mm = this.getMonth() + 1;
+    var dd = this.getDate();
+
+    var HH = this.getHours();
+    var MM = this.getMinutes();
+    return ((dd>9 ? '' : '0') + dd) + '-' + ((mm>9 ? '' : '0') + mm) +  '-' + this.getFullYear() + ' ' +
+        ((HH > 9 ? '' : '0') + HH) + ':' + ((MM > 9 ? '' : '0') + MM);
+};
+
 let post_templ = ejs.compile(fs.readFileSync("./forum/js/ejs_templates/forum_post.ejs", "utf8"));
 
 let paginationInit = require('./pagination');
@@ -139,7 +149,7 @@ $(function () {
                 console.log(res);
                 if(res){
                     $("#topic_name").text(res['topic_name']);
-                    $("#topic_date").text(res['create_timestamp']);
+                    $("#topic_date").text(new Date(res['create_timestamp']).ddmmyyyyhhmm());
                     $("#added-by").text(res['user_name']);
                     $(".back").attr('href', url_object.site_url + "/topics/?cat_name=" + encodeURI(res.cat_name));
                     curr_category_url = url_object.site_url + "/topics/?cat_name=" + encodeURI(res.cat_name);
