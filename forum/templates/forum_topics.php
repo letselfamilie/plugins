@@ -61,6 +61,7 @@ define("PATH", plugins_url('..' , __FILE__));
         <?php } ?>
     </div>
 
+
     <table id="topics">
         <tr id="topics-header">
             <th id="head-name-table" class="topic-name">Topic</th>
