@@ -9,13 +9,15 @@ module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, paginati
         pagina_to: curr_page + n_pages / 2
     }
     if (pagination_obj.pagina_from < 1) {
-        pagination_obj.pagina_to = 1 - pagination_obj.pagina_from;
+        pagination_obj.pagina_to = pagination_obj.pagina_to + 1 - pagination_obj.pagina_from;
         pagination_obj.pagina_from = 1
     }
     if (pagination_obj.pagina_to > max_page) {
         pagination_obj.pagina_to = max_page;
     }
     updateFunc(pagination_obj.current_page);
+
+    console.log(pagination_obj.pagina_from + ' ' + pagination_obj.pagina_to)
 
     createNums();
     let $n = $('.before-dots');
