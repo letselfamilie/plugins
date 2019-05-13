@@ -36,6 +36,8 @@ $(function () {
     var post_to_delete = null;
     var curr_category_url = null;
 
+    var scroll_down = false;
+
     var pagination_obj = {current_page: 1};
     var per_page = 20;
 
@@ -96,11 +98,9 @@ $(function () {
                     respond_to_id = null;
 
                     //loadPost(pagination_obj.current_page);
+                    scroll_down = true;
                     $('.forward-end-arrow').click();
                     $('.forward-arrow').prev().click();
-
-                    window.scrollTo(0,document.body.scrollHeight);
-
 
                     setUpListeners();
                 },
@@ -184,6 +184,13 @@ $(function () {
                 setTimeout(function () {
                     loader(false);
                 }, 1000);
+
+                if (scroll_down) {
+                    console.log('scroll down');
+                    window.scrollTo(0,document.body.scrollHeight);
+                    scroll_down = !scroll_down;
+                }
+
             },
             error: function (error) {
                 console.log(error);
