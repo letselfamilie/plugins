@@ -801,7 +801,7 @@ function um_profile_header( $args ) {
 					</div>
 
 				<div class="user-email">
-					<?php echo wp_get_current_user()->user_email ?>
+					<?php echo um_user('user_email'); ?>
 				</div>
 
 				<?php } ?>
