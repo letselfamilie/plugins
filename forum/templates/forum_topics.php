@@ -56,7 +56,9 @@ define("PATH", plugins_url('..' , __FILE__));
     <div class="info">
         <a class="back"><img class="back" src="<?php echo PATH?>/images/left.svg"></a>
         <h2 id="cat_name"></h2>
+        <?php if(is_user_logged_in()) { ?>
         <img id="add-topic" src="<?php echo PATH?>/images/plus.svg">
+        <?php } ?>
     </div>
 
     <table id="topics">
