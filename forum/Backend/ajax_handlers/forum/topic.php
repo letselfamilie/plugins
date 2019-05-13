@@ -119,7 +119,7 @@ function n_topic_pages() {
     global $wpdb;
     echo json_encode(ceil($wpdb->get_var("SELECT COUNT(*) 
                                                 FROM {$wpdb->prefix}f_topics
-                                                WHERE cat_name = $_POST[cat_name];") / $_POST['per_page']));
+                                                WHERE cat_name = '$_POST[cat_name]';") / $_POST['per_page']));
     die;
 }
 
