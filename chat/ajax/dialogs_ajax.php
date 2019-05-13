@@ -87,10 +87,8 @@ function get_dialogs()
     die;
 }
 
-
-add_action('wp_ajax_' . 'add_dialog', 'add_dialog');
-add_action('wp_ajax_nopriv_' . 'add_dialog', 'add_dialog');
-
+add_action('wp_ajax_' . 'get_messages', 'get_messages');
+add_action('wp_ajax_nopriv_' . 'get_messages', 'get_messages');
 
 function get_messages()
 {
@@ -122,6 +120,9 @@ function get_messages()
     die;
 }
 
+
+add_action('wp_ajax_' . 'add_dialog', 'add_dialog');
+add_action('wp_ajax_nopriv_' . 'add_dialog', 'add_dialog');
 
 function add_dialog()
 {

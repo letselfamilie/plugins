@@ -224,7 +224,7 @@ class ChatSocket implements MessageComponentInterface
                                         $this->saveMessageInDB($user_id_from, $chat_id, $first_message, $time);
 
                                         $message = array(
-                                            'message' => "New chat with employee ".$second_user." was added",
+                                            'message' => "New chat between employee {$second_user} and ".$user_id_from." was added",
                                             'topic' => $topic,
                                             'is_emp_available'=>$is_emp_available,
                                             'first_message'=> array(
@@ -233,13 +233,11 @@ class ChatSocket implements MessageComponentInterface
                                                 'from'=> $user_id_from
                                             )
                                         );
-
                                         $userInfo2 = array(
                                             'user_id' => $second_user,
                                             'user_login' => $topic,
                                             'user_photo' => null
                                         );
-
                                     }else{
                                         $message = array(
                                             'type'=> 'new_chat',
@@ -253,12 +251,13 @@ class ChatSocket implements MessageComponentInterface
                                 case "user_chat":{
                                     $chat_id = $data->dialog_id;
                                     $second_user = $this->getSecondUser($chat_id, $user_id_from);
-                                   // $second_user = $data->second_user;
-                                   // $chat_id = $this->addDialogToDB($user_id_from, $dialog_type, $second_user, null);
-                                    $message = array(
-                                        'message' => "New chat with user ".$second_user." was added"
-                                    );
 
+                                    echo "First user ".$user_id_from;
+                                    echo "Second user ".$second_user;
+
+                                    $message = array(
+                                        'message' => "New chat between users {$user_id_from} and ".$second_user." was added"
+                                    );
                                     $userInfo2 = $this->getUserInfo($second_user);
                                 }
                                 break;
@@ -279,8 +278,11 @@ class ChatSocket implements MessageComponentInterface
                             $message['dialog_type'] = $dialog_type;
                             $message['user_info_1'] = $userInfo1;
                             $message['user_info_2'] = $userInfo2;
-
                             $from->send(json_encode($message));
+
+                            $message['user_info_1'] = $userInfo2;
+                            $message['user_info_2'] = $userInfo1;
+                            $message['second_user'] = $user_id_from;
                             $this->sendDialogToSecondUser($second_user, $message);
                         }
                     }
@@ -356,8 +358,6 @@ class ChatSocket implements MessageComponentInterface
         $this->sendDialogToClients([$user_id], $packet);
     }
 
-
-
     public function onClose(ConnectionInterface $conn)
     {
         $this->clients->detach($conn);
@@ -396,13 +396,11 @@ class ChatSocket implements MessageComponentInterface
 //        }
         echo "Connection {$conn->resourceId} has disconnected\n";
     }
-
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
         echo "An error has occurred: {$e->getMessage()}\n";
         $conn->close();
     }
-
 
     function getEmployeeId(){
         $dbconn = DBHelper::connect();
@@ -433,7 +431,6 @@ class ChatSocket implements MessageComponentInterface
             return -1;
         }
     }
-
     function getAvailableEmployeeId(){
         $randIndex = array_rand($this->consultants_id);
         return isset($randIndex) ? $randIndex : -1;
@@ -469,6 +466,7 @@ class ChatSocket implements MessageComponentInterface
 
     function sendMessage($conn_id, $clientFromId, $roomId, $message, $time)
     {
+        echo "ROOMID ".$roomId;
         $dialog_inf = $this->findRoomInf($roomId);
 
         $dataPacket = array(
@@ -554,9 +552,6 @@ class ChatSocket implements MessageComponentInterface
     }
 
     function findRoomInf($roomId){
-//        global $wpdb;
-        echo "ROOMID ".$roomId;
-
         $dbconn = DBHelper::connect();
 
         $sqlQuery = "SELECT user1_id, COALESCE(user2_id, employee_id) AS user_id, is_employee_chat
@@ -586,13 +581,13 @@ class ChatSocket implements MessageComponentInterface
     function getSecondUser($chat_id, $user_from_id){
         $dialog_inf = $this->findRoomInf($chat_id);
         $users = $dialog_inf['users'];
-        $user_from_id = array_search($user_from_id, $users);
-
-        if(!empty($user_from_id)){
-            unset($users[$user_from_id]);
-            return $users[0];
-        }
-        return -1;
+//        $from_id = array_search($user_from_id, $users);
+        return $users[0] == $user_from_id ? $users[1] : $users[0];
+//        if(!empty($from_id)){
+//            unset($users[$from_id]);
+//            return $users[0];
+//        }
+//        return -1;
     }
 
 
@@ -602,6 +597,7 @@ class ChatSocket implements MessageComponentInterface
                 echo $client;
                 $conn_arr = $this->users_id[$client];
                 foreach ($conn_arr as $conn_id){
+                        echo "CLIENTID ".$client."\n";
                         $conn = $this->users[$conn_id];
                         $this->sendData($conn, $dataPacket);
                 }
@@ -610,6 +606,7 @@ class ChatSocket implements MessageComponentInterface
     }
 
     function sendMessageToClients($from_conn_id, $clientFromId, array $clients, array $dataPacket){
+
         foreach ($clients AS $client) {
             if(array_key_exists($client, $this->users_id)) {
                 echo $client;
@@ -617,6 +614,7 @@ class ChatSocket implements MessageComponentInterface
                 foreach ($conn_arr as $conn_id){
 
                     if($conn_id != $from_conn_id){
+                        echo "CLIENTID ".$client."\n";
                         $conn = $this->users[$conn_id];
                         $this->sendData($conn, $dataPacket);
                     }

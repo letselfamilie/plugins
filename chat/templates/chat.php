@@ -118,7 +118,7 @@ if(!is_user_logged_in()) {
         <div id="profile">
             <div class="wrap">
                 <img id="profile-img" src="<?php echo PATH?>/images/user.png" alt="profile img"/>
-                <p>Mary Cooper</p>
+                <p></p>
             </div>
         </div>
         <div id="search">
@@ -169,7 +169,7 @@ if(!is_user_logged_in()) {
 
         <div class="contact-profile hidden">
             <img src="<?php echo PATH?>/images/question.png" alt="question"/>
-            <p id="chat-title">Vaccination</p>
+            <p id="chat-title"></p>
 
             <div class="btn-group dropleft float-right">
                 <button id="convOptions" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
