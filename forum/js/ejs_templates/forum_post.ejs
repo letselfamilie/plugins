@@ -57,12 +57,17 @@
         <img src="<%= url %>/images/comment-full.svg" class="comment-full none">
         <img src="<%= url %>/images/comment-empty.svg" class="comment-empty">
 
-        <% if (post.user_id == user_id || role == 'administrator' || role == 'adviser') { %>
+
         <div class="dropdown">
             <img src="<%= url %>/images/more.svg">
             <div class="dropdown-content">
-                <p class="edit">Edit</p>
-                <p class="delete">Delete</p>
+                <% if (post.user_id == user_id || role == 'administrator' || role == 'adviser') { %>
+                    <p class="edit">Edit</p>
+                    <p class="delete">Delete</p>
+                <% }%>
+                <% if (post.user_id != user_id ) { %>
+                    <p class="report">Report</p>
+                <% }%>
             </div>
         </div>
         <div class="content-edit none">
@@ -74,6 +79,6 @@
             </div>
 
         </div>
-        <% }%>
+
     </td>
 </tr>
