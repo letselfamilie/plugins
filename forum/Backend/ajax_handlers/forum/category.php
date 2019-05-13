@@ -46,7 +46,7 @@ function get_forum_categories()
                   ON {$wpdb->prefix}f_categories.cat_name = {$wpdb->prefix}f_topics.cat_name) 
                   LEFT OUTER JOIN {$wpdb->prefix}f_posts 
                   ON {$wpdb->prefix}f_topics.topic_id = {$wpdb->prefix}f_posts.topic_id
-                  GROUP BY {$wpdb->prefix}f_categories.cat_name, posts_num
+                  GROUP BY {$wpdb->prefix}f_categories.cat_name
                   LIMIT $_POST[per_page]
                   OFFSET ". ( $_POST['page_number'] - 1 ) * $_POST['per_page'] . ";";
 
