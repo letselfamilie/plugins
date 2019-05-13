@@ -225,7 +225,10 @@ $(function () {
                     $('textarea').css('height', '130px');
                     $('.respond-info').css('display', 'none');
                     respond_to_id = null;
-                    loadPost(pagination_obj.current_page);
+
+                    $('.forward-end-arrow').click();
+                    $('.forward-arrow').prev().click();
+
                     setUpListeners();
                 },
                 error: function (error) {
