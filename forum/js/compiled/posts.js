@@ -171,6 +171,7 @@ $(function () {
 
     var pagination_obj = {current_page: 1};
     var per_page = 20;
+    var max_page = 0;
 
     if (topic_id == -1) {
         window.location.replace(url_object.site_url + "/categories");
@@ -228,10 +229,9 @@ $(function () {
                     $('.respond-info').css('display', 'none');
                     respond_to_id = null;
 
-                    //loadPost(pagination_obj.current_page);
+                    initPagination();
+                    loadPost(max_page);
                     scroll_down = true;
-                    $('.forward-end-arrow').click();
-                    $('.forward-arrow').prev().click();
 
                     setUpListeners();
                 },
