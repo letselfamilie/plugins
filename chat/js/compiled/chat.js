@@ -176,6 +176,7 @@ function loadChat(mes) {
             };
 
 
+            
             mes[key].messages.push(new_message);
 
             messageInput.val(null);

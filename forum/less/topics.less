@@ -7,7 +7,7 @@ body {
   text-transform: none;
 
   padding: 0;
-  margin: 0;
+  margin: 10px 0 0 0;
   //table-layout: fixed;
   border-collapse: collapse;
   width: 100%;
@@ -15,7 +15,7 @@ body {
 
 
   #topics-header {
-    font-size: 20px;
+    font-size: 16px;
     background-color: #0e56a4;
     color: white;
   }
@@ -82,6 +82,8 @@ body {
 
 .info {
   position: relative;
+  margin: 15px 0 0 0;
+  height: 30px;
 }
 
 .back {
@@ -103,7 +105,8 @@ body {
 #cat_name {
   margin: 12px 0 12px 30px;
   font-weight: 400;
-  min-height: 30px;
+  font-size: 24px;
+  padding: 3px 0 3px 5px;
 }
 
 
@@ -140,13 +143,14 @@ body {
 }
 
 #add-panel {
-
   position: fixed;
   //background-color: rgba(156, 156, 156, 0.33);
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+  height: 22px;
+  width: 22px;
 
   .add-panel-container {
     min-width: 300px;
@@ -251,4 +255,21 @@ body {
 .container-blured {
   margin-left: 12px;
   margin-right: 12px;
+}
+
+.topic-search.input-group {
+  width: 100%;
+  height: 30px;
+  margin: 10px 0;
+  border-radius: 0;
+  border: 1px #0e56a4 solid;
+
+  #search-post-input {
+    font-size: 16px;
+  }
+
+  .input-group-append .btn {
+    background-color: #0e56a4;
+  }
+
 }
