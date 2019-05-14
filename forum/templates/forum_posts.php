@@ -54,8 +54,8 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
     </style>
 
     <div class="info">
-        <a class="back"><img class="back" src="<?php echo PATH?>/images/left.svg"></a>
-        <h2 id="topic_name"></h2>
+        <a class="back"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+        <label id="topic_name"></label>
         <span id="topic_date"></span>
         <span id="added-by"></span>
 
