@@ -53,7 +53,7 @@ define("PATH", plugins_url('..' , __FILE__));
 
 </style>
 
-<div class="container container-blured" style="max-width: 750px;">
+<div class="container container-blured forum-area" style="max-width: 750px;">
 
     <div class="info">
         <a class="back"><i class="fa fa-angle-left" aria-hidden="true"></i></a>

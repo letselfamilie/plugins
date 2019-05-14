@@ -26,7 +26,7 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
 <?php get_template_part( 'header' ); ?>
 <?php wp_head(); ?>
 
-<div class="container container-blured blur" style="max-width: 750px;">
+<div class="container container-blured blur forum-area" style="max-width: 750px;">
     <style>
         h1, h2, h3, h4, h5, h6 {
             text-transform: none !important;
