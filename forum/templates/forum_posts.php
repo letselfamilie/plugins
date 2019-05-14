@@ -179,7 +179,9 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
     </div>
 </div>
 
-<button id="top-butt" title="Go to top"><img src="<?php echo PATH?>/images/up.svg"></button>
+<button id="top-butt" title="Go to top">
+    <i class="fa fa-angle-up" aria-hidden="true" style="color: #fff; width: 20px; height: 20px; margin: auto;"></i>
+</button>
 
 <?php get_template_part( 'footer' ); ?>
 
