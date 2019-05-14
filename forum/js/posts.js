@@ -3,6 +3,16 @@ let $ = jQuery;
 let fs = require('fs');
 let ejs = require('ejs');
 
+Date.prototype.ddmmyyyyhhmm = function() {
+    var mm = this.getMonth() + 1;
+    var dd = this.getDate();
+
+    var HH = this.getHours();
+    var MM = this.getMinutes();
+    return ((dd>9 ? '' : '0') + dd) + '-' + ((mm>9 ? '' : '0') + mm) +  '-' + this.getFullYear() + ' ' +
+        ((HH > 9 ? '' : '0') + HH) + ':' + ((MM > 9 ? '' : '0') + MM);
+};
+
 let post_templ = ejs.compile(fs.readFileSync("./forum/js/ejs_templates/forum_post.ejs", "utf8"));
 
 let paginationInit = require('./pagination');
@@ -36,8 +46,11 @@ $(function () {
     var post_to_delete = null;
     var curr_category_url = null;
 
+    var scroll_down = false;
+
     var pagination_obj = {current_page: 1};
     var per_page = 20;
+    var max_page = 0;
 
     if (topic_id == -1) {
         window.location.replace(url_object.site_url + "/categories");
@@ -47,10 +60,8 @@ $(function () {
     // loadMyInfo();
     setUpListeners();
 
-    loadPost(pagination_obj.current_page);
-
     initPagination();
-    function initPagination() {
+    function initPagination(curr_p=1) {
         $.ajax({
             url: url_object.ajax_url,
             type: 'POST',
@@ -61,6 +72,7 @@ $(function () {
             },
             success: function (res) {
                 max_page = res;
+                pagination_obj.current_page = curr_p
                 paginationInit(pagination_obj.current_page, max_page, 5, loadPost, pagination_obj);
             },
             error: function (error) {
@@ -94,7 +106,24 @@ $(function () {
                     $('textarea').css('height', '130px');
                     $('.respond-info').css('display', 'none');
                     respond_to_id = null;
-                    loadPost(pagination_obj.current_page);
+
+                    $.ajax({
+                        url: url_object.ajax_url,
+                        type: 'POST',
+                        data: {
+                            action: 'n_posts_pages',
+                            per_page: per_page,
+                            topic_id: topic_id
+                        },
+                        success: function (res) {
+                            scroll_down = true;
+                            initPagination(res);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+
                     setUpListeners();
                 },
                 error: function (error) {
@@ -120,7 +149,7 @@ $(function () {
                 console.log(res);
                 if(res){
                     $("#topic_name").text(res['topic_name']);
-                    $("#topic_date").text(res['create_timestamp']);
+                    $("#topic_date").text(new Date(res['create_timestamp']).ddmmyyyyhhmm());
                     $("#added-by").text(res['user_name']);
                     $(".back").attr('href', url_object.site_url + "/topics/?cat_name=" + encodeURI(res.cat_name));
                     curr_category_url = url_object.site_url + "/topics/?cat_name=" + encodeURI(res.cat_name);
@@ -177,6 +206,13 @@ $(function () {
                 setTimeout(function () {
                     loader(false);
                 }, 1000);
+
+                if (scroll_down) {
+                    console.log('scroll down');
+                    window.scrollTo(0,document.body.scrollHeight);
+                    scroll_down = !scroll_down;
+                }
+
             },
             error: function (error) {
                 console.log(error);
@@ -556,9 +592,19 @@ $(function () {
 
     document.addEventListener("touchstart", function(){}, true);
 
+    window.onscroll = function() {scrollFunction()};
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("top-butt").style.display = "block";
+        } else {
+            document.getElementById("top-butt").style.display = "none";
+        }
+    }
 
+    $('#top-butt').on('click', function () {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    })
 
 });
-
-
 

@@ -47,6 +47,7 @@ $(function () {
                 cat_name: cat_name
             },
             success: function (res) {
+                console.log(cat_name)
                 console.log('pages:' + res);
                 max_page = res;
                 paginationInit(current_page, max_page, 5, getTopics, {});

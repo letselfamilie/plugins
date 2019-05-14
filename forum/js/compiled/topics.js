@@ -1,22 +1,35 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, pagination_obj) {
-
+    $('.num').remove();
     max_page = (max_page > 0) ? max_page : 1;
 
     pagination_obj = {
         current_page: curr_page,
-        pagina_from: 1,
-        pagina_to: max_page > n_pages ? n_pages : max_page
+        pagina_from: curr_page - n_pages / 2 ,
+        pagina_to: curr_page + n_pages / 2
     }
+    if (pagination_obj.pagina_from < 1) {
+        pagination_obj.pagina_to = pagination_obj.pagina_to + 1 - pagination_obj.pagina_from;
+        pagination_obj.pagina_from = 1
+    }
+    if (pagination_obj.pagina_to > max_page) {
+        pagination_obj.pagina_to = max_page;
+    }
+    updateFunc(pagination_obj.current_page);
 
+    console.log(pagination_obj.pagina_from + ' ' + pagination_obj.pagina_to)
 
     createNums();
     let $n = $('.before-dots');
-    $n.next().addClass('active');
+    //$n.next().addClass('active');
 
     function createNums() {
         for (var i = pagination_obj.pagina_from; i <= pagination_obj.pagina_to; i++) {
-            $('.after-dots').before("<a class='num' href='#'>" + i + "</a>")
+            if (i != curr_page) {
+                $('.after-dots').before("<a class='num' href='#'>" + i + "</a>")
+            } else {
+                $('.after-dots').before("<a class='num active' href='#'>" + i + "</a>")
+            }
         }
     }
 
@@ -134,7 +147,7 @@ let $ = jQuery;
 
 let ejs = require('ejs');
 
-let topic_templ = ejs.compile("<tr class=\"topic-row\">\n    <td class=\"topic-name\"><a href=\"<%= url%>/posts/?topic_id=<%= encodeURI(topic.topic_id)%>\"><%= topic.topic_name%></a></td>\n    <td class=\"authors\"><%= topic.authors_num%></td>\n    <td class=\"num-posts\"><%= topic.posts_num%></td>\n    <td class=\"last-post\">\n        <% if (topic.last_post_user_login != null) { %>\n        <a href=\"<%= url%>/posts/?topic_id=<%= encodeURI(topic.topic_id)%>\">by <%= topic.last_post_user_login %> on <%= topic.last_post_time%></a>\n        <% } else { %>\n            -\n        <% } %>\n    </td>\n</tr>");
+let topic_templ = ejs.compile("<%\nDate.prototype.ddmmyyyyhhmm = function() {\n    var mm = this.getMonth() + 1;\n    var dd = this.getDate();\n\n    var HH = this.getHours();\n    var MM = this.getMinutes();\n    return ((dd>9 ? '' : '0') + dd) + '-' + ((mm>9 ? '' : '0') + mm) +  '-' + this.getFullYear() + ' ' +\n            ((HH > 9 ? '' : '0') + HH) + ':' + ((MM > 9 ? '' : '0') + MM);\n};\n%>\n\n<tr class=\"topic-row\">\n    <td class=\"topic-name\"><a href=\"<%= url%>/posts/?topic_id=<%= encodeURI(topic.topic_id)%>\"><%= topic.topic_name%></a></td>\n    <td class=\"authors\"><%= topic.authors_num%></td>\n    <td class=\"num-posts\"><%= topic.posts_num%></td>\n    <td class=\"last-post\">\n        <% if (topic.last_post_user_login != null) { %>\n        <a href=\"<%= url%>/posts/?topic_id=<%= encodeURI(topic.topic_id)%>\">by <%= topic.last_post_user_login %> on <%=  new Date(topic.last_post_time).ddmmyyyyhhmm() %></a>\n        <% } else { %>\n            -\n        <% } %>\n    </td>\n</tr>");
 
 let paginationInit = require('./pagination');
 
@@ -178,6 +191,7 @@ $(function () {
                 cat_name: cat_name
             },
             success: function (res) {
+                console.log(cat_name)
                 console.log('pages:' + res);
                 max_page = res;
                 paginationInit(current_page, max_page, 5, getTopics, {});

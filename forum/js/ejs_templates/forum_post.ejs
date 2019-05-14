@@ -38,10 +38,11 @@
             <% } %>
 
 
+
         <div class="message"><%- post.post_message.replace(/\n/g, '<br>') %></div>
         </p>
 
-        <span class="date"><%= post.create_timestamp %></span>
+        <span class="date"><%= new Date(post.create_timestamp).ddmmyyyyhhmm() %></span>
 
         <span class="like-number"><%= post.n_likes %></span>
         <span class="reaction-number"><%= post.n_responds %></span>
@@ -56,12 +57,17 @@
         <img src="<%= url %>/images/comment-full.svg" class="comment-full none">
         <img src="<%= url %>/images/comment-empty.svg" class="comment-empty">
 
-        <% if (post.user_id == user_id || role == 'administrator' || role == 'adviser') { %>
+
         <div class="dropdown">
             <img src="<%= url %>/images/more.svg">
             <div class="dropdown-content">
-                <p class="edit">Edit</p>
-                <p class="delete">Delete</p>
+                <% if (post.user_id == user_id || role == 'administrator' || role == 'adviser') { %>
+                    <p class="edit">Edit</p>
+                    <p class="delete">Delete</p>
+                <% }%>
+                <% if (post.user_id != user_id ) { %>
+                    <p class="report">Report</p>
+                <% }%>
             </div>
         </div>
         <div class="content-edit none">
@@ -73,6 +79,6 @@
             </div>
 
         </div>
-        <% }%>
+
     </td>
 </tr>

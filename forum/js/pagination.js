@@ -1,21 +1,34 @@
 module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, pagination_obj) {
-
+    $('.num').remove();
     max_page = (max_page > 0) ? max_page : 1;
 
     pagination_obj = {
         current_page: curr_page,
-        pagina_from: 1,
-        pagina_to: max_page > n_pages ? n_pages : max_page
+        pagina_from: curr_page - n_pages / 2 ,
+        pagina_to: curr_page + n_pages / 2
     }
+    if (pagination_obj.pagina_from < 1) {
+        pagination_obj.pagina_to = pagination_obj.pagina_to + 1 - pagination_obj.pagina_from;
+        pagination_obj.pagina_from = 1
+    }
+    if (pagination_obj.pagina_to > max_page) {
+        pagination_obj.pagina_to = max_page;
+    }
+    updateFunc(pagination_obj.current_page);
 
+    console.log(pagination_obj.pagina_from + ' ' + pagination_obj.pagina_to)
 
     createNums();
     let $n = $('.before-dots');
-    $n.next().addClass('active');
+    //$n.next().addClass('active');
 
     function createNums() {
         for (var i = pagination_obj.pagina_from; i <= pagination_obj.pagina_to; i++) {
-            $('.after-dots').before("<a class='num' href='#'>" + i + "</a>")
+            if (i != curr_page) {
+                $('.after-dots').before("<a class='num' href='#'>" + i + "</a>")
+            } else {
+                $('.after-dots').before("<a class='num active' href='#'>" + i + "</a>")
+            }
         }
     }
 

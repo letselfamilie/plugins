@@ -1,22 +1,35 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, pagination_obj) {
-
+    $('.num').remove();
     max_page = (max_page > 0) ? max_page : 1;
 
     pagination_obj = {
         current_page: curr_page,
-        pagina_from: 1,
-        pagina_to: max_page > n_pages ? n_pages : max_page
+        pagina_from: curr_page - n_pages / 2 ,
+        pagina_to: curr_page + n_pages / 2
     }
+    if (pagination_obj.pagina_from < 1) {
+        pagination_obj.pagina_to = pagination_obj.pagina_to + 1 - pagination_obj.pagina_from;
+        pagination_obj.pagina_from = 1
+    }
+    if (pagination_obj.pagina_to > max_page) {
+        pagination_obj.pagina_to = max_page;
+    }
+    updateFunc(pagination_obj.current_page);
 
+    console.log(pagination_obj.pagina_from + ' ' + pagination_obj.pagina_to)
 
     createNums();
     let $n = $('.before-dots');
-    $n.next().addClass('active');
+    //$n.next().addClass('active');
 
     function createNums() {
         for (var i = pagination_obj.pagina_from; i <= pagination_obj.pagina_to; i++) {
-            $('.after-dots').before("<a class='num' href='#'>" + i + "</a>")
+            if (i != curr_page) {
+                $('.after-dots').before("<a class='num' href='#'>" + i + "</a>")
+            } else {
+                $('.after-dots').before("<a class='num active' href='#'>" + i + "</a>")
+            }
         }
     }
 
@@ -134,7 +147,17 @@ let $ = jQuery;
 
 let ejs = require('ejs');
 
-let post_templ = ejs.compile("<tr class=\"post-row\">\n\n\n        <% if (post.is_anonym == 0) {%>\n            <td class=\"user-info\">\n\n                <img src=\"<%= post.photo %>\">\n\n                <a class=\"dropdown\" style='right:0;'>\n                    <div class=\"name\"><%= post.first_name + \" \" + post.surname %></div>\n                    <div class=\"dropdown-content\">\n                        <p class=\"send-message\">Send message</p>\n                    </div>\n                </a>\n\n            </td>\n        <% } else { %>\n                <td class=\"user-info\">\n\n                    <img src=\"<%= url %>/images/user.png\">\n\n                    <a>Anonym</a>\n                </td>\n        <% } %>\n    <td class=\"post-text\">\n        <span class=\"post-id\"><%= post.post_id %></span>\n\n        <p class=\"text-post\">\n            <% if (post.is_reaction == 1) { %>\n                <div class=\"respond-message\">\n                <% if (post.user_respond_to != null && post.respond_message != null) { %>\n                <span class=\"respond-to-user\"> <%= post.user_respond_to %>: </span>\n                <div class=\"text-post-message\"><%= post.respond_message.substring(0, 75) + ((post.respond_message.length <= 75)? '': \"...\") %></div>\n                <% } else { %>\n                <div class=\"text-post-message\">The post was deleted</div>\n                <% } %>\n                </div>\n            <% } %>\n\n\n        <div class=\"message\"><%- post.post_message.replace(/\\n/g, '<br>') %></div>\n        </p>\n\n        <span class=\"date\"><%= post.create_timestamp %></span>\n\n        <span class=\"like-number\"><%= post.n_likes %></span>\n        <span class=\"reaction-number\"><%= post.n_responds %></span>\n\n        <img src=\"<%= url %>/images/like-empty.svg\" class=\"empty-like <% if (post.liked) { %>\n            <%= \" none\"%>\n        <% }%>\">\n        <img src=\"<%= url %>/images/like-full.svg\" class=\"full-like <% if (!post.liked) { %>\n            <%= \" none\"%>\n        <% }%>\">\n\n        <img src=\"<%= url %>/images/comment-full.svg\" class=\"comment-full none\">\n        <img src=\"<%= url %>/images/comment-empty.svg\" class=\"comment-empty\">\n\n        <% if (post.user_id == user_id || role == 'administrator' || role == 'adviser') { %>\n        <div class=\"dropdown\">\n            <img src=\"<%= url %>/images/more.svg\">\n            <div class=\"dropdown-content\">\n                <p class=\"edit\">Edit</p>\n                <p class=\"delete\">Delete</p>\n            </div>\n        </div>\n        <div class=\"content-edit none\">\n            <div class=\"text-enter-container\">\n                <textarea class=\"edit-textarea\"></textarea>\n                <div class=\"right-align\">\n                <button class=\"save-butt\">Save\n                </button></div>\n            </div>\n\n        </div>\n        <% }%>\n    </td>\n</tr>");
+Date.prototype.ddmmyyyyhhmm = function() {
+    var mm = this.getMonth() + 1;
+    var dd = this.getDate();
+
+    var HH = this.getHours();
+    var MM = this.getMinutes();
+    return ((dd>9 ? '' : '0') + dd) + '-' + ((mm>9 ? '' : '0') + mm) +  '-' + this.getFullYear() + ' ' +
+        ((HH > 9 ? '' : '0') + HH) + ':' + ((MM > 9 ? '' : '0') + MM);
+};
+
+let post_templ = ejs.compile("<tr class=\"post-row\">\n\n\n        <% if (post.is_anonym == 0) {%>\n            <td class=\"user-info\">\n\n                <img src=\"<%= post.photo %>\">\n\n                <a class=\"dropdown\" style='right:0;'>\n                    <div class=\"name\"><%= post.first_name + \" \" + post.surname %></div>\n                    <div class=\"dropdown-content\">\n                        <p class=\"send-message\">Send message</p>\n                    </div>\n                </a>\n\n            </td>\n        <% } else { %>\n                <td class=\"user-info\">\n\n                    <img src=\"<%= url %>/images/user.png\">\n\n                    <a>Anonym</a>\n                </td>\n        <% } %>\n    <td class=\"post-text\">\n        <span class=\"post-id\"><%= post.post_id %></span>\n\n        <p class=\"text-post\">\n            <% if (post.is_reaction == 1) { %>\n                <div class=\"respond-message\">\n                <% if (post.user_respond_to != null && post.respond_message != null) { %>\n                <span class=\"respond-to-user\"> <%= post.user_respond_to %>: </span>\n                <div class=\"text-post-message\"><%= post.respond_message.substring(0, 75) + ((post.respond_message.length <= 75)? '': \"...\") %></div>\n                <% } else { %>\n                <div class=\"text-post-message\">The post was deleted</div>\n                <% } %>\n                </div>\n            <% } %>\n\n\n\n        <div class=\"message\"><%- post.post_message.replace(/\\n/g, '<br>') %></div>\n        </p>\n\n        <span class=\"date\"><%= new Date(post.create_timestamp).ddmmyyyyhhmm() %></span>\n\n        <span class=\"like-number\"><%= post.n_likes %></span>\n        <span class=\"reaction-number\"><%= post.n_responds %></span>\n\n        <img src=\"<%= url %>/images/like-empty.svg\" class=\"empty-like <% if (post.liked) { %>\n            <%= \" none\"%>\n        <% }%>\">\n        <img src=\"<%= url %>/images/like-full.svg\" class=\"full-like <% if (!post.liked) { %>\n            <%= \" none\"%>\n        <% }%>\">\n\n        <img src=\"<%= url %>/images/comment-full.svg\" class=\"comment-full none\">\n        <img src=\"<%= url %>/images/comment-empty.svg\" class=\"comment-empty\">\n\n\n        <div class=\"dropdown\">\n            <img src=\"<%= url %>/images/more.svg\">\n            <div class=\"dropdown-content\">\n                <% if (post.user_id == user_id || role == 'administrator' || role == 'adviser') { %>\n                    <p class=\"edit\">Edit</p>\n                    <p class=\"delete\">Delete</p>\n                <% }%>\n                <% if (post.user_id != user_id ) { %>\n                    <p class=\"report\">Report</p>\n                <% }%>\n            </div>\n        </div>\n        <div class=\"content-edit none\">\n            <div class=\"text-enter-container\">\n                <textarea class=\"edit-textarea\"></textarea>\n                <div class=\"right-align\">\n                <button class=\"save-butt\">Save\n                </button></div>\n            </div>\n\n        </div>\n\n    </td>\n</tr>");
 
 let paginationInit = require('./pagination');
 
@@ -167,8 +190,11 @@ $(function () {
     var post_to_delete = null;
     var curr_category_url = null;
 
+    var scroll_down = false;
+
     var pagination_obj = {current_page: 1};
     var per_page = 20;
+    var max_page = 0;
 
     if (topic_id == -1) {
         window.location.replace(url_object.site_url + "/categories");
@@ -178,10 +204,8 @@ $(function () {
     // loadMyInfo();
     setUpListeners();
 
-    loadPost(pagination_obj.current_page);
-
     initPagination();
-    function initPagination() {
+    function initPagination(curr_p=1) {
         $.ajax({
             url: url_object.ajax_url,
             type: 'POST',
@@ -192,6 +216,7 @@ $(function () {
             },
             success: function (res) {
                 max_page = res;
+                pagination_obj.current_page = curr_p
                 paginationInit(pagination_obj.current_page, max_page, 5, loadPost, pagination_obj);
             },
             error: function (error) {
@@ -225,7 +250,24 @@ $(function () {
                     $('textarea').css('height', '130px');
                     $('.respond-info').css('display', 'none');
                     respond_to_id = null;
-                    loadPost(pagination_obj.current_page);
+
+                    $.ajax({
+                        url: url_object.ajax_url,
+                        type: 'POST',
+                        data: {
+                            action: 'n_posts_pages',
+                            per_page: per_page,
+                            topic_id: topic_id
+                        },
+                        success: function (res) {
+                            scroll_down = true;
+                            initPagination(res);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+
                     setUpListeners();
                 },
                 error: function (error) {
@@ -251,7 +293,7 @@ $(function () {
                 console.log(res);
                 if(res){
                     $("#topic_name").text(res['topic_name']);
-                    $("#topic_date").text(res['create_timestamp']);
+                    $("#topic_date").text(new Date(res['create_timestamp']).ddmmyyyyhhmm());
                     $("#added-by").text(res['user_name']);
                     $(".back").attr('href', url_object.site_url + "/topics/?cat_name=" + encodeURI(res.cat_name));
                     curr_category_url = url_object.site_url + "/topics/?cat_name=" + encodeURI(res.cat_name);
@@ -308,6 +350,13 @@ $(function () {
                 setTimeout(function () {
                     loader(false);
                 }, 1000);
+
+                if (scroll_down) {
+                    console.log('scroll down');
+                    window.scrollTo(0,document.body.scrollHeight);
+                    scroll_down = !scroll_down;
+                }
+
             },
             error: function (error) {
                 console.log(error);
@@ -687,11 +736,21 @@ $(function () {
 
     document.addEventListener("touchstart", function(){}, true);
 
+    window.onscroll = function() {scrollFunction()};
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("top-butt").style.display = "block";
+        } else {
+            document.getElementById("top-butt").style.display = "none";
+        }
+    }
 
+    $('#top-butt').on('click', function () {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    })
 
 });
-
-
 
 
 },{"./pagination":1,"ejs":4}],3:[function(require,module,exports){

@@ -799,24 +799,9 @@ function um_profile_header( $args ) {
 						do_action( 'um_after_profile_name_inline', $args ); ?>
 
 					</div>
-				<div class="user-name">
-					<?php 
-							$first_name =  get_user_meta(get_current_user_id(), 'first_name', true);
-							$last_name =  get_user_meta(get_current_user_id(), 'last_name', true);
-							$nickname =  get_user_meta(get_current_user_id(), 'nickname', true);
-							
-							if($first_name != '' && $last_name != ''){
-								echo $nickname;
-							}else{
-								echo $first_name.' '.$last_name;
-							}
-					?>
-				</div>
+
 				<div class="user-email">
-					<?php echo wp_get_current_user()->user_email ?>
-				</div>
-				<div class="user-country">
-					<?php echo get_user_meta(get_current_user_id(), 'country', true) ?>
+					<?php echo um_user('user_email'); ?>
 				</div>
 
 				<?php } ?>

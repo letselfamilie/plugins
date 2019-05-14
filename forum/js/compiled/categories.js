@@ -4,7 +4,7 @@ let $ = jQuery;
 
 let ejs = require('ejs');
 
-let category_templ = ejs.compile("<tr class=\"categories-row\">\n    <td class=\"cat-name\"><a href=\"<%= url%>/topics/?cat_name=<%= encodeURI(category.cat_name)%>\"><%= category.cat_name%></a></td>\n    <td class=\"onderwerpen\"><%= category.topics_num%></td>\n    <td class=\"berichten\"><%= category.posts_num%></td>\n    <td class=\"last-post\">\n        <% if (category.last_topic_id != null) { %>\n        <a href=\"<%= url%>/posts/?topic_id=<%= encodeURI(category.last_topic_id)%>\">in <%= category.last_topic_name%> at <%= category.last_post_time%></a>\n        <% } else { %>\n        -\n        <% } %>\n    </td>\n</tr>");
+let category_templ = ejs.compile("<%\nDate.prototype.ddmmyyyyhhmm = function() {\n    var mm = this.getMonth() + 1;\n    var dd = this.getDate();\n\n    var HH = this.getHours();\n    var MM = this.getMinutes();\n    return ((dd>9 ? '' : '0') + dd) + '-' + ((mm>9 ? '' : '0') + mm) +  '-' + this.getFullYear() + ' ' +\n            ((HH > 9 ? '' : '0') + HH) + ':' + ((MM > 9 ? '' : '0') + MM);\n};\n%>\n\n<tr class=\"categories-row\">\n    <td class=\"cat-name\"><a href=\"<%= url%>/topics/?cat_name=<%= encodeURI(category.cat_name)%>\"><%= category.cat_name%></a></td>\n    <td class=\"onderwerpen\"><%= category.topics_num%></td>\n    <td class=\"berichten\"><%= category.posts_num%></td>\n    <td class=\"last-post\">\n        <% if (category.last_topic_id != null) { %>\n        <a href=\"<%= url%>/posts/?topic_id=<%= encodeURI(category.last_topic_id)%>\">in <%= category.last_topic_name%> at <%=  new Date(category.last_post_time).ddmmyyyyhhmm() %></a>\n        <% } else { %>\n        -\n        <% } %>\n    </td>\n</tr>");
 
 let paginationInit = require('./pagination');
 
@@ -76,23 +76,36 @@ $(function () {
 });
 },{"./pagination":2,"ejs":4}],2:[function(require,module,exports){
 module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, pagination_obj) {
-
+    $('.num').remove();
     max_page = (max_page > 0) ? max_page : 1;
 
     pagination_obj = {
         current_page: curr_page,
-        pagina_from: 1,
-        pagina_to: max_page > n_pages ? n_pages : max_page
+        pagina_from: curr_page - n_pages / 2 ,
+        pagina_to: curr_page + n_pages / 2
     }
+    if (pagination_obj.pagina_from < 1) {
+        pagination_obj.pagina_to = pagination_obj.pagina_to + 1 - pagination_obj.pagina_from;
+        pagination_obj.pagina_from = 1
+    }
+    if (pagination_obj.pagina_to > max_page) {
+        pagination_obj.pagina_to = max_page;
+    }
+    updateFunc(pagination_obj.current_page);
 
+    console.log(pagination_obj.pagina_from + ' ' + pagination_obj.pagina_to)
 
     createNums();
     let $n = $('.before-dots');
-    $n.next().addClass('active');
+    //$n.next().addClass('active');
 
     function createNums() {
         for (var i = pagination_obj.pagina_from; i <= pagination_obj.pagina_to; i++) {
-            $('.after-dots').before("<a class='num' href='#'>" + i + "</a>")
+            if (i != curr_page) {
+                $('.after-dots').before("<a class='num' href='#'>" + i + "</a>")
+            } else {
+                $('.after-dots').before("<a class='num active' href='#'>" + i + "</a>")
+            }
         }
     }
 
