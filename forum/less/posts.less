@@ -270,7 +270,7 @@ body {
   }
 
   .post-enter {
-    height: auto;
+    min-height: 150px;
     background-color: rgba(38, 157, 255, 0.04);
 
     .post-text-enter {
@@ -288,17 +288,15 @@ body {
         padding-bottom: 5px;
 
         .respond-info {
-
           display: inline-block;
 
           .respond-text {
             display: inline-block;
             position: relative;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            border: none;
             font-style: italic;
             padding: 3px;
             margin-right: 30px;
-
 
             .respond-to-title {
               font-weight: 600;
@@ -320,10 +318,11 @@ body {
         }
 
         .text-enter-container {
-
+          height: 150px;
 
           textarea {
             width: 100%;
+            height: 100px;
             resize: none;
             border: 1px solid rgba(0, 0, 0, 0.05);
             font-size: 14px;
@@ -331,38 +330,36 @@ body {
             padding: 10px;
             -moz-appearance: none;
           }
+
+          .enter-butt {
+            width: 90px;
+            height: 30px;
+            border: none;
+            margin: 5px;
+            background-color: #0e88f1;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+          }
+
+          .enter-butt:hover {
+            background-color: #0b71c8;
+          }
+
+          #chech-anonym {
+            position: relative;
+            margin: 0 6px 3px 6px;
         }
 
-        .enter-butt {
-          width: 90px;
-          height: 30px;
-          border: none;
-          margin: 5px;
-          background-color: #0e88f1;
-          color: white;
-          font-weight: bold;
-          font-size: 14px;
-          outline: none;
-          cursor: pointer;
+          .label-anonym {
+            //position: absolute;
+            //bottom: 17px;
+            //right: 136px;font-size: 12px;font-style: italic;color: darkgray;
+          }
         }
 
-        .enter-butt:hover {
-          background-color: #0b71c8;
-        }
-
-        #chech-anonym {
-          position: relative;
-          margin: 0 6px 3px 6px;
-        }
-
-        .label-anonym {
-          //position: absolute;
-          //bottom: 17px;
-          //right: 136px;
-          font-size: 12px;
-          font-style: italic;
-          color: darkgray;
-        }
       }
     }
   }

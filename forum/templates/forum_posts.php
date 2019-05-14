@@ -121,8 +121,7 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
                         <div class="right-align">
                             <span class="label-anonym">Post anonymously</span>
                             <input type="checkbox" id="chech-anonym" name="chech-anonym">
-                            <button class="enter-butt">Enter
-                        </button>
+                            <button class="enter-butt">Enter</button>
                         </div>
                     </div>
 
