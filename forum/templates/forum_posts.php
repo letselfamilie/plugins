@@ -113,7 +113,7 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
                         <span class="respond-text">
                             <span class="respond-to-title">Respond to </span>
                             <span id="quote-text"></span>
-                            <i id="del-quote" class="fa fa-times fa-fw"></i>
+                            <img id="del-quote" src="<?php echo PATH?>/images/x.svg"/>
                         </span>
                     </div>
                     <div class="text-enter-container">
