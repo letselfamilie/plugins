@@ -4,7 +4,7 @@ let $ = jQuery;
 
 let ejs = require('ejs');
 
-let category_templ = ejs.compile("<%\nDate.prototype.ddmmyyyyhhmm = function() {\n    var mm = this.getMonth() + 1;\n    var dd = this.getDate();\n\n    var HH = this.getHours();\n    var MM = this.getMinutes();\n    return ((dd>9 ? '' : '0') + dd) + '-' + ((mm>9 ? '' : '0') + mm) +  '-' + this.getFullYear() + ' ' +\n            ((HH > 9 ? '' : '0') + HH) + ':' + ((MM > 9 ? '' : '0') + MM);\n};\n%>\n\n<tr class=\"categories-row\">\n    <td class=\"cat-name\"><a href=\"<%= url%>/topics/?cat_name=<%= encodeURI(category.cat_name)%>\"><%= category.cat_name%></a></td>\n    <td class=\"onderwerpen\"><%= category.topics_num%></td>\n    <td class=\"berichten\"><%= category.posts_num%></td>\n    <td class=\"last-post\">\n        <% if (category.last_topic_id != null) { %>\n        <a href=\"<%= url%>/posts/?topic_id=<%= encodeURI(category.last_topic_id)%>\">in <%= category.last_topic_name%> at <%=  new Date(category.last_post_time).ddmmyyyyhhmm() %></a>\n        <% } else { %>\n        -\n        <% } %>\n    </td>\n</tr>");
+let category_templ = ejs.compile("<%\nDate.prototype.ddmmyyyyhhmm = function() {\n    var mm = this.getMonth() + 1;\n    var dd = this.getDate();\n\n    var HH = this.getHours();\n    var MM = this.getMinutes();\n    return ((dd>9 ? '' : '0') + dd) + '-' + ((mm>9 ? '' : '0') + mm) +  '-' + this.getFullYear() + ' ' +\n            ((HH > 9 ? '' : '0') + HH) + ':' + ((MM > 9 ? '' : '0') + MM);\n};\n%>\n\n<tr class=\"categories-row\">\n    <td class=\"cat-name\"><a href=\"<%= url%>/topics/?cat_name=<%= encodeURI(category.cat_name)%>\"><%= category.cat_name%></a></td>\n    <td class=\"onderwerpen\"><%= category.topics_num%></td>\n    <td class=\"berichten\"><%= category.posts_num%></td>\n    <td class=\"last-post\">\n        <% if (category.last_topic_id != null) { %>\n        <a href=\"<%= url%>/posts/?topic_id=<%= encodeURI(category.last_topic_id)%>\">in <%= category.last_topic_name%> at <%=  Date.parseExact(category.last_post_time, \"yyyy-MM-dd HH:mm:ss\").ddmmyyyyhhmm() %></a>\n        <% } else { %>\n        -\n        <% } %>\n    </td>\n</tr>");
 
 let paginationInit = require('./pagination');
 
@@ -1331,7 +1331,7 @@ module.exports={
   "_args": [
     [
       "ejs@2.6.1",
-      "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins"
+      "/Applications/MAMP/htdocs/LetselFamilie/wp-content/plugins"
     ]
   ],
   "_from": "ejs@2.6.1",
@@ -1355,7 +1355,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/ejs/-/ejs-2.6.1.tgz",
   "_spec": "2.6.1",
-  "_where": "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins",
+  "_where": "/Applications/MAMP/htdocs/LetselFamilie/wp-content/plugins",
   "author": {
     "name": "Matthew Eernisse",
     "email": "mde@fleegix.org",
