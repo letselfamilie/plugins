@@ -113,13 +113,13 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
                         <span class="respond-text">
                             <span class="respond-to-title">Respond to </span>
                             <span id="quote-text"></span>
-                            <img id="del-quote" src="<?php echo PATH?>/images/x.svg"/>
+                            <i id="del-quote" class="fa fa-times fa-fw"></i>
                         </span>
                     </div>
                     <div class="text-enter-container">
                         <textarea id="enter-textarea" placeholder="Enter your message here..."></textarea>
                         <div class="right-align">
-                            <span class="label-anonym">anonymously</span>
+                            <span class="label-anonym">Post anonymously</span>
                             <input type="checkbox" id="chech-anonym" name="chech-anonym">
                             <button class="enter-butt">Enter
                         </button>
