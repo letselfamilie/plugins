@@ -106,12 +106,12 @@ define("PATH", plugins_url('..' , __FILE__));
 <div id="add-panel" style="display: none">
     <div class="add-panel-container">
         <div class="add-content">
-            <h2>Add new topic</h2>
+            <label>Add new topic</label>
             <img id="close-add-panel" src="<?php echo PATH?>/images/x.svg">
 
             <form id="add-form" autocomplete="off">
                 <input type="text" id='new-topic-name' name="topic-name" placeholder="Topic name"><br>
-                <span class="label-anonym">anonymously</span>
+                <span class="label-anonym">Post anonymously</span>
                 <input type="checkbox" id="chech-anonym" name="chech-anonym">
                 <button class="enter-butt">Add</button>
             </form>
