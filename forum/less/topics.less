@@ -1,5 +1,10 @@
 body {
   min-width: 300px;
+  background: #b4b4b4;
+}
+
+.forum-area {
+  background: #fff;
 }
 
 #topics, table, tbody {
@@ -7,7 +12,7 @@ body {
   text-transform: none;
 
   padding: 0;
-  margin: 0;
+  margin: 10px 0 0 0;
   //table-layout: fixed;
   border-collapse: collapse;
   width: 100%;
@@ -15,7 +20,7 @@ body {
 
 
   #topics-header {
-    font-size: 20px;
+    font-size: 16px;
     background-color: #0e56a4;
     color: white;
   }
@@ -57,7 +62,7 @@ body {
   }
 
   .topic-row {
-    font-size: 16px;
+    font-size: 14px;
     height: 50px;
 
 
@@ -82,11 +87,12 @@ body {
 
 .info {
   position: relative;
+  margin: 15px 0 0 0;
+  height: 30px;
 }
 
 .back {
   position: absolute;
-  top: 0;
   bottom: 0;
   left: 0;
   margin: auto;
@@ -101,11 +107,10 @@ body {
 }
 
 #cat_name {
-  margin: 12px 0 12px 30px;
+  margin: 0 0 0 15px;
   font-weight: 400;
-  min-height: 30px;
+  font-size: 22px;
 }
-
 
 @media only screen and (min-width:480px){
 
@@ -134,13 +139,12 @@ body {
   bottom: 0;
   margin: auto;
   right: 10px;
-  height: 25px;
-  width: 25px;
+  height: 22px;
+  width: 22px;
   cursor: pointer;
 }
 
 #add-panel {
-
   position: fixed;
   //background-color: rgba(156, 156, 156, 0.33);
   top: 0;
@@ -169,9 +173,10 @@ body {
       border: 1px solid #269dff;
       //box-shadow: 0 0 20px rgba(0,0,0,0.5);
 
-      h2 {
-        margin: 10px;
+      label {
+        font-size: 22px;
         font-weight: 400;
+        margin: 10px 10px 6px 10px;
       }
 
       img {
@@ -184,16 +189,17 @@ body {
       }
 
       #add-form {
-        margin: 10px 11px 10px 10px;
+        margin: 0 10px;
         font-size: 20px;
 
         input[type='text'] {
           background-color: white;
-          border: 1px solid #269dff;
+          border: 1px solid rgba(38, 157, 255, 0.36);
           height: 40px;
           width: 100%;
-          font-size: 20px;
+          font-size: 16px;
           padding: 10px;
+          margin-bottom: 7px;
           -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
           -moz-box-sizing: border-box;    /* Firefox, other Gecko */
           box-sizing: border-box;         /* Opera/IE 8+ */
@@ -202,9 +208,9 @@ body {
 
         .enter-butt {
           position: absolute;
-          bottom: 9px;
-          right: 12px;
-          width: 100px;
+          bottom: 7px;
+          right: 10px;
+          width: 90px;
           height: 30px;
           border: none;
           background-color: #0e88f1;
@@ -216,21 +222,21 @@ body {
         }
 
         .enter-butt:hover {
-          background-color: #269dff;
+          background-color: #0b71c8;
         }
 
         #chech-anonym {
           position: absolute;
           bottom: 13px;
-          right: 116px;
+          right: 113px;
         }
 
         .label-anonym {
           position: absolute;
-          bottom: 15px;
-          right: 138px;
+          bottom: 12px;
+          right: 135px;
           font-size: 12px;
-          font-style: italic;
+          font-variant: all-small-caps;
           color: darkgray;
         }
 
@@ -251,4 +257,20 @@ body {
 .container-blured {
   margin-left: 12px;
   margin-right: 12px;
+}
+
+.topic-search.input-group {
+  width: 100%;
+  margin: 12px 0;
+  border-radius: 0;
+  border: 1px #0e56a4 solid;
+
+  #search-post-input {
+    font-size: 16px;
+  }
+
+  .input-group-append .btn {
+    background-color: #0e56a4;
+  }
+
 }

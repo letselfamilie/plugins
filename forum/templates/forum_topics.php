@@ -19,6 +19,8 @@ define("PATH", plugins_url('..' , __FILE__));
 
 
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
 
     <?php wp_head(); ?>
 </head>
@@ -51,14 +53,23 @@ define("PATH", plugins_url('..' , __FILE__));
 
 </style>
 
-<div class="container container-blured" style="max-width: 750px;">
+<div class="container container-blured forum-area" style="max-width: 750px;">
 
     <div class="info">
-        <a class="back"><img class="back" src="<?php echo PATH?>/images/left.svg"></a>
-        <h2 id="cat_name"></h2>
+        <a class="back"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+        <label id="cat_name"></label>
         <?php if(is_user_logged_in()) { ?>
         <img id="add-topic" src="<?php echo PATH?>/images/plus.svg">
         <?php } ?>
+    </div>
+
+    <div class="topic-search input-group">
+        <input id="search-post-input" class="form-control" type="text" placeholder="Search posts...">
+        <div class="input-group-append">
+            <button class="btn" type="button">
+                <i class="fa fa-search fa-fw" style="color: #fff;" aria-hidden="true"></i>
+            </button>
+        </div>
     </div>
 
 
@@ -95,12 +106,12 @@ define("PATH", plugins_url('..' , __FILE__));
 <div id="add-panel" style="display: none">
     <div class="add-panel-container">
         <div class="add-content">
-            <h2>Add new topic</h2>
+            <label>Add new topic</label>
             <img id="close-add-panel" src="<?php echo PATH?>/images/x.svg">
 
             <form id="add-form" autocomplete="off">
                 <input type="text" id='new-topic-name' name="topic-name" placeholder="Topic name"><br>
-                <span class="label-anonym">anonymously</span>
+                <span class="label-anonym">Post anonymously</span>
                 <input type="checkbox" id="chech-anonym" name="chech-anonym">
                 <button class="enter-butt">Add</button>
             </form>
@@ -115,6 +126,7 @@ define("PATH", plugins_url('..' , __FILE__));
 <!--</div>-->
 <?php get_template_part( 'footer' ); ?>
 
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <?php wp_footer(); ?>
 </body>
 </html>

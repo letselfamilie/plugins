@@ -26,7 +26,7 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
 <?php get_template_part( 'header' ); ?>
 <?php wp_head(); ?>
 
-<div class="container container-blured blur" style="max-width: 750px;">
+<div class="container container-blured blur forum-area" style="max-width: 750px;">
     <style>
         h1, h2, h3, h4, h5, h6 {
             text-transform: none !important;
@@ -54,8 +54,8 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
     </style>
 
     <div class="info">
-        <a class="back"><img class="back" src="<?php echo PATH?>/images/left.svg"></a>
-        <h2 id="topic_name"></h2>
+        <a class="back"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+        <label id="topic_name"></label>
         <span id="topic_date"></span>
         <span id="added-by"></span>
 
@@ -119,10 +119,9 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
                     <div class="text-enter-container">
                         <textarea id="enter-textarea" placeholder="Enter your message here..."></textarea>
                         <div class="right-align">
-                            <span class="label-anonym">anonymously</span>
+                            <span class="label-anonym">Post anonymously</span>
                             <input type="checkbox" id="chech-anonym" name="chech-anonym">
-                            <button class="enter-butt">Enter
-                        </button>
+                            <button class="enter-butt">Enter</button>
                         </div>
                     </div>
 
@@ -180,7 +179,9 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
     </div>
 </div>
 
-<button id="top-butt" title="Go to top"><img src="<?php echo PATH?>/images/up.svg"></button>
+<button id="top-butt" title="Go to top">
+    <i class="fa fa-angle-up" aria-hidden="true" style="color: #fff; width: 20px; height: 20px; margin: auto;"></i>
+</button>
 
 <?php get_template_part( 'footer' ); ?>
 

@@ -25,7 +25,7 @@ define("PATH", plugins_url('..' , __FILE__));
 
 <?php get_template_part( 'header' ); ?>
 
-<div class="container" style="margin-top: 12px; max-width: 750px;">
+<div class="container forum-area" style="margin-top: 12px; max-width: 750px;">
 
     <table id="categories">
         <tr id="categories-header">
