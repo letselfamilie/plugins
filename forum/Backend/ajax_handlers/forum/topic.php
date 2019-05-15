@@ -92,7 +92,7 @@ function get_forum_topics(){
                                                                                 WHERE topic_id =  $curr_topic)";
 
                 foreach ($wpdb->get_results($sqlQuery2, ARRAY_A) as $max_post) {
-                    $user_info = get_userdata($max_post['user_id']);
+                    $user_info = new WP_User( $max_post['user_id'] );
 
                     $max_post['login'] = ($max_post['is_anonym']) ? 'Anonym' : $user_info->login;
                     $topic['last_post_id'] = $max_post['post_id'];
