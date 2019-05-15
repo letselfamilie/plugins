@@ -245,7 +245,7 @@ $(function () {
 
     function addPost(data) {
         let $node = $(post_templ({post: data,
-                user_id:user_id,
+                user_id: user_id,
                 url: url_object.template_directory,
                 role: user_object.role}));
 
