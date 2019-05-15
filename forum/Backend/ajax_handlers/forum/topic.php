@@ -101,6 +101,8 @@ function get_forum_topics(){
                     $topic['last_post_time'] = $max_post['create_timestamp'];
                     $topic['last_post_user_id'] = $max_post['user_id'];
                     $topic['last_post_user_login'] = $max_post['login'];
+
+                    $topic['info'] = $max_post;
                 }
 
                 $topics[] = $topic;
