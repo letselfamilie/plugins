@@ -103,7 +103,7 @@ function get_forum_posts(){
             $user_info = new WP_User( $post['user_id'] );
             $user_respond_to_info = new WP_User($post['user_respond_to'] );
 
-            $post['login'] = (($post['is_anonym'] == '1') ? 'Anonym' : $user_respond_to_info->user_login);
+            $post['login'] = ($post['is_anonym'] == '1') ? 'Anonym' : $user_info->user_login;
             $post['photo'] = get_avatar_url($post['user_id']);
             $post['user_respond_to'] =  $user_respond_to_info->user_login; //TODO
             $posts[] = $post;
