@@ -57,7 +57,7 @@
         <img src="<%= url %>/images/comment-full.svg" class="comment-full none">
         <img src="<%= url %>/images/comment-empty.svg" class="comment-empty">
 
-
+        <% if (post.user_id != null) { %>
         <div class="dropdown">
             <img src="<%= url %>/images/more.svg">
             <div class="dropdown-content">
@@ -70,6 +70,8 @@
                 <% }%>
             </div>
         </div>
+        <% }%>
+        <% if (post.user_id == user_id) { %>
         <div class="content-edit none">
             <div class="text-enter-container">
                 <textarea class="edit-textarea"></textarea>
@@ -79,6 +81,6 @@
             </div>
 
         </div>
-
+        <% }%>
     </td>
 </tr>
