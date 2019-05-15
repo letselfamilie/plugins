@@ -105,7 +105,7 @@ function get_forum_posts(){
 
             $post['login'] = $user_info->user_login;
             $post['photo'] = get_avatar_url($post['user_id']);
-            $post['user_respond_to'] =  $user_respond_to_info->login;
+            $post['user_respond_to'] =  $user_respond_to_info->user_login;
             $posts[] = $post;
 
         }
