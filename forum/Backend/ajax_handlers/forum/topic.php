@@ -149,8 +149,8 @@ function get_topic_by_id(){
             foreach ($wpdb->get_results($sqlQuery, ARRAY_A) as $topic){
                 $user_info = get_userdata(absint($topic['user_id']));
 
-                $topic['first_name'] = ($topic['is_anonym']) ? '' : $user_info->first_name;
-                $topic['user_name'] = ($topic['is_anonym']) ? 'Anonym' : $user_info->last_name . " " . $user_info->first_name;
+
+                $topic['user_name'] = ($topic['is_anonym']) ? 'Anonym' : $user_info->user_login;
                 $topic['photo'] = get_avatar_url($topic['user_id']);
 
                 $topics[] = $topic;
