@@ -73,6 +73,7 @@ function get_forum_posts(){
                          p2.post_message AS respond_message,
                          p.user_id as user_id, 
                          p.is_anonym,
+                         p2.is_anonym AS responder_anonym,
                          p2.user_id AS user_respond_to, 
                          p.is_reaction, 
                          (SELECT COUNT(*)
@@ -105,7 +106,7 @@ function get_forum_posts(){
 
             $post['login'] = ($post['is_anonym'] == '1') ? 'Anonym' : $user_info->user_login;
             $post['photo'] = get_avatar_url($post['user_id']);
-            $post['user_respond_to'] =  $user_respond_to_info->user_login; //TODO
+            $post['user_respond_to'] =  ($post['responder_anonym'] == '1') ? 'Anonym' : $user_respond_to_info->user_login;
             $posts[] = $post;
 
         }
