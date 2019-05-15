@@ -105,7 +105,7 @@ function get_forum_posts(){
 
             $post['login'] = (($post['is_anonym'] == '1') ? 'Anonym' : $user_respond_to_info->user_login);
             $post['photo'] = get_avatar_url($post['user_id']);
-            $post['user_respond_to'] =  $user_respond_to_info->user_login;
+            $post['user_respond_to'] =  $user_respond_to_info->user_login; //TODO
             $posts[] = $post;
 
         }
