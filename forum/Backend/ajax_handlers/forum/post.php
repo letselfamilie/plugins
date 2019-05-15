@@ -103,8 +103,7 @@ function get_forum_posts(){
             $user_info = new WP_User( $post['user_id'] );
             $user_respond_to_info = new WP_User($post['user_respond_to'] );
 
-            $post['surname'] = $user_info->last_name;
-            $post['first_name'] = $user_info->first_name;
+            $post['login'] = $user_info->user_login;
             $post['photo'] = get_avatar_url($post['user_id']);
             $post['user_respond_to'] =  $user_respond_to_info->last_name . " " . $user_respond_to_info->first_name;
             $posts[] = $post;
