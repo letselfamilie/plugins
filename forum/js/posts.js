@@ -269,7 +269,7 @@ $(function () {
 
             $node.on('click', '.comment-empty', function () {
                 var post_text = data.post_message.substring(0, 75) + ((data.post_message.length <= 75) ? '' : "...");
-                $("#quote-text").text(data.first_name + " " + data.surname + ': ' + post_text);
+                $("#quote-text").text(data.login + ': ' + post_text);
 
                 $('.respond-info').css('display', 'inline-block');
 
