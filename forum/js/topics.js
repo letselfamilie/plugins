@@ -73,6 +73,7 @@ $(function () {
             success: function (res) {
                 console.log(res);
                 res = JSON.parse(res);
+                console.log(res);
                 displayTopics(res, topic_templ, $topic_table);
 
             },
