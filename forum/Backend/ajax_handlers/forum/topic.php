@@ -89,7 +89,9 @@ function get_forum_topics(){
                       FROM {$wpdb->prefix}f_posts INNER JOIN {$wpdb->prefix}users ON {$wpdb->prefix}f_posts.user_id = {$wpdb->prefix}users.ID
                       WHERE topic_id = $curr_topic AND create_timestamp IN (SELECT MAX({$wpdb->prefix}f_posts.create_timestamp)
                                                                                 FROM {$wpdb->prefix}f_posts
-                                                                                WHERE topic_id =  $curr_topic)";
+                                                                                WHERE topic_id =  $curr_topic)
+                      ORDER BY {$wpdb->prefix}f_posts.create_timestamp DESC 
+                      LIMIT 1";
 
                 foreach ($wpdb->get_results($sqlQuery2, ARRAY_A) as $max_post) {
                     $user_info = new WP_User( $max_post['user_id'] );
