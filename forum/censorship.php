@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: San Nguyen
- * Date: 14.04.2019
- * Time: 23:46
+ * Date: 18.05.2019
+ * Time: 18:40
  */
 
 
@@ -12,14 +12,14 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 }
 
 
-class Categories_List extends WP_List_Table {
+class Censorship_List extends WP_List_Table {
 
     /** Class constructor */
     public function __construct() {
 
         parent::__construct( [
-            'singular' => __( 'Category', 'sp' ), //singular name of the listed records
-            'plural'   => __( 'Categories', 'sp' ), //plural name of the listed records
+            'singular' => __( 'Censorship', 'sp' ), //singular name of the listed records
+            'plural'   => __( 'Censorship', 'sp' ), //plural name of the listed records
             'ajax'     => false //does this table support ajax?
         ] );
 
@@ -34,11 +34,11 @@ class Categories_List extends WP_List_Table {
      *
      * @return mixed
      */
-    public static function get_categories( $per_page = 5, $page_number = 1 ) {
+    public static function get_words( $per_page = 5, $page_number = 1 ) {
 
         global $wpdb;
 
-        $sql = "SELECT * FROM {$wpdb->prefix}f_categories";
+        $sql = "SELECT * FROM {$wpdb->prefix}censorship";
 
         if ( ! empty( $_REQUEST['orderby'] ) ) {
             $sql .= ' ORDER BY ' . esc_sql( $_REQUEST['orderby'] );
@@ -60,11 +60,11 @@ class Categories_List extends WP_List_Table {
      *
      * @param int $id category ID
      */
-    public static function delete_category( $id ) {
+    public static function delete_word( $id ) {
         global $wpdb;
 
-        $wpdb->query("DELETE FROM {$wpdb->prefix}f_categories
-                      WHERE cat_name = '$id'");
+        $wpdb->query("DELETE FROM {$wpdb->prefix}censorship
+                      WHERE word = '$id'");
     }
 
 
@@ -76,7 +76,7 @@ class Categories_List extends WP_List_Table {
     public static function record_count() {
         global $wpdb;
 
-        $sql = "SELECT COUNT(*) FROM {$wpdb->prefix}f_categories";
+        $sql = "SELECT COUNT(*) FROM {$wpdb->prefix}censorship";
 
         return $wpdb->get_var( $sql );
     }
@@ -84,7 +84,7 @@ class Categories_List extends WP_List_Table {
 
     /** Text displayed when no category data is available */
     public function no_items() {
-        _e( 'No categories avaliable.', 'sp' );
+        _e( 'No words avaliable.', 'sp' );
     }
 
 
@@ -98,7 +98,7 @@ class Categories_List extends WP_List_Table {
      */
     public function column_default( $item, $column_name ) {
         switch ( $column_name ) {
-            case 'cat_name':
+            case 'word':
                 return $item[ $column_name ];
             default:
                 return print_r( $item, true ); //Show the whole array for troubleshooting purposes
@@ -114,7 +114,7 @@ class Categories_List extends WP_List_Table {
      */
     function column_cb( $item ) {
         return sprintf(
-            '<input type="checkbox" name="bulk-delete[]" value="%s" />', $item['cat_name']
+            '<input type="checkbox" name="bulk-delete[]" value="%s" />', $item['word']
         );
     }
 
@@ -128,17 +128,16 @@ class Categories_List extends WP_List_Table {
      */
     function column_name( $item ) {
 
-        $delete_nonce = wp_create_nonce( 'sp_delete_category' );
+        $delete_nonce = wp_create_nonce( 'sp_delete_word' );
 
-        $title = '<strong>' . $item['cat_name'] . '</strong>';
+        $title = '<strong>' . $item['word'] . '</strong>';
 
         $actions = [
-            'visit' => "<a href='". get_site_url() . '/topics/?cat_name=' . $item['cat_name'] ."'>Visit</a>",
             'delete' => sprintf(
-                '<a href="?page=%s&action=%s&category=%s&_wpnonce=%s">Delete</a>',
+                '<a href="?page=%s&action=%s&word=%s&_wpnonce=%s">Delete</a>',
                 esc_attr( $_REQUEST['page'] ),
                 'delete',
-                $item['cat_name'],
+                $item['word'],
                 $delete_nonce )
         ];
 
@@ -153,7 +152,7 @@ class Categories_List extends WP_List_Table {
     function get_columns() {
         $columns = [
             'cb'      => '<input type="checkbox" />',
-            'name'    => __( 'Name', 'sp' ),
+            'name'    => __( 'Word', 'sp' ),
         ];
 
         return $columns;
@@ -167,7 +166,7 @@ class Categories_List extends WP_List_Table {
      */
     public function get_sortable_columns() {
         $sortable_columns = array(
-            'cat_name' => array( 'cat_name', true )
+            'word' => array( 'word', true )
         );
 
         return $sortable_columns;
@@ -197,7 +196,7 @@ class Categories_List extends WP_List_Table {
         /** Process bulk action */
         $this->process_bulk_action();
 
-        $per_page     = $this->get_items_per_page( 'categories_per_page', 5 );
+        $per_page     = $this->get_items_per_page( 'words_per_page', 5 );
         $current_page = $this->get_pagenum();
         $total_items  = self::record_count();
 
@@ -206,7 +205,7 @@ class Categories_List extends WP_List_Table {
             'per_page'    => $per_page //WE have to determine how many items to show on a page
         ] );
 
-        $this->items = self::get_categories( $per_page, $current_page );
+        $this->items = self::get_words( $per_page, $current_page );
     }
 
     public function process_bulk_action() {
@@ -217,11 +216,11 @@ class Categories_List extends WP_List_Table {
             // In our file that handles the request, verify the nonce.
             $nonce = esc_attr( $_REQUEST['_wpnonce'] );
 
-            if ( ! wp_verify_nonce( $nonce, 'sp_delete_category' ) ) {
+            if ( ! wp_verify_nonce( $nonce, 'sp_delete_word' ) ) {
                 die( 'Go get a life script kiddies' );
             }
             else {
-                self::delete_category($_GET['category']);
+                self::delete_word($_GET['word']);
 
                 // esc_url_raw() is used to prevent converting ampersand in url to "#038;"
                 // add_query_arg() return the current url
@@ -240,7 +239,7 @@ class Categories_List extends WP_List_Table {
 
             // loop over the array of record IDs and delete them
             foreach ( $delete_ids as $id ) {
-                self::delete_category( $id );
+                self::delete_word( $id );
 
             }
 
@@ -254,13 +253,13 @@ class Categories_List extends WP_List_Table {
 }
 
 
-class SP_Plugin {
+class SP_Plugin_Censor {
 
     // class instance
     static $instance;
 
     // category WP_List_Table object
-    public $categories_obj;
+    public $words_obj;
 
     // class constructor
     public function __construct() {
@@ -275,39 +274,35 @@ class SP_Plugin {
 
     public function plugin_menu() {
 
-        $hook = add_menu_page(
-            'Forum',
-            'Forum',
-            'manage_categories',
+        $hook = add_submenu_page(
             'sn_categories',
-            [ $this, 'plugin_settings_page' ],
-            'dashicons-excerpt-view',
-            5
+            'Censorship',
+            'Censorship',
+            'manage_categories',
+            'sn_censor',
+            [ $this, 'censorship_page' ]
         );
-
         add_action( "load-$hook", [ $this, 'screen_option' ] );
 
-
         add_submenu_page(
-                'sn_categories',
-                'Add category',
-                'Add category',
-                'manage_categories',
-                'sn_categories_add',
-                [ $this, 'categories_add' ]
-            );
-
+            'sn_categories',
+            'Add censor',
+            'Add censor',
+            'manage_categories',
+            'sn_censor_add',
+            [ $this, 'censorship_add' ]
+        );
     }
 
 
     /**
      * Plugin settings page
      */
-    public function plugin_settings_page() {
+    public function censorship_page() {
         ?>
         <div class="wrap">
-            <h2>Categories
-                <a href="<?php echo get_site_url() . "/wp-admin/admin.php?page=sn_categories_add" ?>" class="page-title-action">Add new</a>
+            <h2>Censorship
+                <a href="<?php echo get_site_url() . "/wp-admin/admin.php?page=sn_censor_add" ?>" class="page-title-action">Add new</a>
             </h2>
 
             <div id="poststuff">
@@ -316,8 +311,8 @@ class SP_Plugin {
                         <div class="meta-box-sortables ui-sortable">
                             <form method="post">
                                 <?php
-                                $this->categories_obj->prepare_items();
-                                $this->categories_obj->display(); ?>
+                                $this->words_obj->prepare_items();
+                                $this->words_obj->display(); ?>
                             </form>
                         </div>
                     </div>
@@ -329,9 +324,9 @@ class SP_Plugin {
     }
 
 
-    public function categories_add()
+    public function censorship_add()
     {
-        include __DIR__ . '/category-add.php';
+        include __DIR__ . '/censor-add.php';
     }
 
 
@@ -343,14 +338,14 @@ class SP_Plugin {
 
         $option = 'per_page';
         $args   = [
-            'label'   => 'Categories',
+            'label'   => 'Words',
             'default' => 5,
-            'option'  => 'categories_per_page'
+            'option'  => 'words_per_page'
         ];
 
         add_screen_option( $option, $args );
 
-        $this->categories_obj = new Categories_List();
+        $this->words_obj = new Censorship_List();
     }
 
 
@@ -367,5 +362,5 @@ class SP_Plugin {
 
 
 add_action( 'plugins_loaded', function () {
-    SP_Plugin::get_instance();
+    SP_Plugin_Censor::get_instance();
 } );

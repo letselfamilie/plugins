@@ -14,7 +14,7 @@ $(function () {
          },
          success: function (res) {
             $('#category_name').val('');
-            $('#ajax-response').html("<div id='message' class='updated notice is-dismissible'><p>Category added.</p></div>");
+            $('#ajax-response').html("<div id='message' class='updated notice is-dismissible'><p>Category was added.</p></div>");
          },
          error: function (error) {
             console.log(error);

@@ -13,9 +13,10 @@ require_once ( __DIR__ . '/Backend/ajax_handlers/forum/category.php');
 require_once ( __DIR__ . '/Backend/ajax_handlers/forum/post.php');
 require_once ( __DIR__ . '/Backend/ajax_handlers/forum/topic.php');
 require_once ( __DIR__ . '/Backend/ajax_handlers/forum/user.php');
+require_once ( __DIR__ . '/Backend/ajax_handlers/censorship.php');
 
 require_once( __DIR__ . '/categories-all.php' );
-
+require_once( __DIR__ . '/censorship.php' );
 
 wp_enqueue_script('categories-add-script', plugins_url('/js/add-category.js', __FILE__), array('jquery'));
 wp_localize_script('categories-add-script', 'url_object',
@@ -159,6 +160,14 @@ function forum_db_tables() {
                 FOREIGN KEY  (user_id) REFERENCES ".$wpdb->prefix."users (ID) ON DELETE CASCADE ON UPDATE CASCADE
             ) $charset_collate";
     dbDelta( $sql5 );
+
+
+    global $wpdb;
+    $sql6 = "CREATE TABLE ".$wpdb->prefix."censorship (
+                 word char(50) NOT NULL ,
+                PRIMARY KEY  (word)
+               ) $charset_collate";
+    dbDelta( $sql6 );
 }
 
 
