@@ -6,6 +6,7 @@
  * Time: 7:00 PM
  */
 
+require_once ( __DIR__ . '/../censorship.php');
 
 add_action('wp_ajax_'.'add_post', 'add_post');
 add_action('wp_ajax_nopriv_'.'add_post', 'add_post');
@@ -107,6 +108,8 @@ function get_forum_posts(){
             $post['login'] = ($post['is_anonym'] == '1') ? 'Anonym' : $user_info->user_login;
             $post['photo'] = get_avatar_url($post['user_id']);
             $post['user_respond_to'] =  ($post['responder_anonym'] == '1') ? 'Anonym' : $user_respond_to_info->user_login;
+            $post['post_message'] = censor($post['post_message']);
+            $post['respond_message'] = censor($post['respond_message']);
             $posts[] = $post;
 
         }
