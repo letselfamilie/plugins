@@ -316,7 +316,7 @@ $(function () {
 
     function loadPost(page) {
         loader(true);
-
+        pagination_obj.current_page = page;
         posts_table.find(".post-row").remove();
 
         $.ajax({
@@ -608,7 +608,7 @@ $(function () {
                 console.log('deleted');
                 $('.container-blured').removeClass('blur');
                 $('#delete-post-panel').attr('style', 'display:none');
-                loadPost(pagination_obj.current_page);
+                loadPost($('.active').text());
             },
             error: function (error) {
                 console.log(error);
