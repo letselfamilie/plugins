@@ -103,9 +103,10 @@ function get_forum_topics(){
                     $topic['last_post_user_id'] = $max_post['user_id'];
 
                     $topic['topic_name'] = censor($topic['topic_name']);
+                    $topic['last_post_user_login'] = $max_post['login'];
                 }
 
-                $topic['last_post_user_login'] = $max_post['login'];
+
                 $topics[] = $topic;
             }
             echo json_encode($topics, JSON_UNESCAPED_UNICODE);

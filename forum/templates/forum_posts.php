@@ -102,7 +102,7 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
                     if ($current_user->user_firstname == '') {
                         echo $current_user->user_login;
                     } else {
-                        echo $current_user->user_firstname . " " . $current_user->user_lastname;
+                        echo $current_user->user_login;
                     }
                     ?></a>
             </td>
