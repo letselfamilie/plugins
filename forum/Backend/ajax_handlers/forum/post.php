@@ -42,6 +42,13 @@ function add_post(){
     $is_anonym = $_POST['is_anonym'];
     $is_reaction = $_POST['is_reaction'];
 
+
+
+    if (check_censor($post_message)) {
+        // TODO SEND WARNING
+    }
+
+
     if($response_to != null && $topic_id != null && $user_id != null && $post_message != null && $is_anonym != null){
         if ( $is_reaction == null ) $is_reaction = 0;
 

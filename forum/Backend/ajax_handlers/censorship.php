@@ -22,12 +22,17 @@ function add_censor() {
     }
 }
 
-function censor($text) {
+function is_in_censor($w) {
     global $wpdb;
+    $sqlQuery = "SELECT 1 FROM {$wpdb->prefix}censorship WHERE word = '$w'";
+    return $wpdb->get_var($sqlQuery) == 1;
+}
+
+function censor($text) {
+
     $data = explode(" ", $text);
     foreach ($data as $w) {
-         $sqlQuery = "SELECT 1 FROM {$wpdb->prefix}censorship WHERE word = '$w'";
-         if ($wpdb->get_var($sqlQuery) == 1) {
+         if (is_in_censor($w)) {
             $text = str_replace($w, str_repeat("*", strlen($w)), $text);
          }
     }
@@ -40,4 +45,15 @@ function filter_censor() {
         echo censor($text);
         die;
     }
+}
+
+function check_censor($text) {
+    $data = explode(" ", $text);
+    $contain = false;
+
+    foreach ($data as $w) {
+        $contain = $contain || is_in_censor($w);
+    }
+
+    return $contain;
 }

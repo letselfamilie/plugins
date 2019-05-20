@@ -35,6 +35,10 @@ function add_topic(){
     $user_id = $_POST['user_id'];
     $is_anonym = $_POST['is_anonym'];
 
+    if (check_censor($topic_name)) {
+        // TODO SEND WARNING
+    }
+
     if($topic_name != null && $cat_name != null && $user_id != null && $is_anonym != null){
         
 
