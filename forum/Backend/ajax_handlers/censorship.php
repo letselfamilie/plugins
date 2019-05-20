@@ -26,9 +26,10 @@ function censor($text) {
     global $wpdb;
     $data = explode(" ", $text);
     foreach ($data as $w) {
-        $sqlQuery = "SELECT 1 FROM {$wpdb->prefix}censorship WHERE word = '$w'";
-        if ($wpdb->get_var($sqlQuery) == 1) {
-            $text =  str_replace(' ' . $w . ' ', ' ' . str_repeat("*", strlen($w)) . ' ', $text);            }
+         $sqlQuery = "SELECT 1 FROM {$wpdb->prefix}censorship WHERE word = '$w'";
+         if ($wpdb->get_var($sqlQuery) == 1) {
+            $text = str_replace($w, str_repeat("*", strlen($w)), $text);
+         }
     }
     return $text;
 }

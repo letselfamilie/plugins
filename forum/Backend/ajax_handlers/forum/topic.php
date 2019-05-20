@@ -7,6 +7,7 @@
  */
 
 require_once (__DIR__.'/../../db_helper.php');
+require_once ( __DIR__ . '/../censorship.php');
 
 add_action('wp_ajax_'.'add_topic', 'add_topic');
 add_action('wp_ajax_nopriv_'.'add_topic', 'add_topic');
@@ -100,9 +101,11 @@ function get_forum_topics(){
                     $topic['last_post_id'] = $max_post['post_id'];
                     $topic['last_post_time'] = $max_post['create_timestamp'];
                     $topic['last_post_user_id'] = $max_post['user_id'];
-                    $topic['last_post_user_login'] = $max_post['login'];
+
+                    $topic['topic_name'] = censor($topic['topic_name']);
                 }
 
+                $topic['last_post_user_login'] = $max_post['login'];
                 $topics[] = $topic;
             }
             echo json_encode($topics, JSON_UNESCAPED_UNICODE);
@@ -152,6 +155,8 @@ function get_topic_by_id(){
 
                 $topic['user_name'] = ($topic['is_anonym']) ? 'Anonym' : $user_info->user_login;
                 $topic['photo'] = get_avatar_url($topic['user_id']);
+
+                $topic['topic_name'] = censor($topic['topic_name']);
 
                 $topics[] = $topic;
 

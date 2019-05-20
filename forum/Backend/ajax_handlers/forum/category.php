@@ -6,7 +6,7 @@
  * Time: 6:58 PM
  */
 
-
+require_once ( __DIR__ . '/../censorship.php');
 
 add_action('wp_ajax_' . 'add_category', 'add_category');
 add_action('wp_ajax_nopriv_' . 'add_category', 'add_category');
@@ -76,7 +76,7 @@ function get_forum_categories()
 
                 foreach ($wpdb->get_results($sqlQuery3, ARRAY_A) as $post){
                     $cat['last_topic_id'] = $post['topic_id'];
-                    $cat['last_topic_name'] = $post['topic_name'];
+                    $cat['last_topic_name'] = censor($post['topic_name']);
                     $cat['last_post_id'] = $post['post_id'];
                     $cat['last_post_time'] = $post['post_time'];
                     $cat['last_user_id'] = $post['user_id'];
