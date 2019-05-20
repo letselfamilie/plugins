@@ -181,7 +181,7 @@ $(function () {
 
     function loadPost(page) {
         loader(true);
-
+        pagination_obj.current_page = page;
         posts_table.find(".post-row").remove();
 
         $.ajax({
