@@ -180,7 +180,7 @@ module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, paginati
 
     $('.pagination').find('.back-end-arrow').on('click', function () {
         if (pagination_obj.current_page != 1) {
-
+            pagination_obj.current_page = 1;
             $('.num').remove();
 
             pagination_obj.pagina_to = pagination_obj.pagina_to - (pagination_obj.pagina_from - 1);
@@ -191,7 +191,7 @@ module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, paginati
             let $n = $('.before-dots');
             $n.next().addClass('active');
 
-            pagination_obj.current_page = 1;
+
             updateFunc(pagination_obj.current_page);
             threeDots();
         }
@@ -199,7 +199,7 @@ module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, paginati
 
     $('.pagination').find('.forward-end-arrow').on('click', function () {
         if (pagination_obj.current_page != max_page) {
-
+            pagination_obj.current_page = max_page;
             $('.num').remove();
 
             pagination_obj.pagina_from = pagination_obj.pagina_from + (max_page - pagination_obj.pagina_to);
@@ -211,7 +211,7 @@ module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, paginati
             $n.prev().addClass('active');
 
 
-            pagination_obj.current_page = max_page;
+
             updateFunc(pagination_obj.current_page);
             threeDots();
         }
