@@ -149,7 +149,7 @@ $(function () {
                 console.log(res);
                 if(res){
                     $("#topic_name").text(res['topic_name']);
-                    $("#topic_date").text(new Date(res['create_timestamp']).ddmmyyyyhhmm());
+                    $("#topic_date").text(new Date(res['create_timestamp'].replace(/\s/, 'T')).ddmmyyyyhhmm());
                     $("#added-by").text(res['user_name']);
                     $(".back").attr('href', url_object.site_url + "/topics/?cat_name=" + encodeURI(res.cat_name));
                     curr_category_url = url_object.site_url + "/topics/?cat_name=" + encodeURI(res.cat_name);
