@@ -24,7 +24,7 @@ module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, paginati
 
     function createNums() {
         for (var i = pagination_obj.pagina_from; i <= pagination_obj.pagina_to; i++) {
-            if (i != curr_page) {
+            if (i != pagination_obj.current_page) {
                 $('.after-dots').before("<a class='num' href='#'>" + i + "</a>")
             } else {
                 $('.after-dots').before("<a class='num active' href='#'>" + i + "</a>")
