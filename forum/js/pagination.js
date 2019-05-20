@@ -111,10 +111,6 @@ module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, paginati
             createNums();
             setUpNums();
 
-            let $n = $('.before-dots');
-            $n.next().addClass('active');
-
-
             updateFunc(pagination_obj.current_page);
             threeDots();
         }
@@ -129,11 +125,6 @@ module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, paginati
             pagination_obj.pagina_to = max_page;
             createNums();
             setUpNums();
-
-            let $n = $('.after-dots');
-            $n.prev().addClass('active');
-
-
 
             updateFunc(pagination_obj.current_page);
             threeDots();
