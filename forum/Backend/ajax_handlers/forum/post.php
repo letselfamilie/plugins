@@ -221,7 +221,7 @@ function delete_post() {
       
 
         $sqlQuery = "DELETE FROM {$wpdb->prefix}f_posts 
-                     WHERE post_id=".$post_id." AND user_id=".$user_id.";";
+                     WHERE post_id=$post_id;";
         try {
             $wpdb->query($sqlQuery);
         }catch (Exception $e) {
