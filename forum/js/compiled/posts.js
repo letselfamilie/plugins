@@ -356,7 +356,7 @@ $(function () {
 
                 if (scroll_down) {
                     console.log('scroll down');
-                    window.scrollTo(100,document.body.scrollHeight);
+                    window.scrollTo(0,document.body.scrollHeight);
                     scroll_down = !scroll_down;
                 }
 

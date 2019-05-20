@@ -212,7 +212,7 @@ $(function () {
 
                 if (scroll_down) {
                     console.log('scroll down');
-                    window.scrollTo(0,document.body.scrollHeight-119);
+                    window.scrollTo(0,document.body.scrollHeight);
                     scroll_down = !scroll_down;
                 }
 
