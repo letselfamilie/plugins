@@ -204,7 +204,9 @@ $(function () {
                     addPost(item)
                 });
                 setTimeout(function () {
+                    $('.hide').removeClass('hide');
                     loader(false);
+
                 }, 1000);
 
                 if (scroll_down) {
@@ -248,6 +250,8 @@ $(function () {
                 user_id: user_id,
                 url: url_object.template_directory,
                 role: user_object.role}));
+
+        $node.addClass('hide');
 
         var is_liked = data.liked == '1';
         var n_likes = parseInt(data.n_likes);
