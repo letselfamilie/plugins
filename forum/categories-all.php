@@ -287,6 +287,14 @@ class SP_Plugin {
 
         add_action( "load-$hook", [ $this, 'screen_option' ] );
 
+        add_submenu_page(
+            'sn_categories',
+            'Categories',
+            'Categories',
+            'manage_categories',
+            'sn_categories',
+            [ $this, 'plugin_settings_page' ]
+        );
 
         add_submenu_page(
                 'sn_categories',
@@ -296,6 +304,7 @@ class SP_Plugin {
                 'sn_categories_add',
                 [ $this, 'categories_add' ]
             );
+
 
     }
 
