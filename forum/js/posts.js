@@ -181,6 +181,7 @@ $(function () {
 
     function loadPost(page) {
         loader(true);
+        //pagination_obj.current_page = page
 
         posts_table.find(".post-row").remove();
 
@@ -211,7 +212,7 @@ $(function () {
 
                 if (scroll_down) {
                     console.log('scroll down');
-                    window.scrollTo(0,document.body.scrollHeight);
+                    window.scrollTo(100,document.body.scrollHeight);
                     scroll_down = !scroll_down;
                 }
 
