@@ -6,6 +6,9 @@ add_action('wp_ajax_nopriv_' . 'add_censor', 'add_censor');
 add_action('wp_ajax_' . 'filter_censor', 'filter_censor');
 add_action('wp_ajax_nopriv_' . 'filter_censor', 'filter_censor');
 
+add_action('wp_ajax_' . 'filter_censor', 'get_censor');
+add_action('wp_ajax_nopriv_' . 'filter_censor', 'get_censor');
+
 function add_censor() {
     global $wpdb;
     $word = $_POST['word'];
@@ -56,4 +59,11 @@ function check_censor($text) {
     }
 
     return $contain;
+}
+
+function get_censor() {
+    global $wpdb;
+    echo json_encode($wpdb->get_var("SELECT COUNT(*) 
+                                     FROM {$wpdb->prefix}f_categories;"));
+    die;
 }
