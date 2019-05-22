@@ -1227,10 +1227,10 @@ function um_profile_content_mycustomtab2_default( $args ) {
 										    WHERE topic_id = '". $topic_id->$column_name."';")[0];
 			?>
           <a href="<?php echo get_site_url().'/posts/?topic_id='.$topic_id->$column_name ?>" class="topic-url-profile">
-			  <?php echo $topic_inf->$col_name_topic_name;?>
+              <span class="topic-name-text"><?php echo $topic_inf->$col_name_topic_name;?></span>
 			  <span class="last-post-time-profile">
 				  <?php if($topic_inf->$col_name_last_post_time != null) { ?>
-				      last post at <?php echo $topic_inf->$col_name_last_post_time ?>
+				      last post at <?php echo date('d-m-Y h:i', strtotime( $topic_inf->$col_name_last_post_time)) ?>
 				  <?php }else {	?>
 				  	  no posts in topic
 				  <?php } ?>
@@ -1262,17 +1262,17 @@ function um_profile_content_mycustomtab_default( $args ) {
 	foreach ($result as $key => $topic_id){ ?>
 		<div class="topic-row-profile">
 			<?php
-				$topic_inf = $wpdb->get_results("SELECT *, (SELECT DATE_FORMAT (MAX(create_timestamp), '%Y-%m-%d')
+				$topic_inf = $wpdb->get_results("SELECT *, (SELECT MAX({$wpdb->prefix}f_posts.create_timestamp)
 		                                                    FROM {$wpdb->prefix}f_posts
 		                                                    WHERE topic_id = {$wpdb->prefix}f_topics.topic_id) AS last_post_time
 				                                 FROM {$wpdb->prefix}f_topics 
 												 WHERE topic_id = '". $topic_id->$column_name."';")[0];
 			?>
           <a href="<?php echo get_site_url().'/posts/?topic_id='.$topic_id->$column_name ?>" class="topic-url-profile">
-			  <?php echo $topic_inf->$col_name_topic_name;?>
+			  <span class="topic-name-text-favorite"><?php echo $topic_inf->$col_name_topic_name;?></span>
 			  <span class="last-post-time-profile">
 				   <?php if($topic_inf->$col_name_last_post_time != null) { ?>
-				      last post at <?php echo $topic_inf->$col_name_last_post_time ?>
+				      last post at <?php echo date('d-m-Y h:i', strtotime( $topic_inf->$col_name_last_post_time))?>
 				  <?php }else {	?>
 				  	  no posts in topic
 				  <?php } ?>

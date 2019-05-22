@@ -1,4 +1,33 @@
 jQuery(document).ready(function() {
+	var text_my = jQuery('.topic-name-text').text();
+	var text_favorite = jQuery('.topic-name-text-favorite').text();
+	
+	jQuery.ajax({
+			url: wp.ajax.settings.url,
+			type: 'post',
+			data: {
+				action:'filter_censor',
+				text:text_my
+			},
+		success: function (res) {
+            console.log(res);
+			jQuery('.topic-name-text').text(res);
+            }
+		});
+	
+	jQuery.ajax({
+			url: wp.ajax.settings.url,
+			type: 'post',
+			data: {
+				action:'filter_censor',
+				text:text_favorite
+			},
+		success: function (res) {
+            console.log(res);
+			jQuery('.topic-name-text-favorite').text(res);
+            }
+		});
+	
 
 	jQuery('.um-profile.um-viewing .um-profile-body .um-row').each(function(){
 		var this_row = jQuery(this);
