@@ -57,7 +57,6 @@ function check_censor($text) {
     foreach ($data as $w) {
         $contain = $contain || is_in_censor($w);
     }
-
     return $contain;
 }
 
