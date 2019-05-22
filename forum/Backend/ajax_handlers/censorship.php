@@ -66,4 +66,5 @@ function get_censor() {
     echo json_encode($wpdb->get_var("SELECT COUNT(*) 
                                      FROM {$wpdb->prefix}f_categories;"));
     die;
+
 }
