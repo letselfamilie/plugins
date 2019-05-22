@@ -1,8 +1,10 @@
 jQuery(document).ready(function() {
-	var text_my = jQuery('.topic-name-text').text();
-	var text_favorite = jQuery('.topic-name-text-favorite').text();
+	//var text_my = jQuery('.topic-name-text').text();
 	
-	jQuery.ajax({
+	jQuery('.topic-name-text').each(function(){
+		var curr = jQuery(this);
+		var text_my = curr.text();
+		jQuery.ajax({
 			url: wp.ajax.settings.url,
 			type: 'post',
 			data: {
@@ -11,11 +13,18 @@ jQuery(document).ready(function() {
 			},
 		success: function (res) {
             console.log(res);
-			jQuery('.topic-name-text').text(res);
-            }
+			curr.text(res);
+            },
+	    error: function (error) {
+            console.log(error);
+         }
 		});
+	});
 	
-	jQuery.ajax({
+	jQuery('.topic-name-text-favorite').each(function(){
+		var curr_favorite = jQuery(this);
+		var text_favorite = curr_favorite.text();
+		jQuery.ajax({
 			url: wp.ajax.settings.url,
 			type: 'post',
 			data: {
@@ -24,9 +33,13 @@ jQuery(document).ready(function() {
 			},
 		success: function (res) {
             console.log(res);
-			jQuery('.topic-name-text-favorite').text(res);
-            }
+			curr_favorite.text(res);
+            },
+	    error: function (error) {
+            console.log(error);
+         }
 		});
+	});
 	
 
 	jQuery('.um-profile.um-viewing .um-profile-body .um-row').each(function(){

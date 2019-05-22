@@ -1238,7 +1238,7 @@ function um_profile_content_mycustomtab2_default( $args ) {
 		  </a>
 		</div>
 	<?php 
-	}   
+	}
 	?>
 	</div>
 	<?php
