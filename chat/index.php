@@ -84,6 +84,7 @@ function chat_db_tables() {
                 employee_id        bigint(20) unsigned NULL,
                 is_employee_chat   bit(1) NOT NULL DEFAULT false,
                 dialog_topic       char(100) NULL,
+                is_closed          bit(1) NULL DEFAULT false
                 PRIMARY KEY  (dialog_id),
                 FOREIGN KEY  (user1_id) REFERENCES ".$wpdb->prefix."users (ID) ON DELETE NO ACTION ON UPDATE NO ACTION,
                 FOREIGN KEY  (user2_id) REFERENCES ".$wpdb->prefix."users (ID) ON DELETE NO ACTION ON UPDATE NO ACTION,
