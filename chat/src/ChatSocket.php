@@ -395,7 +395,6 @@ class ChatSocket implements MessageComponentInterface
                             }else{
                                 $message['message'] = "New chat without employee was added";
                                 $userInfo2 = array();
-                                $this->sendToAllEmployees($message);
                             }
                         }
                         break;
@@ -432,11 +431,14 @@ class ChatSocket implements MessageComponentInterface
                 $message['user_info_2'] = $userInfo2;
                 $from->send(json_encode($message));
 
+                $message['user_info_1'] = $userInfo2;
+                $message['user_info_2'] = $userInfo1;
+                $message['second_user'] = $user_id_from;
+
                 if($second_user != null){
-                    $message['user_info_1'] = $userInfo2;
-                    $message['user_info_2'] = $userInfo1;
-                    $message['second_user'] = $user_id_from;
                     $this->sendDialogToSecondUser($second_user, $message);
+                }else{
+                    $this->sendToAllEmployees($message);
                 }
             }
         }

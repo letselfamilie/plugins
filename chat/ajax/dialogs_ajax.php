@@ -30,7 +30,7 @@ add_action('wp_ajax_' . 'get_general_dialogs', 'get_general_dialogs');
 function get_general_dialogs(){
     global $wpdb;
 
-    $user_id = get_current_user_id();
+  //  $user_id = get_current_user_id();
 
     $sqlQuery = "SELECT dialog_id, is_employee_chat, dialog_topic, user1_id, 1 AS without_employee,
                         (SELECT COUNT(*)
@@ -45,7 +45,7 @@ function get_general_dialogs(){
                  ORDER BY last_message_timestamp;";
 
     $dialogs = array();
-    $dialogs['curr_user'] = $user_id;
+ //   $dialogs['curr_user'] = $user_id;
     try {
         foreach ($wpdb->get_results($sqlQuery, ARRAY_A) as $dialog) {
             $second_id = $dialog['user1_id']; //== $user_id ? $dialog['user2_id'] : $dialog['user1_id'];
