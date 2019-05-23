@@ -23,24 +23,16 @@ window.addEventListener('resize', () => {
 
 //http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3
 $(function () {
-    getDialogs('get_dialogs');
-
-    $("#my_dialogs").on('click', function () {
-        getDialogs('get_dialogs');
-    });
-
-    $("#general_dialogs").on('click', function () {
-        getDialogs('get_general_dialogs');
-    });
+    getDialogs();
 });
 
 
-function getDialogs(action_type) {
+function getDialogs() {
     $.ajax({
         url: url_object.ajax_url,
         type: 'POST',
         data: {
-            action: action_type,
+            action: 'get_dialogs',
             user_id: user_object.id, // example
             //other parameters
         },
@@ -571,8 +563,6 @@ function addDialog(item, mes) {
     let user2_id = item.user2_id;
     let messages = (item.messages === null || item.messages === undefined) ? [] : item.messages;
 
-    let without_employee = item.without_employee ? item.without_employee : null;
-
     let img = (is_employee_chat === "1") ? url_object.plugin_directory + "/images/question.png" : item.second_user_photo;
     let name = (is_employee_chat === "1") ? ((dialog_topic === null) ? item.second_user_nickname : dialog_topic) : item.second_user_nickname;
     name = (name === null || name === "" || name === undefined) ? "Question" : name;
@@ -627,12 +617,6 @@ function addDialog(item, mes) {
         $(".new-convo").css('display', 'none');
         $('.contact-profile').removeClass("hidden");
         $('.message-input').removeClass("hidden");
-
-        if(without_employee != null && without_employee){
-            $('#take-question-btn').css('display', '');
-        }else {
-            $('#take-question-btn').css('display', 'none');
-        }
 
         $("#chat-title").text(name);
 

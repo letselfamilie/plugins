@@ -121,18 +121,6 @@ if(!is_user_logged_in()) {
                 <img id="profile-img" src="<?php echo PATH?>/images/user.png" alt="profile img"/>
                 <p></p>
             </div>
-
-            <?php if ($consultant) { ?>
-            <div class="btn-group dropleft float-right dialogs-option">
-                <button id="convOptions" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-bars"></i>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#" id="my_dialogs">My dialogs</a>
-                    <a class="dropdown-item" href="#" id="general_dialogs">General dialogs</a>
-                </div>
-            </div>
-            <?php } ?>
         </div>
 
         <div id="search">
@@ -193,8 +181,6 @@ if(!is_user_logged_in()) {
                     <a class="dropdown-item" href="#" id="resolve-btn">Mark as resolved</a>
 
                     <?php if ($consultant) { ?>
-                        <a class="dropdown-item" href="#" id="take-question-btn" style="display: none">Take question</a>
-
                         <a class="dropdown-item" href="#redirectCollapse" data-toggle="collapse"
                            role="button" aria-controls="redirectCollapse" aria-expanded="false">
                             Redirect to another consultant

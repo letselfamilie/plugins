@@ -195,7 +195,7 @@ class ChatSocket implements MessageComponentInterface
                             'dialog_id' => $room_id
                         );
                     }
-                    $this->sendToAllEmployees($message);
+                    $this->sendToAllEmployeesExcept($message, [$user_id_from]);
                     break;
 
                 case "close_chat":
@@ -751,7 +751,6 @@ class ChatSocket implements MessageComponentInterface
 
     function sendMessageToClients($from_conn_id, $clientFromId, array $clients, array $dataPacket)
     {
-
         foreach ($clients AS $client) {
             if (array_key_exists($client, $this->users_id)) {
                 echo $client;
@@ -776,6 +775,17 @@ class ChatSocket implements MessageComponentInterface
                 $conn_arr = $this->users_id[$client];
                 foreach ($conn_arr as $conn_id) {
                     $conn = $this->users[$conn_id];
+                    $this->sendData($conn, $packet);
+                }
+            }
+        }
+    }
+
+    function sendToAllEmployeesExcept($packet, array $except_ids){
+        if($except_ids != null){
+            foreach ($this->consultants_id AS $emp_id => $emp_resource_id) {
+                if (!in_array ($emp_id, $except_ids) && array_key_exists($emp_resource_id, $this->users)) {
+                    $conn = $this->users[$emp_resource_id];
                     $this->sendData($conn, $packet);
                 }
             }
