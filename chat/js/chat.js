@@ -48,6 +48,7 @@ function getDialogs() {
                         action: 'get_general_dialogs'
                     },
                     success: function (res2) {
+                        console.log("Res_own_dialogs: " + res);
                         console.log("Res_general_dialogs: " + res2);
 
                         if (typeof res2 !== 'undefined' && res2.length > 0) {
