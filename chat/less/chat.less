@@ -77,10 +77,12 @@ textarea:focus {
     #profile {
       width: 80%;
       margin: 20px auto 18px auto;
+      position: relative;
 
       .wrap {
         height: 50px;
         line-height: 52px;
+        display: inline-block;
         overflow: hidden;
         -moz-transition: 0.3s height ease;
         -o-transition: 0.3s height ease;
@@ -103,6 +105,21 @@ textarea:focus {
           float: left;
           margin-left: 15px;
           height: 50px;
+        }
+      }
+
+      .dialogs-option{
+        display: inline-block;
+        top: 50%;
+        position: absolute;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        right: 0;
+
+        button{
+          border: none;
+          padding: 2px 2px;
+          background: transparent;
         }
       }
     }
@@ -606,6 +623,7 @@ ul {
     #sidepanel {
       width: 58px;
       min-width: 58px;
+      overflow: visible;
 
       #profile {
         width: 100%;
@@ -616,6 +634,7 @@ ul {
         .wrap {
           height: 50px;
           padding: 10px 9px;
+          display: block;
 
           img {
             width: 40px;
@@ -623,6 +642,25 @@ ul {
 
           p {
             display: none;
+          }
+        }
+
+        .dialogs-option{
+          padding-top: 5px;
+          display: block;
+          position: unset;
+          float: none!important;
+          text-align: center;
+          transform: none;
+
+          .dropdown-menu{
+            font-size: 12px!important;
+          //  transform: none!important;
+            width: auto!important;
+
+            .dropdown-item{
+              padding: 5px 5px 3px 3px !important;
+            }
           }
         }
       }

@@ -23,11 +23,24 @@ window.addEventListener('resize', () => {
 
 //http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3
 $(function () {
+    getDialogs('get_dialogs');
+
+    $("#my_dialogs").on('click', function () {
+        getDialogs('get_dialogs');
+    });
+
+    $("#general_dialogs").on('click', function () {
+        getDialogs('get_general_dialogs');
+    });
+});
+
+
+function getDialogs(action_type) {
     $.ajax({
         url: url_object.ajax_url,
         type: 'POST',
         data: {
-            action: 'get_dialogs',
+            action: action_type,
             user_id: user_object.id, // example
             //other parameters
         },
@@ -67,9 +80,7 @@ $(function () {
             console.log(error);
         }
     });
-
-
-});
+}
 
 function loadChat(mes) {
     let is_consultant = (user_object.role == 'adviser');
@@ -80,18 +91,15 @@ function loadChat(mes) {
 
     $("#profile").find("p").text(user_object.username);
 
-
     conn.onopen = function (e) {
         console.log("Connection established.");
         console.log(e);
-
 
         var keys = Object.keys(user_object);
 
         console.log("user_object" + keys);
 
         fillChat(mes);
-
 
         $('.messages').animate({scrollTop: $(document).height()}, 'fast');
 
@@ -174,8 +182,6 @@ function loadChat(mes) {
                 create_timestamp: time
             };
 
-
-            
             mes[key].messages.push(new_message);
 
             messageInput.val(null);
@@ -189,7 +195,6 @@ function loadChat(mes) {
             gotoBottom('messages-container');
 
         }
-
 
         $("#resolve-btn").click(function () {
             var badge = '<span class="badge badge-resolved ml-2">Resolved</span>';
@@ -249,10 +254,9 @@ function loadChat(mes) {
 
     };
 
-
     conn.onmessage = function (e) {
         console.log(e.data);
-        var data = JSON.parse(e.data)
+        var data = JSON.parse(e.data);
         console.log("e.data.type " + data.type);
 
         if (data.type === "message") {
@@ -371,8 +375,6 @@ function loadChat(mes) {
                     console.log("you created new chat with user ");
                 }
 
-
-
                 return;
             }
 
@@ -459,10 +461,8 @@ function loadChat(mes) {
             }
 
 
-            if(dialog_type==="user_chat")
-            {
+            if(dialog_type==="user_chat") {
                 console.log("User chat view is requested to be created");
-
 
 
                 var newDialog = {
@@ -482,15 +482,15 @@ function loadChat(mes) {
 
                 addDialog(newDialog, mes);
 
-                if ($("#"+dialog_id).find(".badge-counter").length === 0) {
+                if ($("#" + dialog_id).find(".badge-counter").length === 0) {
                     let badge = '<span class="badge badge-counter ml-2">new</span>';
-                    $(badge).appendTo($("#"+dialog_id).find(".wrap .meta .name"));
+                    $(badge).appendTo($("#" + dialog_id).find(".wrap .meta .name"));
                     $(badge).removeClass("hidden");
                     //$("#"+dialog_id).detach();
                     //$("#"+dialog_id).prependTo("#conversations ul");
                 } else {
-                    $("#"+dialog_id).find(".badge-counter").text("new");
-                    $("#"+dialog_id).removeClass("hidden");
+                    $("#" + dialog_id).find(".badge-counter").text("new");
+                    $("#" + dialog_id).removeClass("hidden");
                     //$("#"+dialog_id).detach();
                     //$("#"+dialog_id).prependTo("#conversations ul");
                 }
@@ -498,19 +498,14 @@ function loadChat(mes) {
                 let url = new URL(window.location.href);
                 let d_id = url.searchParams.get("dialog_id");
 
-                if(d_id!==null)
-                {
+                if (d_id !== null) {
                     let $node = $("#" + d_id);
                     $node.detach();
                     $node.prependTo("#conversations ul");
                     $node.click();
                     console.log("you created new chat with user ");
                 }
-
-
-
             }
-
 
             console.log(data.message);
             var sound = new Howl({
@@ -568,16 +563,15 @@ function fillChat(mes) {
 }
 
 function addDialog(item, mes) {
-
     let dialog_id = item.dialog_id;
-
-
 
     let is_employee_chat = item.is_employee_chat;
     let dialog_topic = item.dialog_topic;
     let user1_id = item.user1_id;
     let user2_id = item.user2_id;
     let messages = (item.messages === null || item.messages === undefined) ? [] : item.messages;
+
+    let without_employee = item.without_employee ? item.without_employee : null;
 
     let img = (is_employee_chat === "1") ? url_object.plugin_directory + "/images/question.png" : item.second_user_photo;
     let name = (is_employee_chat === "1") ? ((dialog_topic === null) ? item.second_user_nickname : dialog_topic) : item.second_user_nickname;
@@ -625,9 +619,7 @@ function addDialog(item, mes) {
     }
 
 
-
     $node.click(function () {
-
         var newMessages = false;
         $(".contact-profile").css('display', '')
         $(".messages").css('display', '')
@@ -635,6 +627,12 @@ function addDialog(item, mes) {
         $(".new-convo").css('display', 'none');
         $('.contact-profile').removeClass("hidden");
         $('.message-input').removeClass("hidden");
+
+        if(without_employee != null && without_employee){
+            $('#take-question-btn').css('display', '');
+        }else {
+            $('#take-question-btn').css('display', 'none');
+        }
 
         $("#chat-title").text(name);
 
@@ -657,6 +655,7 @@ function addDialog(item, mes) {
         $('.messages ul').empty();
 
         if (idDialog !== undefined && idDialog !== null) {
+
             let value = parseInt($node.find(".badge-counter").text());
 
             if(value>0)

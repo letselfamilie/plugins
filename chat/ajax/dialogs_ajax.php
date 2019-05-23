@@ -8,6 +8,7 @@
 
 
 add_action('wp_ajax_' . 'get_dialogs', 'get_dialogs');
+add_action('wp_ajax_' . 'get_general_dialogs', 'get_general_dialogs');
 //add_action('wp_ajax_nopriv_' . 'get_dialogs', 'get_dialogs');
 
 /**
@@ -26,6 +27,49 @@ add_action('wp_ajax_' . 'get_dialogs', 'get_dialogs');
  * }
  * });
  */
+function get_general_dialogs(){
+    global $wpdb;
+
+    $user_id = get_current_user_id();
+
+    $sqlQuery = "SELECT dialog_id, is_employee_chat, dialog_topic, user1_id, 1 AS without_employee,
+                        (SELECT COUNT(*)
+                         FROM {$wpdb->prefix}c_messages
+                         WHERE dialog_id = D.dialog_id
+                              AND is_read = 0) AS unread_msg,
+                        (SELECT MAX(create_timestamp)
+                         FROM {$wpdb->prefix}c_messages
+                         WHERE dialog_id = D.dialog_id) AS last_message_timestamp                                                                  
+                 FROM {$wpdb->prefix}c_dialogs D
+                 WHERE employee_id IS NULL
+                 ORDER BY last_message_timestamp;";
+
+    $dialogs = array();
+    $dialogs['curr_user'] = $user_id;
+    try {
+        foreach ($wpdb->get_results($sqlQuery, ARRAY_A) as $dialog) {
+            $second_id = $dialog['user1_id']; //== $user_id ? $dialog['user2_id'] : $dialog['user1_id'];
+
+            $dialog['second_user_nickname'] = get_user_meta($second_id, 'nickname', true);
+            $dialog['second_user_photo'] = get_avatar_url($second_id, null);
+
+            $sqlQuery2 = "SELECT *
+                              FROM {$wpdb->prefix}c_messages
+                              WHERE dialog_id = '" . $dialog['dialog_id'] . "';";
+
+            $dialog['messages'] = array();
+            foreach (array_reverse($wpdb->get_results($sqlQuery2, ARRAY_A)) as $message) {
+                $dialog['messages'][] = $message;
+            }
+            $dialogs[] = $dialog;
+        }
+        echo json_encode($dialogs, JSON_UNESCAPED_UNICODE);
+
+    } catch (Exception $e) {
+        wp_send_json_error($e->getMessage() . '\n' . $sqlQuery, '600');
+    }
+    die;
+}
 
 function get_dialogs()
 {

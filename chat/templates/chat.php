@@ -33,7 +33,8 @@ if(!is_user_logged_in()) {
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
 
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 
     <?php wp_head(); ?>
 
@@ -120,7 +121,20 @@ if(!is_user_logged_in()) {
                 <img id="profile-img" src="<?php echo PATH?>/images/user.png" alt="profile img"/>
                 <p></p>
             </div>
+
+            <?php //if ($consultant) { ?>
+            <div class="btn-group dropleft float-right dialogs-option">
+                <button id="convOptions" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#" id="my_dialogs">My dialogs</a>
+                    <a class="dropdown-item" href="#" id="general_dialogs">General dialogs</a>
+                </div>
+            </div>
+            <?php //} ?>
         </div>
+
         <div id="search">
             <label for="inputSearch"><i class="fa fa-search" aria-hidden="true"></i></label>
             <input id="inputSearch" type="text" placeholder="Search..."/>
@@ -177,6 +191,7 @@ if(!is_user_logged_in()) {
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#" id="resolve-btn">Mark as resolved</a>
+                    <a class="dropdown-item" href="#" id="take-question-btn" style="display: none">Take question</a>
                     <?php if ($consultant) { ?>
                     <a class="dropdown-item" href="#redirectCollapse" data-toggle="collapse"
                        role="button" aria-controls="redirectCollapse" aria-expanded="false">
