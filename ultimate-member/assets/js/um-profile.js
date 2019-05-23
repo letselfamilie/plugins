@@ -1,46 +1,4 @@
 jQuery(document).ready(function() {
-	//var text_my = jQuery('.topic-name-text').text();
-	
-	jQuery('.topic-name-text').each(function(){
-		var curr = jQuery(this);
-		var text_my = curr.text();
-		jQuery.ajax({
-			url: wp.ajax.settings.url,
-			type: 'post',
-			data: {
-				action:'filter_censor',
-				text:text_my
-			},
-		success: function (res) {
-            console.log(res);
-			curr.text(res);
-            },
-	    error: function (error) {
-            console.log(error);
-         }
-		});
-	});
-	
-	jQuery('.topic-name-text-favorite').each(function(){
-		var curr_favorite = jQuery(this);
-		var text_favorite = curr_favorite.text();
-		jQuery.ajax({
-			url: wp.ajax.settings.url,
-			type: 'post',
-			data: {
-				action:'filter_censor',
-				text:text_favorite
-			},
-		success: function (res) {
-            console.log(res);
-			curr_favorite.text(res);
-            },
-	    error: function (error) {
-            console.log(error);
-         }
-		});
-	});
-	
 
 	jQuery('.um-profile.um-viewing .um-profile-body .um-row').each(function(){
 		var this_row = jQuery(this);
