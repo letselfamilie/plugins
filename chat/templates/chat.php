@@ -122,7 +122,7 @@ if(!is_user_logged_in()) {
                 <p></p>
             </div>
 
-            <?php //if ($consultant) { ?>
+            <?php if ($consultant) { ?>
             <div class="btn-group dropleft float-right dialogs-option">
                 <button id="convOptions" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-bars"></i>
@@ -132,7 +132,7 @@ if(!is_user_logged_in()) {
                     <a class="dropdown-item" href="#" id="general_dialogs">General dialogs</a>
                 </div>
             </div>
-            <?php //} ?>
+            <?php } ?>
         </div>
 
         <div id="search">
@@ -191,12 +191,14 @@ if(!is_user_logged_in()) {
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#" id="resolve-btn">Mark as resolved</a>
-                    <a class="dropdown-item" href="#" id="take-question-btn" style="display: none">Take question</a>
+
                     <?php if ($consultant) { ?>
-                    <a class="dropdown-item" href="#redirectCollapse" data-toggle="collapse"
-                       role="button" aria-controls="redirectCollapse" aria-expanded="false">
-                        Redirect to another consultant
-                    </a>
+                        <a class="dropdown-item" href="#" id="take-question-btn" style="display: none">Take question</a>
+
+                        <a class="dropdown-item" href="#redirectCollapse" data-toggle="collapse"
+                           role="button" aria-controls="redirectCollapse" aria-expanded="false">
+                            Redirect to another consultant
+                        </a>
                     <?php } ?>
                 </div>
             </div>

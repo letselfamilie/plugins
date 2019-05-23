@@ -621,7 +621,6 @@ function addDialog(item, mes) {
 
 
     $node.click(function () {
-
         var newMessages = false;
         $(".contact-profile").css('display', '')
         $(".messages").css('display', '')
