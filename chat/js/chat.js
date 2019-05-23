@@ -39,36 +39,38 @@ function getDialogs() {
         success: function (res) {
             console.log("Res_own_dialogs: " + res);
 
-            $.ajax({
-                url: url_object.ajax_url,
-                type: 'POST',
-                data: {
-                    action: 'get_general_dialogs'
-                },
-                success: function (res2) {
-                    console.log("Res_general_dialogs: " + res2);
+            if(user_object.role == 'adviser')
+            {
+                $.ajax({
+                    url: url_object.ajax_url,
+                    type: 'POST',
+                    data: {
+                        action: 'get_general_dialogs'
+                    },
+                    success: function (res2) {
+                        console.log("Res_general_dialogs: " + res2);
 
-                    if (typeof res2 !== 'undefined' && res2.length > 0) {
-                        var combined_res = res.concat(res2);
+                        if (typeof res2 !== 'undefined' && res2.length > 0) {
+                            var combined_res = res.concat(res2);
+                        }
+                        else
+                        {
+                            var combined_res = res;
+                        }
+
+                        loadChat(JSON.parse(combined_res));
+
+                    },
+                    error: function (error) {
+                        console.log(error);
                     }
-                    else
-                    {
-                        var combined_res = res;
-                    }
-                    
-                    loadChat(JSON.parse(combined_res));
+                });
+            }
 
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-
-
-            //loadChat(JSON.parse(res));
-
-
-
+            else
+            {
+                loadChat(JSON.parse(res));
+            }
 
             $('#messages-container').on('scroll', function () {
                 if ($('#messages-container').scrollTop() < 1) {
