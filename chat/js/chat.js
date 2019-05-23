@@ -52,10 +52,12 @@ function getDialogs() {
 
                         if (typeof res2 !== 'undefined' && res2.length > 0) {
                             var combined_res = res.concat(res2);
+                            alert("There is general unread dialogs");
                         }
                         else
                         {
                             var combined_res = res;
+                            alert("There aren't any general unread dialogs");
                         }
 
                         loadChat(JSON.parse(combined_res));
@@ -359,7 +361,7 @@ function loadChat(mes) {
             {
                 alert("No employee available. You will have to wait for a little while");
             }
-            
+
 
             /*{
                 "message":"New chat with employee 3 was added",
