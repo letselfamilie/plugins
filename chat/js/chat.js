@@ -280,7 +280,6 @@ function loadChat(mes) {
     conn.onmessage = function (e) {
         console.log(e.data);
         var data = JSON.parse(e.data);
-        console.log("e.data.type " + data.type);
 
         if (data.type === "message") {
 
@@ -355,6 +354,16 @@ function loadChat(mes) {
 
         if (data.type === "new_chat") {
 
+
+            if (data.message === "No employee available. Please, try ask your question later.")
+            {
+                alert("No employee available. You will have to wait for a little while");
+            }
+
+            else
+            {
+                alert("OK");
+            }
 
             /*{
                 "message":"New chat with employee 3 was added",
