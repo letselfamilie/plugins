@@ -41,7 +41,7 @@ function get_general_dialogs(){
                          FROM {$wpdb->prefix}c_messages
                          WHERE dialog_id = D.dialog_id) AS last_message_timestamp                                                                  
                  FROM {$wpdb->prefix}c_dialogs D
-                 WHERE employee_id IS NULL
+                 WHERE employee_id IS NULL AND is_employee_chat = '1'
                  ORDER BY last_message_timestamp;";
 
     $dialogs = array();
