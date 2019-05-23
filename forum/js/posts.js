@@ -598,11 +598,33 @@ $(function () {
 
     window.onscroll = function() {scrollFunction()};
     function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            document.getElementById("top-butt").style.display = "block";
-        } else {
-            document.getElementById("top-butt").style.display = "none";
-        }
+        // var up = false
+        // if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        //     up = true
+        //     document.getElementById("down-butt").style.display = "block";
+        // } else {
+        //     document.getElementById("down-butt").style.display = "none";
+        // }
+        //
+        // var down = false
+        // if (document.body.scrollTop < document.body.scrollHeight - 20 ||
+        //     document.documentElement.scrollTop < document.body.scrollHeight - 20) {
+        //     var down = true
+        //     document.getElementById("top-butt").style.display = "block";
+        // } else {
+        //     document.getElementById("top-butt").style.display = "none";
+        // }
+        //
+        // if (down && up) {
+        //     document.getElementById("down-butt").style.bottom = "20px";
+        //     $('#up-butt').css('bottom: 67px');
+        // } else if (down) {
+        //     document.getElementById("down-butt").style.bottom = "20px";
+        // } else {
+        //     $('#up-butt').css('bottom: 20px');
+        // }
+
+
     }
 
     $('#top-butt').on('click', function () {
@@ -610,5 +632,9 @@ $(function () {
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     })
 
+    $('#down-butt').on('click', function () {
+        document.body.scrollTop = document.body.scrollHeight; // For Safari
+        document.documentElement.scrollTop = document.body.scrollHeight; // For Chrome, Firefox, IE and Opera
+    })
 });
 
