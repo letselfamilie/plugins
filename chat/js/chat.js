@@ -359,11 +359,7 @@ function loadChat(mes) {
             {
                 alert("No employee available. You will have to wait for a little while");
             }
-
-            else
-            {
-                alert("OK");
-            }
+            
 
             /*{
                 "message":"New chat with employee 3 was added",
