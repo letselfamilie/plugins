@@ -228,18 +228,6 @@ $(function () {
 
     $(".enter-butt").on("click", function (e) {
         var parent = e.target.parentElement;
-
-
-        if ($('#floating-enter').offset().top < $('.post-enter').offset().top) {
-            $("#enter-textarea").val($("#enter-textarea-f").val())
-            $("#chech-anonym-f").prop("checked", $("#chech-anonym").is(":checked"));
-
-        } else {
-            $("#enter-textarea-f").val($("#enter-textarea").val())
-            $("#chech-anonym").prop("checked", $("#chech-anonym-f").is(":checked"));
-        }
-
-
         console.log($('#chech-anonym', parent).is(":checked"));
 
         if ($('#enter-textarea').val().trim() !== "") {
@@ -253,6 +241,56 @@ $(function () {
                     user_id: user_id,
                     post_message: $('#enter-textarea').val().trim(),
                     is_anonym: ($('#chech-anonym', parent).is(":checked")) ? 1 : 0,
+                    is_reaction: (respond_to_id == null) ? 0 : 1
+                },
+                success: function (res) {
+                    console.log("POSTED!");
+                    console.log(res);
+                    $('.respond-info').css('display', 'none');
+                    respond_to_id = null;
+
+                    $.ajax({
+                        url: url_object.ajax_url,
+                        type: 'POST',
+                        data: {
+                            action: 'n_posts_pages',
+                            per_page: per_page,
+                            topic_id: topic_id
+                        },
+                        success: function (res) {
+                            scroll_down = true;
+                            initPagination(res);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+
+                    setUpListeners();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+    });
+
+    $(".enter-butt-f").on("click", function (e) {
+        var parent = e.target.parentElement;
+
+        console.log($('#chech-anonym-f', parent).is(":checked"));
+
+        if ($('#enter-textarea-f').val().trim() !== "") {
+            $.ajax({
+                url: url_object.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'add_post',
+                    response_to: (respond_to_id == null) ? 'NULL' : respond_to_id,
+                    topic_id: topic_id,
+                    user_id: user_id,
+                    post_message: $('#enter-textarea-f').val().trim(),
+                    is_anonym: ($('#chech-anonym-f', parent).is(":checked")) ? 1 : 0,
                     is_reaction: (respond_to_id == null) ? 0 : 1
                 },
                 success: function (res) {
