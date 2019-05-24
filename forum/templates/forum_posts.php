@@ -113,8 +113,8 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
                     <div class="respond-info" style="display:none">
                         <span class="respond-text">
                             <span class="respond-to-title">Respond to </span>
-                            <span id="quote-text"></span>
-                            <img id="del-quote" src="<?php echo PATH?>/images/x.svg"/>
+                            <span class="quote-text"></span>
+                            <img class="del-quote" src="<?php echo PATH?>/images/x.svg"/>
                         </span>
                     </div>
                     <div class="text-enter-container">
@@ -153,8 +153,8 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
                     <div class="respond-info" style="display:none">
                         <span class="respond-text">
                             <span class="respond-to-title">Respond to </span>
-                            <span id="quote-text"></span>
-                            <img id="del-quote" src="<?php echo PATH?>/images/x.svg"/>
+                            <span class="quote-text"></span>
+                            <img class="del-quote" src="<?php echo PATH?>/images/x.svg"/>
                         </span>
                     </div>
                     <div class="text-enter-container">
