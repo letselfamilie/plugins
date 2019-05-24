@@ -206,15 +206,13 @@ $(function () {
                 setTimeout(function () {
                     $('.hide').removeClass('hide');
                     loader(false);
-
+                    if (scroll_down) {
+                        console.log('scroll down');
+                        document.body.scrollTop = document.body.scrollHeight; // For Safari
+                        document.documentElement.scrollTop = document.body.scrollHeight; // For Chrome, Firefox, IE and Opera
+                        scroll_down = !scroll_down;
+                    }
                 }, 1000);
-
-                if (scroll_down) {
-                    console.log('scroll down');
-                    document.body.scrollTop = document.body.scrollHeight; // For Safari
-                    document.documentElement.scrollTop = document.body.scrollHeight; // For Chrome, Firefox, IE and Opera
-                    scroll_down = !scroll_down;
-                }
             },
             error: function (error) {
                 console.log(error);
