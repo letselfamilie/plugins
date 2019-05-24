@@ -57,11 +57,11 @@ function getDialogs() {
                         }
                         else
                         {
-                            var combined_res = res;
+                            var combined_res = JSON.parse(res);
                             alert("There aren't any general unread dialogs");
                         }
 
-                        //loadChat(JSON.parse(combined_res));
+                        loadChat(combined_res);
 
                     },
                     error: function (error) {
@@ -755,17 +755,12 @@ function concatArray (a1, a2)
     };
     var size = Object.keys(a1).length;
 
-    console.log("!!!!!!!!CONCATARRAY!!!!!!!");
-
     for (var i =0; i<a2.length; i++)
     {
         a1[size] = a2[i]
         size++;
     }
 
-    Object.keys(a1).forEach(function (key) {
-        console.log('Object has', a1[key], 'at', key);
-    });
 
     return a1;
 }
