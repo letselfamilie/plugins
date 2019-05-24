@@ -364,32 +364,6 @@ function loadChat(mes) {
             }
 
 
-            /*{
-                "message":"New chat with employee 3 was added",
-                "topic":"blsbla",
-                "is_emp_available":false,
-                "type":"new_chat",
-                "second_user":"3",
-                "dialog_id":"14",
-                "dialog_type":"employee_chat",
-                "first_message":
-                {
-                    'message' => $first_message,
-                    'time' => $time,
-                    'from'=> $user_id_from
-                },
-                "user_info_1": {
-                "user_id":"1",
-                    "user_login":"Letsel",
-                    "user_photo":null
-            },
-                "user_info_2": {
-                "user_id":"3",
-                    "user_login":"blsbla",
-                    "user_photo":null
-            }
-            }*/
-
             let dialog_id = data.dialog_id;
 
 
@@ -477,10 +451,6 @@ function loadChat(mes) {
 
                 }
 
-                if(!is_emp_available)
-                {
-                    alert ("The consultant is not available at the moment.");
-                }
 
                 if(second_user_id===user_object.id)
                 {
@@ -545,6 +515,23 @@ function loadChat(mes) {
             sound.play();
 
 
+        }
+
+        if (data.type === "take_dialog")
+        {
+            if(data.state === "success")
+            {
+                var dIdHTML = data.dialog_id;
+                var idDialog = searchObjKey(mes, dIdHTML); //id in global array
+                delete mes[idDialog];
+                let $node = $("#" + dIdHTML);
+                $node.detach();
+            }
+
+            else
+            {
+                console.log("Error with receiving response to somebody taking the dialog");
+            }
         }
     };
 }
@@ -618,21 +605,14 @@ function addDialog(item, mes) {
 
     let N_unread = 0;
 
+    /*COUNT NUMBER OF UNREAD MESSAGES*/
     for(let i = messages.length-1; i>-1; i--)
     {
-        if(messages[i].is_read ==="1")
-        {
-            break;
-        }
-        else
-        {
-            if(messages[i].user_from_id !== user_object.id)
-            {
-                N_unread++;
-            }
-        }
+        if(messages[i].is_read ==="1") {break;}
+        else { if(messages[i].user_from_id !== user_object.id) { N_unread++;} }
     }
 
+    /*ADD BADGE TO DIALOG WITH A NUMBER OF UNREAD MESSAGES*/
     if(N_unread>0)
     {
 
@@ -661,9 +641,9 @@ function addDialog(item, mes) {
 
         $("#chat-title").text(name);
 
-        var idDialogHTML = $(this).attr('id');
+        var idDialogHTML = $(this).attr('id'); //idDialog in DB
 
-        var idDialog = searchObjKey(mes, idDialogHTML);
+        var idDialog = searchObjKey(mes, idDialogHTML); //id in global array
 
         $('.conversation.active').removeClass("active");
 
@@ -672,17 +652,23 @@ function addDialog(item, mes) {
         $('li.conversation').removeClass("hidden not_to_hide");
 
         var user2logo = $(this).find("img").attr('src');
+
         var user2name = $(this).find(".name").text();
 
         $('.contact-profile img').attr('src', user2logo);
+
         if($('.contact-profile p').text()==="") $('.contact-profile p').text(user2name);
 
         $('.messages ul').empty();
+
+
 
         if (idDialog !== undefined && idDialog !== null) {
 
             let value = parseInt($node.find(".badge-counter").text());
 
+
+            /*MARK MESSAGES TO BE READ*/
             if(value>0)
             {
                 conn.send(JSON.stringify({
@@ -698,6 +684,29 @@ function addDialog(item, mes) {
 
             if (mes[idDialog].messages === null || mes[idDialog].messages === undefined) mes[idDialog].messages = [];
 
+
+
+
+            /*IF EMPLOYEE TAKES DIALOG WHICH IS IN LINE (NOBODY'S)*/
+            if(item.without_employee==='1')
+            {
+                conn.send(JSON.stringify({
+                    user_id_from: user_object.id,
+                    command: 'take_dialog',
+                    dialog_id: idDialogHTML
+                }));
+
+                conn.send(JSON.stringify({
+                    command: 'mark_messages',
+                    dialog_id: idDialogHTML
+                }));
+
+
+                //mes[idDialog].without_employee="0";
+                mes[idDialog].user2_id = user_object.id;
+            }
+
+            /*ADD MESSAGES TO THE DIALOG*/
             for (let i = 0; i < mes[idDialog].messages.length; i++) {
                 if (i === mes[idDialog].messages.length - value) {
                     if ($(".mes-break")[0] === undefined) {
@@ -713,9 +722,18 @@ function addDialog(item, mes) {
                 addMes(mes[idDialog].messages[i], user2logo, is_employee_chat);
             }
 
-            //gotoBottom('messages-container');
+            if(mes[idDialog].without_employee==="1")
+            {
+                newBanner("We will answer you promptly");
+                mes[idDialog].without_employee="0";
+                setTimeout(function () {
+                    var new_messages_banner = $(".mes-break")[0];
+                    if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
+                }, 10000);
+            }
+
         }
-        // TODO: badges
+
 
         scrollToBanner();
     });
