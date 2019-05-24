@@ -532,7 +532,6 @@ function loadChat(mes) {
 
                 let $node = $("#" + dIdHTML);
                 $node.detach();
-
             }
             else
             {
