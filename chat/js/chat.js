@@ -756,7 +756,7 @@ function concatArray (a1, a2)
         return size;
     };*/
     var size = Object.keys(a1).length
-    console.log("!!!!!!!!concatArray!!!!!!!");
+    console.log("!!!!!!!!CONCATARRAY!!!!!!!");
     console.log("gen_ar.length "+ a2.length);
     console.log("own_arr.size "+ size);
     for (var i =0; i<a2.length; i++)
@@ -774,7 +774,3 @@ function scrollToBanner() {
         $('#messages-container').scrollTop($('#messages-container').scrollTop() - 100);
     }
 }
-
-
-
-
