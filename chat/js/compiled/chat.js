@@ -527,13 +527,12 @@ function loadChat(mes) {
             if(data.state === "success")
             {
                 var dIdHTML = data.dialog_id;
-
                 var idDialog = searchObjKey(mes, dIdHTML); //id in global array
-                mes.splice(idDialog,1);
-
+                delete mes[idDialog];
                 let $node = $("#" + dIdHTML);
                 $node.detach();
             }
+            
             else
             {
                 console.log("Error with receiving response to somebody taking the dialog");
