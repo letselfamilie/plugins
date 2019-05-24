@@ -53,13 +53,11 @@ function getDialogs() {
 
                         if (typeof res2 !== 'undefined' && res2.length > 0) {
                             var combined_res = concatArray (JSON.parse(res), JSON.parse(res2));
-                            alert("There is general unread dialogs");
                             console.log("combined_res "+ combined_res);
                         }
                         else
                         {
                             var combined_res = JSON.parse(res);
-                            alert("There aren't any general unread dialogs");
                         }
 
                         loadChat(combined_res);
