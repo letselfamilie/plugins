@@ -725,7 +725,7 @@ function addDialog(item, mes) {
 
             if(mes[idDialog].without_employee==="1")
             {
-                newBanner("The consultant is not available at the moment. You will receive an answer in working hours.");
+                newBanner("We will answer you promptly");
                 mes[idDialog].without_employee="0";
                 setTimeout(function () {
                     var new_messages_banner = $(".mes-break")[0];
