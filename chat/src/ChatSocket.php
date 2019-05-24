@@ -7,7 +7,8 @@
  */
 
 /**
- * has 8 commands : take_dialog, close_chat, redirect_chat, new_chat, start_typing, stop_typing, message, mark_messages
+ * has 9 commands : get_employees, take_dialog, close_chat, redirect_chat, new_chat,
+ *                  start_typing, stop_typing, message, mark_messages
  *
  * when open connection, url path should be ws://localhost:8000/?userId=1 (example)
  * (instead of localhost past path to your server and vise versa)
@@ -213,8 +214,16 @@ class ChatSocket implements MessageComponentInterface
                     $from->send(json_encode($message));
                     break;
 
+                case "get_employees":
+                    $emp_ids = array_keys($this->consultants_id);
+                    unset($emp_ids[$user_id_from]);
+                    $emp_inf = $this->getEmployeesInf($emp_ids);
+                    $from->send(json_encode($emp_inf));
+                    break;
+
                 case "redirect_chat":
-                    $new_employee_id = $this->getAvailableEmployeeId($user_id_from);
+                    $new_employee_id = $data->new_employee;
+                   // $new_employee_id = $this->getAvailableEmployeeId($user_id_from);
                     if ($new_employee_id > -1) {
                         if ($this->redirectDialog($room_id, $new_employee_id)) {
                             $message = array(
@@ -444,6 +453,16 @@ class ChatSocket implements MessageComponentInterface
         }
     }
 
+    function getEmployeesInf(array $emp_ids){
+        $message = array();
+
+        foreach ($emp_ids AS $emp_id){
+            $emp_info = $this->getUserInfo($emp_id);
+            $message[] = $emp_info;
+        }
+        return $message;
+    }
+
 //    GET EMPLOYEE
     function getEmployeeId()
     {
@@ -475,6 +494,8 @@ class ChatSocket implements MessageComponentInterface
             return -1;
         }
     }
+
+
 
     function getAvailableEmployeeId($except_val = null)
     {
