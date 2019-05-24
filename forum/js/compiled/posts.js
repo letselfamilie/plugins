@@ -216,6 +216,9 @@ $(function () {
                 max_page = res;
                 pagination_obj.current_page = curr_p
                 paginationInit(pagination_obj.current_page, max_page, 5, loadPost, pagination_obj);
+
+                $('#enter-textarea').val('')
+                $('#enter-textarea-f').val('')
             },
             error: function (error) {
                 console.log(error);
@@ -267,8 +270,6 @@ $(function () {
                     });
 
                     setUpListeners();
-                    $('#enter-textarea').val('')
-                    $('#enter-textarea-f').val('')
                 },
                 error: function (error) {
                     console.log(error);
