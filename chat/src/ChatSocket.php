@@ -181,22 +181,27 @@ class ChatSocket implements MessageComponentInterface
 
             switch ($data->command) {
                 case 'take_dialog':
+                    $message = array(
+                        'type' => 'take_dialog',
+                        'employee' => $user_id_from,
+                        'dialog_id' => $room_id
+                    );
+
+                    $messageToEmp = array(
+                        'type' => 'take_dialog_user_resp',
+                        'employee' => $user_id_from,
+                        'dialog_id' => $room_id,
+                    );
                     if ($this->redirectDialog($room_id, $user_id_from)) {
-                        $message = array(
-                            'type' => 'take_dialog',
-                            'state' => 'success',
-                            'employee' => $user_id_from,
-                            'dialog_id' => $room_id
-                        );
+                        $message['state'] = 'success';
+                        $messageToEmp['state'] = 'success';
                     } else {
-                        $message = array(
-                            'type' => 'take_dialog',
-                            'state' => 'error',
-                            'employee' => $user_id_from,
-                            'dialog_id' => $room_id
-                        );
+                        $message['state'] = 'error';
+                        $messageToEmp['state'] = 'error';
                     }
+
                     $this->sendToAllEmployeesExcept($message, [$user_id_from]);
+                    $from->send(json_encode($messageToEmp));
                     break;
 
                 case "close_chat":

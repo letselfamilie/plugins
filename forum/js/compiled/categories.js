@@ -77,7 +77,7 @@ $(function () {
 },{"./pagination":2,"ejs":4}],2:[function(require,module,exports){
 module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, pagination_obj) {
     $('.num').remove();
-    max_page = (max_page > 0) ? max_page : 1;
+    max_page = (max_page >= 0) ? max_page : 1;
 
     pagination_obj = {
         current_page: curr_page,
@@ -137,6 +137,11 @@ module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, paginati
         }
 
     }
+    $('.pagination').find('.back-arrow').off('click');
+    $('.pagination').find('.forward-arrow').off('click');
+    $('.pagination').find('.back-end-arrow').off('click');
+    $('.pagination').find('.forward-end-arrow').off('click');
+
 
     $('.pagination').find('.back-arrow').on('click', function () {
         if (pagination_obj.current_page > pagination_obj.pagina_from) {

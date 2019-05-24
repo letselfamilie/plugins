@@ -66,7 +66,7 @@ define("PATH", plugins_url('..' , __FILE__));
     <div class="topic-search input-group">
         <input id="search-post-input" class="form-control" type="text" placeholder="Search posts...">
         <div class="input-group-append">
-            <button class="btn" type="button">
+            <button class="btn" id="search-topic-btn" type="button">
                 <i class="fa fa-search fa-fw" style="color: #fff;" aria-hidden="true"></i>
             </button>
         </div>

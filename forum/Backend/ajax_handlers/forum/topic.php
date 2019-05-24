@@ -75,7 +75,7 @@ function get_forum_topics(){
                       {$wpdb->prefix}f_posts.create_timestamp
                      FROM {$wpdb->prefix}f_topics LEFT JOIN {$wpdb->prefix}f_posts 
                      ON {$wpdb->prefix}f_topics.topic_id = {$wpdb->prefix}f_posts.topic_id
-                     WHERE cat_name = '$cat_name'
+                     WHERE cat_name = '$cat_name' AND topic_name LIKE '%$_POST[like]%'
                      GROUP BY topic_name, {$wpdb->prefix}f_topics.topic_id
                      ORDER BY {$wpdb->prefix}f_topics.create_timestamp DESC
                      LIMIT $_POST[per_page]
@@ -129,7 +129,8 @@ function n_topic_pages() {
     global $wpdb;
     echo json_encode(ceil($wpdb->get_var("SELECT COUNT(*) 
                                                 FROM {$wpdb->prefix}f_topics
-                                                WHERE cat_name = '$_POST[cat_name]';") / $_POST['per_page']));
+                                                WHERE cat_name = '$_POST[cat_name]'
+                                                    AND topic_name LIKE '%$_POST[like]%' ;") / $_POST['per_page']));
     die;
 }
 

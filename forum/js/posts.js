@@ -18,7 +18,9 @@ let post_templ = ejs.compile(fs.readFileSync("./forum/js/ejs_templates/forum_pos
 let paginationInit = require('./pagination');
 
 function decodeUrl(){
+
     let search = location.search.substring(1);
+    console.log(search)
     let url_params = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
     return url_params;
 }
@@ -48,7 +50,7 @@ $(function () {
 
     var scroll_down = false;
 
-    var pagination_obj = {current_page: 1};
+    var pagination_obj = {current_page: (url_params['pag'] == null ? 1 : url_params['pag'])};
     var per_page = 20;
     var max_page = 0;
 
@@ -60,7 +62,7 @@ $(function () {
     // loadMyInfo();
     setUpListeners();
 
-    initPagination();
+    initPagination(pagination_obj.current_page);
     function initPagination(curr_p=1) {
         $.ajax({
             url: url_object.ajax_url,
@@ -197,6 +199,9 @@ $(function () {
             },
 
             success: function (res) {
+                history.pushState(null, '', url_object.site_url + '/posts/?topic_id=' + topic_id + '&pag=' + page);
+                console.log(window.location.href);
+
                 console.log(res);
                 res = JSON.parse(res);
                 console.log(res);
@@ -206,15 +211,13 @@ $(function () {
                 setTimeout(function () {
                     $('.hide').removeClass('hide');
                     loader(false);
-
+                    if (scroll_down) {
+                        console.log('scroll down');
+                        document.body.scrollTop = document.body.scrollHeight; // For Safari
+                        document.documentElement.scrollTop = document.body.scrollHeight; // For Chrome, Firefox, IE and Opera
+                        scroll_down = !scroll_down;
+                    }
                 }, 1000);
-
-                if (scroll_down) {
-                    console.log('scroll down');
-                    window.scrollTo(0,document.body.scrollHeight);
-                    scroll_down = !scroll_down;
-                }
-
             },
             error: function (error) {
                 console.log(error);

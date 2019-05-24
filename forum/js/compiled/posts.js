@@ -1,7 +1,7 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, pagination_obj) {
     $('.num').remove();
-    max_page = (max_page > 0) ? max_page : 1;
+    max_page = (max_page >= 0) ? max_page : 1;
 
     pagination_obj = {
         current_page: curr_page,
@@ -61,6 +61,11 @@ module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, paginati
         }
 
     }
+    $('.pagination').find('.back-arrow').off('click');
+    $('.pagination').find('.forward-arrow').off('click');
+    $('.pagination').find('.back-end-arrow').off('click');
+    $('.pagination').find('.forward-end-arrow').off('click');
+
 
     $('.pagination').find('.back-arrow').on('click', function () {
         if (pagination_obj.current_page > pagination_obj.pagina_from) {
@@ -153,7 +158,9 @@ let post_templ = ejs.compile("<tr class=\"post-row\">\r\n\r\n\r\n        <% if (
 let paginationInit = require('./pagination');
 
 function decodeUrl(){
+
     let search = location.search.substring(1);
+    console.log(search)
     let url_params = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
     return url_params;
 }
@@ -183,7 +190,7 @@ $(function () {
 
     var scroll_down = false;
 
-    var pagination_obj = {current_page: 1};
+    var pagination_obj = {current_page: (url_params['pag'] == null ? 1 : url_params['pag'])};
     var per_page = 20;
     var max_page = 0;
 
@@ -195,7 +202,7 @@ $(function () {
     // loadMyInfo();
     setUpListeners();
 
-    initPagination();
+    initPagination(pagination_obj.current_page);
     function initPagination(curr_p=1) {
         $.ajax({
             url: url_object.ajax_url,
@@ -332,6 +339,9 @@ $(function () {
             },
 
             success: function (res) {
+                history.pushState(null, '', url_object.site_url + '/posts/?topic_id=' + topic_id + '&pag=' + page);
+                console.log(window.location.href);
+
                 console.log(res);
                 res = JSON.parse(res);
                 console.log(res);
@@ -341,15 +351,13 @@ $(function () {
                 setTimeout(function () {
                     $('.hide').removeClass('hide');
                     loader(false);
-
+                    if (scroll_down) {
+                        console.log('scroll down');
+                        document.body.scrollTop = document.body.scrollHeight; // For Safari
+                        document.documentElement.scrollTop = document.body.scrollHeight; // For Chrome, Firefox, IE and Opera
+                        scroll_down = !scroll_down;
+                    }
                 }, 1000);
-
-                if (scroll_down) {
-                    console.log('scroll down');
-                    window.scrollTo(0,document.body.scrollHeight);
-                    scroll_down = !scroll_down;
-                }
-
             },
             error: function (error) {
                 console.log(error);
