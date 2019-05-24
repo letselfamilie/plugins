@@ -638,7 +638,9 @@ function addDialog(item, mes) {
     {
 
         if ($node.find(".badge-counter").length === 0) {
-            let badge = '<span class="badge badge-counter ml-2">' + N_unread+ '</span>';
+            var text = N_unread;
+            if(item.without_employee==='1')  { text = "in line" }
+            let badge = '<span class="badge badge-counter ml-2">' + text+ '</span>';
             $(badge).appendTo($node.find(".wrap .meta .name"));
             $(badge).removeClass("hidden");
 
