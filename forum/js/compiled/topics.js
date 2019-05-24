@@ -156,10 +156,12 @@ function decodeUrl(){
 $(function () {
     var current_page = 1;
     var per_page = 10;
-    var like = '';
+
 
     let url_params = decodeUrl();
     console.log(url_params);
+    var like = (url_params['like'] == null)?'':url_params['like'];
+    $('#search-post-input').val(like);
 
     $(".back").attr('href', url_object.site_url + "/categories");
 
@@ -280,8 +282,18 @@ $(function () {
 
     $('#search-topic-btn').on('click', function(){
         like = $('#search-post-input').val();
+        history.replaceState(null, '', url_object.site_url + '/topics/?cat_name=' + cat_name + '&like=' + like);
+        console.log(window.location.href);
         initPagination();
+    });
 
+    $(window).on('keydown', function (e) {
+        if (e.which == 13) {
+            like = $('#search-post-input').val();
+            history.replaceState(null, '', url_object.site_url + '/topics/?cat_name=' + cat_name + '&like=' + like);
+            console.log(window.location.href);
+            initPagination();
+        }
     });
 });
 },{"./pagination":1,"ejs":4}],3:[function(require,module,exports){
