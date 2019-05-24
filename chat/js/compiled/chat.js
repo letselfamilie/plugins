@@ -52,7 +52,7 @@ function getDialogs() {
                         console.log("Res_general_dialogs: " + res2);
 
                         if (typeof res2 !== 'undefined' && res2.length > 0) {
-                            var combined_res = res.concat(res2);
+                            var combined_res = concatArray (res, res2)
                             alert("There is general unread dialogs");
                             console.log("res2 "+ res2);
                             console.log("combined_res "+ combined_res);
@@ -75,7 +75,7 @@ function getDialogs() {
             else
             {
                 console.log("JSON.parse: "+ JSON.parse(res));
-                
+
                 loadChat(JSON.parse(res));
             }
 
@@ -743,6 +743,24 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
 function gotoBottom(id) {
     var element = document.getElementById(id);
     element.scrollTop = element.scrollHeight - element.clientHeight;
+}
+
+function concatArray (a1, a2)
+{
+    Object.size = function(obj) {
+        var size = 0, key;
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) size++;
+        }
+        return size;
+    };
+    var size = Object.size(a1)-1;
+    for (var i =0; i<a2.length; i++)
+    {
+        a1[size] = a2[i]
+        size++;
+    }
+    return a1;
 }
 
 function scrollToBanner() {
