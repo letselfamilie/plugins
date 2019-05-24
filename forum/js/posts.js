@@ -678,7 +678,6 @@ $(function () {
             $("#chech-anonym-f").prop("checked", $("#chech-anonym").is(":checked"));
         }
 
-        console.log($('#floating-enter').offset().top + " < " +  $('.post-enter').offset().top)
     }
 
 
