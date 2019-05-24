@@ -745,8 +745,6 @@ function gotoBottom(id) {
 
 function concatArray (a1, a2)
 {
-    console.log("a1 "+ a1);
-    console.log("a2 "+ a2);
 
     Object.size = function(obj) {
         var size = 0, key;
@@ -755,19 +753,20 @@ function concatArray (a1, a2)
         }
         return size;
     };
-    var size = Object.keys(a1).length
-    console.log("!!!!!!!!CONCATARRAY!!!!!!!");
-    console.log("gen_ar.length "+ a2.length);
-    console.log("own_arr.size "+ size);
+    var size = Object.keys(a1).length;
 
-    Object.keys(a1).forEach(function (key) {
-        console.log('Object has', a1[key], 'at', key);
-    });
+    console.log("!!!!!!!!CONCATARRAY!!!!!!!");
+
     for (var i =0; i<a2.length; i++)
     {
         a1[size] = a2[i]
         size++;
     }
+
+    Object.keys(a1).forEach(function (key) {
+        console.log('Object has', a1[key], 'at', key);
+    });
+
     return a1;
 }
 
