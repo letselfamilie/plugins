@@ -53,7 +53,7 @@ function getDialogs() {
 
                         if (typeof res2 !== 'undefined' && res2.length > 0) {
                             var combined_res = concatArray (JSON.parse(res), JSON.parse(res2));
-                            console.log("combined_res "+ combined_res);
+                            console.log("combined_res "+ JSON.stringify(combined_res));
                         }
                         else
                         {
