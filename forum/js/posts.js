@@ -211,10 +211,10 @@ $(function () {
 
                 if (scroll_down) {
                     console.log('scroll down');
-                    window.scrollTo(0,document.body.scrollHeight);
+                    document.body.scrollTop = document.body.scrollHeight; // For Safari
+                    document.documentElement.scrollTop = document.body.scrollHeight; // For Chrome, Firefox, IE and Opera
                     scroll_down = !scroll_down;
                 }
-
             },
             error: function (error) {
                 console.log(error);
