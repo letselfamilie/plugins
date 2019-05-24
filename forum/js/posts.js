@@ -92,10 +92,11 @@ $(function () {
 
         if ($('#floating-enter').offset().top < $('.post-enter').offset().top) {
             $("#enter-textarea").val($("#enter-textarea-f").val())
-            $("#chech-anonym").prop("checked", $("#chech-anonym-f").is(":checked"));
+            $("#chech-anonym-f").prop("checked", $("#chech-anonym").is(":checked"));
+
         } else {
             $("#enter-textarea-f").val($("#enter-textarea").val())
-            $("#chech-anonym-f").prop("checked", $("#chech-anonym").is(":checked"));
+            $("#chech-anonym").prop("checked", $("#chech-anonym-f").is(":checked"));
         }
 
 
