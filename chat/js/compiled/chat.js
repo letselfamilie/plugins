@@ -532,7 +532,7 @@ function loadChat(mes) {
                 let $node = $("#" + dIdHTML);
                 $node.detach();
             }
-            
+
             else
             {
                 console.log("Error with receiving response to somebody taking the dialog");
@@ -700,6 +700,13 @@ function addDialog(item, mes) {
                     command: 'take_dialog',
                     dialog_id: idDialogHTML
                 }));
+
+                conn.send(JSON.stringify({
+                    command: 'mark_messages',
+                    dialog_id: idDialogHTML
+                }));
+
+
                 mes[idDialog].without_employee="0";
                 mes[idDialog].user2_id = user_object.id;
             }
