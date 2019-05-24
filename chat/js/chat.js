@@ -435,12 +435,11 @@ function loadChat(mes) {
 
                     if(!is_emp_available)
                     {
-                        newBanner("The consultant is not available at the moment. You will receive an answer in working hours.");
-                        alert("The consultant is not available at the moment. You will receive an answer in working hours.");
+                        newBanner("No consultant available at the moment - please wait till working hours.");
                         setTimeout(function () {
                                         var new_messages_banner = $(".mes-break")[0];
                                         if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
-                                    }, 10000);
+                                    }, 5000);
 
                     }
 
