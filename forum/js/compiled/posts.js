@@ -843,8 +843,9 @@ $(function () {
         $('#floating-enter').width($('.post-enter').width());
         $('#floating-enter').find('.user-info').width($('.post-enter').find('.user-info').width())
         $('#floating-enter').find('.post-text-enter').width($('.post-enter').find('.post-text-enter').width())
-        $('#floating-enter').offset({top:$('#floating-enter').offset().top,
-                                     left:$('.post-enter').offset().left})
+        $('#floating-enter').offset({left:$('.post-enter').offset().left})
+        $('#floating-enter').css('bottom', '0');
+
 
         if ($('#floating-enter').offset().top < $('.post-enter').offset().top) {
             $('#floating-enter').css('visibility', 'visible');
