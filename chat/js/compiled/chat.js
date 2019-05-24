@@ -749,14 +749,14 @@ function concatArray (a1, a2)
     console.log("a1 "+ a1);
     console.log("a2 "+ a2);
 
-    Object.size = function(obj) {
+   /* Object.size = function(obj) {
         var size = 0, key;
         for (key in obj) {
             if (obj.hasOwnProperty(key)) size++;
         }
         return size;
-    };
-    var size = Object.size(a1)-1;
+    };*/
+    var size = Object.keys(a1).length
     console.log("!!!!!!!!concatArray!!!!!!!");
     console.log("gen_ar.length "+ a2.length);
     console.log("own_arr.size "+ size);
