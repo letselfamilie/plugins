@@ -137,6 +137,11 @@ module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, paginati
         }
 
     }
+    $('.pagination').find('.back-arrow').off('click');
+    $('.pagination').find('.forward-arrow').off('click');
+    $('.pagination').find('.back-end-arrow').off('click');
+    $('.pagination').find('.forward-end-arrow').off('click');
+
 
     $('.pagination').find('.back-arrow').on('click', function () {
         if (pagination_obj.current_page > pagination_obj.pagina_from) {
