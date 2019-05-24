@@ -726,11 +726,11 @@ function addDialog(item, mes) {
             if(item.without_employee==='1')
             {
                 newBanner("The consultant is not available at the moment. You will receive an answer in working hours.");
-
+                console.log("The consultant is not available at the moment. You will receive an answer in working hours.");
                 setTimeout(function () {
                     var new_messages_banner = $(".mes-break")[0];
                     if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
-                }, 3000);
+                }, 10000);
             }
 
         }
