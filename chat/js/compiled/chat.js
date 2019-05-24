@@ -746,6 +746,9 @@ function gotoBottom(id) {
 
 function concatArray (a1, a2)
 {
+    console.log("a1 "+ a1);
+    console.log("a2 "+ a2);
+
     Object.size = function(obj) {
         var size = 0, key;
         for (key in obj) {
