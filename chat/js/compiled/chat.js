@@ -619,7 +619,8 @@ function addDialog(item, mes) {
 
 
     let N_unread = 0;
-    for(var i = messages.length-1; i>0; i--)
+    console.log(messages.length-1 +" messages.length-1");
+    for(let i = messages.length-1; i>0; i--)
     {
         if(messages[i].is_read ==="1")
         {
