@@ -707,6 +707,13 @@ function addDialog(item, mes) {
             /*IF EMPLOYEE TAKES DIALOG WHICH IS IN LINE (NOBODY'S)*/
             if(item.without_employee==='1')
             {
+                newBanner("The consultant is not available at the moment. You will receive an answer in working hours.");
+                alert("The consultant is not available at the moment. You will receive an answer in working hours.");
+                setTimeout(function () {
+                    var new_messages_banner = $(".mes-break")[0];
+                    if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
+                }, 10000);
+
                 console.log("ATEMPT");
                 conn.send(JSON.stringify({
                     user_id_from: user_object.id,
@@ -719,21 +726,14 @@ function addDialog(item, mes) {
                     dialog_id: idDialogHTML
                 }));
 
-                newBanner("The consultant is not available at the moment. You will receive an answer in working hours.");
-                alert("The consultant is not available at the moment. You will receive an answer in working hours.");
-                setTimeout(function () {
-                    var new_messages_banner = $(".mes-break")[0];
-                    if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
-                }, 10000);
-
                 mes[idDialog].without_employee="0";
                 mes[idDialog].user2_id = user_object.id;
             }
 
         }
-
         scrollToBanner();
     });
+
     $("#conversations ul").prepend($node);
 }
 
