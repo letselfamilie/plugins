@@ -11,8 +11,8 @@ let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 let default_photo = "http://178.128.202.94/wp-content/plugins/ultimate-member/assets/img/default_avatar.jpg"
 let myprofilelogo = url_object.plugin_directory + '/images/user.png';
-let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\r\n    <div class=\"wrap\">\r\n        <img src=\" <%= photo %> \" alt=\"\"/>\r\n        <div class=\"meta\">\r\n            <p class=\"name\"> <%= name %> </p>\r\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\r\n        </div>\r\n    </div>\r\n</li>\r\n");
-let mes_templ = ejs.compile("<li class=\"<%= status %>\">\r\n    <img src=\"<%= image %>\" alt=\"\"/>\r\n    <p>\r\n        <%= mes %>\r\n        <br/>\r\n        <small class=\"float-right mt-2\"><%= time %></small>\r\n    </p>\r\n</li>\r\n");
+let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\n    <div class=\"wrap\">\n        <img src=\" <%= photo %> \" alt=\"\"/>\n        <div class=\"meta\">\n            <p class=\"name\"> <%= name %> </p>\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\n        </div>\n    </div>\n</li>\n");
+let mes_templ = ejs.compile("<li class=\"<%= status %>\">\n    <img src=\"<%= image %>\" alt=\"\"/>\n    <p>\n        <%= mes %>\n        <br/>\n        <small class=\"float-right mt-2\"><%= time %></small>\n    </p>\n</li>\n");
 let conn;
 
 // We listen to the resize event
@@ -110,6 +110,8 @@ function getDialogs() {
 }
 
 function loadChat(mes) {
+    console.log("LAST VERSION");
+
     let is_consultant = (user_object.role == 'adviser');
     let url = 'ws://178.128.202.94:8000/?userId=' + user_object.id + '&consultan=' + ((is_consultant) ? 1 : 0);
     conn = new WebSocket(url);
@@ -358,13 +360,6 @@ function loadChat(mes) {
 
         if (data.type === "new_chat") {
 
-
-            if (data.message === "No employee available. Please, try ask your question later.")
-            {
-                alert("No employee available. You will have to wait for a little while");
-            }
-
-
             let dialog_id = data.dialog_id;
 
 
@@ -438,6 +433,18 @@ function loadChat(mes) {
 
                 if (user_object.role != 'adviser') {
                     $('#' + dialog_id).click();
+
+                    if(!is_emp_available)
+                    {
+                        newBanner("No consultant available at the moment - please wait till working hours.");
+                        setTimeout(function () {
+                                        var new_messages_banner = $(".mes-break")[0];
+                                        if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
+                                    }, 5000);
+
+                    }
+
+
                 }
 
 
@@ -687,26 +694,6 @@ function addDialog(item, mes) {
 
 
 
-
-            /*IF EMPLOYEE TAKES DIALOG WHICH IS IN LINE (NOBODY'S)*/
-            if(item.without_employee==='1')
-            {
-                conn.send(JSON.stringify({
-                    user_id_from: user_object.id,
-                    command: 'take_dialog',
-                    dialog_id: idDialogHTML
-                }));
-
-                conn.send(JSON.stringify({
-                    command: 'mark_messages',
-                    dialog_id: idDialogHTML
-                }));
-
-
-                //mes[idDialog].without_employee="0";
-                mes[idDialog].user2_id = user_object.id;
-            }
-
             /*ADD MESSAGES TO THE DIALOG*/
             for (let i = 0; i < mes[idDialog].messages.length; i++) {
                 if (i === mes[idDialog].messages.length - value) {
@@ -723,21 +710,29 @@ function addDialog(item, mes) {
                 addMes(mes[idDialog].messages[i], user2logo, is_employee_chat);
             }
 
-            if(mes[idDialog].without_employee==="1")
+            /*IF EMPLOYEE TAKES DIALOG WHICH IS IN LINE (NOBODY'S)*/
+            if(item.without_employee==='1')
             {
-                newBanner("We will answer you promptly");
+
+                conn.send(JSON.stringify({
+                    user_id_from: user_object.id,
+                    command: 'take_dialog',
+                    dialog_id: idDialogHTML
+                }));
+
+                conn.send(JSON.stringify({
+                    command: 'mark_messages',
+                    dialog_id: idDialogHTML
+                }));
+
                 mes[idDialog].without_employee="0";
-                setTimeout(function () {
-                    var new_messages_banner = $(".mes-break")[0];
-                    if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
-                }, 10000);
+                mes[idDialog].user2_id = user_object.id;
             }
 
         }
-
-
         scrollToBanner();
     });
+
     $("#conversations ul").prepend($node);
 }
 

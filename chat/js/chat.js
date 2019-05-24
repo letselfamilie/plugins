@@ -109,6 +109,8 @@ function getDialogs() {
 }
 
 function loadChat(mes) {
+    console.log("LAST VERSION");
+
     let is_consultant = (user_object.role == 'adviser');
     let url = 'ws://178.128.202.94:8000/?userId=' + user_object.id + '&consultan=' + ((is_consultant) ? 1 : 0);
     conn = new WebSocket(url);
@@ -357,13 +359,6 @@ function loadChat(mes) {
 
         if (data.type === "new_chat") {
 
-
-            if (data.message === "No employee available. Please, try ask your question later.")
-            {
-                alert("No employee available. You will have to wait for a little while");
-            }
-
-
             let dialog_id = data.dialog_id;
 
 
@@ -437,6 +432,18 @@ function loadChat(mes) {
 
                 if (user_object.role != 'adviser') {
                     $('#' + dialog_id).click();
+
+                    if(!is_emp_available)
+                    {
+                        newBanner("No consultant available at the moment - please wait till working hours.");
+                        setTimeout(function () {
+                                        var new_messages_banner = $(".mes-break")[0];
+                                        if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
+                                    }, 5000);
+
+                    }
+
+
                 }
 
 
@@ -686,26 +693,6 @@ function addDialog(item, mes) {
 
 
 
-
-            /*IF EMPLOYEE TAKES DIALOG WHICH IS IN LINE (NOBODY'S)*/
-            if(item.without_employee==='1')
-            {
-                conn.send(JSON.stringify({
-                    user_id_from: user_object.id,
-                    command: 'take_dialog',
-                    dialog_id: idDialogHTML
-                }));
-
-                conn.send(JSON.stringify({
-                    command: 'mark_messages',
-                    dialog_id: idDialogHTML
-                }));
-
-
-                //mes[idDialog].without_employee="0";
-                mes[idDialog].user2_id = user_object.id;
-            }
-
             /*ADD MESSAGES TO THE DIALOG*/
             for (let i = 0; i < mes[idDialog].messages.length; i++) {
                 if (i === mes[idDialog].messages.length - value) {
@@ -722,21 +709,29 @@ function addDialog(item, mes) {
                 addMes(mes[idDialog].messages[i], user2logo, is_employee_chat);
             }
 
-            if(mes[idDialog].without_employee==="1")
+            /*IF EMPLOYEE TAKES DIALOG WHICH IS IN LINE (NOBODY'S)*/
+            if(item.without_employee==='1')
             {
-                newBanner("We will answer you promptly");
+
+                conn.send(JSON.stringify({
+                    user_id_from: user_object.id,
+                    command: 'take_dialog',
+                    dialog_id: idDialogHTML
+                }));
+
+                conn.send(JSON.stringify({
+                    command: 'mark_messages',
+                    dialog_id: idDialogHTML
+                }));
+
                 mes[idDialog].without_employee="0";
-                setTimeout(function () {
-                    var new_messages_banner = $(".mes-break")[0];
-                    if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
-                }, 10000);
+                mes[idDialog].user2_id = user_object.id;
             }
 
         }
-
-
         scrollToBanner();
     });
+
     $("#conversations ul").prepend($node);
 }
 
