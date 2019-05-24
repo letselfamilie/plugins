@@ -360,13 +360,6 @@ function loadChat(mes) {
 
         if (data.type === "new_chat") {
 
-
-            if (data.message === "No employee available. Please, try ask your question later.")
-            {
-                alert("No employee available. You will have to wait for a little while");
-            }
-
-
             let dialog_id = data.dialog_id;
 
 
@@ -440,6 +433,10 @@ function loadChat(mes) {
 
                 if (user_object.role != 'adviser') {
                     $('#' + dialog_id).click();
+
+                    alert("No employee available. You will have to wait for a little while");
+                    
+
                 }
 
 
@@ -708,7 +705,7 @@ function addDialog(item, mes) {
             /*IF EMPLOYEE TAKES DIALOG WHICH IS IN LINE (NOBODY'S)*/
             if(item.without_employee==='1')
             {
-                newBanner("The consultant is not available at the moment. You will receive an answer in working hours.");
+                /*newBanner("The consultant is not available at the moment. You will receive an answer in working hours.");
                 alert("The consultant is not available at the moment. You will receive an answer in working hours.");
                 console.log("The consultant is not available at the moment. You will receive an answer in working hours.");
                 setTimeout(function () {
@@ -716,7 +713,7 @@ function addDialog(item, mes) {
                     if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
                 }, 10000);
 
-                console.log("ATEMPT");
+                console.log("ATEMPT");*/
                 conn.send(JSON.stringify({
                     user_id_from: user_object.id,
                     command: 'take_dialog',
