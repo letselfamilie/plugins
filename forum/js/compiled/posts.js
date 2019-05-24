@@ -230,8 +230,15 @@ $(function () {
         var parent = e.target.parentElement;
 
 
-        $("#enter-textarea").val($("#enter-textarea-f").val())
-        $("#chech-anonym").prop("checked", $("#chech-anonym-f").is(":checked"));
+        if ($('#floating-enter').offset().top < $('.post-enter').offset().top) {
+            $("#enter-textarea").val($("#enter-textarea-f").val())
+            $("#chech-anonym").prop("checked", $("#chech-anonym-f").is(":checked"));
+        } else {
+            $("#enter-textarea-f").val($("#enter-textarea").val())
+            $("#chech-anonym-f").prop("checked", $("#chech-anonym").is(":checked"));
+        }
+
+
         console.log($('#chech-anonym', parent).is(":checked"));
 
         if ($('#enter-textarea').val().trim() !== "") {
