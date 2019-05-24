@@ -14,6 +14,7 @@ require_once ( __DIR__ . '/Backend/ajax_handlers/forum/post.php');
 require_once ( __DIR__ . '/Backend/ajax_handlers/forum/topic.php');
 require_once ( __DIR__ . '/Backend/ajax_handlers/forum/user.php');
 require_once ( __DIR__ . '/Backend/ajax_handlers/censorship.php');
+require_once ( __DIR__ . '/Backend/ajax_handlers/mailer.php');
 
 require_once( __DIR__ . '/categories-all.php' );
 require_once( __DIR__ . '/censorship.php' );

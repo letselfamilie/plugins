@@ -7,7 +7,8 @@
  */
 
 /**
- * has 8 commands : take_dialog, close_chat, redirect_chat, new_chat, start_typing, stop_typing, message, mark_messages
+ * has 9 commands : get_employees, take_dialog, close_chat, redirect_chat, new_chat,
+ *                  start_typing, stop_typing, message, mark_messages
  *
  * when open connection, url path should be ws://localhost:8000/?userId=1 (example)
  * (instead of localhost past path to your server and vise versa)
@@ -213,8 +214,16 @@ class ChatSocket implements MessageComponentInterface
                     $from->send(json_encode($message));
                     break;
 
+                case "get_employees":
+                    $emp_ids = array_keys($this->consultants_id);
+                    unset($emp_ids[$user_id_from]);
+                    $emp_inf = $this->getEmployeesInf($emp_ids);
+                    $from->send(json_encode($emp_inf));
+                    break;
+
                 case "redirect_chat":
-                    $new_employee_id = $this->getAvailableEmployeeId($user_id_from);
+                    $new_employee_id = $data->new_employee;
+                   // $new_employee_id = $this->getAvailableEmployeeId($user_id_from);
                     if ($new_employee_id > -1) {
                         if ($this->redirectDialog($room_id, $new_employee_id)) {
                             $message = array(
@@ -366,7 +375,7 @@ class ChatSocket implements MessageComponentInterface
                             $second_user = $this->getAvailableEmployeeId();
                             $is_emp_available = true;
 
-                            if($second_user < 0){
+                            if ($second_user < 0) {
                                 $second_user = null;
                                 $is_emp_available = false;
                             }
@@ -385,14 +394,14 @@ class ChatSocket implements MessageComponentInterface
                                 )
                             );
 
-                            if($second_user > -1){
+                            if ($second_user > -1) {
                                 $message['message'] = "New chat between employee {$second_user} and " . $user_id_from . " was added";
                                 $userInfo2 = array(
                                     'user_id' => $second_user,
                                     'user_login' => $topic,
                                     'user_photo' => null
                                 );
-                            }else{
+                            } else {
                                 $message['message'] = "New chat without employee was added";
                                 $userInfo2 = array();
                             }
@@ -435,13 +444,23 @@ class ChatSocket implements MessageComponentInterface
                 $message['user_info_2'] = $userInfo1;
                 $message['second_user'] = $user_id_from;
 
-                if($second_user != null){
+                if ($second_user != null) {
                     $this->sendDialogToSecondUser($second_user, $message);
-                }else{
+                } else {
                     $this->sendToAllEmployees($message);
                 }
             }
         }
+    }
+
+    function getEmployeesInf(array $emp_ids){
+        $message = array();
+
+        foreach ($emp_ids AS $emp_id){
+            $emp_info = $this->getUserInfo($emp_id);
+            $message[] = $emp_info;
+        }
+        return $message;
     }
 
 //    GET EMPLOYEE
@@ -475,6 +494,8 @@ class ChatSocket implements MessageComponentInterface
             return -1;
         }
     }
+
+
 
     function getAvailableEmployeeId($except_val = null)
     {
@@ -783,12 +804,15 @@ class ChatSocket implements MessageComponentInterface
         }
     }
 
-    function sendToAllEmployeesExcept($packet, array $except_ids){
-        if($except_ids != null){
-            foreach ($this->consultants_id AS $emp_id => $emp_resource_id) {
-                if (!in_array ($emp_id, $except_ids) && array_key_exists($emp_resource_id, $this->users)) {
-                    $conn = $this->users[$emp_resource_id];
-                    $this->sendData($conn, $packet);
+    function sendToAllEmployeesExcept($packet, array $except_ids)
+    {
+        foreach ($this->consultants_id AS $emp_id => $emp) {
+            if (!in_array($emp_id, $except_ids)) {
+                foreach ($emp AS $emp_resource_id) {
+                    if (array_key_exists($emp_resource_id, $this->users)) {
+                        $conn = $this->users[$emp_resource_id];
+                        $this->sendData($conn, $packet);
+                    }
                 }
             }
         }
@@ -797,9 +821,11 @@ class ChatSocket implements MessageComponentInterface
     function sendToAllEmployees($packet)
     {
         foreach ($this->consultants_id AS $emp) {
-            if (array_key_exists($emp, $this->users)) {
-                $conn = $this->users[$emp];
-                $this->sendData($conn, $packet);
+            foreach ($emp AS $emp_id => $emp_resource_id) {
+                if (array_key_exists($emp_resource_id, $this->users)) {
+                    $conn = $this->users[$emp_resource_id];
+                    $this->sendData($conn, $packet);
+                }
             }
         }
     }

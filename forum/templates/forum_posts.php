@@ -182,6 +182,9 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
 <button id="top-butt" title="Go to top">
     <i class="fa fa-angle-up" aria-hidden="true" style="color: #fff; width: 20px; height: 20px; margin: auto;"></i>
 </button>
+<button id="down-butt" title="Go to bottom">
+    <i class="fa fa-angle-down" aria-hidden="true" style="color: #fff; width: 20px; height: 20px; margin: auto;"></i>
+</button>
 
 <?php get_template_part( 'footer' ); ?>
 

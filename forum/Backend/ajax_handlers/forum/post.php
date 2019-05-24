@@ -7,6 +7,7 @@
  */
 
 require_once ( __DIR__ . '/../censorship.php');
+require_once ( __DIR__ . '/../mailer.php');
 
 add_action('wp_ajax_'.'add_post', 'add_post');
 add_action('wp_ajax_nopriv_'.'add_post', 'add_post');
@@ -59,6 +60,22 @@ function add_post(){
 
         try {
             $wpdb->query($sqlQuery);
+            header("Content-Length: ".ob_get_length());
+            header("Connection: close");
+            flush();
+            $user_info = get_userdata($user_id);
+            $user_topic_owner = get_userdata($wpdb->get_var("SELECT user_id
+                                                             FROM {$wpdb->prefix}f_topics
+                                                             WHERE topic_id = $topic_id;"));
+
+            new_post_mail($user_topic_owner->user_email,
+                          $is_anonym ? 'Anonym' : $user_info->user_login,
+                          censor($post_message),
+                          censor($wpdb->get_var("SELECT topic_name
+                                                   FROM {$wpdb->prefix}f_topics
+                                                   WHERE topic_id = $topic_id;")),
+                            get_site_url() . "/posts/?topic_id=$topic_id");
+
         }catch (Exception $e) {
             echo 'Exception:', $e->getMessage(), "\n";
             echo $sqlQuery;
