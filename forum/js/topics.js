@@ -16,6 +16,7 @@ function decodeUrl(){
 $(function () {
     var current_page = 1;
     var per_page = 10;
+    var like = '';
 
     let url_params = decodeUrl();
     console.log(url_params);
@@ -44,7 +45,8 @@ $(function () {
             data: {
                 action: 'n_topic_pages',
                 per_page: per_page,
-                cat_name: cat_name
+                cat_name: cat_name,
+                like: like
             },
             success: function (res) {
                 console.log(cat_name)
@@ -67,7 +69,8 @@ $(function () {
                 action: 'get_forum_topics',
                 cat_name: url_params != null ? url_params['cat_name'] : '',
                 page_number: page,
-                per_page: per_page
+                per_page: per_page,
+                like: like
             },
 
             success: function (res) {
@@ -134,4 +137,10 @@ $(function () {
         return false;
     });
 
+
+    $('#search-topic-btn').on('click', function(){
+        like = $('#search-post-input').val();
+        initPagination();
+
+    });
 });

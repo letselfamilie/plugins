@@ -1,7 +1,7 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, pagination_obj) {
     $('.num').remove();
-    max_page = (max_page > 0) ? max_page : 1;
+    max_page = (max_page >= 0) ? max_page : 1;
 
     pagination_obj = {
         current_page: curr_page,
@@ -151,6 +151,7 @@ function decodeUrl(){
 $(function () {
     var current_page = 1;
     var per_page = 10;
+    var like = '';
 
     let url_params = decodeUrl();
     console.log(url_params);
@@ -179,7 +180,8 @@ $(function () {
             data: {
                 action: 'n_topic_pages',
                 per_page: per_page,
-                cat_name: cat_name
+                cat_name: cat_name,
+                like: like
             },
             success: function (res) {
                 console.log(cat_name)
@@ -202,7 +204,8 @@ $(function () {
                 action: 'get_forum_topics',
                 cat_name: url_params != null ? url_params['cat_name'] : '',
                 page_number: page,
-                per_page: per_page
+                per_page: per_page,
+                like: like
             },
 
             success: function (res) {
@@ -269,6 +272,12 @@ $(function () {
         return false;
     });
 
+
+    $('#search-topic-btn').on('click', function(){
+        like = $('#search-post-input').val();
+        initPagination();
+
+    });
 });
 },{"./pagination":1,"ejs":4}],3:[function(require,module,exports){
 
