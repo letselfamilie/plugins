@@ -56,6 +56,7 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
     <div class="info">
         <a class="back"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
         <label id="topic_name"></label>
+<!--        <label id="topic_name-f"></label>-->
         <span id="topic_date"></span>
         <span id="added-by"></span>
 
@@ -128,6 +129,49 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
                 </div>
             </td>
         </tr>
+
+
+
+<!--        FLOATING COPY -->
+        <tr id="floating-enter" style="visibility: hidden">
+            <td class="user-info">
+
+                <img id="my-photo" src="<?php echo get_avatar_url(get_current_user_id())?>">
+
+                <a id="my-name">
+                    <?php
+                    if ($current_user->user_firstname == '') {
+                        echo $current_user->user_login;
+                    } else {
+                        echo $current_user->user_login;
+                    }
+                    ?></a>
+            </td>
+
+            <td class="post-text-enter">
+                <div class="content-enter">
+                    <div class="respond-info" style="display:none">
+                        <span class="respond-text">
+                            <span class="respond-to-title">Respond to </span>
+                            <span id="quote-text"></span>
+                            <img id="del-quote" src="<?php echo PATH?>/images/x.svg"/>
+                        </span>
+                    </div>
+                    <div class="text-enter-container">
+                        <textarea id="enter-textarea-f" placeholder="Enter your message here..."></textarea>
+                        <div class="right-align">
+                            <span class="label-anonym">Post anonymously</span>
+                            <input type="checkbox" id="chech-anonym-f" name="chech-anonym">
+                            <button class="enter-butt">Enter</button>
+                        </div>
+                    </div>
+
+                </div>
+            </td>
+        </tr>
+
+
+
         </tfoot>
         <?php } ?>
 

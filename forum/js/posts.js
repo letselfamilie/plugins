@@ -37,7 +37,7 @@ $(function () {
     let url_params = decodeUrl();
     console.log(url_params);
 
-    $('textarea').autoResize();
+
 
     let topic_id = url_params != null ? url_params['topic_id'] : -1;
     let user_id = user_object.id;
@@ -87,6 +87,8 @@ $(function () {
         var parent = e.target.parentElement;
         console.log($('#chech-anonym', parent).is(":checked"));
 
+        $("#enter-textarea").val($("#enter-textarea-f").val())
+        $("#chech-anonym").prop("checked", $("#chech-anonym-f").is(":checked"));
 
         if ($('#enter-textarea').val().trim() !== "") {
             $.ajax({
@@ -105,7 +107,7 @@ $(function () {
                     console.log("POSTED!");
                     console.log(res);
                     $('#enter-textarea').val('')
-                    $('textarea').css('height', '130px');
+                    $('#enter-textarea-f').val('')
                     $('.respond-info').css('display', 'none');
                     respond_to_id = null;
 
@@ -151,6 +153,7 @@ $(function () {
                 console.log(res);
                 if(res){
                     $("#topic_name").text(res['topic_name']);
+                    $("#topic_name-f").text(res['topic_name']);
                     $("#topic_date").text(new Date(res['create_timestamp'].replace(/\s/, 'T')).ddmmyyyyhhmm());
                     $("#added-by").text(res['user_name']);
                     $(".back").attr('href', url_object.site_url + "/topics/?cat_name=" + encodeURI(res.cat_name));
@@ -217,6 +220,7 @@ $(function () {
                         document.documentElement.scrollTop = document.body.scrollHeight; // For Chrome, Firefox, IE and Opera
                         scroll_down = !scroll_down;
                     }
+                    floating_enter_box();
                 }, 1000);
             },
             error: function (error) {
@@ -271,7 +275,7 @@ $(function () {
                 respond_to_id = data.post_id;
                 console.log(respond_to_id);
 
-                $("#enter-textarea").focus();
+                //$("#enter-textarea").focus();
             });
 
             $node.on('click', '.comment-empty', function () {
@@ -283,7 +287,7 @@ $(function () {
                 respond_to_id = data.post_id;
                 console.log(respond_to_id);
 
-                $("#enter-textarea").focus();
+                //$("#enter-textarea").focus();
                 $('.comment-full').addClass('none');
                 $('.comment-empty').removeClass('none');
                 $node.find('.comment-full').removeClass('none');
@@ -639,5 +643,42 @@ $(function () {
         document.body.scrollTop = document.body.scrollHeight; // For Safari
         document.documentElement.scrollTop = document.body.scrollHeight; // For Chrome, Firefox, IE and Opera
     })
+
+
+    window.addEventListener("resize", floating_enter_box);
+
+    window.addEventListener("scroll", floating_enter_box);
+
+
+    function floating_enter_box() {
+        // console.log($('#down-butt').offset())
+        $('#floating-enter').width($('.post-enter').width());
+        $('#floating-enter').find('.user-info').width($('.post-enter').find('.user-info').width())
+        $('#floating-enter').find('.post-text-enter').width($('.post-enter').find('.post-text-enter').width())
+        $('#floating-enter').offset({top:$('#floating-enter').offset().top,
+                                     left:$('.post-enter').offset().left})
+
+        if ($('#floating-enter').offset().top < $('.post-enter').offset().top) {
+            $('#floating-enter').css('visibility', 'visible');
+
+            $("#enter-textarea").val($("#enter-textarea-f").val())
+            if ($("#enter-textarea").is(':focus'))
+                $("#enter-textarea-f").focus();
+
+            $("#chech-anonym").prop("checked", $("#chech-anonym-f").is(":checked"));
+        } else {
+            $('#floating-enter').css('visibility', 'hidden');
+
+            $("#enter-textarea-f").val($("#enter-textarea").val())
+            if ($("#enter-textarea-f").is(':focus'))
+                $("#enter-textarea").focus();
+
+            $("#chech-anonym-f").prop("checked", $("#chech-anonym").is(":checked"));
+        }
+
+        console.log($('#floating-enter').offset().top + " < " +  $('.post-enter').offset().top)
+    }
+
+
 });
 

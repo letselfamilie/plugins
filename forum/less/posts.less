@@ -270,8 +270,9 @@ body {
   }
 
   .post-enter {
-    min-height: 155px;
-    background-color: rgba(38, 157, 255, 0.04);
+    height: 155px;
+    background-color: rgb(242, 248, 255);
+    border: none;
 
     .post-text-enter {
       height: auto;
@@ -306,7 +307,7 @@ body {
               position: absolute;
               right: -35px;
               bottom: 0;
-              top: 3;
+              top: 3px;
               height: 30px;
               vertical-align: bottom;
               cursor: pointer;
@@ -353,8 +354,6 @@ body {
           }
 
           .label-anonym {
-            margin-top: 5px;
-            font-size: 12px;
             font-variant: all-small-caps;
             color: #333333;
             //position: absolute;
@@ -453,9 +452,13 @@ body {
   left: 0;
   margin: auto;
   width: 25px;
-  height: 25px;
+  height: 40px;
   opacity: 0.5;
   cursor: pointer;
+
+  .fa {
+    font-size: 40px;
+  }
 }
 
 .back:hover {
@@ -586,7 +589,6 @@ body {
   display: block; /* Hidden by default */
   position: fixed; /* Fixed/sticky position */
   //bottom: 20px; /* Place the button at the bottom of the page */
-  left: 30px; /* Place the button 30px from the right */
   z-index: 99; /* Make sure it does not overlap */
   border: none; /* Remove borders */
   outline: none; /* Remove outline */
@@ -598,13 +600,133 @@ body {
   font-size: 18px; /* Increase font size */
 }
 #top-butt {
-  bottom: 67px;
+  bottom: 20px;
+  left: 80px; /* Place the button 30px from the right */
+  z-index: 10000;
 }
 
 #down-butt {
   bottom: 20px;
+  left: 30px; /* Place the button 30px from the right */
+  z-index: 10000;
 }
 
 #top-butt:hover, #down-butt:hover {
   background-color: rgba(14, 136, 241, 0.51); /* Add a dark-grey background on hover */
 }
+
+
+#floating-enter {
+  z-index: 1000;
+  height: 160px;
+  width: 100px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(242, 248, 255);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  .post-text-enter {
+    height: auto;
+    padding: 0;
+    vertical-align: top;
+
+    .content-enter {
+      height: 100%;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+      flex-flow: column;
+      padding: 10px 10px 0 0;
+
+      .respond-info {
+        display: inline-block;
+
+        .respond-text {
+          display: inline-block;
+          position: relative;
+          border: none;
+          font-style: italic;
+          padding: 3px;
+          margin-right: 30px;
+
+          .respond-to-title {
+            font-weight: 600;
+          }
+
+          #del-quote{
+            margin: auto;
+            position: absolute;
+            right: -35px;
+            bottom: 0;
+            top: 3px;
+            height: 30px;
+            vertical-align: bottom;
+            cursor: pointer;
+          }
+        }
+
+        margin-bottom: 5px;
+      }
+
+      .text-enter-container {
+        height: 150px;
+
+        textarea {
+          width: 100%;
+          height: 100px;
+          resize: none;
+          border: 1px solid rgba(0, 0, 0, 0.05);
+          font-size: 14px;
+          outline: none;
+          padding: 10px;
+          -moz-appearance: none;
+        }
+
+        .enter-butt {
+          width: 90px;
+          height: 30px;
+          border: none;
+          margin: 5px 0 0 5px;
+          background-color: #0e88f1;
+          color: white;
+          font-weight: bold;
+          font-size: 14px;
+          outline: none;
+          cursor: pointer;
+        }
+
+        .enter-butt:hover {
+          background-color: #0b71c8;
+        }
+
+        #chech-anonym-f {
+          position: relative;
+          margin: 5px 6px;
+        }
+
+        .label-anonym {
+          font-variant: all-small-caps;
+          color: #333333;
+          //position: absolute;
+          //bottom: 17px;
+          //right: 136px;font-size: 12px;font-style: italic;color: darkgray;
+        }
+      }
+
+    }
+  }
+}
+
+
+
+#topic_name-f {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  z-index: 1000;
+}
+
+
