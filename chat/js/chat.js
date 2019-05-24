@@ -727,10 +727,7 @@ function addDialog(item, mes) {
                 mes[idDialog].user2_id = user_object.id;
             }
 
-
-
         }
-
 
         scrollToBanner();
     });
