@@ -145,6 +145,14 @@ $(function () {
         history.replaceState(null, '', url_object.site_url + '/topics/?cat_name=' + cat_name + '&like=' + like);
         console.log(window.location.href);
         initPagination();
+    });
 
+    $(window).on('keydown', function (e) {
+        if (e.which == 13) {
+            like = $('#search-post-input').val();
+            history.replaceState(null, '', url_object.site_url + '/topics/?cat_name=' + cat_name + '&like=' + like);
+            console.log(window.location.href);
+            initPagination();
+        }
     });
 });
