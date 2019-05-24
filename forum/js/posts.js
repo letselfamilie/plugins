@@ -88,10 +88,11 @@ $(function () {
 
     $(".enter-butt").on("click", function (e) {
         var parent = e.target.parentElement;
-        console.log($('#chech-anonym', parent).is(":checked"));
+
 
         $("#enter-textarea").val($("#enter-textarea-f").val())
         $("#chech-anonym").prop("checked", $("#chech-anonym-f").is(":checked"));
+        console.log($('#chech-anonym', parent).is(":checked"));
 
         if ($('#enter-textarea').val().trim() !== "") {
             $.ajax({
