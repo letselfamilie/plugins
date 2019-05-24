@@ -632,7 +632,7 @@ function addDialog(item, mes) {
             }
         }
     }
-
+    console.log(dialog_id + " has " +N_unread+" unread messages");
     if(N_unread>0)
     {
 
