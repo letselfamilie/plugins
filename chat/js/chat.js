@@ -715,7 +715,6 @@ function addDialog(item, mes) {
                     command: 'mark_messages',
                     dialog_id: idDialogHTML
                 }));
-
                 newBanner("The consultant is not available at the moment. You will receive an answer in working hours.");
                 alert("The consultant is not available at the moment. You will receive an answer in working hours.");
                 setTimeout(function () {
