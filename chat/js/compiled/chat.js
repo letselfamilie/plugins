@@ -760,6 +760,7 @@ function concatArray (a1, a2)
     console.log("!!!!!!!!CONCATARRAY!!!!!!!");
     console.log("gen_ar.length "+ a2.length);
     console.log("own_arr.size "+ size);
+    console.log("object keys "+Object.keys(a1));
     for (var i =0; i<a2.length; i++)
     {
         a1[size] = a2[i]
