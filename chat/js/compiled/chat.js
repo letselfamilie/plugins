@@ -617,7 +617,6 @@ function addDialog(item, mes) {
         preview: (preview !== undefined) ? preview : ""
     }));
 
-
     let N_unread = 0;
 
     for(let i = messages.length-1; i>-1; i--)
