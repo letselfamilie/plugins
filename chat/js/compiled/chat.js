@@ -52,7 +52,7 @@ function getDialogs() {
                         console.log("Res_general_dialogs: " + res2);
 
                         if (typeof res2 !== 'undefined' && res2.length > 0) {
-                            var combined_res = concatArray (res, res2)
+                            var combined_res = concatArray (JSON.parse(res), JSON.parse(res2));
                             alert("There is general unread dialogs");
                             console.log("combined_res "+ combined_res);
                         }
@@ -62,7 +62,7 @@ function getDialogs() {
                             alert("There aren't any general unread dialogs");
                         }
 
-                        loadChat(JSON.parse(combined_res));
+                        //loadChat(JSON.parse(combined_res));
 
                     },
                     error: function (error) {
@@ -749,13 +749,13 @@ function concatArray (a1, a2)
     console.log("a1 "+ a1);
     console.log("a2 "+ a2);
 
-   /* Object.size = function(obj) {
+    Object.size = function(obj) {
         var size = 0, key;
         for (key in obj) {
             if (obj.hasOwnProperty(key)) size++;
         }
         return size;
-    };*/
+    };
     var size = Object.keys(a1).length
     console.log("!!!!!!!!CONCATARRAY!!!!!!!");
     console.log("gen_ar.length "+ a2.length);
