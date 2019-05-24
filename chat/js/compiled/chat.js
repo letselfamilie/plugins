@@ -74,6 +74,7 @@ function getDialogs() {
 
             else
             {
+                console.log("JSON.parse: "+ JSON.parse(res));
                 loadChat(JSON.parse(res));
             }
 
