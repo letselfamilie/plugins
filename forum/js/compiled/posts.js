@@ -246,8 +246,6 @@ $(function () {
                 success: function (res) {
                     console.log("POSTED!");
                     console.log(res);
-                    $('#enter-textarea').val('')
-                    $('#enter-textarea-f').val('')
                     $('.respond-info').css('display', 'none');
                     respond_to_id = null;
 
@@ -269,6 +267,8 @@ $(function () {
                     });
 
                     setUpListeners();
+                    $('#enter-textarea').val('')
+                    $('#enter-textarea-f').val('')
                 },
                 error: function (error) {
                     console.log(error);
