@@ -618,8 +618,8 @@ function addDialog(item, mes) {
 
 
     let N_unread = 0;
-    console.log(messages.length-1 +" messages.length-1");
-    for(let i = messages.length-1; i>0; i--)
+
+    for(let i = messages.length-1; i>-1; i--)
     {
         if(messages[i].is_read ==="1")
         {
@@ -633,7 +633,7 @@ function addDialog(item, mes) {
             }
         }
     }
-    console.log(dialog_id + " has " +N_unread+" unread messages");
+
     if(N_unread>0)
     {
 
