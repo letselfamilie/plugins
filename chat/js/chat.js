@@ -734,6 +734,7 @@ function addDialog(item, mes) {
 
         }
 
+
         scrollToBanner();
     });
     $("#conversations ul").prepend($node);
