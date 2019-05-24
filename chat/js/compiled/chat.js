@@ -110,6 +110,8 @@ function getDialogs() {
 }
 
 function loadChat(mes) {
+    console.log("LAST VERSION");
+
     let is_consultant = (user_object.role == 'adviser');
     let url = 'ws://178.128.202.94:8000/?userId=' + user_object.id + '&consultan=' + ((is_consultant) ? 1 : 0);
     conn = new WebSocket(url);
@@ -706,6 +708,7 @@ function addDialog(item, mes) {
             /*IF EMPLOYEE TAKES DIALOG WHICH IS IN LINE (NOBODY'S)*/
             if(item.without_employee==='1')
             {
+                console.log("ATEMPT");
                 conn.send(JSON.stringify({
                     user_id_from: user_object.id,
                     command: 'take_dialog',
