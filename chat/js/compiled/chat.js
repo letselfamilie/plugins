@@ -752,7 +752,7 @@ function concatArray (a1, a2)
         }
         return size;
     };
-    var size = Object.keys(a1).length;
+    var size = Object.keys(a1).length-1;
 
     for (var i =0; i<a2.length; i++)
     {
