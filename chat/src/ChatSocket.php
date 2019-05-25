@@ -565,7 +565,7 @@ class ChatSocket implements MessageComponentInterface
             'time' => $time,
             'is_employee_chat' => $dialog_inf['is_employee_chat'],
             'photo' => $photo,
-            'from_username' => $from_username
+            'from_username' => 'NAME'
         );
 
 
