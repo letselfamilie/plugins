@@ -70,7 +70,9 @@ function get_forum_categories()
                               WHERE {$wpdb->prefix}f_posts.topic_id = $topic[topic_id]
                                 AND {$wpdb->prefix}f_posts.create_timestamp IN (SELECT MAX({$wpdb->prefix}f_posts.create_timestamp)
                                                          FROM {$wpdb->prefix}f_posts
-                                                         WHERE topic_id = $topic[topic_id])";
+                                                         WHERE topic_id = $topic[topic_id])
+                              ORDER BY post_time DESC
+                              LIMIT 1";
 
 
 
