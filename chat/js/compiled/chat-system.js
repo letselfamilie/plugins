@@ -26,13 +26,14 @@ function addNotification(title, text, photo) {
         }));
     $('body').append($notification_node);
 
+    
     $(document).on("click", ".close-message-n", function () {
         $notification_node.remove();
     });
 
-    setTimeout(function () {
-        $notification_node.remove();
-    }, 7000);
+    // setTimeout(function () {
+    //     $notification_node.remove();
+    // }, 7000);
 }
 
 function addChatBox() {
