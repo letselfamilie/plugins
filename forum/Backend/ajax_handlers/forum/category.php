@@ -67,12 +67,10 @@ function get_forum_categories()
                                       {$wpdb->prefix}f_posts.user_id
                               FROM {$wpdb->prefix}f_posts INNER JOIN {$wpdb->prefix}f_topics 
                                 ON {$wpdb->prefix}f_topics.topic_id = {$wpdb->prefix}f_posts.topic_id
-                              WHERE {$wpdb->prefix}f_posts.topic_id = '".$topic['topic_id']."'
+                              WHERE {$wpdb->prefix}f_posts.topic_id = $topic[topic_id]
                                 AND {$wpdb->prefix}f_posts.create_timestamp IN (SELECT MAX({$wpdb->prefix}f_posts.create_timestamp)
                                                          FROM {$wpdb->prefix}f_posts
-                                                         WHERE topic_id =  ".$topic['topic_id'].")
-                              ORDER BY {$wpdb->prefix}f_posts.create_timestamp DESC 
-                              LIMIT 1";
+                                                         WHERE topic_id = $topic[topic_id])";
 
 
 
