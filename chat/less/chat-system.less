@@ -1,0 +1,107 @@
+#addNewDialog{
+  height: 30px;
+  width: 100%;
+  padding-top: 4px;
+  border-radius: 4px;
+  border: none;
+  background: #0f61b9;
+  color: #f5f5f5;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-family: "Roboto", sans-serif;
+}
+
+.form-control {
+  background-clip: padding-box;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-color: #EEE;
+  font-weight: 300;
+}
+
+#mini-chat{
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  position: fixed;
+  bottom:-240px;
+  right:25px;
+  width: 250px;
+  border: 1px solid #ced4da;
+  border-bottom: 0px;
+  -webkit-transition: 1s;
+  transition:	1s bottom ease,1s background-color ease;
+  z-index:99;
+
+
+}
+inputFirstMessage {
+  resize: none !important;
+}
+#mini-chat.chat-up{
+  bottom:0;
+}
+
+#mini-chat-header{
+  cursor: pointer;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  height:35px;
+  background: #0f61b9;
+  color: #f5f5f5;
+  border-bottom: 1px solid #144880;
+  margin: 0;
+  padding: 5px 6px;
+  text-align: center;
+}
+
+#form-question{
+  padding: 10px;
+  background-color: white;
+}
+
+.message-pop{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding:10px;
+  z-index:15;
+  position: fixed;
+  top:25px;
+  right:25px;
+  width: 400px;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+  z-index: 5;
+  display: table;
+  clear: both;
+}
+
+.user-name{
+  font-weight: bold;
+  height: 30px;
+}
+
+.message-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.message-content{
+  float: right;
+  width: 65%;
+}
+
+.user-icon{
+  float: left;
+  width: 30%;
+}
+
+.close-message{
+  position: absolute;
+  top:10px;
+  right:10px;
+}

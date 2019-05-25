@@ -30,6 +30,10 @@ module.exports = function(grunt) {
             chat: {
                 src:        'chat/js/chat.js',
                 dest:       'chat/js/compiled/chat.js'
+            },
+            chat_system: {
+                src:        'chat/js/chat-system.js',
+                dest:       'chat/js/compiled/chat-system.js'
             }
         }
     };
@@ -40,7 +44,7 @@ module.exports = function(grunt) {
         },
         scripts: {
             files: ['forum/js/*.js','chat/js/*.js', 'forum/js/ejs_templates/*.ejs', 'chat/js/ejs_templates/*.ejs'],
-            tasks: ['browserify:categories', 'browserify:topics', 'browserify:posts', 'browserify:chat']
+            tasks: ['browserify:categories', 'browserify:topics', 'browserify:posts', 'browserify:chat', 'browserify:chat_system']
         }
     };
 
@@ -55,7 +59,8 @@ module.exports = function(grunt) {
             'browserify:categories',
             'browserify:posts',
             'browserify:topics',
-            'browserify:chat'
+            'browserify:chat',
+            'browserify:chat_system'
         ]
     );
 

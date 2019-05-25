@@ -49,7 +49,6 @@ register_activation_hook(__FILE__, 'install_events_pg');
 function chat_scripts()
 {
     if (is_page('chat')) {
-
         wp_register_script('chat-js', plugins_url('js/compiled/chat.js', __FILE__), array('jquery'), date("h:i:s"), true);
         //wp_register_style('chat-css', plugins_url('less/chat.less', __FILE__), '', date("h:i:s"), 'screen');
 
@@ -61,6 +60,24 @@ function chat_scripts()
 
         $current_user = wp_get_current_user();
         wp_localize_script('chat-js', 'user_object',
+            array(
+                'id' => $current_user->ID,
+                'role' => ((array)( wp_get_current_user()->roles )[0])[0],
+                'username' => $current_user->user_firstname . " " . $current_user->user_lastname,
+                'photo' => get_avatar_data($current_user->ID, null)['url']
+            ));
+    } else if (!is_page('posts')) {
+        wp_register_script('chat-system-js', plugins_url('js/compiled/chat-system.js', __FILE__), array('jquery'), date("h:i:s"), true);
+        wp_register_style('chat-css-system', plugins_url('less/chat-system.less', __FILE__), '', date("h:i:s"), 'screen');
+
+        wp_enqueue_script('chat-system-js');
+        wp_enqueue_style('chat-css-system');
+
+        wp_localize_script('chat-system-js', 'url_object',
+            array('ajax_url' => admin_url('admin-ajax.php'), 'plugin_directory' => plugins_url('', __FILE__), 'site_url' => get_site_url()));
+
+        $current_user = wp_get_current_user();
+        wp_localize_script('chat-system-js', 'user_object',
             array(
                 'id' => $current_user->ID,
                 'role' => ((array)( wp_get_current_user()->roles )[0])[0],
