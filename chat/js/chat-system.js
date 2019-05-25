@@ -9,21 +9,31 @@ let notification = ejs.compile(fs.readFileSync("./chat/js/ejs_templates/notifica
 let conn;
 
 $(function () {
-    addChatBox();
+    if (!url_object.is_post) addChatBox();
     connectSocket();
+    addNotification();
 });
+
+function addNotification() {
+    let $notification_node = $(notification({photo:user_object.photo}));
+    $('body').append($notification_node);
+
+    $(document).on("click", ".close-message-n", function () {
+        $notification_node.remove();
+    });
+
+    setTimeout(function () {
+        $notification_node.remove();
+    }, 7000);
+}
 
 function addChatBox() {
     let $chat_box_node = $(chat_box({}));
     $('body').append($chat_box_node);
-
+    console.log('added box chat');
 
     $("#mini-chat-header").click(() => {
         $("#mini-chat").toggleClass("chat-up");
-    });
-
-    $(document).on("click", ".close-message", function () {
-        $(this).closest(".message-pop").remove();
     });
 }
 

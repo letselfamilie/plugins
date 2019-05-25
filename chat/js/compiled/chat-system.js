@@ -5,26 +5,36 @@ $ = jQuery;
 let ejs = require('ejs');
 
 let chat_box = ejs.compile("<div id=\"mini-chat\">\r\n    <div id=\"mini-chat-header\">Ask us anything</div>\r\n    <form id=\"form-question\">\r\n        <div class=\"form-group\">\r\n            <label>Question summary</label>\r\n            <input id=\"inputTopic\" type=\"text\" class=\"form-control\" name=\"topic\"\r\n                   placeholder=\"My question is regarding...\">\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <label>Message</label>\r\n            <textarea id=\"inputFirstMessage\" class=\"form-control\" name=\"text\"\r\n                      placeholder=\"Tell us about your problem here\" rows=\"3\" style=\"resize: none;\"></textarea>\r\n        </div>\r\n        <button id=\"addNewDialog\">Ask</button>\r\n    </form>\r\n</div>\r\n\r\n");
-let notification = ejs.compile("<div class=\"message-pop\">\r\n    <img class=\"user-icon\" src=\"question.png\">\r\n    <div class=\"message-content\">\r\n        <div class=\"user-name\">\r\n            Name\r\n        </div>\r\n        <div class=\"message-text\">\r\n            Boy desirous families prepared gay reserved add ecstatic say. Replied joy age visitor nothing cottage.\r\n        </div>\r\n    </div>\r\n    <span class=\"close-message\">✖</span>\r\n</div>");
+let notification = ejs.compile("<div class=\"message-pop-n\">\r\n    <img class=\"user-icon-n\" src=\"<%= photo %>\">\r\n    <div class=\"message-content-n\">\r\n        <div class=\"user-name-n\">\r\n            Name\r\n        </div>\r\n        <div class=\"message-text-n\">\r\n            Boy desirous families prepared gay reserved add ecstatic say. Replied joy age visitor nothing cottage.\r\n        </div>\r\n    </div>\r\n    <span class=\"close-message-n\">✖</span>\r\n</div>");
 
 let conn;
 
 $(function () {
-    addChatBox();
+    if (!url_object.is_post) addChatBox();
     connectSocket();
+    addNotification();
 });
+
+function addNotification() {
+    let $notification_node = $(notification({photo:user_object.photo}));
+    $('body').append($notification_node);
+
+    $(document).on("click", ".close-message-n", function () {
+        $notification_node.remove();
+    });
+
+    setTimeout(function () {
+        $notification_node.remove();
+    }, 7000);
+}
 
 function addChatBox() {
     let $chat_box_node = $(chat_box({}));
     $('body').append($chat_box_node);
-
+    console.log('added box chat');
 
     $("#mini-chat-header").click(() => {
         $("#mini-chat").toggleClass("chat-up");
-    });
-
-    $(document).on("click", ".close-message", function () {
-        $(this).closest(".message-pop").remove();
     });
 }
 

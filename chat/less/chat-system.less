@@ -60,29 +60,30 @@ inputFirstMessage {
   background-color: white;
 }
 
-.message-pop{
+.message-pop-n{
   text-overflow: ellipsis;
   overflow: hidden;
   padding:10px;
-  z-index:15;
-  position: fixed;
+  position:fixed;
   top:25px;
   right:25px;
-  width: 400px;
+  width: 300px;
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
-  z-index: 5;
   display: table;
   clear: both;
+  z-index: 1000000;
+  background-color: white;
 }
 
-.user-name{
+
+.user-name-n{
   font-weight: bold;
   height: 30px;
 }
 
-.message-text {
+.message-text-n {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -90,17 +91,18 @@ inputFirstMessage {
   -webkit-box-orient: vertical;
 }
 
-.message-content{
+.message-content-n{
   float: right;
   width: 65%;
 }
 
-.user-icon{
+.user-icon-n{
   float: left;
   width: 30%;
+  border-radius: 50%;
 }
 
-.close-message{
+.close-message-n{
   position: absolute;
   top:10px;
   right:10px;
