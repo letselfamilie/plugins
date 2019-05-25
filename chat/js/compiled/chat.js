@@ -185,8 +185,7 @@ function loadChat(mes) {
                 user_id_from: user_object.id,
                 command: 'message',
                 dialog_id: d_id,
-                message: message,
-                photo: user_object.photo
+                message: message
             }));
 
             var today = new Date();
