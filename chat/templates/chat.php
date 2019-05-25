@@ -188,8 +188,7 @@ if(!is_user_logged_in()) {
                 </div>
             </div>
         </div>
-
-
+        
         <?php if ($consultant) { ?>
         <div class="redirect collapse multi-collapse" id="redirectCollapse">
             <form id="redirect_line" class="input-group">
