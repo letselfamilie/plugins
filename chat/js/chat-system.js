@@ -97,7 +97,7 @@ function connectSocket() {
             });
             sound.play();
 
-            let from = data.from_login;
+            let from = data.from_username;
             let mess = data.message;
             let dial_id = data.dialog_id;
             let photo = data.photo;
