@@ -3,7 +3,15 @@ let fs = require('fs');
 let ejs = require('ejs');
 
 const {Howl, Howler} = require('howler');
+Date.prototype.ddmmyyyyhhmm = function() {
+    var mm = this.getMonth() + 1;
+    var dd = this.getDate();
 
+    var HH = this.getHours();
+    var MM = this.getMinutes();
+    return ((dd>9 ? '' : '0') + dd) + '-' + ((mm>9 ? '' : '0') + mm) +  '-' + this.getFullYear() + ' ' +
+        ((HH > 9 ? '' : '0') + HH) + ':' + ((MM > 9 ? '' : '0') + MM);
+};
 // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
 let vh = window.innerHeight * 0.01;
 // Then we set the value in the --vh custom property to the root of the document
