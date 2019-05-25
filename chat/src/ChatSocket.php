@@ -223,7 +223,11 @@ class ChatSocket implements MessageComponentInterface
                     $emp_ids = array_keys($this->consultants_id);
                     unset($emp_ids[$user_id_from]);
                     $emp_inf = $this->getEmployeesInf($emp_ids);
-                    $from->send(json_encode($emp_inf));
+                    $message = array(
+                        'type' => 'get_employees',
+                        'employees_information' => $emp_inf
+                    );
+                    $from->send(json_encode($message));
                     break;
 
                 case "redirect_chat":

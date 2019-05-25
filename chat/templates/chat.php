@@ -179,9 +179,8 @@ if(!is_user_logged_in()) {
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#" id="resolve-btn">Mark as resolved</a>
-
                     <?php if ($consultant) { ?>
-                        <a class="dropdown-item" href="#redirectCollapse" data-toggle="collapse"
+                        <a id="redirect_choose_consultant" class="dropdown-item" href="#redirectCollapse" data-toggle="collapse"
                            role="button" aria-controls="redirectCollapse" aria-expanded="false">
                             Redirect to another consultant
                         </a>
@@ -190,10 +189,9 @@ if(!is_user_logged_in()) {
             </div>
         </div>
 
-
         <?php if ($consultant) { ?>
         <div class="redirect collapse multi-collapse" id="redirectCollapse">
-            <form class="input-group">
+            <form id="redirect_line" class="input-group">
                 <select class="form-control custom-select" id="consultantSelect">
                     <option value="1">Consultant 1</option>
                     <option value="2">Consultant 2</option>
@@ -209,24 +207,6 @@ if(!is_user_logged_in()) {
         <?php } ?>
         <div id="messages-container" class="messages">
             <ul>
-                <!--<li class="sent">
-                    <img src="<?php /*echo PATH*/?>/images/user.png" alt=""/>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. In nisl nisi scelerisque eu ultrices.
-                        <br/>
-                        <small class="float-right mt-2">14:02:59</small>
-                    </p>
-                </li>
-
-                <li class="replies">
-                    <img src="<?php /*echo PATH*/?>/images/logo.png" alt=""/>
-                    <p>
-                        Cursus vitae congue mauris rhoncus aenean vel elit scelerisque.
-                        <br/>
-                        <small class="float-right mt-2">14:08:30</small>
-                    </p>
-                </li>-->
             </ul>
         </div>
         <div class="message-input hidden">
@@ -247,7 +227,3 @@ if(!is_user_logged_in()) {
 
 </body>
 </html>
-
-<!--<li class="mes-break">
-    <p>New messages<i class="fa fa-chevron-down ml-1"></i></p>
-</li>-->

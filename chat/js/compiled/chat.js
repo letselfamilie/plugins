@@ -11,8 +11,8 @@ let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 let default_photo = "http://178.128.202.94/wp-content/plugins/ultimate-member/assets/img/default_avatar.jpg"
 let myprofilelogo = url_object.plugin_directory + '/images/user.png';
-let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\r\n    <div class=\"wrap\">\r\n        <img src=\" <%= photo %> \" alt=\"\"/>\r\n        <div class=\"meta\">\r\n            <p class=\"name\"> <%= name %> </p>\r\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\r\n        </div>\r\n    </div>\r\n</li>\r\n");
-let mes_templ = ejs.compile("<li class=\"<%= status %>\">\r\n    <img src=\"<%= image %>\" alt=\"\"/>\r\n    <p>\r\n        <%= mes %>\r\n        <br/>\r\n        <small class=\"float-right mt-2\"><%= time %></small>\r\n    </p>\r\n</li>\r\n");
+let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\n    <div class=\"wrap\">\n        <img src=\" <%= photo %> \" alt=\"\"/>\n        <div class=\"meta\">\n            <p class=\"name\"> <%= name %> </p>\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\n        </div>\n    </div>\n</li>\n");
+let mes_templ = ejs.compile("<li class=\"<%= status %>\">\n    <img src=\"<%= image %>\" alt=\"\"/>\n    <p>\n        <%= mes %>\n        <br/>\n        <small class=\"float-right mt-2\"><%= time %></small>\n    </p>\n</li>\n");
 let conn;
 
 // We listen to the resize event
@@ -225,6 +225,36 @@ function loadChat(mes) {
 
         }
 
+
+
+        $("#redirect_choose_consultant").click(function () {
+            if(!($(".multi-collapse").hasClass("show")))
+            {
+                $.ajax({
+                    url: url_object.ajax_url,
+                    type: 'POST',
+                    data: {
+                        action: 'get_employees',
+                        user_from_id: user_object.id
+                    },
+                    success: function (res) {
+                        console.log("Available employees: " + res);
+
+
+                        //JSON.parse();
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+
+
+            }
+        });
+
+
+
         $("#resolve-btn").click(function () {
             var badge = '<span class="badge badge-resolved ml-2">Resolved</span>';
             $(badge).appendTo($("#chat-title"));
@@ -235,7 +265,7 @@ function loadChat(mes) {
             newBanner("This problem has been resolved");
 
             // TODO: deprive of the possibility to send messages in a resolved dialog
-            // TODO: add this unfo to server
+            // TODO: add this info to server
 
         });
 
@@ -786,6 +816,14 @@ function scrollToBanner() {
         $('#messages-container').scrollTop($('#messages-container').scrollTop() - 100);
     }
 }
+
+
+
+
+
+
+
+
 },{"ejs":3,"howler":6}],2:[function(require,module,exports){
 
 },{}],3:[function(require,module,exports){
