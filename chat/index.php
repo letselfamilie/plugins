@@ -63,7 +63,7 @@ function chat_scripts()
             array(
                 'id' => $current_user->ID,
                 'role' => ((array)( wp_get_current_user()->roles )[0])[0],
-                'username' => $current_user->user_firstname . " " . $current_user->user_lastname,
+                'username' => $current_user->user_login,
                 'photo' => get_avatar_data($current_user->ID, null)['url']
             ));
     } else {
