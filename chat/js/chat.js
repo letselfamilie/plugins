@@ -227,10 +227,10 @@ function loadChat(mes) {
 
 
         $("#redirect_choose_consultant").click(function () {
-            console.log("CLICKED");
-
-            newBanner("This problem has been redirected");
-
+            if($("#chat-frame").find("#redirect_line").length === 0)
+            {
+              newBanner("Clecked");
+            }
         });
 
 
@@ -245,7 +245,7 @@ function loadChat(mes) {
             newBanner("This problem has been resolved");
 
             // TODO: deprive of the possibility to send messages in a resolved dialog
-            // TODO: add this unfo to server
+            // TODO: add this info to server
 
         });
 

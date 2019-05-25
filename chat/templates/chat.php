@@ -192,7 +192,7 @@ if(!is_user_logged_in()) {
 
         <?php if ($consultant) { ?>
         <div class="redirect collapse multi-collapse" id="redirectCollapse">
-            <form class="input-group">
+            <form id="redirect_line" class="input-group">
                 <select class="form-control custom-select" id="consultantSelect">
                     <option value="1">Consultant 1</option>
                     <option value="2">Consultant 2</option>
