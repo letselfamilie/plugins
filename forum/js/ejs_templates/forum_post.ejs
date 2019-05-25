@@ -70,7 +70,7 @@
             </div>
         </div>
         <% }%>
-        <% if (post.user_id == user_id) { %>
+        <% if (post.user_id == user_id || role == 'administrator' || role == 'adviser') { %>
         <div class="content-edit none">
             <div class="text-enter-container">
                 <textarea class="edit-textarea"></textarea>

@@ -263,7 +263,7 @@ function update_post() {
 //
         $sqlQuery = "UPDATE {$wpdb->prefix}f_posts 
                      SET post_message='$post_message'
-                     WHERE post_id=".$post_id." AND user_id=".$user_id.";";
+                     WHERE post_id=$post_id;";
         try {
             $wpdb->query($sqlQuery);
         }catch (Exception $e) {
