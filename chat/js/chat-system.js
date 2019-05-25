@@ -1,5 +1,6 @@
 $ = jQuery;
 
+const {Howl, Howler} = require('howler');
 let fs = require('fs');
 let ejs = require('ejs');
 
