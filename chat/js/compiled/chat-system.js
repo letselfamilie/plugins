@@ -19,6 +19,7 @@ $(function () {
 function addNotification(title, text, photo) {
     $('.message-pop-n').remove();
 
+
     let $notification_node = $(notification(
         {
             photo: photo,
@@ -31,10 +32,9 @@ function addNotification(title, text, photo) {
     $(document).on("click", ".close-message-n", function () {
         $notification_node.remove();
     });
-
-    // setTimeout(function () {
-    //     $notification_node.remove();
-    // }, 7000);
+    setTimeout(function () {
+        $notification_node.remove();
+    }, 7000);
 }
 
 function addChatBox() {

@@ -31,7 +31,6 @@ function addNotification(title, text, photo) {
     $(document).on("click", ".close-message-n", function () {
         $notification_node.remove();
     });
-
     setTimeout(function () {
         $notification_node.remove();
     }, 7000);
