@@ -99,13 +99,8 @@ if ( ! class_exists( 'um\core\Account' ) ) {
 				'submit_title'  => __( 'Update Password', 'ultimate-member' ),
 			);
 
-			$tabs[300]['privacy'] = array(
-				'icon'          => 'um-faicon-lock',
-				'title'         => __( 'Privacy', 'ultimate-member' ),
-				'submit_title'  => __( 'Update Privacy', 'ultimate-member' ),
-			);
-
-			$tabs[400]['notifications'] = array(
+			
+			$tabs[300]['notifications'] = array(
 				'icon'          => 'um-faicon-envelope',
 				'title'         => __( 'Notifications', 'ultimate-member' ),
 				'submit_title'  => __( 'Update Notifications', 'ultimate-member' ),
