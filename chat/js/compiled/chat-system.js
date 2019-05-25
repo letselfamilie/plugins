@@ -13,6 +13,7 @@ let conn;
 $(function () {
     if (!url_object.is_post) addChatBox();
     connectSocket();
+    addNotification('-', 'sadkdlkjsadlkjsld saddsa sd adasdasd sdasd asdasd asdasd sadssasd? asadasd asdasdas aksdjl', 'http://178.128.202.94/wp-content/plugins/ultimate-member/assets/img/default_avatar.jpg')
 });
 
 function addNotification(title, text, photo) {
@@ -26,7 +27,7 @@ function addNotification(title, text, photo) {
         }));
     $('body').append($notification_node);
 
-    
+
     $(document).on("click", ".close-message-n", function () {
         $notification_node.remove();
     });
