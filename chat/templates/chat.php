@@ -179,7 +179,6 @@ if(!is_user_logged_in()) {
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#" id="resolve-btn">Mark as resolved</a>
-
                     <?php if ($consultant) { ?>
                         <a id="redirect_choose_consultant" class="dropdown-item" href="#redirectCollapse" data-toggle="collapse"
                            role="button" aria-controls="redirectCollapse" aria-expanded="false">

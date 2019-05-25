@@ -226,7 +226,6 @@ function loadChat(mes) {
 
 
 
-
         $("#redirect_choose_consultant").click(function () {
             console.log("CLICKED");
 
