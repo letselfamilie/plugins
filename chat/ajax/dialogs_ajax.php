@@ -32,7 +32,7 @@ function get_general_dialogs(){
 
   //  $user_id = get_current_user_id();
 
-    $sqlQuery = "SELECT dialog_id, is_employee_chat, dialog_topic, user1_id, 1 AS without_employee,
+    $sqlQuery = "SELECT dialog_id, is_employee_chat, dialog_topic, user1_id, 1 AS without_employee, is_closed,
                         (SELECT COUNT(*)
                          FROM {$wpdb->prefix}c_messages
                          WHERE dialog_id = D.dialog_id
@@ -77,7 +77,7 @@ function get_dialogs()
 
     $user_id = get_current_user_id();
 
-    $sqlQuery = "SELECT dialog_id, is_employee_chat, dialog_topic, user1_id, 0 AS without_employee,
+    $sqlQuery = "SELECT dialog_id, is_employee_chat, dialog_topic, user1_id, 0 AS without_employee, is_closed,
                         COALESCE (user2_id, employee_id) AS user2_id, 
                         (SELECT COUNT(*)
                          FROM {$wpdb->prefix}c_messages
