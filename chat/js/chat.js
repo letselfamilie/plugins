@@ -227,7 +227,7 @@ function loadChat(mes) {
 
 
         $("#redirect_choose_consultant").click(function () {
-            if($(".multi-collapse").hasClass("show"))
+            if(!($(".multi-collapse").hasClass("show")))
             {
               newBanner("Clecked");
             }
