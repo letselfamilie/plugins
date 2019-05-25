@@ -393,7 +393,7 @@ $(function () {
                 history.replaceState(null, '', url_object.site_url + '/posts/?topic_id=' + topic_id + '&pag=' + page);
                 console.log(window.location.href);
 
-                console.log(res);
+                //console.log(res);
                 res = JSON.parse(res);
                 console.log(res);
                 res.forEach(function (item) {

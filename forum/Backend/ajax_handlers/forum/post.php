@@ -9,6 +9,9 @@
 require_once ( __DIR__ . '/../censorship.php');
 require_once ( __DIR__ . '/../mailer.php');
 
+use Ratchet\Client;
+use Ratchet\ConnectionInterface;
+
 add_action('wp_ajax_'.'add_post', 'add_post');
 add_action('wp_ajax_nopriv_'.'add_post', 'add_post');
 
@@ -92,13 +95,15 @@ function add_post(){
 
 
             if (check_censor($post_message)) {
+
+                //
                 // TODO SEND WARNING
+                // connect to socket
 
                 $id = $wpdb->get_var("SELECT post_id FROM {$wpdb->prefix}f_posts 
                                 WHERE user_id = $user_id AND topic_id = $topic_id
                                 ORDER BY create_timestamp DESC 
                                 LIMIT 1");
-                echo "++++++++++++++++" . $id;
                 add_post_report($id);
             }
 
