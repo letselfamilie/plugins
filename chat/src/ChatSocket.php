@@ -275,7 +275,7 @@ class ChatSocket implements MessageComponentInterface
                     $time = date("Y-m-d H:i:s");
                     $message = $data->message;
 
-                    $this->sendMessage($conn_id, $user_id_from, $room_id, $message, $time, $data->photo, $data->from_username);
+                    $this->sendMessage($conn_id, $user_id_from, $room_id, $message, $time, $data->photo, $data->from_login);
                     $this->sendUserStoppedTypingMessage($user_id_from, $room_id);
                     break;
 
