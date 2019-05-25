@@ -782,7 +782,7 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
 
     if (is_employee_chat === "1" && item.user_from_id !== user_object.id) png = url_object.plugin_directory + "/images/logo.png";
 
-    let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: item.create_timestamp}));
+    let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time:  new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
 
     if (prepend) {
         $('.messages ul').prepend($node);

@@ -4,7 +4,15 @@ $ = jQuery;
 let ejs = require('ejs');
 
 const {Howl, Howler} = require('howler');
+Date.prototype.ddmmyyyyhhmm = function() {
+    var mm = this.getMonth() + 1;
+    var dd = this.getDate();
 
+    var HH = this.getHours();
+    var MM = this.getMinutes();
+    return ((dd>9 ? '' : '0') + dd) + '-' + ((mm>9 ? '' : '0') + mm) +  '-' + this.getFullYear() + ' ' +
+        ((HH > 9 ? '' : '0') + HH) + ':' + ((MM > 9 ? '' : '0') + MM);
+};
 // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
 let vh = window.innerHeight * 0.01;
 // Then we set the value in the --vh custom property to the root of the document
@@ -26,7 +34,6 @@ window.addEventListener('resize', () => {
 $(function () {
     getDialogs();
 });
-
 
 function getDialogs() {
     $.ajax({
@@ -776,7 +783,7 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
 
     if (is_employee_chat === "1" && item.user_from_id !== user_object.id) png = url_object.plugin_directory + "/images/logo.png";
 
-    let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: item.create_timestamp}));
+    let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time:  new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
 
     if (prepend) {
         $('.messages ul').prepend($node);
