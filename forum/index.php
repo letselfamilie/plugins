@@ -19,6 +19,7 @@ require_once ( __DIR__ . '/Backend/ajax_handlers/mailer.php');
 require_once( __DIR__ . '/categories-all.php' );
 require_once( __DIR__ . '/censorship.php' );
 require_once( __DIR__ . '/ban.php' );
+require_once ( __DIR__ . '/reports.php');
 
 wp_enqueue_script('categories-add-script', plugins_url('/js/add-category.js', __FILE__), array('jquery'));
 wp_localize_script('categories-add-script', 'url_object',

@@ -33,6 +33,25 @@ add_action('wp_ajax_nopriv_'.'update_post', 'update_post');
 add_action('wp_ajax_'.'n_posts_pages', 'n_posts_pages');
 add_action('wp_ajax_nopriv_'.'n_posts_pages', 'n_posts_pages');
 
+add_action('wp_ajax_'.'add_post_report', 'add_post_report');
+add_action('wp_ajax_nopriv_'.'add_post_report', 'add_post_report');
+
+
+function add_post_report($post_id){
+    global $wpdb;
+    $post_id = ($post_id == null) ? $_POST['post_id'] : $post_id;
+
+    $sqlQuery = "INSERT INTO {$wpdb->prefix}reports  (`post_id`, `message_id`, `create_timestamp`) 
+                  VALUES ($post_id, null, CURRENT_TIMESTAMP);";
+    try {
+        $wpdb->query($sqlQuery);
+    }catch (Exception $e) {
+        echo 'Exception:', $e->getMessage(), "\n";
+        echo $sqlQuery;
+    }
+    die;
+}
+
 //add new post
 function add_post(){
     global $wpdb;
@@ -43,11 +62,6 @@ function add_post(){
     $is_anonym = $_POST['is_anonym'];
     $is_reaction = $_POST['is_reaction'];
 
-
-
-    if (check_censor($post_message)) {
-        // TODO SEND WARNING
-    }
 
 
     if($response_to != null && $topic_id != null && $user_id != null && $post_message != null && $is_anonym != null){
@@ -75,6 +89,18 @@ function add_post(){
                                                    FROM {$wpdb->prefix}f_topics
                                                    WHERE topic_id = $topic_id;")),
                             get_site_url() . "/posts/?topic_id=$topic_id");
+
+
+            if (check_censor($post_message)) {
+                // TODO SEND WARNING
+
+                $id = $wpdb->get_var("SELECT post_id FROM {$wpdb->prefix}f_posts 
+                                WHERE user_id = $user_id AND topic_id = $topic_id
+                                ORDER BY create_timestamp DESC 
+                                LIMIT 1");
+                echo "++++++++++++++++" . $id;
+                add_post_report($id);
+            }
 
         }catch (Exception $e) {
             echo 'Exception:', $e->getMessage(), "\n";
