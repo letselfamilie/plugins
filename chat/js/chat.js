@@ -22,6 +22,7 @@ let dialog_templ = ejs.compile(fs.readFileSync("./chat/js/ejs_templates/dialog.e
 let mes_templ = ejs.compile(fs.readFileSync("./chat/js/ejs_templates/message.ejs", "utf8"));
 let conn;
 
+
 // We listen to the resize event
 window.addEventListener('resize', () => {
     // We execute the same script as before
@@ -33,7 +34,6 @@ window.addEventListener('resize', () => {
 $(function () {
     getDialogs();
 });
-
 
 function getDialogs() {
     $.ajax({
