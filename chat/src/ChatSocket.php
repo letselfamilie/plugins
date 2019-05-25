@@ -675,7 +675,7 @@ class ChatSocket implements MessageComponentInterface
         $dbconn = DBHelper::connect();
 
         $sqlQuery = "UPDATE  wp_c_dialogs 
-                     SET is_closed = '1'
+                     SET is_closed = 1
                      WHERE dialog_id = " . $room_id . ";";
 
         try {

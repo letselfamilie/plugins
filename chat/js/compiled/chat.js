@@ -234,8 +234,6 @@ function loadChat(mes) {
 
         }
 
-
-
         $("#redirect_choose_consultant").click(function () {
             if(!($(".multi-collapse").hasClass("show")))
             {
@@ -265,17 +263,12 @@ function loadChat(mes) {
 
 
         $("#resolve-btn").click(function () {
-            var badge = '<span class="badge badge-resolved ml-2">Resolved</span>';
-            $(badge).appendTo($("#chat-title"));
+            var d_id = parseInt($('.conversation.active').attr("id"));
 
-            badge = '<span class="badge badge-resolved ml-2">R</span>';
-            $(badge).appendTo($(".conversation.active .wrap .meta .name"));
-
-            newBanner("This problem has been resolved");
-
-            // TODO: deprive of the possibility to send messages in a resolved dialog
-            // TODO: add this info to server
-
+            conn.send(JSON.stringify({
+                command: 'close_chat',
+                dialog_id: d_id
+            }));
         });
 
         $("#btn-newmessage").click(function () {
@@ -326,6 +319,14 @@ function loadChat(mes) {
     conn.onmessage = function (e) {
         console.log(e.data);
         var data = JSON.parse(e.data);
+
+        if(data.type === "close_chat"){
+            if(data.state === "success"){
+                resolvedDialogBanners();
+            } else{
+                alert("Error occurred");
+            }
+        }
 
         if (data.type === "message") {
 
@@ -584,6 +585,26 @@ function loadChat(mes) {
     };
 }
 
+//RESOLVED DIALOG BANNERS
+function resolvedDialogBanners() {
+    insideDialogResolvedBanners();
+    resolvedBage($(".conversation.active .wrap .meta .name"));
+}
+
+function insideDialogResolvedBanners() {
+    var badge = '<span class="badge badge-resolved ml-2">Resolved</span>';
+    $(badge).appendTo($("#chat-title"));
+
+    newBanner("This problem has been resolved");
+    $('.message-input').css('display', 'none');
+}
+
+function resolvedBage($appendNode) {
+    var badge = '<span class="badge badge-resolved ml-2">R</span>';
+    $(badge).appendTo($appendNode);
+}
+////
+
 function newBanner(message) {
     var html_banner = '<li id="banner" class="mes-break">' +
         '<p>' + message + '</p></li>';
@@ -637,6 +658,8 @@ function addDialog(item, mes) {
     let user2_id = item.user2_id;
     let messages = (item.messages === null || item.messages === undefined) ? [] : item.messages;
 
+    let is_closed = item.is_closed;
+
     let img = (is_employee_chat === "1") ? url_object.plugin_directory + "/images/question.png" : item.second_user_photo;
     let name = (is_employee_chat === "1") ? ((dialog_topic === null) ? item.second_user_nickname : dialog_topic) : item.second_user_nickname;
     name = (name === null || name === "" || name === undefined) ? "Question" : name;
@@ -677,6 +700,9 @@ function addDialog(item, mes) {
         }
     }
 
+    if(is_closed === '1'){
+        resolvedBage($node.find(".wrap .meta .name"));
+    }
 
     $node.click(function () {
         var newMessages = false;
@@ -709,7 +735,9 @@ function addDialog(item, mes) {
 
         $('.messages ul').empty();
 
-
+        if(is_closed === '1'){
+            insideDialogResolvedBanners();
+        }
 
         if (idDialog !== undefined && idDialog !== null) {
 
@@ -1948,7 +1976,7 @@ module.exports={
   "_args": [
     [
       "ejs@2.6.1",
-      "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins"
+      "C:\\Server\\data\\htdocs\\letsel\\wp-content\\plugins"
     ]
   ],
   "_from": "ejs@2.6.1",
@@ -1972,7 +2000,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/ejs/-/ejs-2.6.1.tgz",
   "_spec": "2.6.1",
-  "_where": "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins",
+  "_where": "C:\\Server\\data\\htdocs\\letsel\\wp-content\\plugins",
   "author": {
     "name": "Matthew Eernisse",
     "email": "mde@fleegix.org",
