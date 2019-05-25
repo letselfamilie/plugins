@@ -118,6 +118,7 @@ function chat_db_tables() {
                  user_from_id       bigint(20) unsigned NOT NULL,
                  dialog_id          mediumint unsigned NOT NULL,
                  is_read            bit(1) NOT NULL DEFAULT false,
+                 is_important       bit(1) NOT NULL DEFAULT false,
                  message_body       text NOT NULL,
                  create_timestamp   timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                  PRIMARY KEY  (message_id),

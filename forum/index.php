@@ -170,6 +170,24 @@ function forum_db_tables() {
                 PRIMARY KEY  (word)
                ) $charset_collate";
     dbDelta( $sql6 );
+
+
+    global $wpdb;
+    $sql6 = "CREATE TABLE ".$wpdb->prefix."censorship (
+                 word char(50) NOT NULL ,
+                PRIMARY KEY  (word)
+               ) $charset_collate";
+    dbDelta( $sql6 );
+
+    global $wpdb;
+    $sql7 = "CREATE TABLE ".$wpdb->prefix."reports (
+                 report_id          int unsigned NOT NULL AUTO_INCREMENT ,
+                 post_id            int unsigned NULL ,
+                 message_id         mediumint unsigned NULL ,
+                 create_timestamp   timestamp NOT NULL DEFAULT 0 ,
+                PRIMARY KEY  (report_id)
+               ) $charset_collate";
+    dbDelta( $sql7 );
 }
 
 
