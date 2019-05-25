@@ -230,7 +230,26 @@ function loadChat(mes) {
         $("#redirect_choose_consultant").click(function () {
             if(!($(".multi-collapse").hasClass("show")))
             {
-              newBanner("Clecked");
+                $.ajax({
+                    url: url_object.ajax_url,
+                    type: 'POST',
+                    data: {
+                        action: 'get_employees',
+                        user_from_id: user_object.id
+                    },
+                    success: function (res) {
+                        console.log("Available employees: " + res);
+
+
+                        //JSON.parse();
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+
+
             }
         });
 
@@ -802,24 +821,7 @@ function scrollToBanner() {
 
 
 
-$.ajax({
-    url: url_object.ajax_url,
-    type: 'POST',
-    data: {
-        action: 'get_employees',
-        user_from_id: user_object.id
-    },
-    success: function (res) {
-        console.log("Available employees: " + res);
 
-
-        //JSON.parse();
-
-    },
-    error: function (error) {
-        console.log(error);
-    }
-});
 
 
 },{"ejs":3,"howler":6}],2:[function(require,module,exports){
