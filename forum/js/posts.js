@@ -37,7 +37,7 @@ $(function () {
     let url_params = decodeUrl();
     console.log(url_params);
 
-    $('textarea').autoResize();
+
 
     let topic_id = url_params != null ? url_params['topic_id'] : -1;
     let user_id = user_object.id;
@@ -76,6 +76,9 @@ $(function () {
                 max_page = res;
                 pagination_obj.current_page = curr_p
                 paginationInit(pagination_obj.current_page, max_page, 5, loadPost, pagination_obj);
+
+                $('#enter-textarea').val('')
+                $('#enter-textarea-f').val('')
             },
             error: function (error) {
                 console.log(error);
@@ -86,7 +89,6 @@ $(function () {
     $(".enter-butt").on("click", function (e) {
         var parent = e.target.parentElement;
         console.log($('#chech-anonym', parent).is(":checked"));
-
 
         if ($('#enter-textarea').val().trim() !== "") {
             $.ajax({
@@ -104,8 +106,56 @@ $(function () {
                 success: function (res) {
                     console.log("POSTED!");
                     console.log(res);
-                    $('#enter-textarea').val('')
-                    $('textarea').css('height', '130px');
+                    $('.respond-info').css('display', 'none');
+                    respond_to_id = null;
+
+                    $.ajax({
+                        url: url_object.ajax_url,
+                        type: 'POST',
+                        data: {
+                            action: 'n_posts_pages',
+                            per_page: per_page,
+                            topic_id: topic_id
+                        },
+                        success: function (res) {
+                            scroll_down = true;
+                            initPagination(res);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+
+                    setUpListeners();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+    });
+
+    $(".enter-butt-f").on("click", function (e) {
+        var parent = e.target.parentElement;
+
+        console.log($('#chech-anonym-f', parent).is(":checked"));
+
+        if ($('#enter-textarea-f').val().trim() !== "") {
+            $.ajax({
+                url: url_object.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'add_post',
+                    response_to: (respond_to_id == null) ? 'NULL' : respond_to_id,
+                    topic_id: topic_id,
+                    user_id: user_id,
+                    post_message: $('#enter-textarea-f').val().trim(),
+                    is_anonym: ($('#chech-anonym-f', parent).is(":checked")) ? 1 : 0,
+                    is_reaction: (respond_to_id == null) ? 0 : 1
+                },
+                success: function (res) {
+                    console.log("POSTED!");
+                    console.log(res);
                     $('.respond-info').css('display', 'none');
                     respond_to_id = null;
 
@@ -151,6 +201,7 @@ $(function () {
                 console.log(res);
                 if(res){
                     $("#topic_name").text(res['topic_name']);
+                    $("#topic_name-f").text(res['topic_name']);
                     $("#topic_date").text(new Date(res['create_timestamp'].replace(/\s/, 'T')).ddmmyyyyhhmm());
                     $("#added-by").text(res['user_name']);
                     $(".back").attr('href', url_object.site_url + "/topics/?cat_name=" + encodeURI(res.cat_name));
@@ -217,6 +268,7 @@ $(function () {
                         document.documentElement.scrollTop = document.body.scrollHeight; // For Chrome, Firefox, IE and Opera
                         scroll_down = !scroll_down;
                     }
+                    floating_enter_box();
                 }, 1000);
             },
             error: function (error) {
@@ -264,26 +316,26 @@ $(function () {
         if (user_id > 0) {
             $node.on('click', '.comment-full', function () {
                 var post_text = data.post_message.substring(0, 75) + ((data.post_message.length <= 75) ? '' : "...");
-                $("#quote-text").text(data.login + ': ' + post_text);
+                $(".quote-text").text(data.login + ': ' + post_text);
 
                 $('.respond-info').css('display', 'inline-block');
 
                 respond_to_id = data.post_id;
                 console.log(respond_to_id);
 
-                $("#enter-textarea").focus();
+                //$("#enter-textarea").focus();
             });
 
             $node.on('click', '.comment-empty', function () {
                 var post_text = data.post_message.substring(0, 75) + ((data.post_message.length <= 75) ? '' : "...");
-                $("#quote-text").text(data.login + ': ' + post_text);
+                $(".quote-text").text(data.login + ': ' + post_text);
 
                 $('.respond-info').css('display', 'inline-block');
 
                 respond_to_id = data.post_id;
                 console.log(respond_to_id);
 
-                $("#enter-textarea").focus();
+                //$("#enter-textarea").focus();
                 $('.comment-full').addClass('none');
                 $('.comment-empty').removeClass('none');
                 $node.find('.comment-full').removeClass('none');
@@ -432,7 +484,7 @@ $(function () {
     }
 
     function setUpListeners() {
-        $('#del-quote').on('click', function (e) {
+        $('.del-quote').on('click', function (e) {
             $('.respond-info').css('display', 'none');
             respond_to_id = null;
 
@@ -639,5 +691,42 @@ $(function () {
         document.body.scrollTop = document.body.scrollHeight; // For Safari
         document.documentElement.scrollTop = document.body.scrollHeight; // For Chrome, Firefox, IE and Opera
     })
+
+
+    window.addEventListener("resize", floating_enter_box);
+
+    window.addEventListener("scroll", floating_enter_box);
+
+
+    function floating_enter_box() {
+        // console.log($('#down-butt').offset())
+        $('#floating-enter').width($('.post-enter').width());
+        $('#floating-enter').find('.user-info').width($('.post-enter').find('.user-info').width())
+        $('#floating-enter').find('.post-text-enter').width($('.post-enter').find('.post-text-enter').width())
+        $('#floating-enter').offset({left:$('.post-enter').offset().left})
+        $('#floating-enter').css('bottom', '0');
+
+
+        if ($('#floating-enter').offset().top < $('.post-enter').offset().top) {
+            $('#floating-enter').css('visibility', 'visible');
+
+            $("#enter-textarea").val($("#enter-textarea-f").val())
+            if ($("#enter-textarea").is(':focus'))
+                $("#enter-textarea-f").focus();
+
+            $("#chech-anonym").prop("checked", $("#chech-anonym-f").is(":checked"));
+        } else {
+            $('#floating-enter').css('visibility', 'hidden');
+
+            $("#enter-textarea-f").val($("#enter-textarea").val())
+            if ($("#enter-textarea-f").is(':focus'))
+                $("#enter-textarea").focus();
+
+            $("#chech-anonym-f").prop("checked", $("#chech-anonym").is(":checked"));
+        }
+
+    }
+
+
 });
 
