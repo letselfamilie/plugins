@@ -224,6 +224,18 @@ function loadChat(mes) {
 
         }
 
+
+
+
+        $("#redirect_choose_consultant").click(function () {
+            console.log("CLICKED");
+
+            newBanner("This problem has been redirected");
+
+        });
+
+
+
         $("#resolve-btn").click(function () {
             var badge = '<span class="badge badge-resolved ml-2">Resolved</span>';
             $(badge).appendTo($("#chat-title"));
@@ -785,3 +797,27 @@ function scrollToBanner() {
         $('#messages-container').scrollTop($('#messages-container').scrollTop() - 100);
     }
 }
+
+
+
+
+
+$.ajax({
+    url: url_object.ajax_url,
+    type: 'POST',
+    data: {
+        action: 'get_employees',
+        user_from_id: user_object.id
+    },
+    success: function (res) {
+        console.log("Available employees: " + res);
+
+
+        //JSON.parse();
+
+    },
+    error: function (error) {
+        console.log(error);
+    }
+});
+
