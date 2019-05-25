@@ -1,11 +1,13 @@
 <div class="message-pop-n">
+    <% if (photo) { %>
     <img class="user-icon-n" src="<%= photo %>">
+    <% } %>
     <div class="message-content-n">
         <div class="user-name-n">
-            Name
+            <%= title %>
         </div>
         <div class="message-text-n">
-            Boy desirous families prepared gay reserved add ecstatic say. Replied joy age visitor nothing cottage.
+            <%= text %>
         </div>
     </div>
     <span class="close-message-n">✖</span>
