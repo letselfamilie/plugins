@@ -250,7 +250,6 @@ function loadChat(mes) {
         });
 
         $("#redirect_btn").click(function () {
-
             var e = document.getElementById("consultantSelect");
             //var strUser = e.options[e.selectedIndex].value;
             var strUser = e.options[e.selectedIndex];
