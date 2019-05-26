@@ -269,13 +269,9 @@ function loadChat(mes) {
                 $(".messages").css('display', 'none');
                 $(".message-input").css('display', 'none');
                 $(".redirect.multi-collapse").removeClass("show");
-                
+
                 var idDialog = searchObjKey(mes, d_id);
                 delete mes[idDialog];
-                for(var i=0; i< mes.length; i++)
-                {
-                    console.log(mes[i]);
-                }
             }
         });
 
@@ -449,9 +445,7 @@ function loadChat(mes) {
             let is_emp_available =  data.is_emp_available; //absent for user
             let first_message = data.first_message;
 
-
             console.log("I received request to create new dialog view");
-
 
             let isread = (second_user_id!==user_object.id)?"1":"0";
 
@@ -464,7 +458,6 @@ function loadChat(mes) {
                     message_body: first_message.message,
                     create_timestamp: first_message.time
                 }];
-
 
             console.log("dialog_type" + dialog_type);
 
@@ -526,7 +519,6 @@ function loadChat(mes) {
                     $(".new-convo").css('display', 'none');
                 }
             }
-
 
             if(dialog_type==="user_chat") {
                 console.log("User chat view is requested to be created");
@@ -620,9 +612,57 @@ function loadChat(mes) {
 
         }
 
-        if (data.type === "redirect_chat")
+
+
+        if (data.type === "redirect_chat" && data.state==="success")
         {
-           //TODO accept redirected chat
+           var dialog_id = data.dialog_id;
+           var topic = data.dialog_info.dialog_topic;
+           var last_message_timestamp =data.dialog_info.last_message_timestamp;
+           var client_id = data.dialog_info.user_id;
+           var messages = data.dialog_info.messages;
+
+            if($('#'+dialog_id).length>0)
+            {
+                console.log("New dialog won't be created as it already exists");
+
+                if(dialog_id!==null)
+                {
+                    let $node = $("#" + dialog_id);
+                    $node.detach();
+                    $node.prependTo("#conversations ul");
+                    $node.click();
+                    console.log("you created new chat with user ");
+                }
+
+                return;
+            }
+
+            var newDialog = {
+                dialog_id: dialog_id,
+                is_employee_chat: "1",
+                dialog_topic: topic,
+                user1_id: "" + user_object.id,
+                user2_id: client_id,
+                second_user_nickname: null,
+                second_user_photo: url_object.plugin_directory + "/images/question.png",
+                messages: messages
+            };
+
+            mes[Object.keys(mes).length] = newDialog;
+            addDialog(newDialog, mes);
+
+
+            if ($("#"+dialog_id).find(".badge-counter").length === 0) {
+                let badge = '<span class="badge badge-counter ml-2">redirected</span>';
+                $(badge).appendTo($("#"+dialog_id).find(".wrap .meta .name"));
+                $(badge).removeClass("hidden");
+
+            } else {
+                $("#"+dialog_id).find(".badge-counter").text((m===[])? "redirected" : 1 );
+                $("#"+dialog_id).removeClass("hidden");
+
+            }
 
         }
     };
@@ -693,6 +733,19 @@ function fillChat(mes) {
 }
 
 function addDialog(item, mes) {
+
+    var newDialog = {
+        //dialog_id: dialog_id,
+        //is_employee_chat: "1",
+        //dialog_topic: topic,
+        //user1_id: "" + user_object.id,
+        //user2_id: client_id,
+        //second_user_nickname: null,
+        //second_user_photo: url_object.plugin_directory + "/images/question.png",
+        messages: messages
+    };
+
+
     let dialog_id = item.dialog_id;
 
     let is_employee_chat = item.is_employee_chat;
@@ -724,7 +777,8 @@ function addDialog(item, mes) {
     for(let i = messages.length-1; i>-1; i--)
     {
         if(messages[i].is_read ==="1") {break;}
-        else { if(messages[i].user_from_id !== user_object.id) { N_unread++;} }
+        //TODO if smth goes wrong
+        else { if(messages[i].user_from_id === user2_id) { N_unread++;} }
     }
 
     /*ADD BADGE TO DIALOG WITH A NUMBER OF UNREAD MESSAGES*/
