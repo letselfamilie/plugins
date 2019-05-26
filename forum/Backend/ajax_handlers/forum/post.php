@@ -73,7 +73,7 @@ function add_post(){
         $sqlQuery = "INSERT INTO {$wpdb->prefix}f_posts (response_to, topic_id, user_id, post_message, is_anonym, create_timestamp, is_reaction) 
                      VALUES ('$response_to', '$topic_id', '$user_id', '$post_message', $is_anonym, CURRENT_TIMESTAMP, $is_reaction);";
         $sqlQuery = str_replace("'NULL'", "NULL", $sqlQuery);
-
+        $sqlQuery = str_replace("'null'", "NULL", $sqlQuery);
 
         try {
             $wpdb->query($sqlQuery);
@@ -85,13 +85,24 @@ function add_post(){
                                                              FROM {$wpdb->prefix}f_topics
                                                              WHERE topic_id = $topic_id;"));
 
+            $response_to = $wpdb->get_row("SELECT user_id, post_message
+                                             FROM {$wpdb->prefix}f_posts
+                                             WHERE post_id = $response_to;");
+
+            $user_response = get_userdata($response_to->user_id);
+
+            global $ultimatemember;
+
             new_post_mail($user_topic_owner->user_email,
                           $is_anonym ? 'Anonym' : $user_info->user_login,
                           censor($post_message),
                           censor($wpdb->get_var("SELECT topic_name
                                                    FROM {$wpdb->prefix}f_topics
                                                    WHERE topic_id = $topic_id;")),
-                            get_site_url() . "/posts/?topic_id=$topic_id");
+                            get_site_url() . "/posts/?topic_id=$topic_id",
+                            $is_anonym ?  um_get_default_avatar_uri() : get_avatar_url($user_id),
+                            $user_response->user_login,
+                            $response_to->post_message);
 
 
             if (check_censor($post_message)) {
