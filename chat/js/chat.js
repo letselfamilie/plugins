@@ -255,12 +255,15 @@ function loadChat(mes) {
             var strUser = e.options[e.selectedIndex];
             var d_id = parseInt($('.conversation.active').attr("id"));
             console.log("val "+ strUser);
+            if(strUser!==undefined)
+            {
+                conn.send(JSON.stringify({
+                 command: 'redirect_chat',
+                 dialog_id: d_id,
+                 new_employee: strUser.value
+             }));
+            }
 
-            /*conn.send(JSON.stringify({
-                command: 'redirect_chat',
-                dialog_id: d_id,
-                new_employee: strUser
-            }));*/
         });
 
         $("#resolve-btn").click(function () {
