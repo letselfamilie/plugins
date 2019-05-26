@@ -713,7 +713,7 @@ class ChatSocket implements MessageComponentInterface
         try {
             $stmt = $dbconn->prepare($sqlQuery);
             $stmt->execute();
-            $dialog = $stmt->fetch();
+            $dialog = $stmt->fetch(\PDO::FETCH_ASSOC);
 
             $dialog['messages'] = array();
 
