@@ -701,10 +701,11 @@ class ChatSocket implements MessageComponentInterface
 
         $dbconn = DBHelper::connect();
 
-        $sqlQuery = "SELECT dialog_id, dialog_topic, is_employee_chat, is_closed, 
+        $sqlQuery = "SELECT dialog_id, dialog_topic, is_employee_chat, is_closed,
                         (SELECT MAX(create_timestamp)
                          FROM wp_c_messages
-                         WHERE dialog_id = D.dialog_id) AS last_message_timestamp
+                         WHERE dialog_id = D.dialog_id) AS last_message_timestamp,
+                      COALESCE (user1_id, user2_id) AS user_id 
                      FROM wp_c_dialogs D
                      WHERE dialog_id = " . $roomId . ";";
 
