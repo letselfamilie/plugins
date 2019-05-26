@@ -5,8 +5,8 @@ module.exports = function(curr_page, max_page, n_pages = 5, updateFunc, paginati
 
     pagination_obj = {
         current_page: curr_page,
-        pagina_from: curr_page - n_pages / 2 ,
-        pagina_to: curr_page + n_pages / 2
+        pagina_from: curr_page - Math.ceil(n_pages / 2) ,
+        pagina_to: curr_page +  Math.floor( n_pages / 2)
     }
     if (pagination_obj.pagina_from < 1) {
         pagination_obj.pagina_to = pagination_obj.pagina_to + 1 - pagination_obj.pagina_from;
@@ -576,6 +576,7 @@ $(function () {
                     }
                 });
             });
+
 
             $node.on('click', '.save-butt', function () {
                 var textarea = $node.find('.edit-textarea').val();
