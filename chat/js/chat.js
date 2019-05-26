@@ -234,32 +234,37 @@ function loadChat(mes) {
         }
 
         $("#redirect_choose_consultant").click(function () {
+
             if(!($(".multi-collapse").hasClass("show")))
             {
-                $.ajax({
-                    url: url_object.ajax_url,
-                    type: 'POST',
-                    data: {
-                        action: 'get_employees',
-                        user_from_id: user_object.id
-                    },
-                    success: function (res) {
-                        console.log("Available employees: " + res);
-
-
-                        //JSON.parse();
-
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                });
-
-
+                var myNode = document.getElementById("consultantSelect");
+                while (myNode.firstChild) {
+                    myNode.removeChild(myNode.firstChild);
+                }
+                conn.send(JSON.stringify({
+                    user_id_from: user_object.id,
+                    command: 'get_employees',
+                }));
             }
         });
 
+        $("#redirect_btn").click(function () {
 
+            var e = document.getElementById("consultantSelect");
+            //var strUser = e.options[e.selectedIndex].value;
+            var strUser = e.options[e.selectedIndex];
+            var d_id = parseInt($('.conversation.active').attr("id"));
+            console.log("val "+ strUser);
+            if(strUser!==undefined)
+            {
+                conn.send(JSON.stringify({
+                 command: 'redirect_chat',
+                 dialog_id: d_id,
+                 new_employee: strUser.value
+             }));
+            }
+
+        });
 
         $("#resolve-btn").click(function () {
             var d_id = parseInt($('.conversation.active').attr("id"));
@@ -561,8 +566,6 @@ function loadChat(mes) {
                 src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
             });
             sound.play();
-
-
         }
 
         if (data.type === "take_dialog")
@@ -580,6 +583,34 @@ function loadChat(mes) {
             {
                 console.log("Error with receiving response to somebody taking the dialog");
             }
+        }
+
+        if (data.type === "get_employees")
+        {
+            console.log("Employees that are online");
+
+            var consultants_online = data.employees_information;
+
+            for(var i = 0; i< consultants_online.length; i++)
+            {
+                var log = consultants_online[i].user_login;
+                var id = consultants_online[i].user_id;
+                if(id!==user_object.id)
+                {
+                    var line = '<option value="'+id+'">' +log + '</option>';
+                    $(line).appendTo($("#consultantSelect"));
+                }
+
+            }
+
+
+
+        }
+
+        if (data.type === "redirect_chat")
+        {
+           //TODO accept redirected chat
+
         }
     };
 }
@@ -655,6 +686,7 @@ function addDialog(item, mes) {
     let dialog_topic = item.dialog_topic;
     let user1_id = item.user1_id;
     let user2_id = item.user2_id;
+    let without_employee = item.without_employee;
     let messages = (item.messages === null || item.messages === undefined) ? [] : item.messages;
 
     let is_closed = item.is_closed;
@@ -736,7 +768,12 @@ function addDialog(item, mes) {
 
         if(is_closed === '1'){
             insideDialogResolvedBanners();
+            $("#chat_options").addClass("hidden");
         }
+        else {
+            $("#chat_options").removeClass("hidden");
+        }
+
 
         if (idDialog !== undefined && idDialog !== null) {
 
@@ -795,7 +832,6 @@ function addDialog(item, mes) {
                 mes[idDialog].without_employee="0";
                 mes[idDialog].user2_id = user_object.id;
             }
-
         }
         scrollToBanner();
     });

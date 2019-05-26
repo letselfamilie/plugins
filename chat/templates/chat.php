@@ -173,7 +173,7 @@ if(!is_user_logged_in()) {
             <img src="<?php echo PATH?>/images/question.png" alt="question"/>
             <p id="chat-title"></p>
 
-            <div class="btn-group dropleft float-right">
+            <div id="chat_options" class="btn-group dropleft float-right">
                 <button id="convOptions" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-bars"></i>
                 </button>
@@ -193,13 +193,13 @@ if(!is_user_logged_in()) {
         <div class="redirect collapse multi-collapse" id="redirectCollapse">
             <form id="redirect_line" class="input-group">
                 <select class="form-control custom-select" id="consultantSelect">
-                    <option value="1">Consultant 1</option>
+                    <!--<option value="1">Consultant 1</option>
                     <option value="2">Consultant 2</option>
                     <option value="3">Consultant 3</option>
                     <option value="4">Consultant 4</option>
-                    <option value="5">Consultant 5</option>
+                    <option value="5">Consultant 5</option>-->
                 </select>
-                <div class="input-group-append">
+                <div id="redirect_btn" class="input-group-append">
                     <button type="submit">Redirect</button>
                 </div>
             </form>
