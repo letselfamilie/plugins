@@ -185,18 +185,30 @@ class ChatSocket implements MessageComponentInterface
             switch ($data->command) {
                 case 'notification':
                     $type = $data->type;
-                    if($type == 'bad_word'){
+                    if ($type == 'bad_word') {
+                        if(isset($data->user_login))
+                            $user_login = $data->user_login;
+                        else{
+                            $user_info = $this->getUserInfo($user_id_from);
+                            $user_login = $user_info['user_login'];
+                        }
+                        $message_text = $data->message_text;
+
                         $message = array(
-                          'command'=>'notification',
-                          'type' => 'bad_word'
+                            'command' => 'notification',
+                            'type' => 'bad_word',
+                            'user_id_from' => $user_id_from,
+                            'user_login_from' => $user_login,
+                            'message_text' => $message_text
                         );
-                    }else{
+                        $this->sendToAllEmployees($message);
+                    } else {
                         $message = array(
-                            'command'=>'notification',
+                            'command' => 'notification',
                             'type' => 'smth_else'
                         );
                     }
-                    $from->send(json_encode($message));
+          //          $from->send(json_encode($message));
                     break;
 
                 case 'take_dialog':
@@ -251,7 +263,7 @@ class ChatSocket implements MessageComponentInterface
 
                 case "redirect_chat":
                     $new_employee_id = $data->new_employee;
-                   // $new_employee_id = $this->getAvailableEmployeeId($user_id_from);
+                    // $new_employee_id = $this->getAvailableEmployeeId($user_id_from);
                     if (isset($new_employee_id) && isset($user_id_from) && isset($room_id)) {
                         if ($this->redirectDialog($room_id, $new_employee_id, $user_id_from)) {
                             $dialog_inf = $this->getDialog($room_id);
@@ -343,8 +355,7 @@ class ChatSocket implements MessageComponentInterface
                     $from->send(json_encode($message));
                     break;
             }
-        }
-        else{
+        } else {
             $message = array(
                 'type' => 'default',
                 'message' => 'default action'
@@ -490,10 +501,11 @@ class ChatSocket implements MessageComponentInterface
         }
     }
 
-    function getEmployeesInf(array $emp_ids){
+    function getEmployeesInf(array $emp_ids)
+    {
         $message = array();
 
-        foreach ($emp_ids AS $emp_id){
+        foreach ($emp_ids AS $emp_id) {
             $emp_info = $this->getUserInfo($emp_id);
             $message[] = $emp_info;
         }
@@ -531,7 +543,6 @@ class ChatSocket implements MessageComponentInterface
             return -1;
         }
     }
-
 
 
     function getAvailableEmployeeId($except_val = null)
@@ -680,7 +691,8 @@ class ChatSocket implements MessageComponentInterface
         }
     }
 
-    function takeDialog($room_id, $new_employee_id){
+    function takeDialog($room_id, $new_employee_id)
+    {
         $dbconn = DBHelper::connect();
 
         $sqlQuery = "UPDATE  wp_c_dialogs 
@@ -712,7 +724,7 @@ class ChatSocket implements MessageComponentInterface
 
             $sqlQueryMessages = "UPDATE  wp_c_messages 
                                  SET user_from_id = " . $new_employee_id . "
-                                 WHERE dialog_id = " . $room_id . " AND user_from_id = ".$old_employee_id.";";
+                                 WHERE dialog_id = " . $room_id . " AND user_from_id = " . $old_employee_id . ";";
 
             $dbconn->query($sqlQueryMessages, \PDO::FETCH_ASSOC);
 
@@ -749,7 +761,8 @@ class ChatSocket implements MessageComponentInterface
 //
 
 // INFO
-    function getDialog($roomId, $from = null, $to = null){
+    function getDialog($roomId, $from = null, $to = null)
+    {
         $from_message = isset($from) ? $from : 0;
         $to_message = isset($to) ? $to : 19;
 
@@ -782,8 +795,8 @@ class ChatSocket implements MessageComponentInterface
             $stmt->execute();
             $messages = $stmt->fetchAll(\PDO::FETCH_ASSOC);
             $dialog['messages'] = array_reverse($messages);
-      //      foreach (array_reverse($dbconn->query($sqlQueryMessages, \PDO::ARRAY_A)) as $message)
-     //       }
+            //      foreach (array_reverse($dbconn->query($sqlQueryMessages, \PDO::ARRAY_A)) as $message)
+            //       }
 
         } catch (Exception $e) {
             echo 'Exception:', $e->getMessage(), "\n";
