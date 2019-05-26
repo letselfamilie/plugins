@@ -15,7 +15,7 @@ $(function () {
     connectSocket();
 });
 
-function addNotification(title, text, photo) {
+function addNotification(title, text, photo, rounded = true) {
     $('.message-pop-n').remove();
 
 
@@ -25,6 +25,7 @@ function addNotification(title, text, photo) {
             title: title,
             text: text
         }));
+    if (!rounded) $notification_node.find('.user-icon-n').css('border-radius', '0%');
     $('body').append($notification_node);
 
 
@@ -132,7 +133,7 @@ function connectSocket() {
             let dial_id = data.dialog_id;
             let photo = wp_object.plugin_directory + '/images/bad_word.svg';
 
-            addNotification("BAD WORD", from + ': ' + mess, photo)
+            addNotification("BAD WORD", from + ': ' + mess, photo, false)
         }
     };
 }
