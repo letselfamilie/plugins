@@ -249,12 +249,12 @@ function loadChat(mes) {
             }
         });
 
-        $("#resolve-btn").click(function () {
+        $("#redirect_btn").click(function () {
 
-            var e = document.getElementById("redirect_btn");
+            var e = document.getElementById("consultantSelect");
             var strUser = e.options[e.selectedIndex].value;
 
-            
+
             console.log("VAL: "+ strUser);
 
         });
