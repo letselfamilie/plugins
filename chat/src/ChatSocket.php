@@ -235,14 +235,16 @@ class ChatSocket implements MessageComponentInterface
                    // $new_employee_id = $this->getAvailableEmployeeId($user_id_from);
                     if ($new_employee_id > -1) {
                         if ($this->redirectDialog($room_id, $new_employee_id)) {
+                            $dialog_inf = $this->getDialog($room_id);
                             $message = array(
                                 'type' => 'redirect_chat',
                                 'state' => 'success',
                                 'message' => "Dialog was redirected to user {$new_employee_id}",
                                 'new_employee_id' => $new_employee_id,
-                                'dialog_id' => $room_id
+                                'dialog_id' => $room_id,
+                                'dialog_info' => $dialog_inf
                             );
-
+                            $this->sendDialogToSecondUser($new_employee_id, $message);
                         } else {
                             $message = array(
                                 'type' => 'redirect_chat',
@@ -250,8 +252,8 @@ class ChatSocket implements MessageComponentInterface
                                 'message' => "Error occurred while redirecting",
                                 'dialog_id' => $room_id
                             );
+                            $from->send(json_encode($message));
                         }
-                        $this->sendDialogToSecondUser($new_employee_id, $message);
                     } else {
                         $message = array(
                             'type' => 'redirect_chat',
@@ -259,8 +261,8 @@ class ChatSocket implements MessageComponentInterface
                             'message' => "No employee available. Try to redirect later",
                             'dialog_id' => $room_id
                         );
+                        $from->send(json_encode($message));
                     }
-                    $from->send(json_encode($message));
                     break;
 
                 case "start_typing":
@@ -693,6 +695,46 @@ class ChatSocket implements MessageComponentInterface
 //
 
 // INFO
+    function getDialog($roomId, $from = null, $to = null){
+        $from_message = isset($from) ? $from : 0;
+        $to_message = isset($to) ? $to : 19;
+
+        $dbconn = DBHelper::connect();
+
+        $sqlQuery = "SELECT dialog_id, dialog_topic, is_employee_chat, is_closed, 
+                        (SELECT MAX(create_timestamp)
+                         FROM wp_c_messages
+                         WHERE dialog_id = D.dialog_id) AS last_message_timestamp
+                     FROM wp_c_dialogs D
+                     WHERE dialog_id = " . $roomId . ";";
+
+        $dialog = array();
+        try {
+            $stmt = $dbconn->prepare($sqlQuery);
+            $stmt->execute();
+            $dialog = $stmt->fetch();
+
+            $dialog['messages'] = array();
+
+            $sqlQueryMessages = "SELECT *
+                              FROM wp_c_messages
+                              WHERE dialog_id = '" . $roomId . "'
+                              ORDER BY create_timestamp DESC
+                              LIMIT " . ($to_message - $from_message + 1) . " 
+                              OFFSET $from_message;";
+
+            foreach (array_reverse($dbconn->query($sqlQueryMessages, \PDO::FETCH_ASSOC)) as $message) {
+                $dialog['messages'][] = $message;
+            }
+
+        } catch (Exception $e) {
+            echo 'Exception:', $e->getMessage(), "\n";
+            echo $sqlQuery;
+        }
+        DBHelper::disconnect();
+        return $dialog;
+    }
+
     function getDialogInfo($roomId)
     {
         $dbconn = DBHelper::connect();
