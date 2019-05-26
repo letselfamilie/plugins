@@ -87,9 +87,9 @@ function add_post()
 
             try {
                 $wpdb->query($sqlQuery);
-//                header("Content-Length: ".ob_get_length());
-//                header("Connection: close");
-//                flush();
+                header("Content-Length: ".ob_get_length());
+                header("Connection: close");
+                flush();
                 $user_info = get_userdata($user_id);
                 $user_topic_owner = get_userdata($wpdb->get_var("SELECT user_id
                                                              FROM {$wpdb->prefix}f_topics
