@@ -570,6 +570,21 @@ function loadChat(mes) {
         if (data.type === "get_employees")
         {
             console.log("Employees that are online");
+
+            var consultants_online = data.employees_information;
+
+            for(var i = 0; i< consultants_online.length; i++)
+            {
+                var log = consultants_online[i].user_login;
+                var id = consultants_online[i].user_id;
+                var line = '<option value="'+id+'">' +log + '</option>';
+                $(line).appendTo($("#consultantSelect"));
+
+
+            }
+
+
+
         }
 
 
