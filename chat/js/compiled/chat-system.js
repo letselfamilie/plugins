@@ -130,7 +130,7 @@ function connectSocket() {
             let from = data.user_login_from;
             let mess = data.message_text;
             let dial_id = data.dialog_id;
-            let photo = wp_object.plugin_directory + '/images/bad_word.swg';
+            let photo = wp_object.plugin_directory + '/images/bad_word.svg';
 
             addNotification("BAD WORD", from + ': ' + mess, photo)
         }
