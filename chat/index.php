@@ -79,6 +79,10 @@ function chat_scripts()
                     'site_url' => get_site_url(),
                     'is_post' => is_page('posts')));
 
+        wp_localize_script('chat-system-js', 'wp_object',
+            array('plugin_directory' => plugins_url('', __FILE__),
+                    'is_post' => is_page('posts')));
+
         $current_user = wp_get_current_user();
         wp_localize_script('chat-system-js', 'user_object',
             array(

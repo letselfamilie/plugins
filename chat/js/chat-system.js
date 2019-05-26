@@ -10,7 +10,7 @@ let notification = ejs.compile(fs.readFileSync("./chat/js/ejs_templates/notifica
 let conn;
 
 $(function () {
-    if (!url_object.is_post) addChatBox();
+    if (wp_object.is_post == 0) addChatBox();
     connectSocket();
 });
 
@@ -129,7 +129,7 @@ function connectSocket() {
             let from = data.user_login_from;
             let mess = data.message_text;
             let dial_id = data.dialog_id;
-            let photo = url_object.plugin_directory + '/images/bad_word.swg';
+            let photo = wp_object.plugin_directory + '/images/bad_word.swg';
 
             addNotification("BAD WORD", from + ': ' + mess, photo)
         }
