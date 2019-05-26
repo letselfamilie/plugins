@@ -42,13 +42,6 @@ add_action('wp_ajax_' . 'add_post_report', 'add_post_report');
 add_action('wp_ajax_nopriv_' . 'add_post_report', 'add_post_report');
 
 
-function add_post_report($post_id)
-{
-    $post_id = ($post_id == null) ? $_POST['post_id'] : $post_id;
-
-    add_report_to_db($post_id);
-    die;
-}
 
 function add_report_to_db($post_id){
     global $wpdb;
@@ -57,10 +50,18 @@ function add_report_to_db($post_id){
                   VALUES ({$post_id}, NULL, CURRENT_TIMESTAMP);";
     try {
         $wpdb->query($sqlQuery);
+        echo 'R';
     } catch (Exception $e) {
         echo 'Exception:', $e->getMessage(), "\n";
         echo $sqlQuery;
     }
+}
+
+function add_post_report()
+{
+    $post_id = $_POST['post_id'];
+    add_report_to_db($post_id);
+    die;
 }
 
 
@@ -86,9 +87,9 @@ function add_post()
 
             try {
                 $wpdb->query($sqlQuery);
-            header("Content-Length: ".ob_get_length());
-            header("Connection: close");
-            flush();
+                header("Content-Length: ".ob_get_length());
+                header("Connection: close");
+                flush();
                 $user_info = get_userdata($user_id);
                 $user_topic_owner = get_userdata($wpdb->get_var("SELECT user_id
                                                              FROM {$wpdb->prefix}f_topics
