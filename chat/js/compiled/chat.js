@@ -578,10 +578,12 @@ function loadChat(mes) {
             {
                 var log = consultants_online[i].user_login;
                 var id = consultants_online[i].user_id;
-                var line = '<option value="'+id+'">' +log + '</option>';
-                $(line).appendTo($("#consultantSelect"));
-
-
+                if(id!==user_object.id)
+                {
+                    var line = '<option value="'+id+'">' +log + '</option>';
+                    $(line).appendTo($("#consultantSelect"));
+                }
+                
             }
 
 
