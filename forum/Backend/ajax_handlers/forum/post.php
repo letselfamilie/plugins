@@ -127,7 +127,7 @@ function add_post()
                     $messageToSocket['type'] = 'bad_word';
                     $messageToSocket['user_id_from'] = $user_id;
                     $messageToSocket['user_login'] = $user_info->user_login;
-                    $messageToSocket['topic_id'] = $topic_id;
+                    $messageToSocket['message_text'] = $post_message;
 
                     $conn->on('message', function ($msg) use ($conn) {
                         echo "Received: {$msg}\n";
