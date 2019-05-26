@@ -32,6 +32,15 @@ window.addEventListener('resize', () => {
 
 //http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3
 $(function () {
+    if(typeof AudioContext != "undefined" || typeof webkitAudioContext != "undefined") {
+        var resumeAudio = function() {
+            if(typeof g_WebAudioContext == "undefined" || g_WebAudioContext == null) return;
+            if(g_WebAudioContext.state == "suspended") g_WebAudioContext.resume();
+            document.removeEventListener("click", resumeAudio);
+        };
+        document.addEventListener("click", resumeAudio);
+    }
+
     getDialogs();
 });
 
