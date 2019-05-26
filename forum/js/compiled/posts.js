@@ -569,6 +569,7 @@ $(function () {
                     success: function (res) {
                         console.log(res);
                         console.log("REPORTED");
+                        $node.find('.report').remove()
                     },
                     error: function (error) {
                         console.log(error);
