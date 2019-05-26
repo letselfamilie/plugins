@@ -253,8 +253,13 @@ function loadChat(mes) {
 
             var e = document.getElementById("consultantSelect");
             var strUser = e.options[e.selectedIndex].value;
+            var d_id = parseInt($('.conversation.active').attr("id"));
 
-            console.log("VAL: "+ strUser);
+            conn.send(JSON.stringify({
+                command: 'redirect_chat',
+                dialog_id: d_id,
+                new_employee: strUser
+            }));
 
         });
 
@@ -601,8 +606,10 @@ function loadChat(mes) {
 
         }
 
-
-
+        if (data.type === "redirect_chat")
+        {
+            console.log("GOT NEW CHAT");
+        }
     };
 }
 
