@@ -602,6 +602,8 @@ class ChatSocket implements MessageComponentInterface
     {
         $dbconn = DBHelper::connect();
 
+        $message = str_replace("'", "\'", $message);
+
         $sqlQuery = "INSERT INTO wp_c_messages (user_from_id, dialog_id, message_body, create_timestamp) 
                      VALUES (
                         '" . $clientFromId . "',
