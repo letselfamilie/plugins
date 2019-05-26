@@ -141,6 +141,8 @@ function add_post()
 
                     $conn->send(json_encode($messageToSocket));
                     $conn->close();
+                } else {
+                    $conn->close();
                 }
             } catch (Exception $e) {
                 echo 'Exception:', $e->getMessage(), "\n";
