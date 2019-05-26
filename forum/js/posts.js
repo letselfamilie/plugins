@@ -418,6 +418,24 @@ $(function () {
                 $node.find('.post-text').attr('style', 'padding-bottom:8px;');
             });
 
+            $node.on('click', '.report', function () {
+                $.ajax({
+                    url: url_object.ajax_url,
+                    type: 'POST',
+                    data: {
+                        action: 'add_post_report',
+                        user_to: data.post_id
+                    },
+                    success: function (res) {
+                        console.log(res);
+                        console.log("REPORTED");
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+
             $node.on('click', '.save-butt', function () {
                 var textarea = $node.find('.edit-textarea').val();
                 if (textarea.trim() !== '') {
