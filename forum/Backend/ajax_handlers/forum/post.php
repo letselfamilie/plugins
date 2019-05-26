@@ -85,6 +85,12 @@ function add_post(){
                                                              FROM {$wpdb->prefix}f_topics
                                                              WHERE topic_id = $topic_id;"));
 
+            $response_to = $wpdb->get_row("SELECT user_id, post_message
+                                             FROM {$wpdb->prefix}f_topics
+                                             WHERE topic_id = $response_to;");
+
+            $user_response = get_userdata($response_to->user_id);
+
             global $ultimatemember;
 
             new_post_mail($user_topic_owner->user_email,
@@ -94,7 +100,9 @@ function add_post(){
                                                    FROM {$wpdb->prefix}f_topics
                                                    WHERE topic_id = $topic_id;")),
                             get_site_url() . "/posts/?topic_id=$topic_id",
-                          $is_anonym ?  um_get_default_avatar_uri() : get_avatar_url($user_id));
+                            $is_anonym ?  um_get_default_avatar_uri() : get_avatar_url($user_id),
+                            $user_response->user_login,
+                            $response_to->post_message);
 
 
             if (check_censor($post_message)) {
