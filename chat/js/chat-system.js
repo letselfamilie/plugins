@@ -23,6 +23,7 @@ $(function () {
     connectSocket();
 });
 
+
 function addNotification(title, text, photo, rounded = true) {
     $('.message-pop-n').remove();
 
