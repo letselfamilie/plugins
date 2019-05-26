@@ -131,7 +131,6 @@ function connectSocket() {
             let dial_id = data.dialog_id;
             let photo = url_object.plugin_directory + '/images/bad_word.swg';
 
-
             addNotification("BAD WORD", from + ': ' + mess, photo)
         }
     };
