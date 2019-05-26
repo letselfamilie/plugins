@@ -264,13 +264,14 @@ function loadChat(mes) {
                 }));
 
                 $("#"+d_id).detach();
+                $(".contact-profile").addClass("hidden");
+                $(".message-input").addClass("hidden");
                 var idDialog = searchObjKey(mes, d_id);
                 delete mes[idDialog];
                 for(var i=0; i< mes.length; i++)
                 {
                     console.log(mes[i]);
                 }
-
             }
         });
 
