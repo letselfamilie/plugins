@@ -186,8 +186,8 @@ class ChatSocket implements MessageComponentInterface
                 case 'notification':
                     $type = $data->type;
                     $messageForUser = array();
-                    if ($type == 'bad_word') {
 
+                    if ($type == 'bad_word') {
                         if(isset($data->user_login))
                             $user_login = $data->user_login;
                         else{
@@ -673,6 +673,8 @@ class ChatSocket implements MessageComponentInterface
 
         $sqlQuery = "";
         if ($dialog_type == 'employee_chat') {
+            $topic = str_replace("'", "\'", $topic);
+
             $sqlQuery = "INSERT INTO wp_c_dialogs (user1_id, employee_id, is_employee_chat, dialog_topic) 
                      VALUES (
                         " . $userIdFrom . ",
