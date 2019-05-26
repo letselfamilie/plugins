@@ -192,7 +192,7 @@ class ChatSocket implements MessageComponentInterface
                         'employee' => $user_id_from,
                         'dialog_id' => $room_id,
                     );
-                    if ($this->redirectDialog($room_id, $user_id_from)) {
+                    if ($this->takeDialog($room_id, $user_id_from)) {
                         $message['state'] = 'success';
                         $messageToEmp['state'] = 'success';
                     } else {
@@ -233,8 +233,8 @@ class ChatSocket implements MessageComponentInterface
                 case "redirect_chat":
                     $new_employee_id = $data->new_employee;
                    // $new_employee_id = $this->getAvailableEmployeeId($user_id_from);
-                    if ($new_employee_id > -1) {
-                        if ($this->redirectDialog($room_id, $new_employee_id)) {
+                    if (isset($new_employee_id) && isset($user_id_from) && isset($room_id)) {
+                        if ($this->redirectDialog($room_id, $new_employee_id, $user_id_from)) {
                             $dialog_inf = $this->getDialog($room_id);
                             $message = array(
                                 'type' => 'redirect_chat',
@@ -652,7 +652,26 @@ class ChatSocket implements MessageComponentInterface
         }
     }
 
-    function redirectDialog($room_id, $new_employee_id)
+    function takeDialog($room_id, $new_employee_id){
+        $dbconn = DBHelper::connect();
+
+        $sqlQuery = "UPDATE  wp_c_dialogs 
+                     SET employee_id = " . $new_employee_id . "
+                     WHERE dialog_id = " . $room_id . ";";
+
+        try {
+            $dbconn->query($sqlQuery, \PDO::FETCH_ASSOC);
+            DBHelper::disconnect();
+            return true;
+        } catch (Exception $e) {
+            echo 'Exception:', $e->getMessage(), "\n";
+            echo $sqlQuery;
+            DBHelper::disconnect();
+            return false;
+        }
+    }
+
+    function redirectDialog($room_id, $new_employee_id, $old_employee_id)
     {
         $dbconn = DBHelper::connect();
 
@@ -662,6 +681,13 @@ class ChatSocket implements MessageComponentInterface
 
         try {
             $dbconn->query($sqlQuery, \PDO::FETCH_ASSOC);
+
+            $sqlQueryMessages = "UPDATE  wp_c_messages 
+                                 SET user_from_id = " . $new_employee_id . "
+                                 WHERE dialog_id = " . $room_id . " AND user_from_id = ".$old_employee_id.";";
+
+            $dbconn->query($sqlQueryMessages, \PDO::FETCH_ASSOC);
+
             DBHelper::disconnect();
             return true;
         } catch (Exception $e) {
