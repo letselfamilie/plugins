@@ -261,9 +261,17 @@ function loadChat(mes) {
                  command: 'redirect_chat',
                  dialog_id: d_id,
                  new_employee: strUser.value
-             }));
+                }));
+
+                $("#"+d_id).detach();
+                var idDialog = searchObjKey(mes, d_id);
+                delete mes[idDialog];
+                for(var i=0; i< mes.length; i++)
+                {
+                    console.log(mes[i]);
+                }
+
             }
-            document.location.reload();
         });
 
         $("#resolve-btn").click(function () {
