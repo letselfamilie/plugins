@@ -16,7 +16,7 @@ function new_post_mail($mail, $login, $text, $topic, $url, $photo, $reaction_to,
 
     $body = " <div style='display:none;'>$topic | $text </div>
         
-    <table id='posts' style='-webkit-tap-highlight-color:rgba(0, 0, 0, 0); border:1px solid rgba(0, 0, 0, 0.05); border-collapse:collapse; font-family:'Roboto Condensed', sans-serif; margin:0; padding:0; text-transform:none; width:100%' width='100%'>
+    <table id='posts' style='-webkit-tap-highlight-color:rgba(0, 0, 0, 0); border:1px solid rgba(0, 0, 0, 0.05); border-collapse:collapse; font-family:'Roboto Condensed', sans-serif; margin:0; padding:0; text-transform:none; width:100%; border: 1px solid rgba(0, 0, 0, 0.05);' width='100%; '>
     <tbody style='border-collapse:collapse'>
         <tr id='post-header' style='background-color:rgba(0, 0, 0, 0.05); color:rgba(0, 0, 0, 0.42); font-size:16px' bgcolor='rgba(0, 0, 0, 0.05)'>
             <th style='width:100px;border-bottom:1px solid rgba(0, 0, 0, 0.05); font-weight:200; height:30px; padding:0; text-align:center' height='30' align='center'>Author</th>
