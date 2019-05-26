@@ -566,8 +566,6 @@ function loadChat(mes) {
                 src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
             });
             sound.play();
-
-
         }
 
         if (data.type === "take_dialog")
@@ -611,7 +609,8 @@ function loadChat(mes) {
 
         if (data.type === "redirect_chat")
         {
-            console.log("GOT NEW CHAT");
+           //TODO accept redirected chat
+
         }
     };
 }
@@ -687,6 +686,7 @@ function addDialog(item, mes) {
     let dialog_topic = item.dialog_topic;
     let user1_id = item.user1_id;
     let user2_id = item.user2_id;
+    let without_employee = item.without_employee;
     let messages = (item.messages === null || item.messages === undefined) ? [] : item.messages;
 
     let is_closed = item.is_closed;
@@ -768,7 +768,12 @@ function addDialog(item, mes) {
 
         if(is_closed === '1'){
             insideDialogResolvedBanners();
+            $("#chat_options").addClass("hidden");
         }
+        else {
+            $("#chat_options").removeClass("hidden");
+        }
+
 
         if (idDialog !== undefined && idDialog !== null) {
 
@@ -827,7 +832,6 @@ function addDialog(item, mes) {
                 mes[idDialog].without_employee="0";
                 mes[idDialog].user2_id = user_object.id;
             }
-
         }
         scrollToBanner();
     });

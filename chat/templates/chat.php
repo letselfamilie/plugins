@@ -173,7 +173,7 @@ if(!is_user_logged_in()) {
             <img src="<?php echo PATH?>/images/question.png" alt="question"/>
             <p id="chat-title"></p>
 
-            <div class="btn-group dropleft float-right">
+            <div id="chat_options" class="btn-group dropleft float-right">
                 <button id="convOptions" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-bars"></i>
                 </button>
