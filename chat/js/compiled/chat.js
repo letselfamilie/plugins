@@ -228,28 +228,13 @@ function loadChat(mes) {
 
 
         $("#redirect_choose_consultant").click(function () {
+
             if(!($(".multi-collapse").hasClass("show")))
             {
-                $.ajax({
-                    url: url_object.ajax_url,
-                    type: 'POST',
-                    data: {
-                        action: 'get_employees',
-                        user_from_id: user_object.id
-                    },
-                    success: function (res) {
-                        console.log("Available employees: " + res);
-
-
-                        //JSON.parse();
-
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                });
-
-
+                conn.send(JSON.stringify({
+                    user_id_from: user_object.id,
+                    command: 'get_employees',
+                }));
             }
         });
 
@@ -571,6 +556,15 @@ function loadChat(mes) {
                 console.log("Error with receiving response to somebody taking the dialog");
             }
         }
+
+        if (data.type === "get_employees")
+        {
+            console.log("Employees that are online");
+        }
+
+
+
+
     };
 }
 
