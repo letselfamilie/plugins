@@ -87,9 +87,9 @@ function add_post()
 
             try {
                 $wpdb->query($sqlQuery);
-                header("Content-Length: ".ob_get_length());
-                header("Connection: close");
-                flush();
+//                header("Content-Length: ".ob_get_length());
+//                header("Connection: close");
+//                flush();
                 $user_info = get_userdata($user_id);
                 $user_topic_owner = get_userdata($wpdb->get_var("SELECT user_id
                                                              FROM {$wpdb->prefix}f_topics
@@ -131,12 +131,13 @@ function add_post()
                     $messageToSocket['user_login'] = $user_info->user_login;
                     $messageToSocket['message_text'] = $post_message;
 
-                    $conn->on('message', function ($msg) use ($conn) {
-                        echo "Received: {$msg}\n";
-                        $conn->close();
-                    });
+//                    $conn->on('message', function ($msg) use ($conn) {
+//                        echo "Received: {$msg}\n";
+//                        $conn->close();
+//                    });
 
                     $conn->send(json_encode($messageToSocket));
+                    $conn->close();
                 }
             } catch (Exception $e) {
                 echo 'Exception:', $e->getMessage(), "\n";
