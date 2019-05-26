@@ -185,7 +185,9 @@ class ChatSocket implements MessageComponentInterface
             switch ($data->command) {
                 case 'notification':
                     $type = $data->type;
+                    $messageForUser = array();
                     if ($type == 'bad_word') {
+
                         if(isset($data->user_login))
                             $user_login = $data->user_login;
                         else{
@@ -193,6 +195,9 @@ class ChatSocket implements MessageComponentInterface
                             $user_login = $user_info['user_login'];
                         }
                         $message_text = $data->message_text;
+
+                        $messageForUser['command'] = 'notification_user_resp';
+                        $messageForUser['type'] = 'bad_word';
 
                         $message = array(
                             'command' => 'notification',
@@ -207,8 +212,11 @@ class ChatSocket implements MessageComponentInterface
                             'command' => 'notification',
                             'type' => 'smth_else'
                         );
+
+                        $messageForUser['command'] = 'notification_user_resp';
+                        $messageForUser['type'] = 'smth_else';
                     }
-          //          $from->send(json_encode($message));
+                    $from->send(json_encode($messageForUser));
                     break;
 
                 case 'take_dialog':
