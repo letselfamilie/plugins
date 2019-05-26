@@ -120,6 +120,21 @@ function connectSocket() {
             // });
             // sound.play();
         }
+
+        if (data.type === "bad_word") {
+            var sound = new Howl({
+                src: ['http://178.128.202.94/wp-content/uploads/2019/05/warning.wav']
+            });
+            sound.play();
+
+            let from = data.user_login_from;
+            let mess = data.message_text;
+            let dial_id = data.dialog_id;
+            let photo = url_object.plugin_directory + '/images/bad_word.swg';
+
+
+            addNotification("BAD WORD", from + ': ' + mess, photo)
+        }
     };
 }
 },{"ejs":3,"howler":6}],2:[function(require,module,exports){
