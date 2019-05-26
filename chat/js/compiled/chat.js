@@ -264,7 +264,7 @@ function loadChat(mes) {
                  new_employee: strUser.value
              }));
             }
-
+            location.reload(true);
         });
 
         $("#resolve-btn").click(function () {
@@ -317,8 +317,8 @@ function loadChat(mes) {
 
 
         });
-        return false;
 
+        return false;
     };
 
     conn.onmessage = function (e) {
