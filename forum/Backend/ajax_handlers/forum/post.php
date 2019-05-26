@@ -91,7 +91,8 @@ function add_post(){
                           censor($wpdb->get_var("SELECT topic_name
                                                    FROM {$wpdb->prefix}f_topics
                                                    WHERE topic_id = $topic_id;")),
-                            get_site_url() . "/posts/?topic_id=$topic_id");
+                            get_site_url() . "/posts/?topic_id=$topic_id",
+                          $is_anonym ?  get_site_url() . '/wp-content/plugins/ultimate-member/assets/img/default_avatar.jpg' : get_avatar_url($user_id));
 
 
             if (check_censor($post_message)) {
