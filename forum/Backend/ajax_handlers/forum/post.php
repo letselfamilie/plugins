@@ -42,8 +42,8 @@ add_action('wp_ajax_' . 'add_post_report', 'add_post_report');
 add_action('wp_ajax_nopriv_' . 'add_post_report', 'add_post_report');
 
 
-
-function add_report_to_db($post_id){
+function add_report_to_db($post_id)
+{
     global $wpdb;
 
     $sqlQuery = "INSERT INTO {$wpdb->prefix}reports  (post_id, message_id, create_timestamp) 
@@ -59,18 +59,60 @@ function add_report_to_db($post_id){
 
 function add_post_report()
 {
-    $post_id = $_POST['post_id'];
-    add_report_to_db($post_id);
-    die;
+    header("Content-Length: " . ob_get_length());
+    header("Connection: close");
+    flush();
+
+
+    \Ratchet\Client\connect('ws://178.128.202.94:8000')->then(function ($conn) {
+        global $wpdb;
+        $post_id = $_POST['post_id'];
+        $sqlQuery = "SELECT * FROM {$wpdb->prefix}f_posts WHERE post_id = $post_id";
+
+        try {
+            $post = $wpdb->get_row($sqlQuery);
+
+            echo 'reported | ';
+            $user_info = get_userdata($post->user_id);
+
+            echo "Message " . $post->post_message;
+
+            add_report_to_db($post_id);
+
+            $messageToSocket = array();
+            $messageToSocket['command'] = 'notification';
+            $messageToSocket['type'] = 'report';
+            $messageToSocket['user_id_from'] = $post->user_id;
+            $messageToSocket['user_login'] = $user_info->user_login;
+            $messageToSocket['message_text'] = $post->post_message;
+
+//                    $conn->on('message', function ($msg) use ($conn) {
+//                        echo "Received: {$msg}\n";
+//                        $conn->close();
+//                    });
+
+            $conn->send(json_encode($messageToSocket));
+
+        } catch (Exception $e) {
+            echo 'Exception:', $e->getMessage(), "\n";
+            echo $sqlQuery;
+        }
+
+        $conn->close();
+    }, function ($e) {
+        echo "Could not connect: {$e->getMessage()}\n";
+    });
 }
 
 
 //add new post
 function add_post()
 {
-    header("Content-Length: ".ob_get_length());
+    header("Content-Length: " . ob_get_length());
     header("Connection: close");
     flush();
+
+
     \Ratchet\Client\connect('ws://178.128.202.94:8000')->then(function ($conn) {
         global $wpdb;
         $response_to = $_POST['response_to'];

@@ -187,7 +187,7 @@ class ChatSocket implements MessageComponentInterface
                     $type = $data->type;
                     $messageForUser = array();
 
-                    if ($type == 'bad_word') {
+                    if ($type == 'bad_word' || $type = 'report') {
                         if(isset($data->user_login))
                             $user_login = $data->user_login;
                         else{
@@ -201,7 +201,7 @@ class ChatSocket implements MessageComponentInterface
 
                         $message = array(
                             'command' => 'notification',
-                            'type' => 'bad_word',
+                            'type' => $type,
                             'user_id_from' => $user_id_from,
                             'user_login_from' => $user_login,
                             'message_text' => $message_text
