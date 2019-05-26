@@ -208,7 +208,7 @@ function loadChat(mes) {
 
             var m = {user_from_id: user_object.id, message_body: message, create_timestamp: time};
 
-            addMes(m, myprofilelogo, "0",false);
+            addMes(m, myprofilelogo, "0");
 
             let key = parseInt(searchObjKey(mes, d_id));
 
@@ -368,7 +368,7 @@ function loadChat(mes) {
 
                 //adding message in the open chat
                 var m = {user_from_id: from, message_body: mess, create_timestamp: time};
-                addMes(m, $('.conversation.active').find("img").attr('src'), is_chat_with_employee, false);
+                addMes(m, $('.conversation.active').find("img").attr('src'), is_chat_with_employee);
 
                 isRead = "1";
 
@@ -868,7 +868,7 @@ function addDialog(item, mes) {
                         }, 5000);
                     }
                 }
-                addMes(mes[idDialog].messages[i], user2logo, is_employee_chat, user2_id);
+                addMes(mes[idDialog].messages[i], user2logo, is_employee_chat);
             }
 
             /*IF EMPLOYEE TAKES DIALOG WHICH IS IN LINE (NOBODY'S)*/
@@ -896,13 +896,9 @@ function addDialog(item, mes) {
     $("#conversations ul").prepend($node);
 }
 
-function addMes(item, user2logo, is_employee_chat, prepend, user2_id) {
+function addMes(item, user2logo, is_employee_chat, prepend) {
     var st = ((item.user_from_id === user_object.id) ? "sent" : "replies");
 
-    if(user2_id)
-    {
-        st = ((item.user_from_id === user2_id) ? "replies" : "sent");
-    }
 
     var png = ((item.user_from_id === user_object.id) ? myprofilelogo : user2logo);
 
