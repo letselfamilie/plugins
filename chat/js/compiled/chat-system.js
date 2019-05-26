@@ -11,9 +11,19 @@ let notification = ejs.compile("<div class=\"message-pop-n\">\r\n    <% if (phot
 let conn;
 
 $(function () {
+    if(typeof AudioContext != "undefined" || typeof webkitAudioContext != "undefined") {
+        var resumeAudio = function() {
+            if(typeof g_WebAudioContext == "undefined" || g_WebAudioContext == null) return;
+            if(g_WebAudioContext.state == "suspended") g_WebAudioContext.resume();
+            document.removeEventListener("click", resumeAudio);
+        };
+        document.addEventListener("click", resumeAudio);
+    }
+
     if (wp_object.is_post == 0) addChatBox();
     connectSocket();
 });
+
 
 function addNotification(title, text, photo, rounded = true) {
     $('.message-pop-n').remove();
