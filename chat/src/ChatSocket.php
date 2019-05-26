@@ -151,21 +151,24 @@ class ChatSocket implements MessageComponentInterface
             $this->queryObj[$queryPair[0]] = $queryPair[1];
         }
 
-        $user_id = trim($this->queryObj['userId']);
+        if (isset($this->queryObj['userId'])) {
+            $user_id = trim($this->queryObj['userId']);
 
-        if (!array_key_exists($user_id, $this->users_id))
-            $this->users_id[$user_id] = array();
-        $this->users_id[$user_id][] = $conn->resourceId;
+            if (!array_key_exists($user_id, $this->users_id))
+                $this->users_id[$user_id] = array();
 
-        if ($this->queryObj['consultan'] == '1') {
-            if (!array_key_exists($user_id, $this->consultants_id))
-                $this->consultants_id[$user_id] = array();
+            $this->users_id[$user_id][] = $conn->resourceId;
 
-            $this->consultants_id[$user_id][] = $conn->resourceId;
-            echo "Consultant connected " . $user_id . "\n";
+            if ($this->queryObj['consultan'] == '1') {
+                if (!array_key_exists($user_id, $this->consultants_id))
+                    $this->consultants_id[$user_id] = array();
+
+                $this->consultants_id[$user_id][] = $conn->resourceId;
+                echo "Consultant connected " . $user_id . "\n";
+            }
+
+            echo "User connected " . $user_id . "\n";
         }
-
-        echo "User connected " . $user_id . "\n";
         echo "New connection! ({$conn->resourceId})\n";
     }
 
@@ -180,6 +183,22 @@ class ChatSocket implements MessageComponentInterface
             $user_id_from = $data->user_id_from;
 
             switch ($data->command) {
+                case 'notification':
+                    $type = $data->type;
+                    if($type == 'bad_word'){
+                        $message = array(
+                          'command'=>'notification',
+                          'type' => 'bad_word'
+                        );
+                    }else{
+                        $message = array(
+                            'command'=>'notification',
+                            'type' => 'smth_else'
+                        );
+                    }
+                    $from->send(json_encode($message));
+                    break;
+
                 case 'take_dialog':
                     $message = array(
                         'type' => 'take_dialog',
@@ -324,6 +343,13 @@ class ChatSocket implements MessageComponentInterface
                     $from->send(json_encode($message));
                     break;
             }
+        }
+        else{
+            $message = array(
+                'type' => 'default',
+                'message' => 'default action'
+            );
+            $from->send(json_encode($message));
         }
     }
 
