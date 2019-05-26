@@ -237,6 +237,10 @@ function loadChat(mes) {
 
             if(!($(".multi-collapse").hasClass("show")))
             {
+                var myNode = document.getElementById("consultantSelect");
+                while (myNode.firstChild) {
+                    myNode.removeChild(myNode.firstChild);
+                }
                 conn.send(JSON.stringify({
                     user_id_from: user_object.id,
                     command: 'get_employees',
@@ -582,7 +586,7 @@ function loadChat(mes) {
                     var line = '<option value="'+id+'">' +log + '</option>';
                     $(line).appendTo($("#consultantSelect"));
                 }
-                
+
             }
 
 
