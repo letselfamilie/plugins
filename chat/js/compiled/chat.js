@@ -254,7 +254,6 @@ function loadChat(mes) {
             var e = document.getElementById("consultantSelect");
             var strUser = e.options[e.selectedIndex].value;
 
-
             console.log("VAL: "+ strUser);
 
         });
