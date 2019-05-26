@@ -614,7 +614,6 @@ function loadChat(mes) {
         }
 
 
-
         if (data.type === "redirect_chat" && data.state==="success")
         {
            var dialog_id = data.dialog_id;
@@ -622,6 +621,8 @@ function loadChat(mes) {
            var last_message_timestamp =data.dialog_info.last_message_timestamp;
            var client_id = data.dialog_info.user_id;
            var messages = data.dialog_info.messages;
+
+           console.log("Chat is redirected");
 
             if($('#'+dialog_id).length>0)
             {
@@ -652,7 +653,6 @@ function loadChat(mes) {
 
             mes[Object.keys(mes).length] = newDialog;
             addDialog(newDialog, mes);
-
 
             if ($("#"+dialog_id).find(".badge-counter").length === 0) {
                 let badge = '<span class="badge badge-counter ml-2">redirected</span>';
@@ -734,17 +734,6 @@ function fillChat(mes) {
 }
 
 function addDialog(item, mes) {
-
-    var newDialog = {
-        //dialog_id: dialog_id,
-        //is_employee_chat: "1",
-        //dialog_topic: topic,
-        //user1_id: "" + user_object.id,
-        //user2_id: client_id,
-        //second_user_nickname: null,
-        //second_user_photo: url_object.plugin_directory + "/images/question.png",
-        messages: messages
-    };
 
 
     let dialog_id = item.dialog_id;
