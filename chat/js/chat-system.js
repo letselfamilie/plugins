@@ -145,6 +145,7 @@ function connectSocket() {
             addNotification("BAD WORD", from + ': ' + mess, photo, false)
         }
 
+
         if (data.type === "report") {
             var sound = new Howl({
                 src: ['http://178.128.202.94/wp-content/uploads/2019/05/warning.wav']
