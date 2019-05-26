@@ -424,7 +424,7 @@ $(function () {
                     type: 'POST',
                     data: {
                         action: 'add_post_report',
-                        user_to: data.post_id
+                        post_id: data.post_id
                     },
                     success: function (res) {
                         console.log(res);

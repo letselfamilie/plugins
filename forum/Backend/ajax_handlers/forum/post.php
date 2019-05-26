@@ -50,7 +50,7 @@ function add_report_to_db($post_id){
                   VALUES ({$post_id}, NULL, CURRENT_TIMESTAMP);";
     try {
         $wpdb->query($sqlQuery);
-        echo 'R';
+        echo ' - ' . $sqlQuery;
     } catch (Exception $e) {
         echo 'Exception:', $e->getMessage(), "\n";
         echo $sqlQuery;
@@ -121,6 +121,7 @@ function add_post()
                                 WHERE user_id = $user_id AND topic_id = $topic_id
                                 ORDER BY create_timestamp DESC
                                 LIMIT 1");
+
                     add_report_to_db($id);
 
                     $messageToSocket = array();
