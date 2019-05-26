@@ -252,7 +252,8 @@ function loadChat(mes) {
         $("#redirect_btn").click(function () {
 
             var e = document.getElementById("consultantSelect");
-            var strUser = e.options[e.selectedIndex].value;
+            //var strUser = e.options[e.selectedIndex].value;
+            var strUser = e.options[e.selectedIndex];
             var d_id = parseInt($('.conversation.active').attr("id"));
             console.log("val "+ strUser);
 
@@ -261,7 +262,6 @@ function loadChat(mes) {
                 dialog_id: d_id,
                 new_employee: strUser
             }));*/
-
         });
 
         $("#resolve-btn").click(function () {
