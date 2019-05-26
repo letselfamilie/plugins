@@ -250,7 +250,6 @@ function loadChat(mes) {
         });
 
         $("#redirect_btn").click(function () {
-
             var e = document.getElementById("consultantSelect");
             //var strUser = e.options[e.selectedIndex].value;
             var strUser = e.options[e.selectedIndex];
@@ -264,7 +263,7 @@ function loadChat(mes) {
                  new_employee: strUser.value
              }));
             }
-
+            document.location.reload();
         });
 
         $("#resolve-btn").click(function () {
@@ -317,8 +316,8 @@ function loadChat(mes) {
 
 
         });
-        return false;
 
+        return false;
     };
 
     conn.onmessage = function (e) {
