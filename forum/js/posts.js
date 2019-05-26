@@ -437,6 +437,7 @@ $(function () {
                 });
             });
 
+
             $node.on('click', '.save-butt', function () {
                 var textarea = $node.find('.edit-textarea').val();
                 if (textarea.trim() !== '') {
