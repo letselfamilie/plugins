@@ -46,7 +46,7 @@ add_action('wp_ajax_nopriv_' . 'add_post_report', 'add_post_report');
 function add_report_to_db($post_id){
     global $wpdb;
 
-    $sqlQuery = "INSERT INTO {$wpdb->prefix}reports  ('post_id', 'message_id', 'create_timestamp') 
+    $sqlQuery = "INSERT INTO {$wpdb->prefix}reports  (post_id, message_id, create_timestamp) 
                   VALUES ({$post_id}, NULL, CURRENT_TIMESTAMP);";
     try {
         $wpdb->query($sqlQuery);
