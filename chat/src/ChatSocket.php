@@ -723,9 +723,12 @@ class ChatSocket implements MessageComponentInterface
                               LIMIT " . ($to_message - $from_message + 1) . " 
                               OFFSET $from_message;";
 
-            foreach (array_reverse($dbconn->query($sqlQueryMessages, \PDO::FETCH_ASSOC)) as $message) {
-                $dialog['messages'][] = $message;
-            }
+            $stmt = $dbconn->prepare($sqlQueryMessages);
+            $stmt->execute();
+            $messages = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            $dialog['messages'] = $messages;
+      //      foreach (array_reverse($dbconn->query($sqlQueryMessages, \PDO::ARRAY_A)) as $message)
+     //       }
 
         } catch (Exception $e) {
             echo 'Exception:', $e->getMessage(), "\n";
