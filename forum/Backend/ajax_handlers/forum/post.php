@@ -77,9 +77,9 @@ function add_post(){
 
         try {
             $wpdb->query($sqlQuery);
-            header("Content-Length: ".ob_get_length());
-            header("Connection: close");
-            flush();
+//            header("Content-Length: ".ob_get_length());
+//            header("Connection: close");
+//            flush();
             $user_info = get_userdata($user_id);
             $user_topic_owner = get_userdata($wpdb->get_var("SELECT user_id
                                                              FROM {$wpdb->prefix}f_topics
@@ -106,18 +106,28 @@ function add_post(){
 
 
             if (check_censor($post_message)) {
-
-                //
-                // TODO SEND WARNING
-                // connect to socket
-
                 $id = $wpdb->get_var("SELECT post_id FROM {$wpdb->prefix}f_posts 
                                 WHERE user_id = $user_id AND topic_id = $topic_id
                                 ORDER BY create_timestamp DESC 
                                 LIMIT 1");
                 add_post_report($id);
-            }
 
+
+                //
+                // TODO SEND WARNING
+                // connect to socket
+
+                \Ratchet\Client\connect('ws://178.128.202.94:8000')->then(function($conn) {
+                    $conn->on('message', function($msg) use ($conn) {
+                        echo "Received: {$msg}\n";
+                        $conn->close();
+                    });
+
+                    $conn->send('Hello World!');
+                }, function ($e) {
+                    echo "Could not connect: {$e->getMessage()}\n";
+                });
+            }
         }catch (Exception $e) {
             echo 'Exception:', $e->getMessage(), "\n";
             echo $sqlQuery;
