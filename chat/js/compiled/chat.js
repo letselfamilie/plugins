@@ -254,12 +254,13 @@ function loadChat(mes) {
             var e = document.getElementById("consultantSelect");
             var strUser = e.options[e.selectedIndex].value;
             var d_id = parseInt($('.conversation.active').attr("id"));
+            console.log("val "+ strUser);
 
-            conn.send(JSON.stringify({
+            /*conn.send(JSON.stringify({
                 command: 'redirect_chat',
                 dialog_id: d_id,
                 new_employee: strUser
-            }));
+            }));*/
 
         });
 
