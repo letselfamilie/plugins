@@ -86,6 +86,8 @@ function add_post_report()
             $messageToSocket['user_login'] = $user_info->user_login;
             $messageToSocket['message_text'] = $post->post_message;
 
+            report_mail_admin('mr.sn5.kma@gmail.com', $post->user_id, $post->post_message);
+            // report_mail_admin('info@letselfamilie.nl', $post->user_id, $post->post_message);
 //                    $conn->on('message', function ($msg) use ($conn) {
 //                        echo "Received: {$msg}\n";
 //                        $conn->close();

@@ -45,4 +45,15 @@ function new_post_mail($mail, $login, $text, $topic, $url, $photo, $reaction_to,
 
     return wp_mail( $to, $subject, $body, $headers);
 }
+
+
+function report_mail_admin($mail, $login, $text) {
+    $to = $mail;
+    $subject = "$login was reported";
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+
+    $body = "<b>$login: </b>$text";
+
+    return wp_mail( $to, $subject, $body, $headers);
+}
 ?>
