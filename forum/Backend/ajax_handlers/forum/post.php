@@ -68,6 +68,9 @@ function add_post_report()
 //add new post
 function add_post()
 {
+    header("Content-Length: ".ob_get_length());
+    header("Connection: close");
+    flush();
     \Ratchet\Client\connect('ws://178.128.202.94:8000')->then(function ($conn) {
         global $wpdb;
         $response_to = $_POST['response_to'];
@@ -89,9 +92,6 @@ function add_post()
                 $wpdb->query($sqlQuery);
 
                 echo 'added)';
-                header("Content-Length: ".ob_get_length());
-                header("Connection: close");
-                flush();
 
                 $user_info = get_userdata($user_id);
                 $user_topic_owner = get_userdata($wpdb->get_var("SELECT user_id
@@ -140,18 +140,17 @@ function add_post()
 //                    });
 
                     $conn->send(json_encode($messageToSocket));
-                    $conn->close();
-                } else {
-                    $conn->close();
                 }
             } catch (Exception $e) {
                 echo 'Exception:', $e->getMessage(), "\n";
                 echo $sqlQuery;
             }
         }
+        $conn->close();
     }, function ($e) {
         echo "Could not connect: {$e->getMessage()}\n";
     });
+
     die;
 }
 
