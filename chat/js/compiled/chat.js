@@ -688,7 +688,6 @@ function resolvedBage($appendNode) {
     var badge = '<span class="badge badge-resolved ml-2">R</span>';
     $(badge).appendTo($appendNode);
 }
-////
 
 function newBanner(message) {
     var html_banner = '<li id="banner" class="mes-break">' +
