@@ -259,7 +259,8 @@ function loadChat(mes) {
                 conn.send(JSON.stringify({
                  command: 'redirect_chat',
                  dialog_id: d_id,
-                 new_employee: strUser.value
+                 new_employee: strUser.value,
+                 user_id_from: user_object.id
                 }));
 
                 $("#"+d_id).detach();
