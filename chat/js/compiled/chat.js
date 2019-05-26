@@ -249,7 +249,15 @@ function loadChat(mes) {
             }
         });
 
+        $("#resolve-btn").click(function () {
 
+            var e = document.getElementById("redirect_btn");
+            var strUser = e.options[e.selectedIndex].value;
+
+            
+            console.log("VAL: "+ strUser);
+
+        });
 
         $("#resolve-btn").click(function () {
             var d_id = parseInt($('.conversation.active').attr("id"));

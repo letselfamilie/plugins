@@ -199,7 +199,7 @@ if(!is_user_logged_in()) {
                     <option value="4">Consultant 4</option>
                     <option value="5">Consultant 5</option>-->
                 </select>
-                <div class="input-group-append">
+                <div id="redirect_btn" class="input-group-append">
                     <button type="submit">Redirect</button>
                 </div>
             </form>
