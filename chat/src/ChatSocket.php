@@ -719,7 +719,7 @@ class ChatSocket implements MessageComponentInterface
             $sqlQueryMessages = "SELECT *
                               FROM wp_c_messages
                               WHERE dialog_id = '" . $roomId . "'
-                              ORDER BY create_timestamp DESC
+                              ORDER BY create_timestamp ASC
                               LIMIT " . ($to_message - $from_message + 1) . " 
                               OFFSET $from_message;";
 
