@@ -269,7 +269,8 @@ function loadChat(mes) {
                 $(".contact-profile").css('display', 'none');
                 $(".messages").css('display', 'none');
                 $(".message-input").css('display', 'none');
-
+                $(".redirect.multi-collapse").removeClass("show");
+                
                 var idDialog = searchObjKey(mes, d_id);
                 delete mes[idDialog];
                 for(var i=0; i< mes.length; i++)
