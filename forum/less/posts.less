@@ -356,6 +356,7 @@ body {
           .label-anonym {
             font-variant: all-small-caps;
             color: #333333;
+            text-align: right !important;
             //position: absolute;
             //bottom: 17px;
             //right: 136px;font-size: 12px;font-style: italic;color: darkgray;
@@ -434,6 +435,19 @@ body {
   font-size: 30px;
 }
 
+
+
+@media screen and (max-width: 400px) {
+  #top-butt {
+    display: none !important;
+  }
+}
+
+//@media screen and (max-width: 350px) {
+//  #down-butt {
+//    display: none !important;
+//  }
+//}
 
 @media (hover: none) {
   tr:hover {
@@ -601,14 +615,14 @@ body {
 }
 #top-butt {
   bottom: 20px;
-  left: 80px; /* Place the button 30px from the right */
-  z-index: 10000;
+  left: 70px; /* Place the button 30px from the right */
+  z-index: 199;
 }
 
 #down-butt {
   bottom: 20px;
-  left: 30px; /* Place the button 30px from the right */
-  z-index: 10000;
+  left: 20px; /* Place the button 30px from the right */
+  z-index: 199;
 }
 
 #top-butt:hover, #down-butt:hover {
@@ -617,7 +631,7 @@ body {
 
 
 #floating-enter {
-  z-index: 1000;
+  z-index: 198;
   min-height: 160px;
   width: 100px;
   position: fixed;
@@ -708,6 +722,7 @@ body {
         .label-anonym {
           font-variant: all-small-caps;
           color: #333333;
+          text-align: right !important;
           //position: absolute;
           //bottom: 17px;
           //right: 136px;font-size: 12px;font-style: italic;color: darkgray;

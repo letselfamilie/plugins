@@ -3,7 +3,15 @@ let fs = require('fs');
 let ejs = require('ejs');
 
 const {Howl, Howler} = require('howler');
+Date.prototype.ddmmyyyyhhmm = function() {
+    var mm = this.getMonth() + 1;
+    var dd = this.getDate();
 
+    var HH = this.getHours();
+    var MM = this.getMinutes();
+    return ((dd>9 ? '' : '0') + dd) + '-' + ((mm>9 ? '' : '0') + mm) +  '-' + this.getFullYear() + ' ' +
+        ((HH > 9 ? '' : '0') + HH) + ':' + ((MM > 9 ? '' : '0') + MM);
+};
 // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
 let vh = window.innerHeight * 0.01;
 // Then we set the value in the --vh custom property to the root of the document
@@ -25,7 +33,6 @@ window.addEventListener('resize', () => {
 $(function () {
     getDialogs();
 });
-
 
 function getDialogs() {
     $.ajax({
@@ -184,7 +191,9 @@ function loadChat(mes) {
                 user_id_from: user_object.id,
                 command: 'message',
                 dialog_id: d_id,
-                message: message
+                message: message,
+                photo: user_object.photo,
+                from_login: user_object.username
             }));
 
             var today = new Date();
@@ -224,8 +233,6 @@ function loadChat(mes) {
 
         }
 
-
-
         $("#redirect_choose_consultant").click(function () {
 
             if(!($(".multi-collapse").hasClass("show")))
@@ -240,17 +247,12 @@ function loadChat(mes) {
 
 
         $("#resolve-btn").click(function () {
-            var badge = '<span class="badge badge-resolved ml-2">Resolved</span>';
-            $(badge).appendTo($("#chat-title"));
+            var d_id = parseInt($('.conversation.active').attr("id"));
 
-            badge = '<span class="badge badge-resolved ml-2">R</span>';
-            $(badge).appendTo($(".conversation.active .wrap .meta .name"));
-
-            newBanner("This problem has been resolved");
-
-            // TODO: deprive of the possibility to send messages in a resolved dialog
-            // TODO: add this info to server
-
+            conn.send(JSON.stringify({
+                command: 'close_chat',
+                dialog_id: d_id
+            }));
         });
 
         $("#btn-newmessage").click(function () {
@@ -286,7 +288,8 @@ function loadChat(mes) {
                 }));
 
                 console.log("Request of creating new dialog has been sent to server");
-
+                $('#inputTopic').val('');
+                $('#inputFirstMessage').val('');
             } else (alert("Write your issue, please"))
 
             // TODO: check form for being filled in
@@ -300,6 +303,14 @@ function loadChat(mes) {
     conn.onmessage = function (e) {
         console.log(e.data);
         var data = JSON.parse(e.data);
+
+        if(data.type === "close_chat"){
+            if(data.state === "success"){
+                resolvedDialogBanners();
+            } else{
+                alert("Error occurred");
+            }
+        }
 
         if (data.type === "message") {
 
@@ -567,6 +578,26 @@ function loadChat(mes) {
     };
 }
 
+//RESOLVED DIALOG BANNERS
+function resolvedDialogBanners() {
+    insideDialogResolvedBanners();
+    resolvedBage($(".conversation.active .wrap .meta .name"));
+}
+
+function insideDialogResolvedBanners() {
+    var badge = '<span class="badge badge-resolved ml-2">Resolved</span>';
+    $(badge).appendTo($("#chat-title"));
+
+    newBanner("This problem has been resolved");
+    $('.message-input').css('display', 'none');
+}
+
+function resolvedBage($appendNode) {
+    var badge = '<span class="badge badge-resolved ml-2">R</span>';
+    $(badge).appendTo($appendNode);
+}
+////
+
 function newBanner(message) {
     var html_banner = '<li id="banner" class="mes-break">' +
         '<p>' + message + '</p></li>';
@@ -620,6 +651,8 @@ function addDialog(item, mes) {
     let user2_id = item.user2_id;
     let messages = (item.messages === null || item.messages === undefined) ? [] : item.messages;
 
+    let is_closed = item.is_closed;
+
     let img = (is_employee_chat === "1") ? url_object.plugin_directory + "/images/question.png" : item.second_user_photo;
     let name = (is_employee_chat === "1") ? ((dialog_topic === null) ? item.second_user_nickname : dialog_topic) : item.second_user_nickname;
     name = (name === null || name === "" || name === undefined) ? "Question" : name;
@@ -660,6 +693,9 @@ function addDialog(item, mes) {
         }
     }
 
+    if(is_closed === '1'){
+        resolvedBage($node.find(".wrap .meta .name"));
+    }
 
     $node.click(function () {
         var newMessages = false;
@@ -692,7 +728,9 @@ function addDialog(item, mes) {
 
         $('.messages ul').empty();
 
-
+        if(is_closed === '1'){
+            insideDialogResolvedBanners();
+        }
 
         if (idDialog !== undefined && idDialog !== null) {
 
@@ -766,7 +804,7 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
 
     if (is_employee_chat === "1" && item.user_from_id !== user_object.id) png = url_object.plugin_directory + "/images/logo.png";
 
-    let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: item.create_timestamp}));
+    let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time:  new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
 
     if (prepend) {
         $('.messages ul').prepend($node);

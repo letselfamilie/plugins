@@ -223,7 +223,11 @@ class ChatSocket implements MessageComponentInterface
                     $emp_ids = array_keys($this->consultants_id);
                     unset($emp_ids[$user_id_from]);
                     $emp_inf = $this->getEmployeesInf($emp_ids);
-                    $from->send(json_encode($emp_inf));
+                    $message = array(
+                        'type' => 'get_employees',
+                        'employees_information' => $emp_inf
+                    );
+                    $from->send(json_encode($message));
                     break;
 
                 case "redirect_chat":
@@ -271,7 +275,7 @@ class ChatSocket implements MessageComponentInterface
                     $time = date("Y-m-d H:i:s");
                     $message = $data->message;
 
-                    $this->sendMessage($conn_id, $user_id_from, $room_id, $message, $time);
+                    $this->sendMessage($conn_id, $user_id_from, $room_id, $message, $time, $data->photo, $data->from_login);
                     $this->sendUserStoppedTypingMessage($user_id_from, $room_id);
                     break;
 
@@ -548,7 +552,7 @@ class ChatSocket implements MessageComponentInterface
         $this->sendDataToClients($userFromId, $clients, $dataPacket);
     }
 
-    function sendMessage($conn_id, $clientFromId, $roomId, $message, $time)
+    function sendMessage($conn_id, $clientFromId, $roomId, $message, $time, $photo, $from_username)
     {
         echo "ROOMID " . $roomId;
         $dialog_inf = $this->getDialogInfo($roomId);
@@ -559,7 +563,9 @@ class ChatSocket implements MessageComponentInterface
             'from' => $clientFromId,
             'message' => $message,
             'time' => $time,
-            'is_employee_chat' => $dialog_inf['is_employee_chat']
+            'is_employee_chat' => $dialog_inf['is_employee_chat'],
+            'photo' => $photo,
+            'from_username' => $from_username
         );
 
 
@@ -669,7 +675,7 @@ class ChatSocket implements MessageComponentInterface
         $dbconn = DBHelper::connect();
 
         $sqlQuery = "UPDATE  wp_c_dialogs 
-                     SET is_closed = '1'
+                     SET is_closed = 1
                      WHERE dialog_id = " . $room_id . ";";
 
         try {

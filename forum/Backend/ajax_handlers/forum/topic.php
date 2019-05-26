@@ -187,7 +187,7 @@ function delete_topic() {
         
 
         $sqlQuery = "DELETE FROM {$wpdb->prefix}f_topics 
-                     WHERE topic_id=".$topic_id." AND user_id=".$user_id.";";
+                     WHERE topic_id=$topic_id;";
         try {
             $wpdb->query($sqlQuery);
         }catch (Exception $e) {
