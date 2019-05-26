@@ -720,14 +720,14 @@ class ChatSocket implements MessageComponentInterface
             $sqlQueryMessages = "SELECT *
                               FROM wp_c_messages
                               WHERE dialog_id = '" . $roomId . "'
-                              ORDER BY create_timestamp ASC
+                              ORDER BY create_timestamp DESC
                               LIMIT " . ($to_message - $from_message + 1) . " 
                               OFFSET $from_message;";
 
             $stmt = $dbconn->prepare($sqlQueryMessages);
             $stmt->execute();
             $messages = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-            $dialog['messages'] = $messages;
+            $dialog['messages'] = array_reverse($messages);
       //      foreach (array_reverse($dbconn->query($sqlQueryMessages, \PDO::ARRAY_A)) as $message)
      //       }
 
