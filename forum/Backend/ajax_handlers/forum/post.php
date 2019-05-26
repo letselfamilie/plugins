@@ -85,6 +85,8 @@ function add_post(){
                                                              FROM {$wpdb->prefix}f_topics
                                                              WHERE topic_id = $topic_id;"));
 
+            global $ultimatemember;
+
             new_post_mail($user_topic_owner->user_email,
                           $is_anonym ? 'Anonym' : $user_info->user_login,
                           censor($post_message),
@@ -92,7 +94,7 @@ function add_post(){
                                                    FROM {$wpdb->prefix}f_topics
                                                    WHERE topic_id = $topic_id;")),
                             get_site_url() . "/posts/?topic_id=$topic_id",
-                          $is_anonym ?  get_site_url() . '/wp-content/plugins/ultimate-member/assets/img/default_avatar.jpg' : get_avatar_url($user_id));
+                          $is_anonym ?  um_get_default_avatar_uri() : get_avatar_url($user_id));
 
 
             if (check_censor($post_message)) {
