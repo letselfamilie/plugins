@@ -263,7 +263,7 @@ function loadChat(mes) {
                  new_employee: strUser.value
              }));
             }
-            location.reload(true);
+            document.location.reload(true);
         });
 
         $("#resolve-btn").click(function () {
