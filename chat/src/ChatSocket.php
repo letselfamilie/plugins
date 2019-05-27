@@ -255,7 +255,7 @@ class ChatSocket implements MessageComponentInterface
                             'state' => 'error'
                         );
                     }
-                    $from->send(json_encode($message));
+                    //$from->send(json_encode($message));
 
                     $clients = ($this->getDialogInfo($room_id))['users'];
                     $this->sendDataToClients($user_id_from, $clients, $message);
