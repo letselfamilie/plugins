@@ -150,16 +150,22 @@ function add_post()
 
                 global $ultimatemember;
 
-                new_post_mail($user_topic_owner->user_email,
-                    $is_anonym ? 'Anonym' : $user_info->user_login,
-                    censor($post_message),
-                    censor($wpdb->get_var("SELECT topic_name
+                $receive_not = get_user_meta( get_current_user_id(), "receive_notifications", true );
+                //$cond = ($receive_not['0'] == '0') ? 'kjkj' : 'uuuuuuu';
+
+                if(!isset($receive_not) || $receive_not[0] == 0){
+                    new_post_mail($user_topic_owner->user_email,
+                        $is_anonym ? 'Anonym' : $user_info->user_login,
+                        censor($post_message),
+                        censor($wpdb->get_var("SELECT topic_name
                                                    FROM {$wpdb->prefix}f_topics
                                                    WHERE topic_id = $topic_id;")),
-                    get_site_url() . "/posts/?topic_id=$topic_id",
-                    $is_anonym ? um_get_default_avatar_uri() : get_avatar_url($user_id),
-                    $user_response->user_login,
-                    $response_to->post_message);
+                        get_site_url() . "/posts/?topic_id=$topic_id",
+                        $is_anonym ? um_get_default_avatar_uri() : get_avatar_url($user_id),
+                        $user_response->user_login,
+                        $response_to->post_message);
+                }
+
 
                 if (check_censor($post_message)) {
                     echo "Message " . $post_message;
@@ -205,6 +211,7 @@ function get_forum_posts()
 
     $topic_id = $_POST['topic_id'];
     $user_id = $_POST['user_id'];
+
     $sqlQuery = "SELECT  p.create_timestamp, 
                          p.post_message, 
                          p.post_id, 
