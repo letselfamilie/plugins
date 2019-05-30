@@ -11,16 +11,17 @@ let notification = ejs.compile("<div class=\"message-pop-n\">\r\n    <% if (phot
 let conn;
 
 $(function () {
-    if(typeof AudioContext != "undefined" || typeof webkitAudioContext != "undefined") {
-        var resumeAudio = function() {
-            if(typeof g_WebAudioContext == "undefined" || g_WebAudioContext == null) return;
-            if(g_WebAudioContext.state == "suspended") g_WebAudioContext.resume();
+    if (typeof AudioContext != "undefined" || typeof webkitAudioContext != "undefined") {
+        var resumeAudio = function () {
+            if (typeof g_WebAudioContext == "undefined" || g_WebAudioContext == null) return;
+            if (g_WebAudioContext.state == "suspended") g_WebAudioContext.resume();
             document.removeEventListener("click", resumeAudio);
         };
         document.addEventListener("click", resumeAudio);
     }
 
     if (wp_object.is_post == 0) addChatBox();
+    console.log('is chat = ' + wp_object.is_chat + '--------------')
     connectSocket();
 });
 
@@ -80,7 +81,7 @@ function connectSocket() {
         $('#addNewDialog').click(function () {
             let topic = $("#inputTopic").val();
             let messageFirst = $("#inputFirstMessage").val();
-            messageFirst= (messageFirst===null || messageFirst===undefined)? "" : messageFirst;
+            messageFirst = (messageFirst === null || messageFirst === undefined) ? "" : messageFirst;
             if (topic !== "") {
                 // socket add dialog
                 conn.send(JSON.stringify({
@@ -105,12 +106,11 @@ function connectSocket() {
     };
 
 
-
     conn.onmessage = function (e) {
         console.log(e.data);
         var data = JSON.parse(e.data);
 
-        if (data.type === "message") {
+        if (data.type === "message" && wp_object.is_chat == 0) {
 
             var sound = new Howl({
                 src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
@@ -128,8 +128,7 @@ function connectSocket() {
         if (data.type === "new_chat") {
             let dialog_id = data.dialog_id;
             let dialog_type = data.dialog_type; //  employee_chat || user_chat
-            if(dialog_type==="employee_chat")
-            {
+            if (dialog_type === "employee_chat" && data.user_info_1.user_id == user_object.id) {
                 window.location.href = url_object.site_url + "/chat?dialog_id=" + dialog_id;
             }
 
@@ -150,7 +149,7 @@ function connectSocket() {
             let dial_id = data.dialog_id;
             let photo = wp_object.plugin_directory + '/images/bad_word.svg';
 
-            addNotification("BAD WORD", from + ': ' + mess, photo, url_object.site_url + '/wp-admin/admin.php?page=sn_report',false)
+            addNotification("BAD WORD", from + ': ' + mess, photo, url_object.site_url + '/wp-admin/admin.php?page=sn_report', false)
         }
 
 

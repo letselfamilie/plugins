@@ -8,7 +8,7 @@ Author: San Nguyen
 Author URI: https://github.com/mrsn5
 */
 
-require_once ( __DIR__ . '/ajax/dialogs_ajax.php');
+require_once(__DIR__ . '/ajax/dialogs_ajax.php');
 
 add_filter('template_include', 'chat_page_template', 99);
 
@@ -48,60 +48,61 @@ register_activation_hook(__FILE__, 'install_events_pg');
 
 function chat_scripts()
 {
-    if (is_page('chat')) {
-        wp_register_script('chat-js', plugins_url('js/compiled/chat.js', __FILE__), array('jquery'), date("h:i:s"), true);
-        //wp_register_style('chat-css', plugins_url('less/chat.less', __FILE__), '', date("h:i:s"), 'screen');
 
-        wp_enqueue_script('chat-js');
-        //wp_enqueue_style('chat-css');
+    wp_register_script('chat-js', plugins_url('js/compiled/chat.js', __FILE__), array('jquery'), date("h:i:s"), true);
+    //wp_register_style('chat-css', plugins_url('less/chat.less', __FILE__), '', date("h:i:s"), 'screen');
 
-        wp_localize_script('chat-js', 'url_object',
-            array('ajax_url' => admin_url('admin-ajax.php'), 'plugin_directory' => plugins_url('', __FILE__), 'site_url' => get_site_url()));
+    wp_enqueue_script('chat-js');
+    //wp_enqueue_style('chat-css');
 
-        $current_user = wp_get_current_user();
-        wp_localize_script('chat-js', 'user_object',
-            array(
-                'id' => $current_user->ID,
-                'role' => ((array)( wp_get_current_user()->roles )[0])[0],
-                'username' => $current_user->user_login,
-                'photo' => get_avatar_data($current_user->ID, null)['url']
-            ));
-    } else {
-        wp_register_script('chat-system-js', plugins_url('js/compiled/chat-system.js', __FILE__), array('jquery'), date("h:i:s"), true);
-        wp_register_style('chat-css-system', plugins_url('less/chat-system.less', __FILE__), '', date("h:i:s"), 'screen');
+    wp_localize_script('chat-js', 'url_object',
+        array('ajax_url' => admin_url('admin-ajax.php'), 'plugin_directory' => plugins_url('', __FILE__), 'site_url' => get_site_url()));
 
-        wp_enqueue_script('chat-system-js');
-        wp_enqueue_style('chat-css-system');
+    $current_user = wp_get_current_user();
+    wp_localize_script('chat-js', 'user_object',
+        array(
+            'id' => $current_user->ID,
+            'role' => ((array)(wp_get_current_user()->roles)[0])[0],
+            'username' => $current_user->user_login,
+            'photo' => get_avatar_data($current_user->ID, null)['url']
+        ));
 
-        wp_localize_script('chat-system-js', 'url_object',
-            array('ajax_url' => admin_url('admin-ajax.php'),
-                    'plugin_directory' => plugins_url('', __FILE__),
-                    'site_url' => get_site_url(),
-                    'is_post' => is_page('posts')));
+    wp_register_script('chat-system-js', plugins_url('js/compiled/chat-system.js', __FILE__), array('jquery'), date("h:i:s"), true);
+    wp_register_style('chat-css-system', plugins_url('less/chat-system.less', __FILE__), '', date("h:i:s"), 'screen');
 
-        wp_localize_script('chat-system-js', 'wp_object',
-            array('plugin_directory' => plugins_url('', __FILE__),
-                    'is_post' => is_page('posts')));
+    wp_enqueue_script('chat-system-js');
+    wp_enqueue_style('chat-css-system');
 
-        $current_user = wp_get_current_user();
-        wp_localize_script('chat-system-js', 'user_object',
-            array(
-                'id' => $current_user->ID,
-                'role' => ((array)( wp_get_current_user()->roles )[0])[0],
-                'username' => $current_user->user_firstname . " " . $current_user->user_lastname,
-                'photo' => get_avatar_data($current_user->ID, null)['url']
-            ));
-    }
+    wp_localize_script('chat-system-js', 'url_object',
+        array('ajax_url' => admin_url('admin-ajax.php'),
+            'plugin_directory' => plugins_url('', __FILE__),
+            'site_url' => get_site_url(),
+            'is_post' => is_page('posts')));
+
+    wp_localize_script('chat-system-js', 'wp_object',
+        array('plugin_directory' => plugins_url('', __FILE__),
+            'is_post' => is_page('posts'),
+            'is_chat' => is_page('chat')));
+
+    $current_user = wp_get_current_user();
+    wp_localize_script('chat-system-js', 'user_object',
+        array(
+            'id' => $current_user->ID,
+            'role' => ((array)(wp_get_current_user()->roles)[0])[0],
+            'username' => $current_user->user_firstname . " " . $current_user->user_lastname,
+            'photo' => get_avatar_data($current_user->ID, null)['url']
+        ));
 }
 
-register_activation_hook( __FILE__, 'chat_db_tables' );
-function chat_db_tables() {
+register_activation_hook(__FILE__, 'chat_db_tables');
+function chat_db_tables()
+{
     global $wpdb;
-    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
     $charset_collate = $wpdb->get_charset_collate();
 
-    $sql1 = "CREATE TABLE ".$wpdb->prefix."c_dialogs (
+    $sql1 = "CREATE TABLE " . $wpdb->prefix . "c_dialogs (
                 dialog_id          mediumint unsigned NOT NULL AUTO_INCREMENT,
                 user1_id           bigint(20) unsigned NOT NULL,
                 user2_id           bigint(20) unsigned NULL,
@@ -110,14 +111,14 @@ function chat_db_tables() {
                 dialog_topic       char(100) NULL,
                 is_closed          bit(1) NOT NULL DEFAULT false
                 PRIMARY KEY  (dialog_id),
-                FOREIGN KEY  (user1_id) REFERENCES ".$wpdb->prefix."users (ID) ON DELETE NO ACTION ON UPDATE NO ACTION,
-                FOREIGN KEY  (user2_id) REFERENCES ".$wpdb->prefix."users (ID) ON DELETE NO ACTION ON UPDATE NO ACTION,
-                FOREIGN KEY  (employee_id) REFERENCES ".$wpdb->prefix."users (ID) ON DELETE NO ACTION ON UPDATE NO ACTION
+                FOREIGN KEY  (user1_id) REFERENCES " . $wpdb->prefix . "users (ID) ON DELETE NO ACTION ON UPDATE NO ACTION,
+                FOREIGN KEY  (user2_id) REFERENCES " . $wpdb->prefix . "users (ID) ON DELETE NO ACTION ON UPDATE NO ACTION,
+                FOREIGN KEY  (employee_id) REFERENCES " . $wpdb->prefix . "users (ID) ON DELETE NO ACTION ON UPDATE NO ACTION
             ) $charset_collate";
-    dbDelta( $sql1 );
+    dbDelta($sql1);
 
     global $wpdb;
-    $sql2 = "CREATE TABLE ".$wpdb->prefix."c_messages (
+    $sql2 = "CREATE TABLE " . $wpdb->prefix . "c_messages (
                  message_id         mediumint unsigned NOT NULL AUTO_INCREMENT,
                  user_from_id       bigint(20) unsigned NOT NULL,
                  dialog_id          mediumint unsigned NOT NULL,
@@ -126,10 +127,10 @@ function chat_db_tables() {
                  message_body       text NOT NULL,
                  create_timestamp   timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                  PRIMARY KEY  (message_id),
-                 FOREIGN KEY  (dialog_id) REFERENCES ".$wpdb->prefix."c_dialogs (dialog_id) ON DELETE CASCADE ON UPDATE CASCADE,
-                 FOREIGN KEY  (user_from_id) REFERENCES ".$wpdb->prefix."users (ID) ON DELETE NO ACTION ON UPDATE NO ACTION
+                 FOREIGN KEY  (dialog_id) REFERENCES " . $wpdb->prefix . "c_dialogs (dialog_id) ON DELETE CASCADE ON UPDATE CASCADE,
+                 FOREIGN KEY  (user_from_id) REFERENCES " . $wpdb->prefix . "users (ID) ON DELETE NO ACTION ON UPDATE NO ACTION
             ) $charset_collate";
-    dbDelta( $sql2 );
+    dbDelta($sql2);
 }
 
 add_action('wp_enqueue_scripts', 'chat_scripts');
