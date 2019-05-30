@@ -45,7 +45,8 @@ function new_post_mail($user_id, $mail, $login, $text, $topic, $url, $photo, $re
             </td>
         </tr>
     </tbody>
-</table>";
+</table>
+<a href='$url'>Go to the topic</a>";
 
     return wp_mail( $to, $subject, $body, $headers);
 }
