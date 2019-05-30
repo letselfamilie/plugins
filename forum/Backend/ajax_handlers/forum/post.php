@@ -194,7 +194,7 @@ function add_post()
                 }
 
                 $notifToSocket = array();
-                $notifToSocket['command'] = 'notification';
+                $notifToSocket['command'] = 'new_post';
                 $notifToSocket['type'] = 'new_post';
                 $notifToSocket['user_id_from'] = $user_id;
                 $notifToSocket['user_login'] = $user_info->user_login;
