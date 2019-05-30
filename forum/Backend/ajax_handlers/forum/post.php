@@ -200,7 +200,7 @@ function add_post()
                 $notifToSocket['user_login'] = $user_info->user_login;
                 $notifToSocket['message_text'] = $post_message;
                 $notifToSocket['user_id_to'] = $user_topic_owner->ID;
-
+                $notifToSocket['topic_id'] = $topic_id;
 
                 $conn->send(json_encode($notifToSocket));
 

@@ -137,6 +137,21 @@ function connectSocket() {
             // sound.play();
         }
 
+        if (data.type === "new_post") {
+
+            var sound = new Howl({
+                src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
+            });
+            sound.play();
+
+            let from = data.from_username;
+            let mess = data.post_text;
+            let topic_id = data.topic_id;
+            let photo = data.photo;
+
+            addNotification(from, mess, photo, url_object.site_url + "/forum?topic_id=" + topic_id)
+        }
+
         if (data.type === "bad_word") {
             var sound = new Howl({
                 src: ['http://178.128.202.94/wp-content/uploads/2019/05/warning.wav']
