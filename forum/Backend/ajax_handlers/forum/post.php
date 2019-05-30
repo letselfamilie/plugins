@@ -192,6 +192,19 @@ function add_post()
 
                     $conn->send(json_encode($messageToSocket));
                 }
+
+                $notifToSocket = array();
+                $notifToSocket['command'] = 'notification';
+                $notifToSocket['type'] = 'new_post';
+                $notifToSocket['user_id_from'] = $user_id;
+                $notifToSocket['user_login'] = $user_info->user_login;
+                $notifToSocket['message_text'] = $post_message;
+                $notifToSocket['user_id_to'] = $user_topic_owner->ID;
+
+
+                $conn->send(json_encode($notifToSocket));
+
+
             } catch (Exception $e) {
                 echo 'Exception:', $e->getMessage(), "\n";
                 echo $sqlQuery;
