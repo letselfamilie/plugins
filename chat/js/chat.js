@@ -107,12 +107,11 @@ function getDialogs() {
                         success: function (res) {
                             console.log($('#messages-container').find('ul').find('li').length);
                             console.log("new mess: " + res);
-
+                            res = JSON.parse(res);
                             // SCROLL MESS
                             res.reverse().forEach(function (item) {
                                 addMes(item, null, null, true)
                             });
-
 
                         },
                         error: function (error) {
