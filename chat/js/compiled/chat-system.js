@@ -28,14 +28,17 @@ $(function () {
 function addNotification(title, text, photo, url = null, rounded = true) {
     $('.message-pop-n').remove();
 
-
     let $notification_node = $(notification(
         {
             photo: photo,
             title: title,
             text: text
         }));
-    $notification_node.on('click', function () {
+    $notification_node.find('.message-content-n').on('click', function () {
+        if (url != null) window.location.href = url;
+    });
+
+    $notification_node.find('.user-icon-n').on('click', function () {
         if (url != null) window.location.href = url;
     });
 
