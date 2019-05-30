@@ -118,7 +118,7 @@ function connectSocket() {
             let dial_id = data.dialog_id;
             let photo = data.photo;
 
-            addNotification(from, mess, photo)
+            addNotification(from, mess, photo, url_object.site_url + "/chat?dialog_id=" + dial_id)
         }
 
         if (data.type === "new_chat") {
@@ -146,7 +146,7 @@ function connectSocket() {
             let dial_id = data.dialog_id;
             let photo = wp_object.plugin_directory + '/images/bad_word.svg';
 
-            addNotification("BAD WORD", from + ': ' + mess, photo, false)
+            addNotification("BAD WORD", from + ': ' + mess, photo, url_object.site_url + '/wp-admin/admin.php?page=sn_report',false)
         }
 
 
@@ -161,7 +161,7 @@ function connectSocket() {
             let dial_id = data.dialog_id;
             let photo = wp_object.plugin_directory + '/images/complain.svg';
 
-            addNotification("REPORT", from + ': ' + mess, photo, false)
+            addNotification("REPORT", from + ': ' + mess, photo, url_object.site_url + '/wp-admin/admin.php?page=sn_report', false)
         }
     };
 }
