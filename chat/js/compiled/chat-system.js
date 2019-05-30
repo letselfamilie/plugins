@@ -24,8 +24,8 @@ $(function () {
     connectSocket();
 });
 
-// TODO ADD URL WHEN CLICK
-function addNotification(title, text, photo, rounded = true) {
+
+function addNotification(title, text, photo, url = null, rounded = true) {
     $('.message-pop-n').remove();
 
 
@@ -35,6 +35,10 @@ function addNotification(title, text, photo, rounded = true) {
             title: title,
             text: text
         }));
+    $notification_node.on('click', function () {
+        if (url != null) window.location.href = url;
+    });
+
     if (!rounded) $notification_node.find('.user-icon-n').css('border-radius', '0%');
     $('body').append($notification_node);
 
