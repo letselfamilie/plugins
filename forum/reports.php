@@ -163,7 +163,7 @@ class Report_List extends WP_List_Table {
                 $item['message_id'],
                 $delete_nonce ),
             'ban' => sprintf(
-                '<a href="?page=%s&action=%s&report=%s&post_id=%s&message_id=%s&user_id=%s&_wpnonce=%s">Ban</a>',
+                "<a style='color: rgb(195, 3, 255);' href='?page=%s&action=%s&report=%s&post_id=%s&message_id=%s&user_id=%s&_wpnonce=%s'>Ban</a>",
                 esc_attr( $_REQUEST['page'] ),
                 'ban',
                 $item['report_id'],

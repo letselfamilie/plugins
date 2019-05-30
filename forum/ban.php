@@ -106,3 +106,10 @@ function sn_authenticate_user( $user ) {
 }
 
 add_filter( 'wp_authenticate_user', 'sn_authenticate_user', 1 );
+
+add_action('wp_head', 'sn_ban_check');
+function sn_ban_check(){
+    if (sn_is_user_banned(get_current_user_id())) {
+        wp_logout();
+    }
+}
