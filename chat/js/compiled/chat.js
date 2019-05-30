@@ -110,7 +110,9 @@ function getDialogs() {
                             console.log("new mess: " + res);
 
                             // SCROLL MESS
-                            addMes(res, null, null, true)
+                            res.reverse().forEach(function (item) {
+                                addMes(item, null, null, true)
+                            });
 
 
                         },
