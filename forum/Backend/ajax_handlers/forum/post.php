@@ -201,6 +201,8 @@ function add_post()
                 $notifToSocket['message_text'] = $post_message;
                 $notifToSocket['user_id_to'] = $user_topic_owner->ID;
                 $notifToSocket['topic_id'] = $topic_id;
+                $notifToSocket['photo'] = get_avatar_url($user_id);
+
 
                 $conn->send(json_encode($notifToSocket));
 
