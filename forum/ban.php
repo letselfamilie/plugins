@@ -112,4 +112,6 @@ function sn_ban_check(){
     if (sn_is_user_banned(get_current_user_id())) {
         wp_logout();
     }
+
+
 }

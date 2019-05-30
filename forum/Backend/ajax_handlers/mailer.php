@@ -6,7 +6,11 @@
  * Time: 22:22
  */
 
-function new_post_mail($mail, $login, $text, $topic, $url, $photo, $reaction_to, $reaction_text) {
+function new_post_mail($user_id, $mail, $login, $text, $topic, $url, $photo, $reaction_to, $reaction_text) {
+    if (get_user_option( 'receive_notifications', $user_id, false )) {
+        return false;
+    }
+
     $to = $mail;
     $subject = "$login responded to your topic";
     $headers = array('Content-Type: text/html; charset=UTF-8');

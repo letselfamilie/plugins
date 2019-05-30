@@ -154,7 +154,8 @@ function add_post()
                 //$cond = ($receive_not['0'] == '0') ? 'kjkj' : 'uuuuuuu';
 
                 if(!isset($receive_not) || $receive_not[0] == 0){
-                    new_post_mail($user_topic_owner->user_email,
+                    new_post_mail($user_topic_owner->ID,
+                        $user_topic_owner->user_email,
                         $is_anonym ? 'Anonym' : $user_info->user_login,
                         censor($post_message),
                         censor($wpdb->get_var("SELECT topic_name
