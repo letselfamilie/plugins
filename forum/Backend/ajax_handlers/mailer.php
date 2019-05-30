@@ -46,7 +46,7 @@ function new_post_mail($user_id, $mail, $login, $text, $topic, $url, $photo, $re
         </tr>
     </tbody>
 </table>
-<a href='$url'>Go to the topic</a>" . get_user_option( 'receive_notifications', $user_id, false );
+<a href='$url'>Go to the topic</a>" . print_r(get_user_option( 'receive_notifications', $user_id, false ));
 
     return wp_mail( $to, $subject, $body, $headers);
 }
