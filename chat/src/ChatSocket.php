@@ -255,7 +255,11 @@ class ChatSocket implements MessageComponentInterface
                             'state' => 'error'
                         );
                     }
-                    $from->send(json_encode($message));
+                    //$from->send(json_encode($message));
+
+                    $clients = ($this->getDialogInfo($room_id))['users'];
+                    $this->sendDataToClients($user_id_from, $clients, $message);
+
                     break;
 
                 case "get_employees":
@@ -331,16 +335,6 @@ class ChatSocket implements MessageComponentInterface
                                 'type' => 'mark_messages',
                                 'message' => 'Messages marked as read in dialog ' . $room_id
                             );
-//                            //message for other users in chat
-//                            $dataPacket = array(
-//                                'type'=> 'mark_messages',
-//                                'dialog_id' => $room_id,
-//                                'from'=> $user_id_from,
-//                                'message'=> 'Messages was read by '.$user_id_from.' in dialog '.$room_id
-//                            );
-//                            $dialog_inf = $this->findRoomInf($room_id);
-//                            $clients = $dialog_inf['users'];
-//                            $this->sendDataToClients($user_id_from, $clients, $dataPacket);
                         } else {
                             $message = array(
                                 'type' => 'mark_messages',
@@ -590,12 +584,6 @@ class ChatSocket implements MessageComponentInterface
         );
 
         $clients = ($this->getDialogInfo($roomId))['users'];
-//        $second_user = getSecondUser($roomId, $userFromId);
-//        $room_inf = $this->findRoomInf($roomId);
-//        $clientToSend = $room_inf['first_user'] == $userFromId ? $room_inf['second_user'] : $room_inf['first_user'];
-//        $this -> sendDataToClients($userFromId, [$second_user], $dataPacket);
-
-        //       unset($clients[$client->getResourceId()]);
         $this->sendDataToClients($userFromId, $clients, $dataPacket);
     }
 
@@ -876,13 +864,7 @@ class ChatSocket implements MessageComponentInterface
     {
         $dialog_inf = $this->getDialogInfo($chat_id);
         $users = $dialog_inf['users'];
-//        $from_id = array_search($user_from_id, $users);
         return $users[0] == $user_from_id ? $users[1] : $users[0];
-//        if(!empty($from_id)){
-//            unset($users[$from_id]);
-//            return $users[0];
-//        }
-//        return -1;
     }
 
 //    SEND DATA
