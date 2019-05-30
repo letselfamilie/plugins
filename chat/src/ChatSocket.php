@@ -183,6 +183,23 @@ class ChatSocket implements MessageComponentInterface
             $user_id_from = $data->user_id_from;
 
             switch ($data->command) {
+                case 'new_post':
+                    $user_id_to = $data->user_id_to;
+                    $user_login_from = $data->user_login;
+                    $post_text = $data->message_text;
+                    $topic_id = $data->topic_id;
+                    $photo = $data->photo;
+
+                    $message = array(
+                        'type' => 'new_post',
+                        'from_username' => $user_login_from,
+                        'topic_id' => $topic_id,
+                        'post_text' => $post_text,
+                        'photo' => $photo
+                    );
+                    $this->sendDataToUser($user_id_to, $message);
+                    break;
+
                 case 'notification':
                     $type = $data->type;
                     $messageForUser = array();
@@ -258,7 +275,7 @@ class ChatSocket implements MessageComponentInterface
                     //$from->send(json_encode($message));
 
                     $clients = ($this->getDialogInfo($room_id))['users'];
-                    $this->sendDataToClients($user_id_from, $clients, $message);
+                    $this->sendDataToOtherClients($user_id_from, $clients, $message);
 
                     break;
 
@@ -287,7 +304,7 @@ class ChatSocket implements MessageComponentInterface
                                 'dialog_id' => $room_id,
                                 'dialog_info' => $dialog_inf
                             );
-                            $this->sendDialogToSecondUser($new_employee_id, $message);
+                            $this->sendDataToUser($new_employee_id, $message);
                         } else {
                             $message = array(
                                 'type' => 'redirect_chat',
@@ -495,7 +512,7 @@ class ChatSocket implements MessageComponentInterface
                 $message['second_user'] = $user_id_from;
 
                 if ($second_user != null) {
-                    $this->sendDialogToSecondUser($second_user, $message);
+                    $this->sendDataToUser($second_user, $message);
                 } else {
                     $this->sendToAllEmployees($message);
                 }
@@ -572,7 +589,7 @@ class ChatSocket implements MessageComponentInterface
 //        $clientToSend = $room_inf['first_user'] == $userFromId ? $room_inf['second_user'] : $room_inf['first_user'];
         //     $second_user = getSecondUser($roomId, $userFromId);
         //     $this -> sendDataToClients($userFromId, [$second_user], $dataPacket);
-        $this->sendDataToClients($userFromId, $clients, $dataPacket);
+        $this->sendDataToOtherClients($userFromId, $clients, $dataPacket);
     }
 
     function sendUserStoppedTypingMessage($userFromId, $roomId)
@@ -584,7 +601,7 @@ class ChatSocket implements MessageComponentInterface
         );
 
         $clients = ($this->getDialogInfo($roomId))['users'];
-        $this->sendDataToClients($userFromId, $clients, $dataPacket);
+        $this->sendDataToOtherClients($userFromId, $clients, $dataPacket);
     }
 
     function sendMessage($conn_id, $clientFromId, $roomId, $message, $time, $photo, $from_username)
@@ -868,12 +885,12 @@ class ChatSocket implements MessageComponentInterface
     }
 
 //    SEND DATA
-    function sendDialogToSecondUser($user_id, $packet)
+    function sendDataToUser($user_id, $packet)
     {
-        $this->sendDialogToClients([$user_id], $packet);
+        $this->sendDataToAllClients([$user_id], $packet);
     }
 
-    function sendDialogToClients(array $clients, array $dataPacket)
+    function sendDataToAllClients(array $clients, array $dataPacket)
     {
         foreach ($clients AS $client) {
             if (array_key_exists($client, $this->users_id)) {
@@ -906,7 +923,7 @@ class ChatSocket implements MessageComponentInterface
         }
     }
 
-    function sendDataToClients($clientFromId, array $clients, array $packet)
+    function sendDataToOtherClients($clientFromId, array $clients, array $packet)
     {
         foreach ($clients AS $client) {
             if (array_key_exists($client, $this->users_id) && $client != $clientFromId) {
