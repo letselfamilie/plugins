@@ -7,9 +7,9 @@
  */
 
 function new_post_mail($user_id, $mail, $login, $text, $topic, $url, $photo, $reaction_to, $reaction_text) {
-    if (get_user_option( 'receive_notifications', $user_id, false )) {
-        return false;
-    }
+//    if (get_user_option( 'receive_notifications', $user_id, false )) {
+//        return false;
+//    }
 
     $to = $mail;
     $subject = "$login responded to your topic";
@@ -46,7 +46,7 @@ function new_post_mail($user_id, $mail, $login, $text, $topic, $url, $photo, $re
         </tr>
     </tbody>
 </table>
-<a href='$url'>Go to the topic</a>";
+<a href='$url'>Go to the topic</a>" . get_user_option( 'receive_notifications', $user_id, false );
 
     return wp_mail( $to, $subject, $body, $headers);
 }
