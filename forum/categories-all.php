@@ -276,8 +276,8 @@ class SP_Plugin {
     public function plugin_menu() {
 
         $hook = add_menu_page(
-            'Forum',
-            'Forum',
+            'Forum+Chat',
+            'Forum+Chat',
             'manage_categories',
             'sn_categories',
             [ $this, 'plugin_settings_page' ],
