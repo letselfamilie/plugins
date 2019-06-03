@@ -334,9 +334,9 @@ class ChatSocket implements MessageComponentInterface
                     break;
 
                 case "message":
-                    $time = $data->time;
-                    if(!isset($time))
-                        $time = date("Y-m-d H:i:s");
+                  //  $time = $data->time;
+                  //  if(!isset($time))
+                    $time = date("Y-m-d H:i:s");
                     $message = $data->message;
 
                     $this->sendMessage($conn_id, $user_id_from, $room_id, $message, $time, $data->photo, $data->from_login);
@@ -915,11 +915,11 @@ class ChatSocket implements MessageComponentInterface
                 $conn_arr = $this->users_id[$client];
                 foreach ($conn_arr as $conn_id) {
 
-                    if ($conn_id != $from_conn_id) {
+                  //  if ($conn_id != $from_conn_id) {
                         echo "CLIENTID " . $client . "\n";
                         $conn = $this->users[$conn_id];
                         $this->sendData($conn, $dataPacket);
-                    }
+                  //  }
                 }
             }
         }

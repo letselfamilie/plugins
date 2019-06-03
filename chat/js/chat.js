@@ -238,35 +238,34 @@ function loadChat(mes) {
                 dialog_id: d_id,
                 message: message,
                 photo: user_object.photo,
-                from_login: user_object.username,
-                time: time
+                from_login: user_object.username
             }));
 
             var m = {user_from_id: user_object.id, message_body: message, create_timestamp: time};
 
-            addMes(m, myprofilelogo, "0");
-
-            let key = parseInt(searchObjKey(mes, d_id));
-
-            var new_message = {
-                message_id: "" + mes[Object.keys(mes).length - 1].message_id + 1,
-                user_from_id: "" + user_object.id,
-                dialog_id: "" + d_id, is_read: "0",
-                message_body: "" + message,
-                create_timestamp: time
-            };
-
-            mes[key].messages.push(new_message);
-
-            messageInput.val(null);
-
-            $('.conversation.active .preview').html('<span>You: </span>' + message);
-
-            //$('.messages').animate({ scrollTop: $('.messages ul').children('li').last().position().top }, 'fast');
-
-            $('.messages ul').children('li').last().focus();
-
-            gotoBottom('messages-container');
+            // addMes(m, myprofilelogo, "0");
+            //
+            // let key = parseInt(searchObjKey(mes, d_id));
+            //
+            // var new_message = {
+            //     message_id: "" + mes[Object.keys(mes).length - 1].message_id + 1,
+            //     user_from_id: "" + user_object.id,
+            //     dialog_id: "" + d_id, is_read: "0",
+            //     message_body: "" + message,
+            //     create_timestamp: time
+            // };
+            //
+            // mes[key].messages.push(new_message);
+            //
+            // messageInput.val(null);
+            //
+            // $('.conversation.active .preview').html('<span>You: </span>' + message);
+            //
+            // //$('.messages').animate({ scrollTop: $('.messages ul').children('li').last().position().top }, 'fast');
+            //
+            // $('.messages ul').children('li').last().focus();
+            //
+            // gotoBottom('messages-container');
 
         }
 
@@ -395,7 +394,7 @@ function loadChat(mes) {
         //    });
 
             let from = data.from;
-            let time = data.time;
+            let time = data.create_timestamp;
             let mess = data.message;
             let dial_id = data.dialog_id;
             let is_chat_with_employee = data.is_employee_chat;
