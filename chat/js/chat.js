@@ -22,7 +22,7 @@ let dialog_templ = ejs.compile(fs.readFileSync("./chat/js/ejs_templates/dialog.e
 let mes_templ = ejs.compile(fs.readFileSync("./chat/js/ejs_templates/message.ejs", "utf8"));
 let conn;
 
-//let chat_sound_prop = 0;
+let chat_sound_prop = 0;
 
 // We listen to the resize event
 window.addEventListener('resize', () => {
@@ -43,10 +43,10 @@ $(function () {
         document.addEventListener("click", resumeAudio);
     }
 
-  //  getChatSoundProp(function (sound_prop) {
-  //      chat_sound_prop = sound_prop;
+    getChatSoundProp(function (sound_prop) {
+        chat_sound_prop = sound_prop;
         getDialogs();
-  //  });
+    });
 });
 
 function getChatSoundProp(callback) {
@@ -385,13 +385,13 @@ function loadChat(mes) {
                 src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
             });
 
-            getChatSoundProp(function (sound_prop){
-                console.log("getChatSoundProp");
-               if(sound_prop == 0){
+        //    getChatSoundProp(function (sound_prop){
+        //        console.log("getChatSoundProp");
+               if(chat_sound_prop == 0){
                    console.log("sound");
                    sound.play();
                }
-            });
+        //    });
 
             let from = data.from;
             let time = data.time;
@@ -613,12 +613,12 @@ function loadChat(mes) {
 
             console.log(data.message);
 
+            let sound = new Howl({
+                src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
+            });
             getChatSoundProp(function (sound_prop){
-                if(sound_prop === 0){
-                    console.log("play sound");
-                    var sound = new Howl({
-                        src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
-                    });
+                if(sound_prop == 0){
+                    console.log("sound");
                     sound.play();
                 }
             });
