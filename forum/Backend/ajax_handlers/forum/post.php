@@ -153,7 +153,7 @@ function add_post()
                 $receive_not = get_user_meta( get_current_user_id(), "receive_notifications", true );
                 //$cond = ($receive_not['0'] == '0') ? 'kjkj' : 'uuuuuuu';
 
-                if(!isset($receive_not) || $receive_not[0] == 0){
+                if(empty($receive_not) || $receive_not[0] == 0){
                     new_post_mail($user_topic_owner->ID,
                         $user_topic_owner->user_email,
                         $is_anonym ? 'Anonym' : $user_info->user_login,
