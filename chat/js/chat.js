@@ -381,12 +381,14 @@ function loadChat(mes) {
         if (data.type === "message") {
             console.log("new message");
 
+            let sound = new Howl({
+                src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
+            });
+
             getChatSoundProp(function (sound_prop){
-               if(sound_prop === 0){
-                   console.log("play sound");
-                   var sound = new Howl({
-                       src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
-                   });
+                console.log("getChatSoundProp");
+               if(sound_prop == 0){
+                   console.log("sound");
                    sound.play();
                }
             });
