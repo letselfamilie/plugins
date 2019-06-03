@@ -380,7 +380,8 @@ function loadChat(mes) {
 
         if (data.type === "message") {
 
-            if(chat_sound_prop === 0){
+            if(chat_sound_prop == 0){
+                console.log("play sound");
                 var sound = new Howl({
                     src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
                 });
@@ -606,10 +607,13 @@ function loadChat(mes) {
             }
 
             console.log(data.message);
-            var sound = new Howl({
-                src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
-            });
-            sound.play();
+
+            if(chat_sound_prop == 0) {
+                var sound = new Howl({
+                    src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
+                });
+                sound.play();
+            }
         }
 
         if (data.type === "take_dialog")
