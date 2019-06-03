@@ -379,6 +379,7 @@ function loadChat(mes) {
         }
 
         if (data.type === "message") {
+            console.log("new message");
 
             if(chat_sound_prop == 0){
                 console.log("play sound");
