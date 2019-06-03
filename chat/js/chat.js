@@ -223,14 +223,14 @@ function loadChat(mes) {
 
             var d_id = parseInt($('.conversation.active').attr("id"));
 
-            var today = new Date();
-            var day = today.getDate();
-            var month = today.getMonth() + 1;
-
-            day = (day < 10) ? "0" + day : "" + day;
-            month = (month < 10) ? "0" + month : "" + month;
-
-            var time = today.getFullYear() + "-" + month + "-" + day + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            // var today = new Date();
+            // var day = today.getDate();
+            // var month = today.getMonth() + 1;
+            //
+            // day = (day < 10) ? "0" + day : "" + day;
+            // month = (month < 10) ? "0" + month : "" + month;
+            //
+            // var time = today.getFullYear() + "-" + month + "-" + day + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
             conn.send(JSON.stringify({
                 user_id_from: user_object.id,
@@ -241,7 +241,7 @@ function loadChat(mes) {
                 from_login: user_object.username
             }));
 
-            var m = {user_from_id: user_object.id, message_body: message, create_timestamp: time};
+            //var m = {user_from_id: user_object.id, message_body: message, create_timestamp: time};
 
             // addMes(m, myprofilelogo, "0");
             //
@@ -257,7 +257,7 @@ function loadChat(mes) {
             //
             // mes[key].messages.push(new_message);
             //
-            // messageInput.val(null);
+            messageInput.val(null);
             //
             // $('.conversation.active .preview').html('<span>You: </span>' + message);
             //
