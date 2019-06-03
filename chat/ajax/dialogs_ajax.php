@@ -10,6 +10,7 @@
 add_action('wp_ajax_' . 'get_dialogs', 'get_dialogs');
 add_action('wp_ajax_' . 'get_general_dialogs', 'get_general_dialogs');
 add_action('wp_ajax_' . 'sound_prop', 'sound_prop');
+add_action('wp_ajax_' . 'push_notif_prop', 'push_notif_prop');
 //add_action('wp_ajax_nopriv_' . 'get_dialogs', 'get_dialogs');
 
 /**
@@ -35,6 +36,15 @@ function sound_prop(){
 
     $chat_sound_prop = empty ($chat_sound) ? 0 : $chat_sound[0];
     echo json_encode($chat_sound_prop, JSON_UNESCAPED_UNICODE);
+    die;
+}
+
+function push_notif_prop(){
+    $user_id = get_current_user_id();
+    $push_notif = get_user_meta( $user_id, "push_notifications", true);
+
+    $push_notif_prop = empty ($push_notif) ? 0 : $push_notif[0];
+    echo json_encode($push_notif_prop, JSON_UNESCAPED_UNICODE);
     die;
 }
 

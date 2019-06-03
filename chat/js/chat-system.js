@@ -9,6 +9,8 @@ let notification = ejs.compile(fs.readFileSync("./chat/js/ejs_templates/notifica
 
 let conn;
 
+let push_sound_prop = 0;
+
 $(function () {
     if (typeof AudioContext != "undefined" || typeof webkitAudioContext != "undefined") {
         var resumeAudio = function () {
@@ -20,9 +22,33 @@ $(function () {
     }
 
     if (wp_object.is_post == 0) addChatBox();
-    console.log('is chat = ' + wp_object.is_chat + '--------------')
-    connectSocket();
+    console.log('is chat = ' + wp_object.is_chat + '--------------');
+
+    getPushNotifSoundProp(function (push_sound) {
+        push_sound_prop = push_sound;
+        connectSocket();
+    });
 });
+
+
+function getPushNotifSoundProp(callback) {
+    $.ajax({
+        url: url_object.ajax_url,
+        type: 'POST',
+        data: {
+            action: 'push_notif_prop'
+        },
+        success: function (res) {
+            res = JSON.parse(res);
+            console.log("push_sound_prop: " + res);
+            callback(res);
+        },
+        error: function (error) {
+            console.log(error);
+            callback(0);
+        }
+    });
+}
 
 
 function addNotification(title, text, photo, url = null, rounded = true) {
@@ -114,7 +140,11 @@ function connectSocket() {
             var sound = new Howl({
                 src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
             });
-            sound.play();
+
+            if(push_sound_prop == 0) {
+                console.log("push sound");
+                sound.play();
+            }
 
             let from = data.from_username;
             let mess = data.message;
@@ -142,7 +172,11 @@ function connectSocket() {
             var sound = new Howl({
                 src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
             });
-            sound.play();
+
+            if(push_sound_prop == 0) {
+                console.log("push sound");
+                sound.play();
+            }
 
             let from = data.from_username;
             let mess = data.post_text;
@@ -156,7 +190,11 @@ function connectSocket() {
             var sound = new Howl({
                 src: ['http://178.128.202.94/wp-content/uploads/2019/05/warning.wav']
             });
-            sound.play();
+
+            if(push_sound_prop == 0) {
+                console.log("push sound");
+                sound.play();
+            }
 
             let from = data.user_login_from;
             let mess = data.message_text;
@@ -171,7 +209,11 @@ function connectSocket() {
             var sound = new Howl({
                 src: ['http://178.128.202.94/wp-content/uploads/2019/05/warning.wav']
             });
-            sound.play();
+
+            if(push_sound_prop == 0) {
+                console.log("push sound");
+                sound.play();
+            }
 
             let from = data.user_login_from;
             let mess = data.message_text;
