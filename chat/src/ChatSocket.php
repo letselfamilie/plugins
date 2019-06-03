@@ -334,7 +334,9 @@ class ChatSocket implements MessageComponentInterface
                     break;
 
                 case "message":
-                    $time = date("Y-m-d H:i:s");
+                    $time = $data->time;
+                    if(!isset($time))
+                        $time = date("Y-m-d H:i:s");
                     $message = $data->message;
 
                     $this->sendMessage($conn_id, $user_id_from, $room_id, $message, $time, $data->photo, $data->from_login);
@@ -614,7 +616,7 @@ class ChatSocket implements MessageComponentInterface
             'dialog_id' => $roomId,
             'from' => $clientFromId,
             'message' => $message,
-            'time' => $time,
+            'create_timestamp' => $time,
             'is_employee_chat' => $dialog_inf['is_employee_chat'],
             'photo' => $photo,
             'from_username' => $from_username

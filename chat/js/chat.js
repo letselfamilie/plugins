@@ -223,15 +223,6 @@ function loadChat(mes) {
 
             var d_id = parseInt($('.conversation.active').attr("id"));
 
-            conn.send(JSON.stringify({
-                user_id_from: user_object.id,
-                command: 'message',
-                dialog_id: d_id,
-                message: message,
-                photo: user_object.photo,
-                from_login: user_object.username
-            }));
-
             var today = new Date();
             var day = today.getDate();
             var month = today.getMonth() + 1;
@@ -240,6 +231,16 @@ function loadChat(mes) {
             month = (month < 10) ? "0" + month : "" + month;
 
             var time = today.getFullYear() + "-" + month + "-" + day + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+            conn.send(JSON.stringify({
+                user_id_from: user_object.id,
+                command: 'message',
+                dialog_id: d_id,
+                message: message,
+                photo: user_object.photo,
+                from_login: user_object.username,
+                time: time
+            }));
 
             var m = {user_from_id: user_object.id, message_body: message, create_timestamp: time};
 
@@ -953,7 +954,7 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
 
     if (is_employee_chat === "1" && item.user_from_id !== user_object.id) png = url_object.plugin_directory + "/images/logo.png";
 
-    let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: new Date(item)})); // new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
+    let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: item.create_timestamp})); // new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
 
     if (prepend) {
         $('.messages ul').prepend($node);
