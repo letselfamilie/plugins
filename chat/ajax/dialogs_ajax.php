@@ -9,6 +9,7 @@
 
 add_action('wp_ajax_' . 'get_dialogs', 'get_dialogs');
 add_action('wp_ajax_' . 'get_general_dialogs', 'get_general_dialogs');
+add_action('wp_ajax_' . 'sound_prop', 'sound_prop');
 //add_action('wp_ajax_nopriv_' . 'get_dialogs', 'get_dialogs');
 
 /**
@@ -27,6 +28,16 @@ add_action('wp_ajax_' . 'get_general_dialogs', 'get_general_dialogs');
  * }
  * });
  */
+
+function sound_prop(){
+    $user_id = get_current_user_id();
+    $chat_sound = get_user_meta( $user_id, "chat_sound", true);
+
+    $chat_sound_prop = empty ($chat_sound) ? 0 : $chat_sound[0];
+    echo json_encode($chat_sound_prop, JSON_UNESCAPED_UNICODE);
+    die;
+}
+
 function get_general_dialogs(){
     global $wpdb;
 

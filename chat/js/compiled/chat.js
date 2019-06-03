@@ -23,6 +23,8 @@ let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\r\
 let mes_templ = ejs.compile("<li class=\"<%= status %>\">\r\n    <img src=\"<%= image %>\" alt=\"\"/>\r\n    <p>\r\n        <%= mes %>\r\n        <br/>\r\n        <small class=\"float-right mt-2\"><%= time %></small>\r\n    </p>\r\n</li>\r\n");
 let conn;
 
+let chat_sound_prop = 0;
+
 // We listen to the resize event
 window.addEventListener('resize', () => {
     // We execute the same script as before
@@ -42,8 +44,30 @@ $(function () {
         document.addEventListener("click", resumeAudio);
     }
 
-    getDialogs();
+    getChatSoundProp(function (sound_prop) {
+        chat_sound_prop = sound_prop;
+        getDialogs();
+    });
 });
+
+function getChatSoundProp(callback) {
+    $.ajax({
+        url: url_object.ajax_url,
+        type: 'POST',
+        data: {
+            action: 'sound_prop'
+        },
+        success: function (res) {
+            res = JSON.parse(res);
+            console.log("sound_prop: " + res);
+            callback(res);
+        },
+        error: function (error) {
+            console.log(error);
+            callback(0);
+        }
+    });
+}
 
 function getDialogs() {
     $.ajax({
@@ -357,10 +381,12 @@ function loadChat(mes) {
 
         if (data.type === "message") {
 
-            var sound = new Howl({
-                src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
-            });
-            sound.play();
+            if(chat_sound_prop === 0){
+                var sound = new Howl({
+                    src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
+                });
+                sound.play();
+            }
 
             let from = data.from;
             let time = data.time;
@@ -2081,7 +2107,7 @@ module.exports={
   "_args": [
     [
       "ejs@2.6.1",
-      "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins"
+      "C:\\Server\\data\\htdocs\\letsel\\wp-content\\plugins"
     ]
   ],
   "_from": "ejs@2.6.1",
@@ -2105,7 +2131,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/ejs/-/ejs-2.6.1.tgz",
   "_spec": "2.6.1",
-  "_where": "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins",
+  "_where": "C:\\Server\\data\\htdocs\\letsel\\wp-content\\plugins",
   "author": {
     "name": "Matthew Eernisse",
     "email": "mde@fleegix.org",

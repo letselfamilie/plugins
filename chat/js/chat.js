@@ -22,6 +22,8 @@ let dialog_templ = ejs.compile(fs.readFileSync("./chat/js/ejs_templates/dialog.e
 let mes_templ = ejs.compile(fs.readFileSync("./chat/js/ejs_templates/message.ejs", "utf8"));
 let conn;
 
+let chat_sound_prop = 0;
+
 // We listen to the resize event
 window.addEventListener('resize', () => {
     // We execute the same script as before
@@ -41,8 +43,30 @@ $(function () {
         document.addEventListener("click", resumeAudio);
     }
 
-    getDialogs();
+    getChatSoundProp(function (sound_prop) {
+        chat_sound_prop = sound_prop;
+        getDialogs();
+    });
 });
+
+function getChatSoundProp(callback) {
+    $.ajax({
+        url: url_object.ajax_url,
+        type: 'POST',
+        data: {
+            action: 'sound_prop'
+        },
+        success: function (res) {
+            res = JSON.parse(res);
+            console.log("sound_prop: " + res);
+            callback(res);
+        },
+        error: function (error) {
+            console.log(error);
+            callback(0);
+        }
+    });
+}
 
 function getDialogs() {
     $.ajax({
@@ -356,10 +380,12 @@ function loadChat(mes) {
 
         if (data.type === "message") {
 
-            var sound = new Howl({
-                src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
-            });
-            sound.play();
+            if(chat_sound_prop === 0){
+                var sound = new Howl({
+                    src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
+                });
+                sound.play();
+            }
 
             let from = data.from;
             let time = data.time;
