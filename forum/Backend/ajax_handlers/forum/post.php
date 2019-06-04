@@ -274,8 +274,8 @@ function get_forum_posts()
             $post['post_message'] = censor($post['post_message']);
             $post['respond_message'] = censor($post['respond_message']);
             if ($role == 'administrator' || $role == 'adviser') {
-                $post['login'] = 'Letselschade adviseur';
-            }
+//                $post['login'] = 'Letselschade adviseur';
+//            }
             $posts[] = $post;
 
         }
