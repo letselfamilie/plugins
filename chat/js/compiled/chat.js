@@ -788,8 +788,6 @@ function fillChat(mes) {
 }
 
 function addDialog(item, mes) {
-
-
     let dialog_id = item.dialog_id;
 
     let is_employee_chat = item.is_employee_chat;
@@ -886,43 +884,45 @@ function addDialog(item, mes) {
         }
 
 
+
         if (idDialog !== undefined && idDialog !== null) {
+            let dialog_mes = mes[idDialog].messages;
+            let last_mes = dialog_mes[dialog_mes.length-1];
 
-            let value = parseInt($node.find(".badge-counter").text());
+            if(last_mes.user_from_id != user_object.id){
+                let value = parseInt($node.find(".badge-counter").text());
 
+                /*MARK MESSAGES TO BE READ*/
+                if(value>0)
+                {
+                    conn.send(JSON.stringify({
+                        command: 'mark_messages',
+                        dialog_id: idDialogHTML
+                    }));
 
-            /*MARK MESSAGES TO BE READ*/
-            if(value>0)
-            {
-                conn.send(JSON.stringify({
-                    command: 'mark_messages',
-                    dialog_id: idDialogHTML
-                }));
-
-                console.log("marked read/ id: " + idDialogHTML);
-            }
-
-            $node.find(".badge-counter").text(0);
-            $node.find(".badge-counter").addClass("hidden");
-
-            if (mes[idDialog].messages === null || mes[idDialog].messages === undefined) mes[idDialog].messages = [];
-
-
-
-            /*ADD MESSAGES TO THE DIALOG*/
-            for (let i = 0; i < mes[idDialog].messages.length; i++) {
-                if (i === mes[idDialog].messages.length - value) {
-                    if ($(".mes-break")[0] === undefined) {
-                        newMessages = true;
-                        newBanner("New messages");
-
-                        setTimeout(function () {
-                            var new_messages_banner = $(".mes-break")[0];
-                            if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
-                        }, 5000);
-                    }
+                    console.log("marked read/ id: " + idDialogHTML);
                 }
-                addMes(mes[idDialog].messages[i], user2logo, is_employee_chat);
+
+                $node.find(".badge-counter").text(0);
+                $node.find(".badge-counter").addClass("hidden");
+
+                if (mes[idDialog].messages === null || mes[idDialog].messages === undefined) mes[idDialog].messages = [];
+
+                /*ADD MESSAGES TO THE DIALOG*/
+                for (let i = 0; i < mes[idDialog].messages.length; i++) {
+                    if (i === mes[idDialog].messages.length - value) {
+                        if ($(".mes-break")[0] === undefined) {
+                            newMessages = true;
+                            newBanner("New messages");
+
+                            setTimeout(function () {
+                                var new_messages_banner = $(".mes-break")[0];
+                                if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
+                            }, 5000);
+                        }
+                    }
+                    addMes(mes[idDialog].messages[i], user2logo, is_employee_chat);
+                }
             }
 
             /*IF EMPLOYEE TAKES DIALOG WHICH IS IN LINE (NOBODY'S)*/
