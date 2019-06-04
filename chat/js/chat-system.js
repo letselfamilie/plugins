@@ -23,6 +23,26 @@ $(function () {
 
     if (wp_object.is_post == 0 && wp_object.is_chat == 0 && wp_object.is_reg == 0) addChatBox();
 
+    if (wp_object.is_chat == 0 && user_object.id != 0) {
+        var $chatLink = $("a[href='" +  url_object.site_url + "/chat/']");
+        $.ajax({
+            url: url_object.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'get_n_unread'
+            },
+            success: function (res) {
+                res = JSON.parse(res);
+                $chatLink.append("<span style='background-color: orange; color: white; border-radius: 50%; " +
+                                 "margin-left: 5px; width:20px; height: 20px; padding: 3px; font-size: 12px; " +
+                                 "text-align: center; display: inline-block;'>" + res +"</span>")
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
     getPushNotifSoundProp(function (push_sound) {
         push_sound_prop = push_sound;
         connectSocket();

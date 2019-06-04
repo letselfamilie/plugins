@@ -11,6 +11,7 @@ add_action('wp_ajax_' . 'get_dialogs', 'get_dialogs');
 add_action('wp_ajax_' . 'get_general_dialogs', 'get_general_dialogs');
 add_action('wp_ajax_' . 'sound_prop', 'sound_prop');
 add_action('wp_ajax_' . 'push_notif_prop', 'push_notif_prop');
+add_action('wp_ajax_' . 'get_n_unread', 'get_n_unread');
 //add_action('wp_ajax_nopriv_' . 'get_dialogs', 'get_dialogs');
 
 /**
@@ -219,6 +220,26 @@ function add_dialog()
 //                      (user1_id, user2_id, employee_id, is_employee_chat, dialog_topic)
 //                      VALUES ($user_id, null, $employee_id, 1, $dialog_topic)");
 //    }
+    } catch (Exception $e) {
+        wp_send_json_error($e->getMessage(), '600');
+    }
+    die;
+}
+
+
+
+function get_n_unread() {
+    global $wpdb;
+    $user_id = get_current_user_id();
+
+    try {
+        if ($user_id != null) {
+            $sqlQuery = "SELECT COUNT(*)
+                         FROM {$wpdb->prefix}c_dialogs
+                         WHERE (user1_id = $user_id 
+                            OR user2_id = $user_id);";
+            echo json_encode($wpdb->get_var($sqlQuery), JSON_UNESCAPED_UNICODE);
+        }
     } catch (Exception $e) {
         wp_send_json_error($e->getMessage(), '600');
     }
