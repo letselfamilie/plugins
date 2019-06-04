@@ -25,7 +25,7 @@ $(function () {
     if (wp_object.is_post == 0 && wp_object.is_chat == 0 && wp_object.is_reg == 0) addChatBox();
 
     if (wp_object.is_chat == 0 && user_object.id != 0) {
-        var $chatLink = $("a[href='" +  url_object.site_url + "/chat/']");
+        var $chatLink = $("a[href='" + url_object.site_url + "/chat/']");
         $.ajax({
             url: url_object.ajax_url,
             type: 'POST',
@@ -36,9 +36,9 @@ $(function () {
                 res = JSON.parse(res);
                 res = res.toString().trim();
                 $chatLink.append("<span style='background-color: orange; color: white; border-radius: 50%; " +
-                                 "margin-left: 5px; width:20px; height: 20px; padding: 3px; font-size: 12px; " +
-                                 "text-align: center; display: inline-block;'>" +
-                                 "<div style='display: flex; justify-items: center; justify-content: center; padding-left: 2px; padding-bottom: 2px'>" + res +"</div></span>")
+                    "margin-left: 5px; width:20px; height: 20px; padding: 3px; font-size: 12px; " +
+                    "text-align: center; display: inline-block;'>" +
+                    "<div style='display: flex; justify-items: center; justify-content: center; padding-left: 2px; padding-bottom: 2px'>" + res + "</div></span>")
             },
             error: function (error) {
                 console.log(error);
@@ -164,13 +164,13 @@ function connectSocket() {
         console.log(e.data);
         var data = JSON.parse(e.data);
 
-        if (data.type === "message" && wp_object.is_chat == 0) {
+        if (data.type === "message" && wp_object.is_chat != 0) {
 
             var sound = new Howl({
                 src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
             });
 
-            if(push_sound_prop == 0) {
+            if (push_sound_prop == 0) {
                 console.log("push sound");
                 sound.play();
             }
@@ -181,29 +181,29 @@ function connectSocket() {
             let photo = data.photo;
 
             addNotification(from, mess, photo, url_object.site_url + "/chat?dialog_id=" + dial_id)
-        }
 
 
-        if (data.type === "new_chat") {
-            let dialog_id = data.dialog_id;
-            let dialog_type = data.dialog_type; //  employee_chat || user_chat
-            if (dialog_type === "employee_chat" && data.user_info_1.user_id == user_object.id) {
-                window.location.href = url_object.site_url + "/chat?dialog_id=" + dialog_id;
+            if (data.type === "new_chat") {
+                let dialog_id = data.dialog_id;
+                let dialog_type = data.dialog_type; //  employee_chat || user_chat
+                if (dialog_type === "employee_chat" && data.user_info_1.user_id == user_object.id) {
+                    window.location.href = url_object.site_url + "/chat?dialog_id=" + dialog_id;
+                }
+
+                // var sound = new Howl({
+                //     src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
+                // });
+                // sound.play();
             }
 
-            // var sound = new Howl({
-            //     src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
-            // });
-            // sound.play();
         }
-
         if (data.type === "new_post") {
 
             var sound = new Howl({
                 src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
             });
 
-            if(push_sound_prop == 0) {
+            if (push_sound_prop == 0) {
                 console.log("push sound");
                 sound.play();
             }
@@ -221,7 +221,7 @@ function connectSocket() {
                 src: ['http://178.128.202.94/wp-content/uploads/2019/05/warning.wav']
             });
 
-            if(push_sound_prop == 0) {
+            if (push_sound_prop == 0) {
                 console.log("push sound");
                 sound.play();
             }
@@ -240,7 +240,7 @@ function connectSocket() {
                 src: ['http://178.128.202.94/wp-content/uploads/2019/05/warning.wav']
             });
 
-            if(push_sound_prop == 0) {
+            if (push_sound_prop == 0) {
                 console.log("push sound");
                 sound.play();
             }
