@@ -824,6 +824,9 @@ function addDialog(item, mes) {
 
     if (is_closed === '1') {
         resolvedBage($node.find(".wrap .meta .name"));
+        $('#resolve-btn').css('display', 'none');
+    }else{
+        $('#resolve-btn').css('display', 'block');
     }
 
     $node.click(function () {
