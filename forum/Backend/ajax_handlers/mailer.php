@@ -7,10 +7,13 @@
  */
 
 function new_post_mail($user_id, $mail, $login, $text, $topic, $url, $photo, $reaction_to, $reaction_text) {
-//
-//    if (get_user_meta($user_id, "receive_notifications", true )) {
-//        return false;
-//    }
+
+    $push_notif = get_user_meta($user_id, "receive_notifications", true);
+    $push_notif_prop = empty ($push_notif) ? 0 : $push_notif[0];
+
+    if ($push_notif_prop) {
+        return false;
+    }
 
     $to = $mail;
     $subject = "$login responded to your topic";
@@ -44,7 +47,7 @@ function new_post_mail($user_id, $mail, $login, $text, $topic, $url, $photo, $re
         </tr>
     </tbody>
 </table>
-<a href='$url'>Go to the topic</a>"  . get_user_meta($user_id, "receive_notifications", true ) . print_r(get_user_meta($user_id, "receive_notifications", true ));
+<a href='$url'>Go to the topic</a>"  . $push_notif_prop;
 
     return wp_mail( $to, $subject, $body, $headers);
 }
