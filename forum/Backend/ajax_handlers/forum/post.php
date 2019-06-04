@@ -266,8 +266,10 @@ function get_forum_posts()
             $user_info = new WP_User($post['user_id']);
             $user_respond_to_info = new WP_User($post['user_respond_to']);
 
+            $role = ((array)( $user_info->roles )[0])[0];
+
             $post['login'] = ($post['is_anonym'] == '1') ? 'Anonym' : $user_info->user_login;
-            $post['photo'] = get_avatar_url($post['user_id']);
+            $post['photo'] = ($role == 'administartor' || $role == 'advisor') ? site_logo() : get_avatar_url($post['user_id']);
             $post['user_respond_to'] = ($post['responder_anonym'] == '1') ? 'Anonym' : $user_respond_to_info->user_login;
             $post['post_message'] = censor($post['post_message']);
             $post['respond_message'] = censor($post['respond_message']);
