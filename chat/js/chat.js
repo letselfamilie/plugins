@@ -907,23 +907,23 @@ function addDialog(item, mes) {
 
                 if (mes[idDialog].messages === null || mes[idDialog].messages === undefined) mes[idDialog].messages = [];
 
-            }
+                /*ADD MESSAGES TO THE DIALOG*/
+                for (let i = 0; i < mes[idDialog].messages.length; i++) {
+                    if (i === mes[idDialog].messages.length - value) {
+                        if ($(".mes-break")[0] === undefined) {
+                            newMessages = true;
+                            newBanner("New messages");
 
-            /*ADD MESSAGES TO THE DIALOG*/
-            for (let i = 0; i < mes[idDialog].messages.length; i++) {
-                if (i === mes[idDialog].messages.length - value) {
-                    if ($(".mes-break")[0] === undefined) {
-                        newMessages = true;
-                        newBanner("New messages");
-
-                        setTimeout(function () {
-                            var new_messages_banner = $(".mes-break")[0];
-                            if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
-                        }, 5000);
+                            setTimeout(function () {
+                                var new_messages_banner = $(".mes-break")[0];
+                                if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
+                            }, 5000);
+                        }
                     }
+                    addMes(mes[idDialog].messages[i], user2logo, is_employee_chat);
                 }
-                addMes(mes[idDialog].messages[i], user2logo, is_employee_chat);
             }
+
 
             /*IF EMPLOYEE TAKES DIALOG WHICH IS IN LINE (NOBODY'S)*/
             if(item.without_employee==='1')
