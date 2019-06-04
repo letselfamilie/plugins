@@ -269,7 +269,7 @@ function get_forum_posts()
             $role = ((array)( $user_info->roles )[0])[0];
 
             $post['login'] = ($post['is_anonym'] == '1') ? 'Anonym' : $user_info->user_login;
-            $post['photo'] = ($role == 'administrator' || $role == 'adviser') ? plugins_url('', __FILE__) . '/images/logo.png' : get_avatar_url($post['user_id']);
+            $post['photo'] = ($role == 'administrator' || $role == 'adviser') ? plugins_url('', __FILE__) . '../../../images/logo.png' : get_avatar_url($post['user_id']);
             $post['user_respond_to'] = ($post['responder_anonym'] == '1') ? 'Anonym' : $user_respond_to_info->user_login;
             $post['post_message'] = censor($post['post_message']);
             $post['respond_message'] = censor($post['respond_message']);
