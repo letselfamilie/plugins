@@ -869,6 +869,8 @@ function addDialog(item, mes) {
 
         $('.messages ul').empty();
 
+        console.log(is_employee_chat);
+
         if(is_employee_chat === "0"){
             $("#resolve-btn").addClass("hidden");
         }else{
