@@ -21,8 +21,7 @@ $(function () {
         document.addEventListener("click", resumeAudio);
     }
 
-    if (wp_object.is_post == 0) addChatBox();
-    console.log('is chat = ' + wp_object.is_chat + '--------------');
+    if (wp_object.is_post == 0 && wp_object.is_chat == 0 && wp_object.is_reg == 0) addChatBox();
 
     getPushNotifSoundProp(function (push_sound) {
         push_sound_prop = push_sound;
@@ -82,6 +81,11 @@ function addNotification(title, text, photo, url = null, rounded = true) {
 
 function addChatBox() {
     let $chat_box_node = $(chat_box({}));
+    if (user_object.id == 0) {
+        $chat_box_node.on('click', function () {
+            window.location.href = url_object.site_url + "/register";
+        })
+    }
     $('body').append($chat_box_node);
     console.log('added box chat');
 
