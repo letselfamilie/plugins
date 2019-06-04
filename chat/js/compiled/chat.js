@@ -712,7 +712,7 @@ function insideDialogResolvedBanners() {
 
     newBanner("This problem has been resolved");
     $('.message-input').css('display', 'none');
-    $('#resolve-btn').css('display', 'none');
+    $("#chat_options").addClass("hidden");
 }
 
 function resolvedBage($appendNode) {
@@ -824,16 +824,13 @@ function addDialog(item, mes) {
 
     if (is_closed === '1') {
         resolvedBage($node.find(".wrap .meta .name"));
-      //  $('#resolve-btn').css('display', 'none');
-    }else{
-        $('#resolve-btn').css('display', 'block');
     }
 
     $node.click(function () {
         var newMessages = false;
-        $(".contact-profile").css('display', '')
-        $(".messages").css('display', '')
-        $(".message-input").css('display', '')
+        $(".contact-profile").css('display', '');
+        $(".messages").css('display', '');
+        $(".message-input").css('display', '');
         $(".new-convo").css('display', 'none');
         $('.contact-profile').removeClass("hidden");
         $('.message-input').removeClass("hidden");
@@ -865,6 +862,7 @@ function addDialog(item, mes) {
             $("#chat_options").addClass("hidden");
         } else {
             $("#chat_options").removeClass("hidden");
+
         }
 
 
