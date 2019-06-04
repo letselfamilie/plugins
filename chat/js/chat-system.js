@@ -37,7 +37,7 @@ $(function () {
                 $chatLink.append("<span style='background-color: orange; color: white; border-radius: 50%; " +
                                  "margin-left: 5px; width:20px; height: 20px; padding: 3px; font-size: 12px; " +
                                  "text-align: center; display: inline-block;'>" +
-                                 "<div style='display: flex; justify-items: center; justify-content: center; padding-left: 2px'>" + res +"</div></span>")
+                                 "<div style='display: flex; justify-items: center; justify-content: center; padding-left: 2px; padding-bottom: 2px'>" + res +"</div></span>")
             },
             error: function (error) {
                 console.log(error);
