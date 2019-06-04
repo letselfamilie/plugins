@@ -264,7 +264,8 @@ class ChatSocket implements MessageComponentInterface
                     if ($this->closeChat($room_id)) {
                         $message = array(
                             'type' => 'close_chat',
-                            'state' => 'success'
+                            'state' => 'success',
+                            'dialog_id' => $room_id
                         );
                     } else {
                         $message = array(

@@ -366,6 +366,12 @@ function loadChat(mes) {
         if (data.type === "close_chat") {
             if (data.state === "success") {
                 resolvedDialogBanners();
+                let dialog_id = data.dialog_id;
+                let dialog_id_in_mes = searchObjKey(mes, dialog_id);
+                if(dialog_id_in_mes !== undefined && dialog_id_in_mes !== null){
+                    mes[dialog_id_in_mes].is_closed = 1;
+                }
+
             } else {
                 alert("Error occurred");
             }
@@ -512,7 +518,8 @@ function loadChat(mes) {
                     user2_id: second_user_id,
                     second_user_nickname: null,
                     second_user_photo: url_object.plugin_directory + "/images/question.png",
-                    messages: m
+                    messages: m,
+                    is_closed:0
                 };
 
                 mes[Object.keys(mes).length] = newDialog;
@@ -569,7 +576,8 @@ function loadChat(mes) {
                     user2_id: second_user_id,
                     second_user_nickname: second_user_name,
                     second_user_photo: default_photo,
-                    messages: []
+                    messages: [],
+                    is_closed: 0
                 };
 
                 mes[Object.keys(mes).length] = newDialog;
@@ -823,7 +831,6 @@ function addDialog(item, mes) {
 
     if (is_closed === '1') {
         resolvedBage($node.find(".wrap .meta .name"));
-        insideDialogResolvedBanners();
     }
 
     $node.click(function () {
@@ -862,11 +869,13 @@ function addDialog(item, mes) {
             $("#chat_options").addClass("hidden");
         } else {
             $("#chat_options").removeClass("hidden");
-
         }
 
-
         if (idDialog !== undefined && idDialog !== null) {
+            if(mes[idDialog].is_closed === 1){
+                insideDialogResolvedBanners();
+            }
+
             let dialog_mes = mes[idDialog].messages;
             let last_mes = dialog_mes.length > 0 ? dialog_mes[dialog_mes.length - 1] : null;
 
