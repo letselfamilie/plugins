@@ -4,13 +4,13 @@ $ = jQuery;
 let ejs = require('ejs');
 
 const {Howl, Howler} = require('howler');
-Date.prototype.ddmmyyyyhhmm = function() {
+Date.prototype.ddmmyyyyhhmm = function () {
     var mm = this.getMonth() + 1;
     var dd = this.getDate();
 
     var HH = this.getHours();
     var MM = this.getMinutes();
-    return ((dd>9 ? '' : '0') + dd) + '-' + ((mm>9 ? '' : '0') + mm) +  '-' + this.getFullYear() + ' ' +
+    return ((dd > 9 ? '' : '0') + dd) + '-' + ((mm > 9 ? '' : '0') + mm) + '-' + this.getFullYear() + ' ' +
         ((HH > 9 ? '' : '0') + HH) + ':' + ((MM > 9 ? '' : '0') + MM);
 };
 // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
@@ -35,10 +35,10 @@ window.addEventListener('resize', () => {
 
 //http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3
 $(function () {
-    if(typeof AudioContext != "undefined" || typeof webkitAudioContext != "undefined") {
-        var resumeAudio = function() {
-            if(typeof g_WebAudioContext == "undefined" || g_WebAudioContext == null) return;
-            if(g_WebAudioContext.state == "suspended") g_WebAudioContext.resume();
+    if (typeof AudioContext != "undefined" || typeof webkitAudioContext != "undefined") {
+        var resumeAudio = function () {
+            if (typeof g_WebAudioContext == "undefined" || g_WebAudioContext == null) return;
+            if (g_WebAudioContext.state == "suspended") g_WebAudioContext.resume();
             document.removeEventListener("click", resumeAudio);
         };
         document.addEventListener("click", resumeAudio);
@@ -81,8 +81,7 @@ function getDialogs() {
         success: function (res) {
             console.log("Res_own_dialogs: " + res);
 
-            if(user_object.role == 'adviser')
-            {
+            if (user_object.role == 'adviser') {
                 $.ajax({
                     url: url_object.ajax_url,
                     type: 'POST',
@@ -93,11 +92,9 @@ function getDialogs() {
                         console.log("Res_general_dialogs: " + res2);
 
                         if (typeof res2 !== 'undefined' && res2.length > 0) {
-                            var combined_res = concatArray (JSON.parse(res), JSON.parse(res2));
-                            console.log("combined_res "+ JSON.stringify(combined_res));
-                        }
-                        else
-                        {
+                            var combined_res = concatArray(JSON.parse(res), JSON.parse(res2));
+                            console.log("combined_res " + JSON.stringify(combined_res));
+                        } else {
                             var combined_res = JSON.parse(res);
                         }
 
@@ -108,11 +105,8 @@ function getDialogs() {
                         console.log(error);
                     }
                 });
-            }
-
-            else
-            {
-                console.log("JSON.parse: "+ JSON.parse(res));
+            } else {
+                console.log("JSON.parse: " + JSON.parse(res));
 
                 loadChat(JSON.parse(res));
             }
@@ -159,7 +153,7 @@ function loadChat(mes) {
     let url = 'ws://178.128.202.94:8000/?userId=' + user_object.id + '&consultan=' + ((is_consultant) ? 1 : 0);
     conn = new WebSocket(url);
 
-    $("#profile-img").attr('src',user_object.photo);
+    $("#profile-img").attr('src', user_object.photo);
 
     $("#profile").find("p").text(user_object.username);
 
@@ -272,8 +266,7 @@ function loadChat(mes) {
 
         $("#redirect_choose_consultant").click(function () {
 
-            if(!($(".multi-collapse").hasClass("show")))
-            {
+            if (!($(".multi-collapse").hasClass("show"))) {
                 var myNode = document.getElementById("consultantSelect");
                 while (myNode.firstChild) {
                     myNode.removeChild(myNode.firstChild);
@@ -290,17 +283,16 @@ function loadChat(mes) {
             //var strUser = e.options[e.selectedIndex].value;
             var strUser = e.options[e.selectedIndex];
             var d_id = parseInt($('.conversation.active').attr("id"));
-            console.log("val "+ strUser);
-            if(strUser!==undefined)
-            {
+            console.log("val " + strUser);
+            if (strUser !== undefined) {
                 conn.send(JSON.stringify({
-                 command: 'redirect_chat',
-                 dialog_id: d_id,
-                 new_employee: strUser.value,
-                 user_id_from: user_object.id
+                    command: 'redirect_chat',
+                    dialog_id: d_id,
+                    new_employee: strUser.value,
+                    user_id_from: user_object.id
                 }));
 
-                $("#"+d_id).detach();
+                $("#" + d_id).detach();
 
                 $(".conversation.active").removeClass("active");
                 $(".contact-profile").css('display', 'none');
@@ -335,11 +327,10 @@ function loadChat(mes) {
 
         });
 
-        $("#addNewDialog").click(function ()
-        {
+        $("#addNewDialog").click(function () {
             let topic = $("#inputTopic").val();
             let messageFirst = $("#inputFirstMessage").val();
-            messageFirst= (messageFirst===null || messageFirst===undefined)? "" : messageFirst;
+            messageFirst = (messageFirst === null || messageFirst === undefined) ? "" : messageFirst;
             if (topic !== "") {
                 console.log(topic);
                 console.log(messageFirst);
@@ -371,10 +362,10 @@ function loadChat(mes) {
         console.log(e.data);
         var data = JSON.parse(e.data);
 
-        if(data.type === "close_chat"){
-            if(data.state === "success"){
+        if (data.type === "close_chat") {
+            if (data.state === "success") {
                 resolvedDialogBanners();
-            } else{
+            } else {
                 alert("Error occurred");
             }
         }
@@ -386,13 +377,13 @@ function loadChat(mes) {
                 src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
             });
 
-        //    getChatSoundProp(function (sound_prop){
-        //        console.log("getChatSoundProp");
-               if(chat_sound_prop == 0){
-                   console.log("sound");
-                   sound.play();
-               }
-        //    });
+            //    getChatSoundProp(function (sound_prop){
+            //        console.log("getChatSoundProp");
+            if (chat_sound_prop == 0) {
+                console.log("sound");
+                sound.play();
+            }
+            //    });
 
             let from = data.from;
             let time = data.create_timestamp;
@@ -416,7 +407,7 @@ function loadChat(mes) {
                 addMes(m, $('.conversation.active').find("img").attr('src'), is_chat_with_employee);
 
 
-                if(from != user_object.id){
+                if (from != user_object.id) {
 
                     isRead = "1";
 
@@ -426,7 +417,7 @@ function loadChat(mes) {
                     }));
 
                 }
-                
+
                 $('.messages ul').children('li').last().focus();
 
             } else {
@@ -437,7 +428,7 @@ function loadChat(mes) {
                 } else {
                     let val = $node.find(".badge-counter").text();
 
-                    $node.find(".badge-counter").text(isNaN(parseInt(val))? 1 : parseInt(val) + 1);
+                    $node.find(".badge-counter").text(isNaN(parseInt(val)) ? 1 : parseInt(val) + 1);
                 }
 
                 $node.find(".badge-counter").removeClass("hidden");
@@ -467,12 +458,10 @@ function loadChat(mes) {
             let dialog_id = data.dialog_id;
 
 
-            if($('#'+dialog_id).length>0)
-            {
+            if ($('#' + dialog_id).length > 0) {
                 console.log("New dialog won't be created as it already exists");
 
-                if(dialog_id!==null)
-                {
+                if (dialog_id !== null) {
                     let $node = $("#" + dialog_id);
                     $node.detach();
                     $node.prependTo("#conversations ul");
@@ -492,17 +481,17 @@ function loadChat(mes) {
             let second_user_photo = data.user_info_2.user_photo;
             let dialog_type = data.dialog_type; //  employee_chat || user_chat
             let topic = data.topic;  // absent for user
-            let is_emp_available =  data.is_emp_available; //absent for user
+            let is_emp_available = data.is_emp_available; //absent for user
             let first_message = data.first_message;
 
             console.log("I received request to create new dialog view");
 
-            let isread = (second_user_id!==user_object.id)?"1":"0";
+            let isread = (second_user_id !== user_object.id) ? "1" : "0";
 
-            var m = (first_message===null || first_message===undefined || first_message.message==="")? [] :
+            var m = (first_message === null || first_message === undefined || first_message.message === "") ? [] :
                 [{
                     message_id: "1",
-                    dialog_id: ""+ dialog_id,
+                    dialog_id: "" + dialog_id,
                     is_read: isread,
                     user_from_id: first_message.from,
                     message_body: first_message.message,
@@ -511,8 +500,7 @@ function loadChat(mes) {
 
             console.log("dialog_type" + dialog_type);
 
-            if(dialog_type==="employee_chat")
-            {
+            if (dialog_type === "employee_chat") {
                 console.log("Employee chat view is requested to be created");
 
                 var newDialog = {
@@ -535,13 +523,12 @@ function loadChat(mes) {
                 if (user_object.role != 'adviser') {
                     $('#' + dialog_id).click();
 
-                    if(!is_emp_available)
-                    {
+                    if (!is_emp_available) {
                         newBanner("No consultant available at the moment - please wait till working hours.");
                         setTimeout(function () {
-                                        var new_messages_banner = $(".mes-break")[0];
-                                        if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
-                                    }, 5000);
+                            var new_messages_banner = $(".mes-break")[0];
+                            if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
+                        }, 5000);
 
                     }
 
@@ -549,20 +536,19 @@ function loadChat(mes) {
                 }
 
 
-                if ($("#"+dialog_id).find(".badge-counter").length === 0 && user_object.role == 'adviser') {
+                if ($("#" + dialog_id).find(".badge-counter").length === 0 && user_object.role == 'adviser') {
                     let badge = '<span class="badge badge-counter ml-2">new</span>';
-                    $(badge).appendTo($("#"+dialog_id).find(".wrap .meta .name"));
+                    $(badge).appendTo($("#" + dialog_id).find(".wrap .meta .name"));
                     $(badge).removeClass("hidden");
 
                 } else {
-                    $("#"+dialog_id).find(".badge-counter").text((m===[])? "new" : 1 );
-                    $("#"+dialog_id).removeClass("hidden");
+                    $("#" + dialog_id).find(".badge-counter").text((m === []) ? "new" : 1);
+                    $("#" + dialog_id).removeClass("hidden");
 
                 }
 
 
-                if(second_user_id===user_object.id)
-                {
+                if (second_user_id === user_object.id) {
                     $(".contact-profile").css('display', 'none');
                     $(".messages").css('display', 'none');
                     $(".message-input").css('display', 'none');
@@ -570,7 +556,7 @@ function loadChat(mes) {
                 }
             }
 
-            if(dialog_type==="user_chat") {
+            if (dialog_type === "user_chat") {
                 console.log("User chat view is requested to be created");
 
 
@@ -621,70 +607,58 @@ function loadChat(mes) {
             let sound = new Howl({
                 src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
             });
-          //  getChatSoundProp(function (sound_prop){
-                if(chat_sound_prop == 0){
-                    console.log("sound");
-                    sound.play();
-                }
-          //  });
+            //  getChatSoundProp(function (sound_prop){
+            if (chat_sound_prop == 0) {
+                console.log("sound");
+                sound.play();
+            }
+            //  });
         }
 
-        if (data.type === "take_dialog")
-        {
-            if(data.state === "success")
-            {
+        if (data.type === "take_dialog") {
+            if (data.state === "success") {
                 var dIdHTML = data.dialog_id;
                 var idDialog = searchObjKey(mes, dIdHTML); //id in global array
                 delete mes[idDialog];
                 let $node = $("#" + dIdHTML);
                 $node.detach();
-            }
-
-            else
-            {
+            } else {
                 console.log("Error with receiving response to somebody taking the dialog");
             }
         }
 
-        if (data.type === "get_employees")
-        {
+        if (data.type === "get_employees") {
             console.log("Employees that are online");
 
             var consultants_online = data.employees_information;
 
-            for(var i = 0; i< consultants_online.length; i++)
-            {
+            for (var i = 0; i < consultants_online.length; i++) {
                 var log = consultants_online[i].user_login;
                 var id = consultants_online[i].user_id;
-                if(id!==user_object.id)
-                {
-                    var line = '<option value="'+id+'">' +log + '</option>';
+                if (id !== user_object.id) {
+                    var line = '<option value="' + id + '">' + log + '</option>';
                     $(line).appendTo($("#consultantSelect"));
                 }
 
             }
 
 
-
         }
 
 
-        if (data.type === "redirect_chat" && data.state==="success")
-        {
-           var dialog_id = data.dialog_id;
-           var topic = data.dialog_info.dialog_topic;
-           var last_message_timestamp =data.dialog_info.last_message_timestamp;
-           var client_id = data.dialog_info.user_id;
-           var messages = data.dialog_info.messages;
+        if (data.type === "redirect_chat" && data.state === "success") {
+            var dialog_id = data.dialog_id;
+            var topic = data.dialog_info.dialog_topic;
+            var last_message_timestamp = data.dialog_info.last_message_timestamp;
+            var client_id = data.dialog_info.user_id;
+            var messages = data.dialog_info.messages;
 
-           console.log("Chat is redirected");
+            console.log("Chat is redirected");
 
-            if($('#'+dialog_id).length>0)
-            {
+            if ($('#' + dialog_id).length > 0) {
                 console.log("New dialog won't be created as it already exists");
 
-                if(dialog_id!==null)
-                {
+                if (dialog_id !== null) {
                     let $node = $("#" + dialog_id);
                     $node.detach();
                     $node.prependTo("#conversations ul");
@@ -709,14 +683,14 @@ function loadChat(mes) {
             mes[Object.keys(mes).length] = newDialog;
             addDialog(newDialog, mes);
 
-            if ($("#"+dialog_id).find(".badge-counter").length === 0) {
+            if ($("#" + dialog_id).find(".badge-counter").length === 0) {
                 let badge = '<span class="badge badge-counter ml-2">redirected</span>';
-                $(badge).appendTo($("#"+dialog_id).find(".wrap .meta .name"));
+                $(badge).appendTo($("#" + dialog_id).find(".wrap .meta .name"));
                 $(badge).removeClass("hidden");
 
             } else {
-                $("#"+dialog_id).find(".badge-counter").text((m===[])? "redirected" : 1 );
-                $("#"+dialog_id).removeClass("hidden");
+                $("#" + dialog_id).find(".badge-counter").text((m === []) ? "redirected" : 1);
+                $("#" + dialog_id).removeClass("hidden");
 
             }
 
@@ -774,13 +748,12 @@ function fillChat(mes) {
     let url = new URL(window.location.href);
     let d_id = url.searchParams.get("dialog_id");
 
-    if(d_id!==null)
-    {
+    if (d_id !== null) {
         conn.send(JSON.stringify({
             user_id_from: user_object.id,
             command: 'new_chat',
             dialog_type: 'user_chat',
-            dialog_id : d_id
+            dialog_id: d_id
         }));
 
         console.log("Request to create new dialog with user has been sent");
@@ -816,21 +789,27 @@ function addDialog(item, mes) {
     let N_unread = 0;
 
     /*COUNT NUMBER OF UNREAD MESSAGES*/
-    for(let i = messages.length-1; i>-1; i--)
-    {
-        if(messages[i].is_read ==="1") {break;}
+    for (let i = messages.length - 1; i > -1; i--) {
+        if (messages[i].is_read === "1") {
+            break;
+        }
         //TODO if smth goes wrong
-        else { if(messages[i].user_from_id === user2_id) { N_unread++;} }
+        else {
+            if (messages[i].user_from_id === user2_id) {
+                N_unread++;
+            }
+        }
     }
 
     /*ADD BADGE TO DIALOG WITH A NUMBER OF UNREAD MESSAGES*/
-    if(N_unread>0)
-    {
+    if (N_unread > 0) {
 
         if ($node.find(".badge-counter").length === 0) {
             var text = N_unread;
-            if(item.without_employee==='1')  { text = "in line" }
-            let badge = '<span class="badge badge-counter ml-2">' + text+ '</span>';
+            if (item.without_employee === '1') {
+                text = "in line"
+            }
+            let badge = '<span class="badge badge-counter ml-2">' + text + '</span>';
             $(badge).appendTo($node.find(".wrap .meta .name"));
             $(badge).removeClass("hidden");
 
@@ -840,7 +819,7 @@ function addDialog(item, mes) {
         }
     }
 
-    if(is_closed === '1'){
+    if (is_closed === '1') {
         resolvedBage($node.find(".wrap .meta .name"));
     }
 
@@ -871,30 +850,27 @@ function addDialog(item, mes) {
 
         $('.contact-profile img').attr('src', user2logo);
 
-        if($('.contact-profile p').text()==="") $('.contact-profile p').text(user2name);
+        if ($('.contact-profile p').text() === "") $('.contact-profile p').text(user2name);
 
         $('.messages ul').empty();
 
-        if(is_closed === '1'){
+        if (is_closed === '1') {
             insideDialogResolvedBanners();
             $("#chat_options").addClass("hidden");
-        }
-        else {
+        } else {
             $("#chat_options").removeClass("hidden");
         }
 
 
-
         if (idDialog !== undefined && idDialog !== null) {
             let dialog_mes = mes[idDialog].messages;
-            let last_mes = dialog_mes[dialog_mes.length-1];
+            let last_mes = dialog_mes[dialog_mes.length - 1];
 
-            if(last_mes.user_from_id != user_object.id){
-                let value = parseInt($node.find(".badge-counter").text());
+            let value = parseInt($node.find(".badge-counter").text());
 
+            if (last_mes.user_from_id != user_object.id) {
                 /*MARK MESSAGES TO BE READ*/
-                if(value>0)
-                {
+                if (value > 0) {
                     conn.send(JSON.stringify({
                         command: 'mark_messages',
                         dialog_id: idDialogHTML
@@ -905,30 +881,29 @@ function addDialog(item, mes) {
 
                 $node.find(".badge-counter").text(0);
                 $node.find(".badge-counter").addClass("hidden");
+            }
 
-                if (mes[idDialog].messages === null || mes[idDialog].messages === undefined) mes[idDialog].messages = [];
+            if (mes[idDialog].messages === null || mes[idDialog].messages === undefined) mes[idDialog].messages = [];
 
-                /*ADD MESSAGES TO THE DIALOG*/
-                for (let i = 0; i < mes[idDialog].messages.length; i++) {
-                    if (i === mes[idDialog].messages.length - value) {
-                        if ($(".mes-break")[0] === undefined) {
-                            newMessages = true;
-                            newBanner("New messages");
+            /*ADD MESSAGES TO THE DIALOG*/
+            for (let i = 0; i < mes[idDialog].messages.length; i++) {
+                if (i === mes[idDialog].messages.length - value && last_mes.user_from_id != user_object.id) {
+                    if ($(".mes-break")[0] === undefined) {
+                        newMessages = true;
+                        newBanner("New messages");
 
-                            setTimeout(function () {
-                                var new_messages_banner = $(".mes-break")[0];
-                                if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
-                            }, 5000);
-                        }
+                        setTimeout(function () {
+                            var new_messages_banner = $(".mes-break")[0];
+                            if (new_messages_banner !== undefined) new_messages_banner.parentNode.removeChild(new_messages_banner);
+                        }, 5000);
                     }
-                    addMes(mes[idDialog].messages[i], user2logo, is_employee_chat);
                 }
+                addMes(mes[idDialog].messages[i], user2logo, is_employee_chat);
             }
 
 
             /*IF EMPLOYEE TAKES DIALOG WHICH IS IN LINE (NOBODY'S)*/
-            if(item.without_employee==='1')
-            {
+            if (item.without_employee === '1') {
 
                 conn.send(JSON.stringify({
                     user_id_from: user_object.id,
@@ -941,7 +916,7 @@ function addDialog(item, mes) {
                     dialog_id: idDialogHTML
                 }));
 
-                mes[idDialog].without_employee="0";
+                mes[idDialog].without_employee = "0";
                 mes[idDialog].user2_id = user_object.id;
             }
         }
@@ -973,20 +948,18 @@ function gotoBottom(id) {
     element.scrollTop = element.scrollHeight - element.clientHeight;
 }
 
-function concatArray (a1, a2)
-{
+function concatArray(a1, a2) {
 
-    Object.size = function(obj) {
+    Object.size = function (obj) {
         var size = 0, key;
         for (key in obj) {
             if (obj.hasOwnProperty(key)) size++;
         }
         return size;
     };
-    var size = Object.keys(a1).length-1;
+    var size = Object.keys(a1).length - 1;
 
-    for (var i =0; i<a2.length; i++)
-    {
+    for (var i = 0; i < a2.length; i++) {
         a1[size] = a2[i]
         size++;
     }
