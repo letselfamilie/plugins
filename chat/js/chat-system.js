@@ -163,7 +163,7 @@ function connectSocket() {
         console.log(e.data);
         var data = JSON.parse(e.data);
 
-        if (data.type === "message" && wp_object.is_chat != 0) {
+        if (data.type === "message" && wp_object.is_chat == 0) {
 
             var sound = new Howl({
                 src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
