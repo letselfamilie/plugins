@@ -340,6 +340,7 @@ $(function () {
                 res = JSON.parse(res);
                 console.log(res);
                 if(res){
+                    document.title = res['topic_name'];
                     $("#topic_name").text(res['topic_name']);
                     $("#topic_name-f").text(res['topic_name']);
                     $("#topic_date").text(new Date(res['create_timestamp'].replace(/\s/, 'T')).ddmmyyyyhhmm());

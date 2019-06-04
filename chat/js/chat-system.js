@@ -126,7 +126,8 @@ function connectSocket() {
         var keys = Object.keys(user_object);
         console.log("user_object" + keys);
 
-        if (wp_object.is_chat == 0) {
+        if (wp_object.is_chat != 0) {
+            preventDefault();
             $('#addNewDialog').click(function () {
                 let topic = $("#inputTopic").val();
                 let messageFirst = $("#inputFirstMessage").val();
@@ -149,6 +150,7 @@ function connectSocket() {
 
                 return false;
             });
+            return false;
         }
         return false;
 
