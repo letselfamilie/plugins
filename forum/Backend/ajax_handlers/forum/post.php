@@ -273,9 +273,9 @@ function get_forum_posts()
             $post['user_respond_to'] = ($post['responder_anonym'] == '1') ? 'Anonym' : $user_respond_to_info->user_login;
             $post['post_message'] = censor($post['post_message']);
             $post['respond_message'] = censor($post['respond_message']);
-    //        if ($role == 'administrator' || $role == 'adviser') {
-//                $post['login'] = 'Letselschade adviseur';
-//            }
+            if (($role == 'administrator' || $role == 'adviser') && $post['is_anonym'] == '0') {
+                $post['login'] = 'Letselschade adviseur';
+            }
             $posts[] = $post;
 
         }
