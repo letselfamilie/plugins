@@ -869,9 +869,14 @@ function addDialog(item, mes) {
 
         $('.messages ul').empty();
 
+        if(is_employee_chat === "0"){
+            $("#resolve-btn").addClass("hidden");
+        }else{
+            $("#resolve-btn").removeClass("hidden");
+        }
+
         if (is_closed === '1') {
             insideDialogResolvedBanners();
-          //  $("#chat_options").addClass("hidden");
         } else {
             $("#resolve-btn").removeClass("hidden");
         }
