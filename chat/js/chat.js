@@ -719,7 +719,7 @@ function insideDialogResolvedBanners() {
 
     newBanner("This problem has been resolved");
     $('.message-input').css('display', 'none');
-    $("#chat_options").addClass("hidden");
+    $("#resolve-btn").addClass("hidden");
 }
 
 function resolvedBage($appendNode) {
@@ -829,6 +829,10 @@ function addDialog(item, mes) {
         }
     }
 
+    if(is_employee_chat === "0"){
+        $("#resolve-btn").addClass("hidden");
+    }
+
     if (is_closed === '1') {
         resolvedBage($node.find(".wrap .meta .name"));
     }
@@ -866,9 +870,9 @@ function addDialog(item, mes) {
 
         if (is_closed === '1') {
             insideDialogResolvedBanners();
-            $("#chat_options").addClass("hidden");
+          //  $("#chat_options").addClass("hidden");
         } else {
-            $("#chat_options").removeClass("hidden");
+            $("#resolve-btn").removeClass("hidden");
         }
 
         if (idDialog !== undefined && idDialog !== null) {
