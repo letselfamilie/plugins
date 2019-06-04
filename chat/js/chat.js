@@ -311,6 +311,8 @@ function loadChat(mes) {
                 command: 'close_chat',
                 dialog_id: d_id
             }));
+
+
         });
 
         $("#btn-newmessage").click(function () {
@@ -709,6 +711,7 @@ function insideDialogResolvedBanners() {
 
     newBanner("This problem has been resolved");
     $('.message-input').css('display', 'none');
+    $('#resolve-btn').css('display', 'none');
 }
 
 function resolvedBage($appendNode) {
