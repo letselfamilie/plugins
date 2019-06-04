@@ -824,6 +824,7 @@ function addDialog(item, mes) {
 
     if (is_closed === '1') {
         resolvedBage($node.find(".wrap .meta .name"));
+        insideDialogResolvedBanners();
     }
 
     $node.click(function () {
