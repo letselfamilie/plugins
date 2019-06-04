@@ -415,7 +415,7 @@ function loadChat(mes) {
                 addMes(m, $('.conversation.active').find("img").attr('src'), is_chat_with_employee);
 
 
-                if(from !== user_object.id){
+                if(from != user_object.id){
 
                     isRead = "1";
 
