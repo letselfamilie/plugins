@@ -126,30 +126,30 @@ function connectSocket() {
         var keys = Object.keys(user_object);
         console.log("user_object" + keys);
 
+        if (wp_object.is_chat == 0) {
+            $('#addNewDialog').click(function () {
+                let topic = $("#inputTopic").val();
+                let messageFirst = $("#inputFirstMessage").val();
+                messageFirst = (messageFirst === null || messageFirst === undefined) ? "" : messageFirst;
+                if (topic !== "") {
+                    // socket add dialog
+                    conn.send(JSON.stringify({
+                        user_id_from: user_object.id,
+                        command: 'new_chat',
+                        dialog_type: 'employee_chat',
+                        topic: topic,
+                        message: messageFirst
+                    }));
 
-        $('#addNewDialog').click(function () {
-            let topic = $("#inputTopic").val();
-            let messageFirst = $("#inputFirstMessage").val();
-            messageFirst = (messageFirst === null || messageFirst === undefined) ? "" : messageFirst;
-            if (topic !== "") {
-                // socket add dialog
-                conn.send(JSON.stringify({
-                    user_id_from: user_object.id,
-                    command: 'new_chat',
-                    dialog_type: 'employee_chat',
-                    topic: topic,
-                    message: messageFirst
-                }));
+                    console.log("Request of creating new dialog has been sent to server");
 
-                console.log("Request of creating new dialog has been sent to server");
+                } else (alert("Write your issue, please"))
 
-            } else (alert("Write your issue, please"))
+                // TODO: check form for being filled in
 
-            // TODO: check form for being filled in
-
-            return false;
-        });
-
+                return false;
+            });
+        }
         return false;
 
     };
@@ -177,6 +177,7 @@ function connectSocket() {
 
             addNotification(from, mess, photo, url_object.site_url + "/chat?dialog_id=" + dial_id)
         }
+
 
         if (data.type === "new_chat") {
             let dialog_id = data.dialog_id;
