@@ -413,7 +413,6 @@ function loadChat(mes) {
                 var m = {user_from_id: from, message_body: mess, create_timestamp: time};
                 addMes(m, $('.conversation.active').find("img").attr('src'), is_chat_with_employee);
 
-
                 if (from != user_object.id) {
 
                     isRead = "1";
@@ -775,8 +774,8 @@ function addDialog(item, mes) {
 
     let is_employee_chat = item.is_employee_chat;
     let dialog_topic = item.dialog_topic;
-    let user1_id = item.user1_id;
-    let user2_id = item.user2_id;
+ //   let user1_id = item.user1_id;
+    let user2_id = item.user2_id == user_object.id ? item.user1_id : item.user2_id;
     let without_employee = item.without_employee;
     let messages = (item.messages === null || item.messages === undefined) ? [] : item.messages;
 
@@ -803,7 +802,7 @@ function addDialog(item, mes) {
         if (messages[i].is_read === "1") {
             break;
         }
-        //TODO if smth goes wrong
+
         else {
             if (messages[i].user_from_id === user2_id) {
                 N_unread++;
@@ -882,13 +881,13 @@ function addDialog(item, mes) {
                 insideDialogResolvedBanners();
             }
 
-            let dialog_mes = mes[idDialog].messages;
-            let last_mes = dialog_mes.length > 0 ? dialog_mes[dialog_mes.length - 1] : null;
+         //   let dialog_mes = mes[idDialog].messages;
+         //   let last_mes = dialog_mes.length > 0 ? dialog_mes[dialog_mes.length - 1] : null;
            // console.log("length " + dialog_mes.length);
 
             let value = parseInt($node.find(".badge-counter").text());
 
-            if (last_mes !== null && last_mes.user_from_id != user_object.id) {
+            if (!fromyou) {
                 /*MARK MESSAGES TO BE READ*/
                 if (value > 0) {
                     conn.send(JSON.stringify({
@@ -907,7 +906,7 @@ function addDialog(item, mes) {
 
             /*ADD MESSAGES TO THE DIALOG*/
             for (let i = 0; i < mes[idDialog].messages.length; i++) {
-                if (i === mes[idDialog].messages.length - value && (last_mes !== null && last_mes.user_from_id != user_object.id)) {
+                if (i === mes[idDialog].messages.length - value && !fromyou) {
                     if ($(".mes-break")[0] === undefined) {
                         newMessages = true;
                         newBanner("New messages");
