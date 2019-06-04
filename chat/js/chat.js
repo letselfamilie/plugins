@@ -883,12 +883,12 @@ function addDialog(item, mes) {
             }
 
             let dialog_mes = mes[idDialog].messages;
-            let last_mes = dialog_mes[dialog_mes.length - 1];
+            let last_mes = dialog_mes.length > 0 ? dialog_mes[dialog_mes.length - 1] : null;
            // console.log("length " + dialog_mes.length);
 
             let value = parseInt($node.find(".badge-counter").text());
 
-            if (last_mes.user_from_id != user_object.id) {
+            if (last_mes !== null && last_mes.user_from_id != user_object.id) {
                 /*MARK MESSAGES TO BE READ*/
                 if (value > 0) {
                     conn.send(JSON.stringify({
@@ -907,7 +907,7 @@ function addDialog(item, mes) {
 
             /*ADD MESSAGES TO THE DIALOG*/
             for (let i = 0; i < mes[idDialog].messages.length; i++) {
-                if (i === mes[idDialog].messages.length - value && (last_mes.user_from_id != user_object.id)) {
+                if (i === mes[idDialog].messages.length - value && (last_mes !== null && last_mes.user_from_id != user_object.id)) {
                     if ($(".mes-break")[0] === undefined) {
                         newMessages = true;
                         newBanner("New messages");
