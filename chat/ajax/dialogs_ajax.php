@@ -239,8 +239,8 @@ function get_n_unread() {
                          WHERE user_from_id <> $user_id AND NOT is_read AND 
                               dialog_id IN (SELECT dialog_id
                                              FROM {$wpdb->prefix}c_dialogs
-                                             WHERE (user1_id = $user_id 
-                                                  OR user2_id = $user_id));";
+                                             WHERE user1_id = " . $user_id . " OR 
+                    IF (user2_id IS NOT NULL, user2_id = " . $user_id . " , employee_id = " . $user_id . ");";
             echo json_encode($wpdb->get_var($sqlQuery), JSON_UNESCAPED_UNICODE);
         }
     } catch (Exception $e) {
