@@ -829,13 +829,12 @@ function addDialog(item, mes) {
         }
     }
 
-    if(is_employee_chat === "0"){
-        $("#resolve-btn").addClass("hidden");
+    if(is_employee_chat === "1"){
+        if (is_closed === '1') {
+            resolvedBage($node.find(".wrap .meta .name"));
+        }
     }
 
-    if (is_closed === '1') {
-        resolvedBage($node.find(".wrap .meta .name"));
-    }
 
     $node.click(function () {
         var newMessages = false;
@@ -868,18 +867,14 @@ function addDialog(item, mes) {
 
         $('.messages ul').empty();
 
-        console.log(is_employee_chat);
-
-        if(is_employee_chat === "0"){
-            $("#resolve-btn").addClass("hidden");
+        if(is_employee_chat === "1"){
+            if (is_closed === '1') {
+                insideDialogResolvedBanners();
+            } else {
+                $("#resolve-btn").removeClass("hidden");
+            }
         }else{
-            $("#resolve-btn").removeClass("hidden");
-        }
-
-        if (is_closed === '1') {
-            insideDialogResolvedBanners();
-        } else {
-            $("#resolve-btn").removeClass("hidden");
+            $("#resolve-btn").addClass("hidden");
         }
 
         if (idDialog !== undefined && idDialog !== null) {
