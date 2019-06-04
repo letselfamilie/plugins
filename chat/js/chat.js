@@ -414,13 +414,17 @@ function loadChat(mes) {
                 var m = {user_from_id: from, message_body: mess, create_timestamp: time};
                 addMes(m, $('.conversation.active').find("img").attr('src'), is_chat_with_employee);
 
-                isRead = "1";
 
-                conn.send(JSON.stringify({
-                    command: 'mark_messages',
-                    dialog_id: dial_id
-                }));
+                if(from !== user_object.id){
 
+                    isRead = "1";
+
+                    conn.send(JSON.stringify({
+                        command: 'mark_messages',
+                        dialog_id: dial_id
+                    }));
+
+                }
                 
                 $('.messages ul').children('li').last().focus();
 

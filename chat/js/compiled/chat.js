@@ -415,13 +415,17 @@ function loadChat(mes) {
                 var m = {user_from_id: from, message_body: mess, create_timestamp: time};
                 addMes(m, $('.conversation.active').find("img").attr('src'), is_chat_with_employee);
 
-                isRead = "1";
 
-                conn.send(JSON.stringify({
-                    command: 'mark_messages',
-                    dialog_id: dial_id
-                }));
+                if(from !== user_object.id){
 
+                    isRead = "1";
+
+                    conn.send(JSON.stringify({
+                        command: 'mark_messages',
+                        dialog_id: dial_id
+                    }));
+
+                }
                 
                 $('.messages ul').children('li').last().focus();
 
@@ -2119,7 +2123,7 @@ module.exports={
   "_args": [
     [
       "ejs@2.6.1",
-      "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins"
+      "C:\\Server\\data\\htdocs\\letsel\\wp-content\\plugins"
     ]
   ],
   "_from": "ejs@2.6.1",
@@ -2143,7 +2147,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/ejs/-/ejs-2.6.1.tgz",
   "_spec": "2.6.1",
-  "_where": "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins",
+  "_where": "C:\\Server\\data\\htdocs\\letsel\\wp-content\\plugins",
   "author": {
     "name": "Matthew Eernisse",
     "email": "mde@fleegix.org",
