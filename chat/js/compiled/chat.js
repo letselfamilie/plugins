@@ -870,13 +870,15 @@ function addDialog(item, mes) {
             let messages = $("#messages-container ul").children().toArray();
             messages.forEach((mes) => {
                 let offset = mes.offsetTop;
-                console.log(offset);
+                //console.log(offset);
                 if (offset < 150) {
-                    console.log(mes.children[1]);
+                    console.log(offset + " " + mes.children[1]);
 
-                    //let text = mes.children[1].children[2].innerHTML;
-                    //console.log(text);
-                    //$("#date-bubble").innerHTML = text;
+                    let date_reg = new RegExp('(.|\\s)*(\\d{4}-\\d{2}-\\d{2})(.|\\s)*');
+                    let text = mes.innerHTML;
+                    text = text.replace(date_reg, '$2');
+                    console.log(text);
+                    $("#date-bubble").innerHTML = text;
                 }
             });
 
