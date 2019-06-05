@@ -998,12 +998,16 @@ function addDialog(item, mes) {
 function addMes(item, user2logo, is_employee_chat, prepend) {
     var st = ((item.user_from_id === user_object.id) ? "sent" : "replies");
 
-
     var png = ((item.user_from_id === user_object.id) ? myprofilelogo : user2logo);
 
     if (is_employee_chat === "1" && item.user_from_id !== user_object.id) png = url_object.plugin_directory + "/images/logo.png";
 
     let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: item.create_timestamp})); // new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
+
+    var html_banner = '<li id="banner" class="mes-break">' +
+        '<p>' +  item.create_timestamp + '</p></li>';
+
+    $(html_banner).appendTo($('.messages ul'));
 
     if (prepend) {
         $('.messages ul').prepend($node);
@@ -1011,6 +1015,7 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
         $('.messages ul').append($node);
     }
 }
+
 
 function gotoBottom(id) {
     var element = document.getElementById(id);
@@ -2166,7 +2171,7 @@ module.exports={
   "_args": [
     [
       "ejs@2.6.1",
-      "/Applications/MAMP/htdocs/LetselFamilie/wp-content/plugins"
+      "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins"
     ]
   ],
   "_from": "ejs@2.6.1",
@@ -2190,7 +2195,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/ejs/-/ejs-2.6.1.tgz",
   "_spec": "2.6.1",
-  "_where": "/Applications/MAMP/htdocs/LetselFamilie/wp-content/plugins",
+  "_where": "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins",
   "author": {
     "name": "Matthew Eernisse",
     "email": "mde@fleegix.org",
