@@ -854,7 +854,7 @@ function addDialog(item, mes) {
             setDateBubble();
         }
         scrollTimer = setTimeout(function() {
-            $("#messages-container").removeClass("messages-move-top");
+            //$("#messages-container").removeClass("messages-move-top");
             $("#date-bubble").addClass("hidden");
             console.log("Finished scrolling");
         }, 3000);
@@ -868,6 +868,7 @@ function addDialog(item, mes) {
             let messages = $("#messages-container ul").children().toArray();
             messages.forEach((mes) => {
                 let offset = mes.offsetTop;
+                console.log(offset);
                 if (offset > -20 && offset < 20) {
                     let text = mes.children()[1].children()[2].html().slice(0, 10);
                     console.log(text);
@@ -875,9 +876,9 @@ function addDialog(item, mes) {
                 }
             });
 
-            $("#messages-container").addClass("messages-move-top");
+            //$("#messages-container").addClass("messages-move-top");
             $("#date-bubble").removeClass("hidden");
-        }, 300);
+        }, 1000);
     }
 
 
