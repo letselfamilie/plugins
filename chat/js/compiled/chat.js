@@ -863,7 +863,7 @@ function addDialog(item, mes) {
     });
 
     function setDateBubble() {
-        let messages = $("#messages-container ul").childNodes;
+        let messages = $("#messages-container").children[0].childNodes;
         messages.forEach((mes_node) => {
             console.log(mes_node);
             let offset = mes_node.offsetTop;
