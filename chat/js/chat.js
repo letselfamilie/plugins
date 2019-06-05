@@ -1002,7 +1002,6 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
 
     let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: item.create_timestamp})); // new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
 
-
     var html_banner = '<li id="banner" class="mes-break">' +
         '<p>' +  item.create_timestamp + '</p></li>';
 
@@ -1014,6 +1013,7 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
         $('.messages ul').append($node);
     }
 }
+
 
 function gotoBottom(id) {
     var element = document.getElementById(id);
