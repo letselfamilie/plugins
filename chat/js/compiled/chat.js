@@ -855,7 +855,7 @@ function addDialog(item, mes) {
             clearTimeout(stopScrollTimer);
         }
         stopScrollTimer = setTimeout(function() {
-            //$("#messages-container").removeClass("messages-move-top");
+            $("#messages-container").removeClass("messages-move-top");
             $("#date-bubble").addClass("hidden");
             console.log("Finished scrolling");
         }, 3000);
@@ -863,24 +863,24 @@ function addDialog(item, mes) {
 
     var scrollTimer = null;
     function setDateBubble() {
-        if (scrollTimer !== null) {
+        /*if (scrollTimer !== null) {
             clearTimeout(scrollTimer);
         }
-        scrollTimer = setTimeout(function () {
+        scrollTimer = setTimeout(function () {*/
             let messages = $("#messages-container ul").children().toArray();
             messages.forEach((mes) => {
                 let offset = mes.offsetTop;
-                console.log(mes +  " " + offset);
+                console.log(offset);
                 if (offset < 150) {
-                    let text = mes.children()[1].children()[2].html().slice(10, 17);
+                    let text = mes.children[1].children[2].innerHTML.slice(10, 17);
                     console.log(text);
                     $("#date-bubble").innerHTML = text;
                 }
             });
 
-            //$("#messages-container").addClass("messages-move-top");
+            $("#messages-container").addClass("messages-move-top");
             $("#date-bubble").removeClass("hidden");
-        }, 300);
+        //}, 300);
     }
 
 
