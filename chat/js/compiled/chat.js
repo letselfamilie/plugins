@@ -1021,9 +1021,11 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
         console.log("mydate.getTime()" + mydate.getTime());
     }
 
+    
     var html_banner = '<li id="banner" class="mes-break">' +
         '<p>' +  item.create_timestamp + '</p></li>';
     $(html_banner).appendTo($('.messages ul'));
+
 
     if (prepend) {
         $('.messages ul').prepend($node);
