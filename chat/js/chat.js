@@ -1024,12 +1024,12 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
     let date_reg = new RegExp('(.|\\s)*(\\d{4}-\\d{2}-\\d{2})(.|\\s)*');
     let date = lastMes.prop('outerHTML');
 
-    console.log(date.toString());
+    console.log(date);
     if(date===undefined)
     {
         console.log("undefined");
     }
-    
+
     else{
         console.log("lastMessage"  +date);
         date = date.replace(date_reg, '$2');
