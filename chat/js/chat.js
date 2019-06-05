@@ -848,32 +848,36 @@ function addDialog(item, mes) {
     /* WHEN SCROLLING SHOW DATE BUBBLE ON TOP OF CHAT */
     var scrollTimer = null;
     $("#messages-container").on('scroll', function() {
-        setDateBubble();
-        /*if(scrollTimer !== null) {
+        //setDateBubble();
+        if(scrollTimer !== null) {
             console.log("Scrolling...?");
-            clearTimeout(scrollTimer);
             setDateBubble();
         }
         scrollTimer = setTimeout(function() {
             $("#messages-container").removeClass("messages-move-top");
-            $("#date-bubble").removeClass("hidden");
+            $("#date-bubble").addClass("hidden");
             console.log("Finished scrolling");
-        }, 3000);*/
+        }, 3000);
     });
 
     function setDateBubble() {
-        let messages = $("#messages-container ul").children().toArray();
-        messages.forEach((mes) => {
-            console.log(mes);
-            let offset = mes.offsetTop;
-            if (offset > -20 && offset < 20) {
-                let text = mes.children()[1].children()[2].html().slice(0, 10);
-                $("#date-bubble").innerHTML = text;
-            }
-        });
+        if (scrollTimer !== null) {
+            clearTimeout(scrollTimer);
+        }
+        scrollTimer = setTimeout(function () {
+            let messages = $("#messages-container ul").children().toArray();
+            messages.forEach((mes) => {
+                console.log(mes);
+                let offset = mes.offsetTop;
+                if (offset > -20 && offset < 20) {
+                    let text = mes.children()[1].children()[2].html().slice(0, 10);
+                    $("#date-bubble").innerHTML = text;
+                }
+            });
 
-        $("#messages-container").addClass("messages-move-top");
-        $("#date-bubble").addClass("hidden");
+            $("#messages-container").addClass("messages-move-top");
+            $("#date-bubble").removeClass("hidden");
+        }, 100);
     }
 
 
