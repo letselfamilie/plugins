@@ -849,12 +849,14 @@ function addDialog(item, mes) {
     var scrollTimer = null;
     $("#messages-container").onscroll = function() {
         if(scrollTimer !== null) {
+            console.log("Scrolling...?");
             clearTimeout(scrollTimer);
             setDateBubble();
         }
         scrollTimer = setTimeout(function() {
             $("#messages-container").addClass("messages-move-top");
             $("#date-bubble").removeClass("hidden");
+            console.log("Finished scrolling");
         }, 3000);
     };
     function setDateBubble() {
