@@ -1009,7 +1009,7 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
     var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
     var temp = new Date(); temp.setDate(today.getDate() - 1);
 
-    
+
     var text = item.create_timestamp.split(' ')[0];
     if(mydate.isSameDateAs(today)) {
         text= "today";
@@ -1027,7 +1027,7 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
 
     console.log("date: " + date + " dateOfPrevMes: "+dateOfPrevMes);
 
-    var addBanner = (mydate.isSameDateAs(dateOfPrevMes))? true:false;
+    var addBanner = (mydate.isSameDateAs(dateOfPrevMes))? false:true;
 
 
     console.log("date of mes: " + date);
