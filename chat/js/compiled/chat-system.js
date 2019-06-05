@@ -5,8 +5,8 @@ const {Howl, Howler} = require('howler');
 
 let ejs = require('ejs');
 
-let chat_box = ejs.compile("<div id=\"mini-chat\">\r\n    <div id=\"mini-chat-header\">Ask us anything</div>\r\n    <form id=\"form-question\">\r\n        <div class=\"form-group\">\r\n            <label>Question summary</label>\r\n            <input id=\"inputTopic\" type=\"text\" class=\"form-control\" name=\"topic\"\r\n                   placeholder=\"My question is regarding...\">\r\n        </div>\r\n        <div class=\"form-group\">\r\n            <label>Message</label>\r\n            <textarea id=\"inputFirstMessage\" class=\"form-control\" name=\"text\"\r\n                      placeholder=\"Tell us about your problem here\" rows=\"3\" style=\"resize: none;\"></textarea>\r\n        </div>\r\n        <button id=\"addNewDialog\">Ask</button>\r\n    </form>\r\n</div>\r\n\r\n");
-let notification = ejs.compile("<div class=\"message-pop-n\">\r\n    <% if (photo) { %>\r\n    <img class=\"user-icon-n\" src=\"<%= photo %>\">\r\n    <% } %>\r\n    <div class=\"message-content-n\">\r\n        <div class=\"user-name-n\">\r\n            <%= title %>\r\n        </div>\r\n        <div class=\"message-text-n\">\r\n            <%= text %>\r\n        </div>\r\n    </div>\r\n    <span class=\"close-message-n\">✖</span>\r\n</div>");
+let chat_box = ejs.compile("<div id=\"mini-chat\">\n    <div id=\"mini-chat-header\">Ask us anything</div>\n    <form id=\"form-question\">\n        <div class=\"form-group\">\n            <label>Question summary</label>\n            <input id=\"inputTopic\" type=\"text\" class=\"form-control\" name=\"topic\"\n                   placeholder=\"My question is regarding...\">\n        </div>\n        <div class=\"form-group\">\n            <label>Message</label>\n            <textarea id=\"inputFirstMessage\" class=\"form-control\" name=\"text\"\n                      placeholder=\"Tell us about your problem here\" rows=\"3\" style=\"resize: none;\"></textarea>\n        </div>\n        <button id=\"addNewDialog\">Ask</button>\n    </form>\n</div>\n\n");
+let notification = ejs.compile("<div class=\"message-pop-n\">\n    <% if (photo) { %>\n    <img class=\"user-icon-n\" src=\"<%= photo %>\">\n    <% } %>\n    <div class=\"message-content-n\">\n        <div class=\"user-name-n\">\n            <%= title %>\n        </div>\n        <div class=\"message-text-n\">\n            <%= text %>\n        </div>\n    </div>\n    <span class=\"close-message-n\">✖</span>\n</div>");
 
 let conn;
 
@@ -1368,7 +1368,7 @@ module.exports={
   "_args": [
     [
       "ejs@2.6.1",
-      "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins"
+      "/Applications/MAMP/htdocs/LetselFamilie/wp-content/plugins"
     ]
   ],
   "_from": "ejs@2.6.1",
@@ -1392,7 +1392,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/ejs/-/ejs-2.6.1.tgz",
   "_spec": "2.6.1",
-  "_where": "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins",
+  "_where": "/Applications/MAMP/htdocs/LetselFamilie/wp-content/plugins",
   "author": {
     "name": "Matthew Eernisse",
     "email": "mde@fleegix.org",

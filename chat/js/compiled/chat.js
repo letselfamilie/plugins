@@ -28,8 +28,8 @@ let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 let default_photo = "http://178.128.202.94/wp-content/plugins/ultimate-member/assets/img/default_avatar.jpg"
 let myprofilelogo = url_object.plugin_directory + '/images/user.png';
-let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\r\n    <div class=\"wrap\">\r\n        <img src=\" <%= photo %> \" alt=\"\"/>\r\n        <div class=\"meta\">\r\n            <p class=\"name\"> <%= name %> </p>\r\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\r\n        </div>\r\n    </div>\r\n</li>\r\n");
-let mes_templ = ejs.compile("<li class=\"<%= status %>\">\r\n    <img src=\"<%= image %>\" alt=\"\"/>\r\n    <p>\r\n        <%= mes %>\r\n        <br/>\r\n        <small class=\"float-right mt-2\"><%= time %></small>\r\n    </p>\r\n</li>\r\n");
+let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\n    <div class=\"wrap\">\n        <img src=\" <%= photo %> \" alt=\"\"/>\n        <div class=\"meta\">\n            <p class=\"name\"> <%= name %> </p>\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\n        </div>\n    </div>\n</li>\n");
+let mes_templ = ejs.compile("<li class=\"<%= status %>\">\n    <img src=\"<%= image %>\" alt=\"\"/>\n    <p>\n        <%= mes %>\n        <br/>\n        <small class=\"float-right mt-2\"><%= time %></small>\n    </p>\n</li>\n");
 let conn;
 
 let chat_sound_prop = 0;
@@ -843,6 +843,32 @@ function addDialog(item, mes) {
         if (is_closed === '1') {
             resolvedBage($node.find(".wrap .meta .name"));
         }
+    }
+
+
+    /* WHEN SCROLLING SHOW DATE BUBBLE ON TOP OF CHAT */
+    var scrollTimer = null;
+    $("#messages-container").onscroll = function() {
+        if(scrollTimer !== null) {
+            clearTimeout(scrollTimer);
+            setDateBubble();
+        }
+        scrollTimer = setTimeout(function() {
+            $("#messages-container").removeClass("messages-move-top");
+            $("#date-bubble").addClass("date-bubble-hidden");
+        }, 3000);
+    };
+    function setDateBubble() {
+        let messages = $("#messages-container ul").children;
+        messages.forEach((mes_node) => {
+            let offset = mes_node.offsetTop ;
+            if (offset > -20 && offset < 20) {
+                let text = mes_node.childNodes[1].childNodes[2].innerHTML.slice(0, 10);
+                $("#date-bubble").innerHTML = text;
+            }
+        });
+        $("#messages-container").addClass("messages-move-top");
+        $("#date-bubble").removeClass("date-bubble-hidden");
     }
 
 
@@ -2127,7 +2153,7 @@ module.exports={
   "_args": [
     [
       "ejs@2.6.1",
-      "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins"
+      "/Applications/MAMP/htdocs/LetselFamilie/wp-content/plugins"
     ]
   ],
   "_from": "ejs@2.6.1",
@@ -2151,7 +2177,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/ejs/-/ejs-2.6.1.tgz",
   "_spec": "2.6.1",
-  "_where": "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins",
+  "_where": "/Applications/MAMP/htdocs/LetselFamilie/wp-content/plugins",
   "author": {
     "name": "Matthew Eernisse",
     "email": "mde@fleegix.org",
