@@ -862,12 +862,12 @@ function addDialog(item, mes) {
     });
 
     function setDateBubble() {
-        let messages = $("#messages-container ul").children();
-        messages.forEach((mes_node) => {
-            console.log(mes_node);
-            let offset = mes_node.offsetTop;
+        let messages = $("#messages-container ul").children().toArray();
+        messages.forEach((mes) => {
+            console.log(mes);
+            let offset = mes.offsetTop;
             if (offset > -20 && offset < 20) {
-                let text = mes_node.children()[1].children()[2].html().slice(0, 10);
+                let text = mes.children()[1].children()[2].html().slice(0, 10);
                 $("#date-bubble").innerHTML = text;
             }
         });
