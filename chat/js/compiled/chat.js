@@ -1021,19 +1021,18 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
 
     var addBanner = true;
 
-    var lastMes = $(".messages ul li .mes").last();
-    
+    var lastMes = $(".mes").last();
+
     let date_reg = new RegExp('(.|\\s)*(\\d{4}-\\d{2}-\\d{2})(.|\\s)*');
     let date = lastMes.prop('outerHTML');
 
-    console.log(date);
+    console.log("lastMes: "+date);
     if(date===undefined)
     {
         console.log("undefined");
     }
 
     else{
-        console.log("lastMessage"  +date);
         date = date.replace(date_reg, '$2');
         var parts2 =date.split(' ')[0].split('-');
         var dateOfPrevMes = new Date(parts2[0], parts2[1] - 1, parts2[2]);
