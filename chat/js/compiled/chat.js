@@ -873,6 +873,7 @@ function addDialog(item, mes) {
                 console.log(offset);
                 if (offset < 150) {
                     console.log(mes.children[1].children[2]);
+                    
                     let text = mes.children[1].children[2].innerHTML;
                     console.log(text);
                     $("#date-bubble").innerHTML = text;
@@ -2171,7 +2172,7 @@ module.exports={
   "_args": [
     [
       "ejs@2.6.1",
-      "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins"
+      "/Applications/MAMP/htdocs/LetselFamilie/wp-content/plugins"
     ]
   ],
   "_from": "ejs@2.6.1",
@@ -2195,7 +2196,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/ejs/-/ejs-2.6.1.tgz",
   "_spec": "2.6.1",
-  "_where": "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins",
+  "_where": "/Applications/MAMP/htdocs/LetselFamilie/wp-content/plugins",
   "author": {
     "name": "Matthew Eernisse",
     "email": "mde@fleegix.org",
