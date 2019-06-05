@@ -1005,14 +1005,13 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
 
     let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: item.create_timestamp})); // new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
 
-
     var now = new Date();
     var today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() ));
     if(item.create_timestamp.getTime() == today.getTime())
     {
         console.log("today");
     }
-else{
+    else{
         console.log("NO");
     }
 
@@ -2182,7 +2181,7 @@ module.exports={
   "_args": [
     [
       "ejs@2.6.1",
-      "/Applications/MAMP/htdocs/LetselFamilie/wp-content/plugins"
+      "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins"
     ]
   ],
   "_from": "ejs@2.6.1",
@@ -2206,7 +2205,7 @@ module.exports={
   ],
   "_resolved": "https://registry.npmjs.org/ejs/-/ejs-2.6.1.tgz",
   "_spec": "2.6.1",
-  "_where": "/Applications/MAMP/htdocs/LetselFamilie/wp-content/plugins",
+  "_where": "D:\\PROGRAMS\\wamp\\www\\LetselFamilie\\wp-content\\plugins",
   "author": {
     "name": "Matthew Eernisse",
     "email": "mde@fleegix.org",
