@@ -869,8 +869,8 @@ function addDialog(item, mes) {
             messages.forEach((mes) => {
                 let offset = mes.offsetTop;
                 console.log(offset);
-                if (offset > -20 && offset < 20) {
-                    let text = mes.children()[1].children()[2].html().slice(0, 10);
+                if (offset < 150) {
+                    let text = mes.children()[1].children()[2].html().slice(10, 17);
                     console.log(text);
                     $("#date-bubble").innerHTML = text;
                 }
