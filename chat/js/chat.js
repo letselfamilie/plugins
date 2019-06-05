@@ -866,7 +866,6 @@ function addDialog(item, mes) {
                 $("#date-bubble").innerHTML = text;
             }
         });
-
         $("#messages-container").addClass("messages-move-top");
         $("#date-bubble").removeClass("date-bubble-hidden");
     }
