@@ -847,18 +847,20 @@ function addDialog(item, mes) {
 
     /* WHEN SCROLLING SHOW DATE BUBBLE ON TOP OF CHAT */
     var scrollTimer = null;
-    $("#messages-container").onscroll = function() {
-        if(scrollTimer !== null) {
+    $("#messages-container").on('scroll', function() {
+        setDateBubble();
+        /*if(scrollTimer !== null) {
             console.log("Scrolling...?");
             clearTimeout(scrollTimer);
             setDateBubble();
         }
         scrollTimer = setTimeout(function() {
-            $("#messages-container").addClass("messages-move-top");
+            $("#messages-container").removeClass("messages-move-top");
             $("#date-bubble").removeClass("hidden");
             console.log("Finished scrolling");
-        }, 3000);
-    };
+        }, 3000);*/
+    });
+
     function setDateBubble() {
         let messages = $("#messages-container ul").children;
         messages.forEach((mes_node) => {
@@ -868,7 +870,8 @@ function addDialog(item, mes) {
                 $("#date-bubble").innerHTML = text;
             }
         });
-        $("#messages-container").removeClass("messages-move-top");
+
+        $("#messages-container").addClass("messages-move-top");
         $("#date-bubble").addClass("hidden");
     }
 
