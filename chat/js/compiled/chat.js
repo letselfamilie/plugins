@@ -1003,9 +1003,19 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
 
     let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: item.create_timestamp})); // new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
 
+
+    var now = new Date();
+    var today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() ));
+    if(item.create_timestamp.getTime() == today.getTime())
+    {
+        console.log("today");
+    }
+else{
+        console.log("NO");
+    }
+
     var html_banner = '<li id="banner" class="mes-break">' +
         '<p>' +  item.create_timestamp + '</p></li>';
-
     $(html_banner).appendTo($('.messages ul'));
 
     if (prepend) {
