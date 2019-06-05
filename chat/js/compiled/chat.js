@@ -1007,7 +1007,11 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
 
     var now = new Date();
     var today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() ));
-    if(item.create_timestamp.getTime() == today.getTime())
+
+    var parts =item.create_timestamp.split(' ')[0].split('-');
+    var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
+
+    if(mydate.getTime() == today.getTime())
     {
         console.log("today");
     }
