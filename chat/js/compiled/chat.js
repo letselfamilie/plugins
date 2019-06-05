@@ -1021,12 +1021,12 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
 
     var addBanner = true;
 
-    var lastMes = $(".messages ul li.mes").last();
+    var lastMes = (!prepend)? $(".messages ul li.mes").last() : $(".messages ul li.mes").first();
     //var lastMes = $(".messages ul li.mes:last-child");
 
     let date_reg = new RegExp('(.|\\s)*(\\d{4}-\\d{2}-\\d{2})(.|\\s)*');
     let date = lastMes.prop('outerHTML');
-    
+
 
     if(date!==undefined){
         date = date.replace(date_reg, '$2');
