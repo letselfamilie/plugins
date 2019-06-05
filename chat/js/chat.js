@@ -1034,11 +1034,11 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
 
     var html_banner = '<li id="banner" class="mes-break">' +  '<p>' +  text + '</p></li>';
     if (prepend) {
+        $('.messages ul').prepend($node);
         if(addBanner)
         {
-            $('.messages ul').prepend($node);
+            $(html_banner).prependTo($('.messages ul'));
         }
-        $(html_banner).prependTo($('.messages ul'));
     } else {
 
         if(addBanner)
@@ -1046,7 +1046,6 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
             $(html_banner).appendTo($('.messages ul'));
         }
         $('.messages ul').append($node);
-
     }
 }
 
