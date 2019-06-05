@@ -1022,11 +1022,11 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
     var lastMes = $( ".messages ul:last-child");
 
     let date_reg = new RegExp('(.|\\s)*(\\d{4}-\\d{2}-\\d{2})(.|\\s)*');
-    let date = lastMes.innerHTML;
-    date = date.replace(date_reg, '$2');
+    let date = lastMes.outerHTML;
+    console.log("date1: " + date);
+    date = lastMes.replace(date_reg, '$2');
 
     console.log("date of mes: " + date);
-
     var html_banner = '<li id="banner" class="mes-break">' +  '<p>' +  text + '</p></li>';
     if (prepend) {
         if(addBanner)
