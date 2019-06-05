@@ -1012,15 +1012,14 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
     var parts =item.create_timestamp.split(' ')[0].split('-');
     var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
 
-    if(mydate.getTime() == today.getTime())
+    if(mydate.isSameDateAs(today))
     {
         console.log("today");
     }
     else{
-        console.log("mydate.getTime()" + mydate.getTime());
+        console.log("mydate.getTime()" + mydate.toDateString());
     }
 
-    
     var html_banner = '<li id="banner" class="mes-break">' +
         '<p>' +  item.create_timestamp + '</p></li>';
     $(html_banner).appendTo($('.messages ul'));
