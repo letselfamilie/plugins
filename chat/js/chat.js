@@ -1022,11 +1022,11 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
     let date_reg = new RegExp('(.|\\s)*(\\d{4}-\\d{2}-\\d{2})(.|\\s)*');
     let date = lastMes.prop('outerHTML');
 
-    console.log(date);
+    console.log("lastMessage"  +date);
     date = date.replace(date_reg, '$2');
     var parts2 =date.split(' ')[0].split('-');
     var dateOfPrevMes = new Date(parts2[0], parts2[1] - 1, parts2[2]);
-    
+
     var addBanner = (mydate.isSameDateAs(dateOfPrevMes))? false:true;
 
     console.log("date of mes: " + date);
