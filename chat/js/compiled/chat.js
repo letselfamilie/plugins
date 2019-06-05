@@ -1022,7 +1022,7 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
     var addBanner = true;
 
     var lastMes = $( ".messages ul li:last-child");
-
+    console.log(lastMes.toString());
     if(lastMes===undefined)
     {
         console.log("undefined");
@@ -1039,7 +1039,6 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
         addBanner = (mydate.isSameDateAs(dateOfPrevMes))? false:true;
         console.log("date of mes: " + date);
     }
-
 
 
     var html_banner = '<li id="banner" class="mes-break">' +  '<p>' +  text + '</p></li>';
