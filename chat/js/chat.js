@@ -1008,20 +1008,22 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
 
     var now = new Date();
     var today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() ));
-
     var parts =item.create_timestamp.split(' ')[0].split('-');
     var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
 
+    var temp = new Date(); temp.setDate(today.getDate() - 1);
+
+    var text = item.create_timestamp
+
     if(mydate.isSameDateAs(today))
     {
-        console.log("today");
+        text= "today";
     }
-    else{
-        console.log("mydate.getTime()" + mydate.toDateString());
+    if(mydate.isSameDateAs(temp)){
+        text= "yesterday";
     }
 
-    var html_banner = '<li id="banner" class="mes-break">' +
-        '<p>' +  item.create_timestamp + '</p></li>';
+    var html_banner = '<li id="banner" class="mes-break">' +  '<p>' +  text + '</p></li>';
     $(html_banner).appendTo($('.messages ul'));
 
 
