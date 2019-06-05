@@ -19,19 +19,19 @@ body {
 }
 
 button:focus {
-  outline: none;
+  outline: none !important;
 }
 
 select:focus {
-  outline: none;
+  outline: none !important;
 }
 
 input:focus {
-  outline: none;
+  outline: none !important;
 }
 
 textarea:focus {
-  outline: none;
+  outline: none !important;
 }
 
 .badge-resolved {
@@ -459,15 +459,23 @@ textarea:focus {
         .dropdown-menu {
           border-radius: 0;
 
-          .dropdown-item {
-            line-height: initial !important;
+          .dropdown-item-special {
+            line-height: initial;
             padding: .25rem 1rem;
             font-family: @font_family_1;
             color: @dark_grey;
+            display: block;
+            text-align: left;
+            background: white;
 
             &:hover {
               background: rgba(14, 86, 164, 0.04);
             }
+          }
+        }
+        button {
+          i:active {
+            color: @dark_grey;
           }
         }
       }

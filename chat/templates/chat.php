@@ -178,9 +178,9 @@ if(!is_user_logged_in()) {
                     <i class="fa fa-bars"></i>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#" id="resolve-btn">Mark as resolved</a>
+                    <a class="dropdown-item-special" href="#" id="resolve-btn">Mark as resolved</a>
                     <?php if ($consultant) { ?>
-                        <a id="redirect_choose_consultant" class="dropdown-item" href="#redirectCollapse" data-toggle="collapse"
+                        <a id="redirect_choose_consultant" class="dropdown-item-special" href="#redirectCollapse" data-toggle="collapse"
                            role="button" aria-controls="redirectCollapse" aria-expanded="false">
                             Redirect to another consultant
                         </a>
