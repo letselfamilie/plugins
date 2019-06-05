@@ -1041,20 +1041,20 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
             $(html_banner).prependTo($('.messages ul'));
         }
     } else {
-
+        $('.messages ul').append($node);
         if(addBanner)
         {
             $(html_banner).appendTo($('.messages ul'));
         }
-        $('.messages ul').append($node);
+
     }
 }
-
 
 function gotoBottom(id) {
     var element = document.getElementById(id);
     element.scrollTop = element.scrollHeight - element.clientHeight;
 }
+
 
 function concatArray(a1, a2) {
 
