@@ -1009,6 +1009,8 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
     var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
     var temp = new Date(); temp.setDate(today.getDate() - 1);
 
+    var addBanner = true;
+
     var text = item.create_timestamp;
     if(mydate.isSameDateAs(today)) {
         text= "today";
@@ -1018,12 +1020,21 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
     }
 
     var html_banner = '<li id="banner" class="mes-break">' +  '<p>' +  text + '</p></li>';
-    (prepend)? $(html_banner).prependTo($('.messages ul')): $(html_banner).appendTo($('.messages ul'));
 
     if (prepend) {
-        $('.messages ul').prepend($node);
+        if(addBanner)
+        {
+            $('.messages ul').prepend($node);
+        }
+        $(html_banner).prependTo($('.messages ul'));
     } else {
+
+        if(addBanner)
+        {
+            $(html_banner).appendTo($('.messages ul'));
+        }
         $('.messages ul').append($node);
+
     }
 }
 
