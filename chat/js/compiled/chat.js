@@ -1036,15 +1036,15 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
         addBanner = (mydate.isSameDateAs(dateOfPrevMes))? false:true;
         console.log("date of mes: " + date);
     }
-
-
+    
     var html_banner = '<li id="banner" class="mes-break">' +  '<p>' +  text + '</p></li>';
     if (prepend) {
-        $('.messages ul').prepend($node);
         if(addBanner)
         {
             $(html_banner).prependTo($('.messages ul'));
         }
+        $('.messages ul').prepend($node);
+
     } else {
 
         if(addBanner)
