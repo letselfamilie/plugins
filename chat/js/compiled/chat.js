@@ -29,7 +29,7 @@ document.documentElement.style.setProperty('--vh', `${vh}px`);
 let default_photo = "http://178.128.202.94/wp-content/plugins/ultimate-member/assets/img/default_avatar.jpg"
 let myprofilelogo = url_object.plugin_directory + '/images/user.png';
 let dialog_templ = ejs.compile("<li id=\"<%= id %>\"  class=\"conversation\">\n    <div class=\"wrap\">\n        <img src=\" <%= photo %> \" alt=\"\"/>\n        <div class=\"meta\">\n            <p class=\"name\"> <%= name %> </p>\n            <p class=\"preview\"><span>  <% if (sent) { %>  You: <% }%>  </span><%= preview.message_body %>  </p>\n        </div>\n    </div>\n</li>\n");
-let mes_templ = ejs.compile("<li class=\"<%= status %>\">\n    <img src=\"<%= image %>\" alt=\"\"/>\n    <p>\n        <%= mes %>\n        <br/>\n        <small class=\"float-right mt-2\"><%= time %></small>\n    </p>\n</li>\n");
+let mes_templ = ejs.compile("<li id=\"message\" class=\"<%= status %>\">\n    <img src=\"<%= image %>\" alt=\"\"/>\n    <p>\n        <%= mes %>\n        <br/>\n        <small class=\"float-right mt-2\"><%= time %></small>\n    </p>\n</li>\n");
 let conn;
 
 let chat_sound_prop = 0;
@@ -1021,7 +1021,7 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
 
     var addBanner = true;
 
-    var lastMes = $( ".messages ul li:last-child");
+    var lastMes = $( ".messages ul #message:last-child");
     let date_reg = new RegExp('(.|\\s)*(\\d{4}-\\d{2}-\\d{2})(.|\\s)*');
     let date = lastMes.prop('outerHTML');
 

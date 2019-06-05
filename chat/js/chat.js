@@ -1020,7 +1020,7 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
 
     var addBanner = true;
 
-    var lastMes = $( ".messages ul li:last-child");
+    var lastMes = $( ".messages ul #message:last-child");
     let date_reg = new RegExp('(.|\\s)*(\\d{4}-\\d{2}-\\d{2})(.|\\s)*');
     let date = lastMes.prop('outerHTML');
 
