@@ -868,14 +868,14 @@ function addDialog(item, mes) {
 
         $('.messages ul').empty();
 
-        if(is_employee_chat === "1"){
+        if(is_employee_chat === "1") {
             if (is_closed === '1') {
                 insideDialogResolvedBanners();
             } else {
-                $("#resolve-btn").removeClass("hidden");
+                $("#chat_options").removeClass("hidden");
             }
-        }else{
-            $("#resolve-btn").addClass("hidden");
+        } else {
+            $("#chat_options").addClass("hidden");
         }
 
         if (idDialog !== undefined && idDialog !== null) {
