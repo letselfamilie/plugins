@@ -850,7 +850,6 @@ function addDialog(item, mes) {
     $("#messages-container").on('scroll', function() {
         //setDateBubble();
         if(scrollTimer !== null) {
-            console.log("Scrolling...?");
             setDateBubble();
         }
         scrollTimer = setTimeout(function() {
@@ -867,17 +866,17 @@ function addDialog(item, mes) {
         scrollTimer = setTimeout(function () {
             let messages = $("#messages-container ul").children().toArray();
             messages.forEach((mes) => {
-                console.log(mes);
                 let offset = mes.offsetTop;
                 if (offset > -20 && offset < 20) {
                     let text = mes.children()[1].children()[2].html().slice(0, 10);
+                    console.log(text);
                     $("#date-bubble").innerHTML = text;
                 }
             });
 
             $("#messages-container").addClass("messages-move-top");
             $("#date-bubble").removeClass("hidden");
-        }, 100);
+        }, 300);
     }
 
 
