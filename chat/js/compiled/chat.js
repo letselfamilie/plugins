@@ -872,7 +872,7 @@ function addDialog(item, mes) {
                 let offset = mes.offsetTop;
                 console.log(offset);
                 if (offset < 150) {
-                    let text = mes.children[1].children[2].html().slice(10, 17);
+                    let text = mes.children[1].children[2].innerHTML.slice(10, 17);
                     console.log(text);
                     $("#date-bubble").innerHTML = text;
                 }
