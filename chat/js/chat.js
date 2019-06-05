@@ -718,7 +718,8 @@ function insideDialogResolvedBanners() {
 
     newBanner("This problem has been resolved");
     $('.message-input').css('display', 'none');
-    $("#resolve-btn").addClass("hidden");
+    //$("#resolve-btn").addClass("hidden");
+    $("#chat_options").addClass("hidden");
 }
 
 function resolvedBage($appendNode) {
