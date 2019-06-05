@@ -1028,9 +1028,7 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
 
     console.log("date of mes: " + date);
 
-
     var html_banner = '<li id="banner" class="mes-break">' +  '<p>' +  text + '</p></li>';
-
     if (prepend) {
         if(addBanner)
         {
