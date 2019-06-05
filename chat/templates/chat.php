@@ -205,6 +205,9 @@ if(!is_user_logged_in()) {
             </form>
         </div>
         <?php } ?>
+
+        <div id="date-bubble" class="date-bubble-hidden"> DATE </div>
+
         <div id="messages-container" class="messages">
             <ul>
             </ul>

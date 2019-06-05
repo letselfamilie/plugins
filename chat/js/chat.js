@@ -836,6 +836,33 @@ function addDialog(item, mes) {
     }
 
 
+    /* WHEN SCROLLING SHOW DATE BUBBLE ON TOP OF CHAT */
+    var scrollTimer = null;
+    $("#messages-container").onscroll = function() {
+        if(scrollTimer !== null) {
+            clearTimeout(scrollTimer);
+            setDateBubble();
+        }
+        scrollTimer = setTimeout(function() {
+            $("#messages-container").removeClass("messages-move-top");
+            $("#date-bubble").addClass("date-bubble-hidden");
+        }, 3000);
+    };
+    function setDateBubble() {
+        let messages = $("#messages-container ul").children;
+        messages.forEach((mes_node) => {
+            let offset = mes_node.offsetTop ;
+            if (offset > -20 && offset < 20) {
+                let text = mes_node.childNodes[1].childNodes[2].innerHTML.slice(0, 10);
+                $("#date-bubble").innerHTML = text;
+            }
+        });
+
+        $("#messages-container").addClass("messages-move-top");
+        $("#date-bubble").removeClass("date-bubble-hidden");
+    }
+
+
     $node.click(function () {
         var newMessages = false;
         $(".contact-profile").css('display', '');
