@@ -1009,8 +1009,7 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
     var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
     var temp = new Date(); temp.setDate(today.getDate() - 1);
 
-
-
+    
     var text = item.create_timestamp.split(' ')[0];
     if(mydate.isSameDateAs(today)) {
         text= "today";
@@ -1023,10 +1022,12 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
     let date_reg = new RegExp('(.|\\s)*(\\d{4}-\\d{2}-\\d{2})(.|\\s)*');
     let date = lastMes.prop('outerHTML');
     date = date.replace(date_reg, '$2');
+    var parts2 =date.split(' ')[0].split('-');
+    var dateOfPrevMes = new Date(parts2[0], parts2[1] - 1, parts2[2]);
 
-    console.log("date: " + date + "mydate: "+mydate);
+    console.log("date: " + date + " dateOfPrevMes: "+dateOfPrevMes);
 
-    var addBanner = (date==mydate)? true:false;
+    var addBanner = (mydate.isSameDateAs(dateOfPrevMes))? true:false;
 
 
     console.log("date of mes: " + date);
