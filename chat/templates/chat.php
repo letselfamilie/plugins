@@ -206,7 +206,7 @@ if(!is_user_logged_in()) {
         </div>
         <?php } ?>
 
-        <div id="date-bubble" class="date-bubble-hidden"> DATE </div>
+        <div id="date-bubble" class="hidden"> DATE </div>
 
         <div id="messages-container" class="messages">
             <ul>
