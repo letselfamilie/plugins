@@ -846,7 +846,7 @@ function addDialog(item, mes) {
 
 
     /* WHEN SCROLLING SHOW DATE BUBBLE ON TOP OF CHAT */
-    var stopScrollTimer = null;
+    /*var stopScrollTimer = null;
     $("#messages-container").on('scroll', function() {
         //setDateBubble();
         if(stopScrollTimer !== null) {
@@ -862,10 +862,10 @@ function addDialog(item, mes) {
 
     var scrollTimer = null;
     function setDateBubble() {
-        /*if (scrollTimer !== null) {
+        if (scrollTimer !== null) {
             clearTimeout(scrollTimer);
         }
-        scrollTimer = setTimeout(function () {*/
+        scrollTimer = setTimeout(function () {
             let messages = $("#messages-container ul").children().toArray();
             messages.forEach((mes) => {
                 let offset = mes.offsetTop;
@@ -883,8 +883,8 @@ function addDialog(item, mes) {
 
             $("#messages-container").addClass("messages-move-top");
             $("#date-bubble").removeClass("hidden");
-        //}, 300);
-    }
+        }, 300);
+    }*/
 
 
     $node.click(function () {
