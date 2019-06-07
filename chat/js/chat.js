@@ -845,6 +845,48 @@ function addDialog(item, mes) {
     }
 
 
+    /* WHEN SCROLLING SHOW DATE BUBBLE ON TOP OF CHAT */
+    /*var stopScrollTimer = null;
+    $("#messages-container").on('scroll', function() {
+        //setDateBubble();
+        if(stopScrollTimer !== null) {
+            setDateBubble();
+            clearTimeout(stopScrollTimer);
+        }
+        stopScrollTimer = setTimeout(function() {
+            $("#messages-container").removeClass("messages-move-top");
+            $("#date-bubble").addClass("hidden");
+            console.log("Finished scrolling");
+        }, 3000);
+    });
+
+    var scrollTimer = null;
+    function setDateBubble() {
+        if (scrollTimer !== null) {
+            clearTimeout(scrollTimer);
+        }
+        scrollTimer = setTimeout(function () {
+            let messages = $("#messages-container ul").children().toArray();
+            messages.forEach((mes) => {
+                let offset = mes.offsetTop;
+                //console.log(offset);
+                if (offset < 150) {
+                    console.log(offset + " " + mes.children[1]);
+
+                    let date_reg = new RegExp('(.|\\s)*(\\d{4}-\\d{2}-\\d{2})(.|\\s)*');
+                    let text = mes.innerHTML;
+                    text = text.replace(date_reg, '$2');
+                    console.log(text);
+                    $("#date-bubble").innerHTML = text;
+                }
+            });
+
+            $("#messages-container").addClass("messages-move-top");
+            $("#date-bubble").removeClass("hidden");
+        }, 300);
+    }*/
+
+
     $node.click(function () {
         var newMessages = false;
         $(".contact-profile").css('display', '');
@@ -957,17 +999,57 @@ function addDialog(item, mes) {
 
 function addMes(item, user2logo, is_employee_chat, prepend) {
     var st = ((item.user_from_id === user_object.id) ? "sent" : "replies");
-
-
     var png = ((item.user_from_id === user_object.id) ? myprofilelogo : user2logo);
-
     if (is_employee_chat === "1" && item.user_from_id !== user_object.id) png = url_object.plugin_directory + "/images/logo.png";
-
     let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: item.create_timestamp})); // new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
 
+    var now = new Date();
+    var today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() ));
+    var parts =item.create_timestamp.split(' ')[0].split('-');
+    var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
+    var temp = new Date(); temp.setDate(today.getDate() - 1);
+
+
+    var text = item.create_timestamp.split(' ')[0];
+    if(mydate.isSameDateAs(today)) {
+        text= "today";
+    }
+    if(mydate.isSameDateAs(temp)){
+        text= "yesterday";
+    }
+
+    var addBanner = true;
+
+    var lastMes = (!prepend)? $(".messages ul li.mes").last() : $(".messages ul li.mes").first();
+    //var lastMes = $(".messages ul li.mes:last-child");
+
+    let date_reg = new RegExp('(.|\\s)*(\\d{4}-\\d{2}-\\d{2})(.|\\s)*');
+    let date = lastMes.prop('outerHTML');
+
+
+    if(date!==undefined){
+        date = date.replace(date_reg, '$2');
+        var parts2 =date.split(' ')[0].split('-');
+        var dateOfPrevMes = new Date(parts2[0], parts2[1] - 1, parts2[2]);
+
+        addBanner = (mydate.isSameDateAs(dateOfPrevMes))? false:true;
+        console.log("date of mes: " + date);
+    }
+    
+    var html_banner = '<li id="banner" class="mes-break">' +  '<p>' +  text + '</p></li>';
     if (prepend) {
+        if(addBanner)
+        {
+            $(html_banner).prependTo($('.messages ul'));
+        }
         $('.messages ul').prepend($node);
+
     } else {
+
+        if(addBanner)
+        {
+            $(html_banner).appendTo($('.messages ul'));
+        }
         $('.messages ul').append($node);
     }
 }
@@ -976,6 +1058,7 @@ function gotoBottom(id) {
     var element = document.getElementById(id);
     element.scrollTop = element.scrollHeight - element.clientHeight;
 }
+
 
 function concatArray(a1, a2) {
 
