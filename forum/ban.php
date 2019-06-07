@@ -33,7 +33,7 @@ function sn_edit_user_profile() {
     <h3></h3>
     <table class="form-table">
         <tr>
-            <th scope="row">Banned</th>
+            <th scope="row">Blokkeren</th>
             <td><label for="sn_ban"><input name="sn_ban" type="checkbox" id="sn_ban"
                         <?php if (sn_is_user_banned( $user_id )) echo 'checked'; ?>
                     /></label></td>

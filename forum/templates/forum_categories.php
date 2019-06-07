@@ -9,7 +9,7 @@ define("PATH", plugins_url('..' , __FILE__));
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categories</title>
+    <title>Categorieën</title>
 
     <link rel="stylesheet/less" type="text/css" href="<?php echo PATH?>/less/categories.less" />
     <link rel="stylesheet/less" type="text/css" href="<?php echo PATH?>/less/pagination.less" />
@@ -31,14 +31,14 @@ define("PATH", plugins_url('..' , __FILE__));
         <tr id="categories-header">
             <th class="cat-name" style="cursor: auto">Forum</th>
             <th class="onderwerpen">
-                <span class="menu_text">Topics</span>
+                <span class="menu_text">Onderwerpen</span>
                 <img class="menu_icon" src="<?php echo PATH?>/images/chat.svg">
             </th>
             <th class="berichten">
-                <span class="menu_text">Posts</span>
+                <span class="menu_text">Berichten</span>
                 <img class="menu_icon" src="<?php echo PATH?>/images/comment.svg">
             </th>
-            <th class="last-post">Last post</th>
+            <th class="last-post">Laatste bericht</th>
         </tr>
 
         <tbody id="categories_list">

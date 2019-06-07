@@ -186,9 +186,9 @@ class Report_List extends WP_List_Table {
     function get_columns() {
         $columns = [
             'cb'      => '<input type="checkbox" />',
-            'name'    => __( 'Username', 'sp' ),
+            'name'    => __( 'Gebruikersnaam', 'sp' ),
             'text_original'    => __( 'Text', 'sp' ),
-            'create_timestamp'    => __( 'Time', 'sp' )
+            'create_timestamp'    => __( 'Tijd', 'sp' )
         ];
 
         return $columns;

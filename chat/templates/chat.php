@@ -125,7 +125,7 @@ if(!is_user_logged_in()) {
 
         <div id="search">
             <label for="inputSearch"><i class="fa fa-search" aria-hidden="true"></i></label>
-            <input id="inputSearch" type="text" placeholder="Search..."/>
+            <input id="inputSearch" type="text" placeholder="Zoeken..."/>
         </div>
         <div id="conversations">
             <ul>
@@ -144,7 +144,7 @@ if(!is_user_logged_in()) {
         <div id="bottom-bar">
             <button id="btn-newmessage">
                 <i class="fa fa-comments fa-fw" aria-hidden="true"></i>
-                <span>New message</span>
+                <span>Nieuw bericht</span>
             </button>
         </div>
         <?php } ?>
@@ -153,15 +153,15 @@ if(!is_user_logged_in()) {
         <?php if (!$consultant) { ?>
         <div class="new-convo">
             <div class="new-convo-header">
-                <p>New question</p>
+                <p>Nieuwe vraag</p>
             </div>
             <form id="form-question">
                 <div class="form-group">
-                    <label>Question summary</label>
-                    <input id="inputTopic" type="text" class="form-control" name="topic" placeholder="My question is regarding...">
+                    <label>Onderwerp</label>
+                    <input id="inputTopic" type="text" class="form-control" name="topic" placeholder="Ik heb een vraag over...">
                 </div>
                 <div class="form-group">
-                    <label>Message</label>
+                    <label>Bericht</label>
                     <textarea id="inputFirstMessage" class="form-control" name="text" placeholder="Tell us about your problem here" rows="3"></textarea>
                 </div>
                 <button id="addNewDialog">Ask</button>
@@ -178,7 +178,7 @@ if(!is_user_logged_in()) {
                     <i class="fa fa-bars"></i>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#" id="resolve-btn">Mark as resolved</a>
+                    <a class="dropdown-item" href="#" id="resolve-btn">Markeer als opgelost</a>
                     <?php if ($consultant) { ?>
                         <a id="redirect_choose_consultant" class="dropdown-item" href="#redirectCollapse" data-toggle="collapse"
                            role="button" aria-controls="redirectCollapse" aria-expanded="false">
@@ -211,7 +211,7 @@ if(!is_user_logged_in()) {
         </div>
         <div class="message-input hidden">
             <div class="wrap">
-                <input id="message-input" type="text" placeholder="Write your message..."/>
+                <input id="message-input" type="text" placeholder="Typ hier uw bericht…"/>
                 <button id="send-message-butt" class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
             </div>
         </div>

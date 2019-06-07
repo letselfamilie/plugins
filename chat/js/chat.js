@@ -722,10 +722,10 @@ function resolvedDialogBanners() {
 }
 
 function insideDialogResolvedBanners() {
-    var badge = '<span class="badge badge-resolved ml-2">Resolved</span>';
+    var badge = '<span class="badge badge-resolved ml-2">Opgelost</span>';
     $(badge).appendTo($("#chat-title"));
 
-    newBanner("This problem has been resolved");
+    newBanner("Dit probleem is opgelost");
     $('.message-input').css('display', 'none');
     //$("#resolve-btn").addClass("hidden");
     $("#chat_options").addClass("hidden");

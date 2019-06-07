@@ -9,12 +9,14 @@ wp_localize_script('censor-add-script', 'url_object',
 
 <div class="wrap">
     <h1 id="add-new-censor">
-        Add new censor</h1>
+        Censuur toevoegen
+    </h1>
 
 
     <div id="ajax-response"></div>
 
-    <p>Add new censor to block this word on forum and chat</p>
+    <p>Voeg nieuw woord toe om deze te censureren in de forum en chat.
+    </p>
     <form method="post" name="createcensor" id="createcensor" class="validate" novalidate="novalidate">
         <input name="action" type="hidden" value="createcensor">
 
@@ -24,7 +26,7 @@ wp_localize_script('censor-add-script', 'url_object',
         <table class="form-table">
             <tbody>
             <tr class="form-field form-required">
-                <th scope="row"><label for="censor_name">New censored word<span
+                <th scope="row"><label for="censor_name">Nieuw woord censureren<span
                             class="description"> (required)</span></label></th>
                 <td><input name="censor_name" type="text" id="censor_name" value="" aria-required="true"
                            autocapitalize="none" autocorrect="off" maxlength="60"></td>

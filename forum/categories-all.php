@@ -153,7 +153,7 @@ class Categories_List extends WP_List_Table {
     function get_columns() {
         $columns = [
             'cb'      => '<input type="checkbox" />',
-            'name'    => __( 'Name', 'sp' ),
+            'name'    => __( 'Naam', 'sp' ),
         ];
 
         return $columns;
@@ -289,8 +289,8 @@ class SP_Plugin {
 
         add_submenu_page(
             'sn_categories',
-            'Categories',
-            'Categories',
+            'Categorieën',
+            'Categorieën',
             'manage_categories',
             'sn_categories',
             [ $this, 'plugin_settings_page' ]
@@ -298,8 +298,8 @@ class SP_Plugin {
 
         add_submenu_page(
                 'sn_categories',
-                'Add category',
-                'Add category',
+                'Voeg nieuw categorie toe',
+                'Voeg nieuw categorie toe',
                 'manage_categories',
                 'sn_categories_add',
                 [ $this, 'categories_add' ]
@@ -315,8 +315,8 @@ class SP_Plugin {
     public function plugin_settings_page() {
         ?>
         <div class="wrap">
-            <h2>Categories
-                <a href="<?php echo get_site_url() . "/wp-admin/admin.php?page=sn_categories_add" ?>" class="page-title-action">Add new</a>
+            <h2>Categorieën
+                <a href="<?php echo get_site_url() . "/wp-admin/admin.php?page=sn_categories_add" ?>" class="page-title-action">Voeg nieuw toe</a>
             </h2>
 
             <div id="poststuff">

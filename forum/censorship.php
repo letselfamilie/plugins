@@ -152,7 +152,7 @@ class Censorship_List extends WP_List_Table {
     function get_columns() {
         $columns = [
             'cb'      => '<input type="checkbox" />',
-            'name'    => __( 'Word', 'sp' ),
+            'name'    => __( 'Woord', 'sp' ),
         ];
 
         return $columns;
@@ -276,8 +276,8 @@ class SP_Plugin_Censor {
 
         $hook = add_submenu_page(
             'sn_categories',
-            'Censorship',
-            'Censorship',
+            'Censuur',
+            'Censuur',
             'manage_categories',
             'sn_censor',
             [ $this, 'censorship_page' ]
@@ -286,8 +286,8 @@ class SP_Plugin_Censor {
 
         add_submenu_page(
             'sn_categories',
-            'Add censor',
-            'Add censor',
+            'Voeg censuur toe',
+            'Voeg censuur toe',
             'manage_categories',
             'sn_censor_add',
             [ $this, 'censorship_add' ]
@@ -301,8 +301,8 @@ class SP_Plugin_Censor {
     public function censorship_page() {
         ?>
         <div class="wrap">
-            <h2>Censorship
-                <a href="<?php echo get_site_url() . "/wp-admin/admin.php?page=sn_censor_add" ?>" class="page-title-action">Add new</a>
+            <h2>Censuur
+                <a href="<?php echo get_site_url() . "/wp-admin/admin.php?page=sn_censor_add" ?>" class="page-title-action">Voeg nieuw toe</a>
             </h2>
 
             <div id="poststuff">

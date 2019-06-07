@@ -9,7 +9,7 @@
                 <a class="dropdown" style='right:0;'>
                     <div class="name"><%= post.login %></div>
                     <div class="dropdown-content">
-                        <p class="send-message">Send message</p>
+                        <p class="send-message">Bericht versturen</p>
                     </div>
                 </a>
 
@@ -30,7 +30,7 @@
                 <span class="respond-to-user"> <%= post.user_respond_to %>: </span>
                 <div class="text-post-message"><%= post.respond_message.substring(0, 75) + ((post.respond_message.length <= 75)? '': "...") %></div>
                 <% } else { %>
-                <div class="text-post-message">The post was deleted</div>
+                <div class="text-post-message">Het bericht is verwijderd</div>
                 <% } %>
                 </div>
             <% } %>
@@ -61,11 +61,11 @@
             <img src="<%= url %>/images/more.svg">
             <div class="dropdown-content">
                 <% if (post.user_id == user_id || role == 'administrator' || role == 'adviser') { %>
-                    <p class="edit">Edit</p>
-                    <p class="delete">Delete</p>
+                    <p class="edit">Bewerk</p>
+                    <p class="delete">Verwijder</p>
                 <% }%>
                 <% if (post.user_id != user_id ) { %>
-                    <p class="report">Report</p>
+                    <p class="report">Rapporteren</p>
                 <% }%>
             </div>
         </div>
@@ -75,7 +75,7 @@
             <div class="text-enter-container">
                 <textarea class="edit-textarea"></textarea>
                 <div class="right-align">
-                <button class="save-butt">Save
+                <button class="save-butt">Opslaan
                 </button></div>
             </div>
         </div>

@@ -71,7 +71,7 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
             <img src="<?php echo PATH?>/images/more.svg">
 
             <div class="dropdown-content">
-                <p class="delete">Delete</p>
+                <p class="delete">Verwijder</p>
             </div>
         </div>
             <?php } ?>
@@ -82,8 +82,8 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
 
     <table id="posts">
         <tr id="post-header">
-            <th>Author</th>
-            <th>Post</th>
+            <th>Auteur</th>
+            <th>Bericht</th>
         </tr>
 
 
@@ -112,15 +112,16 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
                 <div class="content-enter">
                     <div class="respond-info" style="display:none">
                         <span class="respond-text">
-                            <span class="respond-to-title">Respond to </span>
+                            <span class="respond-to-title">Reageer op </span>
                             <span class="quote-text"></span>
                             <img class="del-quote" src="<?php echo PATH?>/images/x.svg"/>
                         </span>
                     </div>
                     <div class="text-enter-container">
-                        <textarea id="enter-textarea" placeholder="Enter your message here..."></textarea>
+                        <textarea id="enter-textarea" placeholder="Plaats hier uw bericht…
+"></textarea>
                         <div class="right-align">
-                            <span class="label-anonym">Post anonymously</span>
+                            <span class="label-anonym">Plaats anoniem</span>
                             <input type="checkbox" id="chech-anonym" name="chech-anonym">
                             <button class="enter-butt">Enter</button>
                         </div>
@@ -152,15 +153,15 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
                 <div class="content-enter">
                     <div class="respond-info" style="display:none">
                         <span class="respond-text">
-                            <span class="respond-to-title">Respond to </span>
+                            <span class="respond-to-title">Reageer op </span>
                             <span class="quote-text"></span>
                             <img class="del-quote" src="<?php echo PATH?>/images/x.svg"/>
                         </span>
                     </div>
                     <div class="text-enter-container">
-                        <textarea id="enter-textarea-f" placeholder="Enter your message here..."></textarea>
+                        <textarea id="enter-textarea-f" placeholder="Plaats hier uw bericht…"></textarea>
                         <div class="right-align">
-                            <span class="label-anonym">Post anonymously</span>
+                            <span class="label-anonym">Plaats anoniem</span>
                             <input type="checkbox" id="chech-anonym-f" name="chech-anonym">
                             <button class="enter-butt-f">Enter</button>
                         </div>
@@ -179,7 +180,8 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
 
 
     <?php if(!is_user_logged_in()) {
-        echo '<span class="please-login">To add new post please log in.</span>';
+        echo '<span class="please-login">Om een bericht te kunnen plaatsen dient u in te loggen.
+</span>';
     } ?>
 
     <div class="pagination">
@@ -202,11 +204,11 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
 <div id="delete-topic-panel" style="display: none">
     <div class="delete-panel-container">
         <div class="delete-content">
-            <h2>Delete</h2>
+            <h2>Verwijder</h2>
             <img class="close-delete-panel" src="<?php echo PATH?>/images/x.svg">
-            <p>Are you sure you want to delete this topic?</p>
-            <button class="delete-butt">Delete</button>
-            <button class="cancel-butt">Cancel</button>
+            <p>Weet je zeker dat je dit onderwerp wilt verwijderen?</p>
+            <button class="delete-butt">Verwijder</button>
+            <button class="cancel-butt">Annuleren</button>
         </div>
     </div>
 </div>
@@ -214,11 +216,11 @@ $role =  ((array)( wp_get_current_user()->roles )[0])[0];
 <div id="delete-post-panel" style="display: none">
     <div class="delete-panel-container">
         <div class="delete-content">
-            <h2>Delete</h2>
+            <h2>Verwijder</h2>
             <img class="close-delete-panel" src="<?php echo PATH?>/images/x.svg">
-            <p>Are you sure you want to delete this post?</p>
-            <button class="delete-butt">Delete</button>
-            <button class="cancel-butt">Cancel</button>
+            <p>Weet je zeker dat je dit bericht wilt verwijderen?</p>
+            <button class="delete-butt">Verwijder</button>
+            <button class="cancel-butt">Annuleren</button>
         </div>
     </div>
 </div>

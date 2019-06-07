@@ -16,7 +16,7 @@ Date.prototype.ddmmyyyyhhmm = function() {
     <td class="berichten"><%= category.posts_num%></td>
     <td class="last-post">
         <% if (category.last_topic_id != null) { %>
-        <a href="<%= url%>/posts/?topic_id=<%= encodeURI(category.last_topic_id)%>">in <%= category.last_topic_name%> at <%=  new Date(category.last_post_time.replace(/\s/, 'T')).ddmmyyyyhhmm() %></a>
+        <a href="<%= url%>/posts/?topic_id=<%= encodeURI(category.last_topic_id)%>">in <%= category.last_topic_name%> op <%=  new Date(category.last_post_time.replace(/\s/, 'T')).ddmmyyyyhhmm() %></a>
         <% } else { %>
         -
         <% } %>

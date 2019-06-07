@@ -10,7 +10,7 @@ define("PATH", plugins_url('..' , __FILE__));
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Topics</title>
+    <title>Onderwerpen</title>
 
     <link rel="stylesheet/less" type="text/css" href="<?php echo PATH?>/less/topics.less" />
     <link rel="stylesheet/less" type="text/css" href="<?php echo PATH?>/less/loading.less" />
@@ -64,7 +64,7 @@ define("PATH", plugins_url('..' , __FILE__));
     </div>
 
     <div class="topic-search input-group">
-        <input id="search-post-input" class="form-control" type="text" placeholder="Search posts...">
+        <input id="search-post-input" class="form-control" type="text" placeholder="Zoek onderwerp...">
         <div class="input-group-append">
             <button class="btn" id="search-topic-btn" type="button">
                 <i class="fa fa-search fa-fw" style="color: #fff;" aria-hidden="true"></i>
@@ -75,16 +75,16 @@ define("PATH", plugins_url('..' , __FILE__));
 
     <table id="topics">
         <tr id="topics-header">
-            <th id="head-name-table" class="topic-name">Topic</th>
+            <th id="head-name-table" class="topic-name">Onderwerp</th>
             <th class="authors">
-                <span class="menu_text">Authors</span>
+                <span class="menu_text">Auteurs</span>
                 <img class="menu_icon" src="<?php echo PATH?>/images/author.svg">
             </th>
             <th class="num-posts">
-                <span class="menu_text">Posts</span>
+                <span class="menu_text">Berichten</span>
                 <img class="menu_icon" src="<?php echo PATH?>/images/comment.svg">
             </th>
-            <th class="last-post">Last post</th>
+            <th class="last-post">Laatste bericht</th>
         </tr>
 
         <tbody id="topics_list">
@@ -106,14 +106,14 @@ define("PATH", plugins_url('..' , __FILE__));
 <div id="add-panel" style="display: none">
     <div class="add-panel-container">
         <div class="add-content">
-            <label>Add new topic</label>
+            <label>Nieuw onderwerp toevoegen</label>
             <img id="close-add-panel" src="<?php echo PATH?>/images/x.svg">
 
             <form id="add-form" autocomplete="off">
-                <input type="text" id='new-topic-name' name="topic-name" placeholder="Topic name"><br>
-                <span class="label-anonym">Post anonymously</span>
+                <input type="text" id='new-topic-name' name="topic-name" placeholder="Onderwerp"><br>
+                <span class="label-anonym">Plaats anoniem</span>
                 <input type="checkbox" id="chech-anonym" name="chech-anonym">
-                <button class="enter-butt">Add</button>
+                <button class="enter-butt">Toevoegen</button>
             </form>
 
 
