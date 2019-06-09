@@ -138,27 +138,24 @@ function connectSocket() {
         if (wp_object.is_chat == 0) {
             console.log('here');
 
-            $("#addNewDialog").submit(function(e) {
-                e.preventDefault();
-                // let topic = $("#inputTopic").val();
-                // let messageFirst = $("#inputFirstMessage").val();
-                // messageFirst = (messageFirst === null || messageFirst === undefined) ? "" : messageFirst;
-                // if (topic !== "") {
-                //     // socket add dialog
-                //     conn.send(JSON.stringify({
-                //         user_id_from: user_object.id,
-                //         command: 'new_chat',
-                //         dialog_type: 'employee_chat',
-                //         topic: topic,
-                //         message: messageFirst
-                //     }));
-                //
-                //     console.log("Request of creating new dialog has been sent to server");
-                //
-                // } else (alert("Write your issue, please"))
+            $("#addNewDialog").on('click', function() {
+                let topic = $("#inputTopic").val();
+                let messageFirst = $("#inputFirstMessage").val();
+                messageFirst = (messageFirst === null || messageFirst === undefined) ? "" : messageFirst;
+                if (topic !== "") {
+                    // socket add dialog
+                    conn.send(JSON.stringify({
+                        user_id_from: user_object.id,
+                        command: 'new_chat',
+                        dialog_type: 'employee_chat',
+                        topic: topic,
+                        message: messageFirst
+                    }));
 
-                // TODO: check form for being filled in
-                return false;
+                    console.log("Request of creating new dialog has been sent to server");
+
+                } else (alert("Write your issue, please"))
+
             });
         }
     };
