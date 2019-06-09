@@ -130,6 +130,7 @@ function connectSocket() {
         console.log("wp_object.is_chat " + wp_object.is_chat);
 
         if (wp_object.is_chat == 0) {
+            console.log('here');
 
             $("#addNewDialog").submit(function(e) {
                 e.preventDefault();
