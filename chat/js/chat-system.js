@@ -131,8 +131,12 @@ function connectSocket() {
         if (wp_object.is_chat != 0) {
             preventDefault();
 
+            $("#addNewDialog").submit(function(e) {
+                e.preventDefault();
+                return false;
+            });
+
             $('#addNewDialog').click(function () {
-                preventDefault();
                 let topic = $("#inputTopic").val();
                 let messageFirst = $("#inputFirstMessage").val();
                 messageFirst = (messageFirst === null || messageFirst === undefined) ? "" : messageFirst;
