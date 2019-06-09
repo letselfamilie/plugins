@@ -1009,7 +1009,7 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
     var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
     var temp = new Date(); temp.setDate(today.getDate() - 1);
 
-    let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: mydate})); // new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
+    let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: item.create_timestamp})); // new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
 
 
     var text = item.create_timestamp.split(' ')[0];
