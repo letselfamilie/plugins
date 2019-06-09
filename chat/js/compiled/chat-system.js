@@ -134,10 +134,6 @@ function connectSocket() {
 
             $("#addNewDialog").submit(function(e) {
                 e.preventDefault();
-                return false;
-            });
-
-            $('#addNewDialog').click(function () {
                 let topic = $("#inputTopic").val();
                 let messageFirst = $("#inputFirstMessage").val();
                 messageFirst = (messageFirst === null || messageFirst === undefined) ? "" : messageFirst;
@@ -159,6 +155,7 @@ function connectSocket() {
 
                 return false;
             });
+
             return false;
         }
         return false;
