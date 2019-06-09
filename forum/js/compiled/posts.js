@@ -195,6 +195,7 @@ $(function () {
     var max_page = 0;
 
     var is_f = false;
+    var is_proc = false;
 
 
     if (topic_id == -1) {
@@ -230,10 +231,13 @@ $(function () {
     }
 
     $(".enter-butt").on("click", function (e) {
+
+
         var parent = e.target.parentElement;
         console.log($('#chech-anonym', parent).is(":checked"));
 
-        if ($('#enter-textarea').val().trim() !== "") {
+        if ($('#enter-textarea').val().trim() !== "" && !is_proc) {
+            is_proc = true;
             $.ajax({
                 url: url_object.ajax_url,
                 type: 'POST',
@@ -262,6 +266,7 @@ $(function () {
                         },
                         success: function (res) {
                             scroll_down = true;
+                            is_proc = false;
                             initPagination(res);
                         },
                         error: function (error) {
@@ -283,7 +288,8 @@ $(function () {
 
         console.log($('#chech-anonym-f', parent).is(":checked"));
 
-        if ($('#enter-textarea-f').val().trim() !== "") {
+        if ($('#enter-textarea-f').val().trim() !== "" && !is_proc) {
+            is_proc = true;
             $.ajax({
                 url: url_object.ajax_url,
                 type: 'POST',
@@ -312,6 +318,7 @@ $(function () {
                         },
                         success: function (res) {
                             scroll_down = true;
+                            is_proc = false;
                             initPagination(res);
                         },
                         error: function (error) {
@@ -336,7 +343,8 @@ $(function () {
 
                 console.log($('#chech-anonym-f', parent).is(":checked"));
 
-                if ($('#enter-textarea-f').val().trim() !== "") {
+                if ($('#enter-textarea-f').val().trim() !== "" && !is_proc) {
+                    is_proc = true;
                     $.ajax({
                         url: url_object.ajax_url,
                         type: 'POST',
@@ -365,6 +373,7 @@ $(function () {
                                 },
                                 success: function (res) {
                                     scroll_down = true;
+                                    is_proc = false;
                                     initPagination(res);
                                 },
                                 error: function (error) {
@@ -383,7 +392,8 @@ $(function () {
                 var parent = $('.post-enter');
                 console.log($('#chech-anonym', parent).is(":checked"));
 
-                if ($('#enter-textarea').val().trim() !== "") {
+                if ($('#enter-textarea').val().trim() !== "" && !is_proc) {
+                    is_proc = true;
                     $.ajax({
                         url: url_object.ajax_url,
                         type: 'POST',
@@ -412,6 +422,7 @@ $(function () {
                                 },
                                 success: function (res) {
                                     scroll_down = true;
+                                    is_proc = false;
                                     initPagination(res);
                                 },
                                 error: function (error) {
