@@ -151,7 +151,7 @@ function connectSocket() {
                 } else (alert("Write your issue, please"))
 
                 // TODO: check form for being filled in
-
+                return false;
             });
         }
     };
