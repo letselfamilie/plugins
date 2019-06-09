@@ -1002,13 +1002,14 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
     var st = ((item.user_from_id === user_object.id) ? "sent" : "replies");
     var png = ((item.user_from_id === user_object.id) ? myprofilelogo : user2logo);
     if (is_employee_chat === "1" && item.user_from_id !== user_object.id) png = url_object.plugin_directory + "/images/logo.png";
-    let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: new Date(item.create_timestamp).ddmmyyyyhhmm()})); // new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
 
     var now = new Date();
     var today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() ));
     var parts =item.create_timestamp.split(' ')[0].split('-');
     var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
     var temp = new Date(); temp.setDate(today.getDate() - 1);
+
+    let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: mydate})); // new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
 
 
     var text = item.create_timestamp.split(' ')[0];
