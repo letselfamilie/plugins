@@ -166,7 +166,7 @@ function connectSocket() {
         if (data.type === "message" && wp_object.is_chat == 0) {
 
             var sound = new Howl({
-                src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
+                src: ['http://www.letselfamilie.nl/wp-content/uploads/2019/06/unconvinced.mp3']
             });
 
             if (push_sound_prop == 0) {
@@ -190,7 +190,7 @@ function connectSocket() {
                 }
 
                 // var sound = new Howl({
-                //     src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
+                //     src: ['http://www.letselfamilie.nl/wp-content/uploads/2019/06/unconvinced.mp3']
                 // });
                 // sound.play();
             }
@@ -199,7 +199,7 @@ function connectSocket() {
         if (data.type === "new_post") {
 
             var sound = new Howl({
-                src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
+                src: ['http://www.letselfamilie.nl/wp-content/uploads/2019/06/unconvinced.mp3']
             });
 
             if (push_sound_prop == 0) {
@@ -217,7 +217,7 @@ function connectSocket() {
 
         if (data.type === "bad_word") {
             var sound = new Howl({
-                src: ['http://178.128.202.94/wp-content/uploads/2019/05/warning.wav']
+                src: ['http://www.letselfamilie.nl/wp-content/uploads/2019/06/warning.wav']
             });
 
             if (push_sound_prop == 0) {
@@ -236,7 +236,7 @@ function connectSocket() {
 
         if (data.type === "report") {
             var sound = new Howl({
-                src: ['http://178.128.202.94/wp-content/uploads/2019/05/warning.wav']
+                src: ['http://www.letselfamilie.nl/wp-content/uploads/2019/06/warning.wav']
             });
 
             if (push_sound_prop == 0) {

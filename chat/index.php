@@ -10,6 +10,7 @@ Author URI: https://github.com/mrsn5
 
 require_once(__DIR__ . '/ajax/dialogs_ajax.php');
 
+
 add_filter('template_include', 'chat_page_template', 99);
 
 function chat_page_template($template)

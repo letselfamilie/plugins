@@ -41,7 +41,7 @@ window.addEventListener('resize', () => {
 });
 
 
-//http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3
+//http://www.letselfamilie.nl/wp-content/uploads/2019/06/unconvinced.mp3
 $(function () {
     if (typeof AudioContext != "undefined" || typeof webkitAudioContext != "undefined") {
         var resumeAudio = function () {
@@ -390,7 +390,7 @@ function loadChat(mes) {
             console.log("new message");
 
             let sound = new Howl({
-                src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
+                src: ['http://www.letselfamilie.nl/wp-content/uploads/2019/06/unconvinced.mp3']
             });
 
             //    getChatSoundProp(function (sound_prop){
@@ -622,7 +622,7 @@ function loadChat(mes) {
             console.log(data.message);
 
             let sound = new Howl({
-                src: ['http://178.128.202.94/wp-content/uploads/2019/04/unconvinced.mp3']
+                src: ['http://www.letselfamilie.nl/wp-content/uploads/2019/06/unconvinced.mp3']
             });
             //  getChatSoundProp(function (sound_prop){
             if (chat_sound_prop == 0) {
