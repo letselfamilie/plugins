@@ -325,6 +325,12 @@ $(function () {
         }
     });
 
+    $(window).on('keydown', function (e) {
+        if (e.which == 13 && !e.shiftKey) {
+            console.log('sending!')
+            return false;
+        }
+    });
 
     function getInfAboutTopic() {
         $.ajax({
