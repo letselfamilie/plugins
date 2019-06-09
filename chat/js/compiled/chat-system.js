@@ -184,7 +184,9 @@ function connectSocket() {
             let photo = data.photo;
 
             addNotification(from, mess, photo, url_object.site_url + "/chat?dialog_id=" + dial_id)
+        }
 
+        if (wp_object.is_chat == 0) {
 
             if (data.type === "new_chat") {
                 let dialog_id = data.dialog_id;
@@ -198,8 +200,8 @@ function connectSocket() {
                 // });
                 // sound.play();
             }
-
         }
+
         if (data.type === "new_post") {
 
             var sound = new Howl({
