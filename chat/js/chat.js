@@ -1008,7 +1008,7 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
     var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
     var temp = new Date(); temp.setDate(today.getDate() - 1);
 
-    let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: '---'})); // new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
+    let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()})); // new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
 
 
     var text = item.create_timestamp.split(' ')[0];
@@ -1024,14 +1024,14 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
     var lastMes = (!prepend)? $(".messages ul li.mes").last() : $(".messages ul li.mes").first();
     //var lastMes = $(".messages ul li.mes:last-child");
 
-    let date_reg = new RegExp('(.|\\s)*(\\d{4}-\\d{2}-\\d{2})(.|\\s)*');
+    let date_reg = new RegExp('(.|\\s)*(\\d{2}-\\d{2}-\\d{4})(.|\\s)*');
     let date = lastMes.prop('outerHTML');
 
 
     if(date!==undefined){
         date = date.replace(date_reg, '$2');
         var parts2 =date.split(' ')[0].split('-');
-        var dateOfPrevMes = new Date(parts2[0], parts2[1] - 1, parts2[2]);
+        var dateOfPrevMes = new Date(parts2[2], parts2[1] - 1, parts2[0]);
 
         addBanner = (mydate.isSameDateAs(dateOfPrevMes))? false:true;
         console.log("date of mes: " + date);
