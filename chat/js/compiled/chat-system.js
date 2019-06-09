@@ -128,6 +128,7 @@ function connectSocket() {
 
         var keys = Object.keys(user_object);
         console.log("user_object" + keys);
+        console.log("wp_object.is_chat " + wp_object.is_chat);
 
         if (wp_object.is_chat != 0) {
             preventDefault();
@@ -148,18 +149,13 @@ function connectSocket() {
                     }));
 
                     console.log("Request of creating new dialog has been sent to server");
-                    return false;
+
                 } else (alert("Write your issue, please"))
 
                 // TODO: check form for being filled in
 
-                return false;
             });
-
-            return false;
         }
-        return false;
-
     };
 
 
