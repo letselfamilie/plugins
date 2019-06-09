@@ -131,7 +131,9 @@ function connectSocket() {
 
         if (wp_object.is_chat != 0) {
             preventDefault();
+
             $('#addNewDialog').click(function () {
+                preventDefault();
                 let topic = $("#inputTopic").val();
                 let messageFirst = $("#inputFirstMessage").val();
                 messageFirst = (messageFirst === null || messageFirst === undefined) ? "" : messageFirst;
@@ -146,7 +148,7 @@ function connectSocket() {
                     }));
 
                     console.log("Request of creating new dialog has been sent to server");
-
+                    return false;
                 } else (alert("Write your issue, please"))
 
                 // TODO: check form for being filled in
