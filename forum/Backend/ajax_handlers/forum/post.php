@@ -115,6 +115,31 @@ function add_post()
     flush();
 
 
+    global $wpdb;
+    $response_to = $_POST['response_to'];
+    $topic_id = $_POST['topic_id'];
+    $user_id = $_POST['user_id'];
+    $post_message = $_POST['post_message'];
+    $is_anonym = $_POST['is_anonym'];
+    $is_reaction = $_POST['is_reaction'];
+
+
+    if ($response_to != null && $topic_id != null && $user_id != null && $post_message != null && $is_anonym != null) {
+        if ($is_reaction == null) $is_reaction = 0;
+
+        $sqlQuery = "INSERT INTO {$wpdb->prefix}f_posts (response_to, topic_id, user_id, post_message, is_anonym, create_timestamp, is_reaction) 
+                     VALUES ('$response_to', '$topic_id', '$user_id', '$post_message', $is_anonym, CURRENT_TIMESTAMP, $is_reaction);";
+        $sqlQuery = str_replace("'NULL'", "NULL", $sqlQuery);
+        $sqlQuery = str_replace("'null'", "NULL", $sqlQuery);
+        try {
+            $wpdb->query($sqlQuery);
+            echo 'added)';
+        } catch (Exception $e) {
+            echo 'Exception:', $e->getMessage(), "\n";
+            echo $sqlQuery;
+        }
+    }
+
     \Ratchet\Client\connect('ws://178.128.202.94:8000')->then(function ($conn) {
         global $wpdb;
         $response_to = $_POST['response_to'];
@@ -127,16 +152,8 @@ function add_post()
         if ($response_to != null && $topic_id != null && $user_id != null && $post_message != null && $is_anonym != null) {
             if ($is_reaction == null) $is_reaction = 0;
 
-            $sqlQuery = "INSERT INTO {$wpdb->prefix}f_posts (response_to, topic_id, user_id, post_message, is_anonym, create_timestamp, is_reaction) 
-                     VALUES ('$response_to', '$topic_id', '$user_id', '$post_message', $is_anonym, CURRENT_TIMESTAMP, $is_reaction);";
-            $sqlQuery = str_replace("'NULL'", "NULL", $sqlQuery);
-            $sqlQuery = str_replace("'null'", "NULL", $sqlQuery);
 
             try {
-                $wpdb->query($sqlQuery);
-
-                echo 'added)';
-
                 $user_info = get_userdata($user_id);
                 $user_topic_owner = get_userdata($wpdb->get_var("SELECT user_id
                                                              FROM {$wpdb->prefix}f_topics
