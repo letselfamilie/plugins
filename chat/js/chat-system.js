@@ -114,6 +114,11 @@ function addChatBox() {
     $("#mini-chat-header").click(() => {
         $("#mini-chat").toggleClass("chat-up");
     });
+
+    $("#addNewDialog").submit(function(e) {
+        e.preventDefault();
+        return false;
+    });
 }
 
 function connectSocket() {
@@ -134,22 +139,22 @@ function connectSocket() {
 
             $("#addNewDialog").submit(function(e) {
                 e.preventDefault();
-                let topic = $("#inputTopic").val();
-                let messageFirst = $("#inputFirstMessage").val();
-                messageFirst = (messageFirst === null || messageFirst === undefined) ? "" : messageFirst;
-                if (topic !== "") {
-                    // socket add dialog
-                    conn.send(JSON.stringify({
-                        user_id_from: user_object.id,
-                        command: 'new_chat',
-                        dialog_type: 'employee_chat',
-                        topic: topic,
-                        message: messageFirst
-                    }));
-
-                    console.log("Request of creating new dialog has been sent to server");
-
-                } else (alert("Write your issue, please"))
+                // let topic = $("#inputTopic").val();
+                // let messageFirst = $("#inputFirstMessage").val();
+                // messageFirst = (messageFirst === null || messageFirst === undefined) ? "" : messageFirst;
+                // if (topic !== "") {
+                //     // socket add dialog
+                //     conn.send(JSON.stringify({
+                //         user_id_from: user_object.id,
+                //         command: 'new_chat',
+                //         dialog_type: 'employee_chat',
+                //         topic: topic,
+                //         message: messageFirst
+                //     }));
+                //
+                //     console.log("Request of creating new dialog has been sent to server");
+                //
+                // } else (alert("Write your issue, please"))
 
                 // TODO: check form for being filled in
                 return false;
