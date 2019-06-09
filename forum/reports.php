@@ -445,8 +445,7 @@ class SP_Plugin_Report {
         ?>
         <div class="wrap">
             <h2>Report
-                <a href="<?php echo get_site_url() . "/wp-admin/admin.php?page=sn_report_add" ?>" class="page-title-action">Add new</a>
-            </h2>
+                </h2>
 
             <div id="poststuff">
                 <div id="post-body" class="metabox-holder columns-2">
