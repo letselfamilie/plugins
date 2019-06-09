@@ -3,6 +3,7 @@ let fs = require('fs');
 let ejs = require('ejs');
 
 const {Howl, Howler} = require('howler');
+
 Date.prototype.ddmmyyyyhhmm = function () {
     var mm = this.getMonth() + 1;
     var dd = this.getDate();
@@ -525,7 +526,7 @@ function loadChat(mes) {
                     user1_id: "" + user_object.id,
                     user2_id: second_user_id,
                     second_user_nickname: null,
-                    second_user_photo: url_object.plugin_directory + "/images/question.png",
+                    second_user_photo: 'http://www.letselfamilie.nl/wp-content/uploads/2019/06/LetselFamilie-logo-1.png',
                     messages: m,
                     is_closed:0
                 };
@@ -693,7 +694,7 @@ function loadChat(mes) {
                 user1_id: "" + user_object.id,
                 user2_id: client_id,
                 second_user_nickname: null,
-                second_user_photo: url_object.plugin_directory + "/images/question.png",
+                second_user_photo: 'http://www.letselfamilie.nl/wp-content/uploads/2019/06/LetselFamilie-logo-1.png',
                 messages: messages
             };
 
@@ -791,7 +792,7 @@ function addDialog(item, mes) {
 
     let is_closed = item.is_closed;
 
-    let img = (is_employee_chat === "1") ? url_object.plugin_directory + "/images/question.png" : item.second_user_photo;
+    let img = (is_employee_chat === "1") ? 'http://www.letselfamilie.nl/wp-content/uploads/2019/06/LetselFamilie-logo-1.png' : item.second_user_photo;
     let name = (is_employee_chat === "1") ? ((dialog_topic === null) ? item.second_user_nickname : dialog_topic) : item.second_user_nickname;
     name = (name === null || name === "" || name === undefined) ? "Question" : name;
 
@@ -1001,7 +1002,7 @@ function addMes(item, user2logo, is_employee_chat, prepend) {
     var st = ((item.user_from_id === user_object.id) ? "sent" : "replies");
     var png = ((item.user_from_id === user_object.id) ? myprofilelogo : user2logo);
     if (is_employee_chat === "1" && item.user_from_id !== user_object.id) png = url_object.plugin_directory + "/images/logo.png";
-    let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: item.create_timestamp})); // new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
+    let $node = $(mes_templ({status: st, image: png, mes: item.message_body, time: new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()})); // new Date(item.create_timestamp.replace(/\s/, 'T')).ddmmyyyyhhmm()}));
 
     var now = new Date();
     var today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() ));

@@ -226,7 +226,6 @@ function add_post()
 
             } catch (Exception $e) {
                 echo 'Exception:', $e->getMessage(), "\n";
-                echo $sqlQuery;
             }
         }
         $conn->close();
